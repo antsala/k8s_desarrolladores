@@ -1,23 +1,180 @@
 # Laboratorio 20-A: "Instalación de Minikube"
-# 
+ 
 # Este laboratorio instalará el runtime podman y Minikube en una máquina virtual
 # Ubuntu 20.04 LTS
-#
+
 # Requisitos:
 #    Una máquina virtual con Ubunto 20.04 LTS a la que poder hacer ssh.
-#
+
+
 ######################################
 # Ejercicio 1: Instalación de Podman #
 ######################################
-#
+
 # Necesitamos un runtime de contenedor. Si bien podemos instalar Docker, no lo 
 # haremos. En su lugar instalamos podman, que nos servirá para demostrar que
 # Kubernetes puede usar cualquier runtime de contenedor compatible con CRI 
 # Container Runtime Interface.
-#
-#
+
+# Aseguramos que 'curl' está instalado.
+
+sudo apt-get -y update
+
+sudo apt-get -y install curl
+
+
 # Para Ubuntu 20.04 no se puede instalar podman directamente desde los repositorios
-# oficiales. Para conseguirlo, añadimos a la lista de repos, el de podman (RedHat)
+# oficiales. Para conseguirlo, añadimos a la lista de repos, el de podman (RedHat).
 
 echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" | \
     sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+
+curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key" | \
+    sudo apt-key add -
+
+
+# Volvemos a actualizar el repositorio de paquetes.
+
+sudo apt-get -y update
+
+
+# Instalamos podman.
+
+sudo apt-get -y install podman
+
+
+# Comprobamos que podman se ha instalado correctamente.
+# El resultado será la versión de podman.
+
+podman --version
+
+
+# Probamos a lanzar un contenedor y ejecutar un comando en el. Como resultado
+# aparecerá información sobre la versión del sistema operativo del contenedor.
+
+podman run --rm docker.io/library/ubuntu:latest cat /etc/lsb-release
+
+
+# Con esto finalizamos la instalación del runtime
+
+
+########################################
+# Ejercicio 2: Instalación de Minikube #
+########################################
+
+# Ya tenemos el runtime de contenedor instalado. Ahora prodecemos a descargar el binario
+# de Minikube desde la web de Google.
+
+wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+
+# Comprobamos que se ha descargado listando el directorio.
+# Debe aparecer un archivo con nombre 'minikube-linux-amd64'
+
+ls -l 
+
+
+# Vamos a mover el archivo descargado a un directorio del sistema. En el
+# mismo comando aprovechamos y le cambiamos el nombre a 'minikube'
+
+sudo mv minikube-linux-amd64 /usr/local/bin/minikube
+
+
+# Comprobamos que ha quedado en su sitio.
+# Observar que no tiene permiso de ejecución.
+
+sudo ls -l /usr/local/bin/minikube
+
+
+# Añadimos el permiso de ejecución al binario de Minikube.
+
+sudo chmod +x /usr/local/bin/minikube
+
+
+# Comprobamos que ya es ejecutable.
+# El propietario del archivo sigue siendo el usuario con el que estás logado. No hace 
+# falta cambiarlo.
+
+sudo ls -l /usr/local/bin/minikube
+
+
+# Comprobamos que podemos ejecutarlo
+
+minikube version
+
+
+# Con esto termina la instalación del binario de Minikube.
+
+
+#######################################
+# Ejercicio 3: Instalación de kubectl #
+#######################################
+
+# 'kubectl' es la herramienta de línea de comando para interactuar con el API-Server (Control Plane)
+# Esta herramienta también hay que descargarla e instalarla.
+# 
+# Procedemos a descargar la última versión estable.
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+
+
+# Comprobamos. Debe haberse descargado un archivo llamado 'kubectl'
+
+ls -l
+
+
+# Procedemos a moverlo a una ubicación más apropiada y asignarle permisos de ejecución.
+
+sudo mv kubectl /usr/local/bin/
+
+chmod +x /usr/local/bin/kubectl
+
+
+# Comprobamos
+
+ls -l /usr/local/bin/kubectl
+
+
+# Ahora probamos la herramienta 'kubectl' mostrando su versión. Aparecerá un error que indica que no
+# puede conectar con 'localhost:8080'. Este comportamiento es correcto porque aun no hemos iniciado
+# Minikube, solo hemos descargado su binario, así que 'kubectl' no puede todavía contactar con el
+# API Server. 
+
+kubectl version -o yaml
+
+
+# El siguiente paso sería iniciar Minikube, pero daría error. Esto es así porque el driver podman no se
+# puede ejecutar con permisos de root. Para resolverlo, es necesario anadir una línea al fichero 'sudoers'.
+#
+# Editar 'sudoers' con 'visudo' de la siguiente forma:
+
+sudo visudo
+
+
+# Desplazarse hasta el final del archivo 'sudoers' y añadir una nueva línea debajo 
+# de '#includedir /etc/sudoers.d'. Esta línea debe tener el contenido que aparece entre las 
+# comillas simples (sin incluirlas): '<usuario> ALL=(ALL) NOPASSWD: /usr/bin/podman'
+#
+# Sustituimos '<usuario>' por tu usuario de Linux. Por ejemplo, si el usuario es 'alumno', la
+# línea a insertar sería así: 'alumno ALL=(ALL) NOPASSWD: /usr/bin/podman'
+#
+# Guardar con CTRL+X, Y, ENTER.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
