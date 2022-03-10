@@ -1,9 +1,23 @@
-Laboratorio 20-A: "Instalación de Minikube"
+# Laboratorio 20-A: "Instalación de Minikube"
+# 
+# Este laboratorio instalará el runtime podman y Minikube en una máquina virtual
+# Ubuntu 20.04 LTS
+#
+# Requisitos:
+#    Una máquina virtual con Ubunto 20.04 LTS a la que poder hacer ssh.
+#
+######################################
+# Ejercicio 1: Instalación de Podman #
+######################################
+#
+# Necesitamos un runtime de contenedor. Si bien podemos instalar Docker, no lo 
+# haremos. En su lugar instalamos podman, que nos servirá para demostrar que
+# Kubernetes puede usar cualquier runtime de contenedor compatible con CRI 
+# Container Runtime Interface.
+#
+#
+# Para Ubuntu 20.04 no se puede instalar podman directamente desde los repositorios
+# oficiales. Para conseguirlo, añadimos a la lista de repos, el de podman (RedHat)
 
-Este laboratorio instalará el runtime podman y Minikube en una máquina virtual
-Ubuntu 20.04 LTS
-
-Requisitos:
-    Una máquina virtual con Ubunto 20.04 LTS a la que poder hacer ssh.
-
-
+echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" | \
+    sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
