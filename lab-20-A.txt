@@ -7,9 +7,9 @@
 #    Una máquina virtual con Ubunto 20.04 LTS a la que poder hacer ssh.
 
 
-######################################
-# Ejercicio 1: Instalación de Podman #
-######################################
+########################################
+# Ejercicio 1: Instalación de 'Podman' #
+########################################
 
 # Necesitamos un runtime de contenedor. Si bien podemos instalar Docker, no lo 
 # haremos. En su lugar instalamos podman, que nos servirá para demostrar que
@@ -58,9 +58,9 @@ podman run --rm docker.io/library/ubuntu:latest cat /etc/lsb-release
 # Con esto finalizamos la instalación del runtime
 
 
-########################################
-# Ejercicio 2: Instalación de Minikube #
-########################################
+##########################################
+# Ejercicio 2: Instalación de 'Minikube' #
+##########################################
 
 # Ya tenemos el runtime de contenedor instalado. Ahora prodecemos a descargar el binario
 # de Minikube desde la web de Google.
@@ -106,9 +106,9 @@ minikube version
 # Con esto termina la instalación del binario de Minikube.
 
 
-#######################################
-# Ejercicio 3: Instalación de kubectl #
-#######################################
+#########################################
+# Ejercicio 3: Instalación de 'kubectl' #
+#########################################
 
 # 'kubectl' es la herramienta de línea de comando para interactuar con el API-Server (Control Plane)
 # Esta herramienta también hay que descargarla e instalarla.
