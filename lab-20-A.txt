@@ -135,6 +135,11 @@ chmod +x /usr/local/bin/kubectl
 ls -l /usr/local/bin/kubectl
 
 
+
+########################################################
+# Ejercicio 4: Modificar 'sudoers' e instalar 'uidmap' #
+########################################################
+
 # Ahora probamos la herramienta 'kubectl' mostrando su versión. Aparecerá un error que indica que no
 # puede conectar con 'localhost:8080'. Este comportamiento es correcto porque aun no hemos iniciado
 # Minikube, solo hemos descargado su binario, así que 'kubectl' no puede todavía contactar con el
@@ -156,9 +161,57 @@ sudo visudo
 # comillas simples (sin incluirlas): '<usuario> ALL=(ALL) NOPASSWD: /usr/bin/podman'
 #
 # Sustituimos '<usuario>' por tu usuario de Linux. Por ejemplo, si el usuario es 'alumno', la
-# línea a insertar sería así: 'alumno ALL=(ALL) NOPASSWD: /usr/bin/podman'
+# línea a insertar sería así: 'alumno ALL=(ALL) NOPASSWD: /bin/podman'
 #
 # Guardar con CTRL+X, Y, ENTER.
+
+
+# Debemos asegurar que la distribución contiene el paquete 'uidmap'. Este paquete es necesario para
+# poder trabajar con podman en modo 'rootless' cuando está instalado Minikube.
+
+sudo apt-get -y install uidmap
+
+
+
+#################################
+# Ejercicio 5: Iniciar Minikube #
+#################################~
+
+# Para iniciar Minikube no es necesario indicar el runtime de contenedor que queremos usar. Esto solo
+# sería necesario si usamos uno diferente a Docker, que es precísamente nuestro caso. Así que para iniciar
+# Minikube con el driver (runtime) podman, debemos ejecutar el siguiente comando.
+#
+# Pasado un rato, se iniciará Kubernetes. 
+
+minikube start --driver=podman 
+
+
+# Todos los servicios del Control Plane, Kubelet y k-proxy se ejecutan en un único contenedor 
+# (en este caso de podman). Podemos ver el contenedor, que se llama 'minikube' con el siguiente comando.
+
+sudo podman container ls
+
+
+# Una vez finalizado el arranque de Minikube, probamos que kubectl puede comunicarse con el Control Plane.
+# Aparecerá información sobre el único nodo de nuestro cluster de Kubernetes.
+
+kubectl get nodes
+
+
+# Minikube realmente no se instala en el equipo, simplemente se inicia.
+# Cuando finalicemos nuestra sesión de trabajo debemos detener el contenedor que nos ofrece los servicios
+# del cluster. Esto lo hacemos para liberar recursos de hardware de nuestro equipo.
+
+minikube stop
+
+
+# Realmente, lo que hemos hecho es detener el contenedor de podman que ofrece los servicios del cluster.
+# un posterior 'minikube start' volverá a iniciar el contenedor y, con él, los servicios de cluster.
+#
+# Si en algún momento se produjera un error al iniciar el contenedor de podman con los servicios del cluster,
+# debemos eliminarlo, con el comando 'minikube delete' y proceder a un nuevo start, que volverá a descargar 
+# la imagen de contenedor desde el repositorio.
+
 
 
 
