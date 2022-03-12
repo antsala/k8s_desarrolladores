@@ -209,14 +209,20 @@ sudo podman container ls
 
 kubectl get nodes
 
+# El comando 'minikube status' mostrará información de estado de ejecución de Minikube. Ejecutar el
+# siguiente comando y observar el resultado.
+
+minikube status
+
+
 # Aunque 'kubectl' será la principal herramienta para administrar el cluster, también podemos levantar una
 # interfaz gráfica. Para ello ejecutamos el siguiente comando. Nota: Se abrirá automáticamente el navegador y 
 # conectará con la URL: 'http://127.0.0.1:40743/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/'
 
 minikube dashboard
 
-# La consola ejecuta el dashboard. Para finalizar dicha ejecución pulsamos CTRL+C.
 
+# La consola ejecuta el dashboard. Para finalizar dicha ejecución pulsamos CTRL+C.
 
 # Minikube realmente no se instala en el equipo, simplemente se inicia.
 # Cuando finalicemos nuestra sesión de trabajo debemos detener el contenedor que nos ofrece los servicios
@@ -231,6 +237,15 @@ minikube stop
 # Si en algún momento se produjera un error al iniciar el contenedor de podman con los servicios del cluster,
 # debemos eliminarlo, con el comando 'minikube delete' y proceder a un nuevo start, que volverá a descargar 
 # la imagen de contenedor desde el repositorio.
+#
+# Si aun así, Minikube no se inicia, podemos arrancarlo en modo de depuración (DEBUG). Para ello debemos
+# eliminar primero el contenedor y volver a iniciarlo en modo de depuración con los siguientes comandos.
+
+minikube delete
+
+minikube start --driver=podman --v==7 --alsologtostderr
+
+
 
 
 
