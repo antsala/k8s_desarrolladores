@@ -76,8 +76,7 @@ kubectl get deployments
 #
 # NAME               READY   UP-TO-DATE   AVAILABLE   AGE
 # nginx-deployment   1/1     1            1           111s
-#
-#
+
 # El significado de las columnas es el siguiente:
 #
 # NAME:         Muestra el nombre del deployment, en este caso 'nginx-deployment'
@@ -88,7 +87,7 @@ kubectl get deployments
 # UP-TO-DATE:   Cuando se actualice el deployment, pod ejemplo si cambiamos la imagen de los contenedores de sus pods,
 #               Esta columna indicará cuantos pods están actualizados.
 #
-# AVAILABLE:    Indica el número de pods que han pasado las pruebas 'readiness'. Esto se verá más adelante en el curso,
+# AVAILABLE:    Indica el número de pods están pasando las pruebas 'readiness'. Esto se verá más adelante en el curso,
 #               pero si quieres verlo por adelantado, consulta esto: 
 #               'https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/'
 #
@@ -105,8 +104,7 @@ kubectl get pods
 #
 # NAME                                READY   STATUS    RESTARTS   AGE
 # nginx-deployment-7fd6754bf7-29ft2   1/1     Running   0          13m
-#
-#
+
 # El significado y el valor de cada columna es el siguiente:
 #
 # NAME:         Nombre del pod. En este ejemplo 'nginx-deployment-7fd6754bf7-29ft2'. El nombre del pod es una 
@@ -133,6 +131,160 @@ kubectl get pods
 #               en consecuencia, el orquestador está reiniciando el Pod.
 #
 # AGE:          Indica el tiempo transcurrido desde que se creo el Pod.
+
+
+# Como venimos indicando, al crear un Deployment, se crea de forma automática otro objeto, de tipo ReplicaSet. Para
+# ver los ReplicaSets del cluster, ejecutamos el siguiente comando:
+
+kubectl get replicasets
+
+
+# La salida del comando anterior será más o menos así:
+#
+# NAME                          DESIRED   CURRENT   READY   AGE
+# nginx-deployment-7fd6754bf7   1         1         1       28m
+
+# Y el significado de las columnas, el siguiente:
+#
+# NAME:         Es el nombre del ReplicaSet, en este ejemplo: 'nginx-deployment-7fd6754bf7'. Este nombre está formado
+#               por la concatenación del nombre del Deployment 'nginx-deployment' que creó este ReplicaSet, y un
+#               identificador único del ReplicaSet: '7fd6754bf7'. Este id único también aparece en los nombres de los
+#               Pods que administra el ReplicaSet.
+#
+# DESIRED:      Como decíamos, la finalidad del ReplicaSet es asegurar que el número de Pods declarado en el Deployment
+#               coincide con el número de los que están instanciados en el cluster. Por lo tanto, esta columna muestra
+#               el número de Pods que "deseamos" tener corriendo.
+#
+# CURRENT:      Indica cuántos Pods ha podido poner en funcionamiento el ReplicaSet. Lo habitual es que el estado deseado,
+#               en cuanto a número de Pods, coincida con el estado actual del Cluster. Esto no será así en el caso
+#               de que el cluster se quede sin recursos y no pueda levantar nuevos Pods.
+#
+# READY:        Indica cuántos Pods se ha iniciado.
+#
+# AGE:          La antiguedad del ReplicaSet.
+#
+# No debemos tocar el objeto ReplicaSet. Cuando creamos un Deployment, éste creará el ReplicaSet. Así mismo, cuando eliminemos
+# el Deployment, se eliminará sus ReplicaSets y Pods automáticamente.
+
+
+# En Kubernetes, es el objeto Deployment quien gestiona los Pods (nosotros no debemos modificar los Pods). Por ejemplo, si 
+# deseamos cambiar la versión de la imagen que ejecutan los contenedores de los Pods, debemos hacerlo desde el Deployment,
+# y no editandos los Pods que se han creado en el cluster.
+#
+# En consecuencia, para modificar el Deployment, ejecutamos el siguiente comando:
+
+kubectl edit deployment nginx-deployment
+
+# Se abre el editor con la configuración del Deployment que hemos creado. La sintaxis y las propiedades que aparecen en
+# este archivo serán tratadas posteriormente en este curso. Por ahora localicemos las única configuración que hemos aportado
+# a la hora de crear el Deployment: La imagen de contenedor que ser usará.
+#
+# El editor usado es 'vim', que habrá que saber usar.
+#
+# Localizar 'spec/template/spec/containers/image'. Debe aparecer el valor 'nginx:latest'.
+#
+# Vamos a cambiar la versión de nginx a la 1.16, así que procedemos a cambiar 'latest' por '1.16'.
+#
+#
+# Deberá quedar así (Ojo, no poner los '#')
+#     spec:
+#       containers:
+#       - image: nginx:1.16
+#
+#
+# Guardamos los cambios.
+#
+#
+# Comprobamos los pods.
+
+kubectl get pods
+
+
+# La salida del comando anterior será similar a esta:
+#
+# NAME                                READY   STATUS    RESTARTS   AGE
+# nginx-deployment-6bbc464978-tsrb5   1/1     Running   0          116s
+
+# Se ha creado un nuevo Pod (con la versión 1.16 de nginx en su contenedor) y está en ejecución.#
+#
+# Lo importante es darse cuenta que el ReplicaSet ha cambiado. Lo podemos ver en el nombre del Pod,
+# 'nginx-deployment-6bbc464978-tsrb5'. El id del ReplicaSet es ahora '6bbc464978', que es diferente 
+# al que tenía el Pod anterior ('7fd6754bf7').
+#
+# Este comportamiento ES NORMAL en Kubernetes. Si se modifica el cambio el en Deployment va más allá de
+# cambiar el número de réplicas, por ejemplo, cambiando la imagen de los contenedores, K8s creará un nuevo
+# ReplicaSet asociado a ese Deployment. Lo podemos ver así:
+
+kubectl get replicasets
+
+# NAME                          DESIRED   CURRENT   READY   AGE
+# nginx-deployment-6bbc464978   1         1         1       7m26s
+# nginx-deployment-7fd6754bf7   0         0         0       68m
+
+# Los ReplicaSets tienen en la parte izquierda de su nombre el nombre del Deployment que lo ha creado. Observar
+# cómo el número de Pods del nuevo ReplicaSet es el deseado a la vez que el del antiguo se ha puesto a cero. En
+# consecuencia, ahora existe un Pod con la versión '1.16' de nginx y se ha eliminado el Pod con la version 'latest'.
+#
+# Kubernetes no borra los ReplicaSets. La razón es que siguen ahí por si queremos volver a la versión anterior. Esto
+# se conoce como 'Rollout undo'.
+#
+# Este comando lista el historial del Deployment (sus ReplicaSets):
+
+kubectl rollout history deployment nginx-deployment
+
+
+# La salida del comando muestra que hay dos revisiones.
+#
+# REVISION  CHANGE-CAUSE
+# 1         <none>
+# 2         <none>
+#
+
+
+# La actual es la '2'. Si queremos volver a la anterior, la '1', hacemos:
+
+kubectl rollout undo deployment nginx-deployment --to-revision=1
+
+
+# Si mostramos los ReplicaSets, podemos comprobar que se ha recuperado el Pod anterior y eliminado el actual.
+# Ahora se está ejecutando 'nginx:latest'
+
+kubectl get replicasets
+
+
+# La salida del comando es:
+#
+# NAME                          DESIRED   CURRENT   READY   AGE
+# nginx-deployment-6bbc464978   0         0         0       16m
+# nginx-deployment-7fd6754bf7   1         1         1       77m
+
+# El id del ReplicaSet activo vuelve a ser '7fd6754bf7', y si listamos los Pods:
+
+kubectl get pods
+
+
+# La salida del comando indica que se ha reutilizado el ReplicaSet original y el nuevo Pod es gestionado por éste.
+#
+# NAME                                READY   STATUS    RESTARTS   AGE
+# nginx-deployment-7fd6754bf7-8xhc9   1/1     Running   0          2m52s
+
+# Se puede comprobar la reversión del despliegue, editando su configuración y comprobando que la versión de 
+# nginx vuelve a ser 'latest'.
+
+kubectl edit deployment nginx-deployment
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
