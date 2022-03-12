@@ -68,6 +68,76 @@ kubectl create --help
 kubectl create deployment nginx-deployment --image=nginx:latest
 
 
+# Para ver los deployments, ejecutamos el siguiente comando.
+
+kubectl get deployments
+
+# La salida del comando debe ser similar a esta:
+#
+# NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+# nginx-deployment   1/1     1            1           111s
+#
+#
+# El significado de las columnas es el siguiente:
+#
+# NAME:         Muestra el nombre del deployment, en este caso 'nginx-deployment'
+#
+# READY:        Indica cuántos pods (del total) están ejecutándose. En ese caso, el deployment solo tiene un
+#               pod, y éste se está ejecutando. 
+#
+# UP-TO-DATE:   Cuando se actualice el deployment, pod ejemplo si cambiamos la imagen de los contenedores de sus pods,
+#               Esta columna indicará cuantos pods están actualizados.
+#
+# AVAILABLE:    Indica el número de pods que han pasado las pruebas 'readiness'. Esto se verá más adelante en el curso,
+#               pero si quieres verlo por adelantado, consulta esto: 
+#               'https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/'
+#
+# AGE:          Tiempo desde que se creó el deployment.
+#
+
+
+# Los deployments crean los pods. Para ver los pods ejecutamos el siguiente comando.
+
+kubectl get pods
+
+
+# La salida del comando anterior debe ser similar a esta:
+#
+# NAME                                READY   STATUS    RESTARTS   AGE
+# nginx-deployment-7fd6754bf7-29ft2   1/1     Running   0          13m
+#
+#
+# El significado y el valor de cada columna es el siguiente:
+#
+# NAME:         Nombre del pod. En este ejemplo 'nginx-deployment-7fd6754bf7-29ft2'. El nombre del pod es una 
+#               concatenación del nombre del deployment, el nombre del objeto ReplicaSet y un identificador
+#               para el pod. Es decir:
+#
+#               'nginx-deployment' es el nombre del deployment que creó el pod.
+#
+#               '7fd6754bf7' hace referencia a un objeto 'ReplicaSet', asociado al Deployment. El objeto
+#               ReplicaSet es quien está controlando, en todo momento, que el número de pods que forma el 
+#               deployment sea el deseado. Si algún pod cae, el ReplicaSet creará otro nuevo. 
+#
+#               En este ejemplo, hemos creado un deployment sin indicar cuántos pods queremos (réplicas), así
+#               que solo se instancia un único pod.
+#
+#               '29ft2' Es el identificador del pod dentro del ReplicaSet. Cada pod en el ReplicaSet, tendrá un
+#               valor único en este campo.
+#
+# READY:        Indican cúantos CONTENEDORES están corriendo en el Pod.
+#
+# STATUS:       Indica el estado de ejecución del Pod. Si al menos un Contenedor se inicia, pondrá "Running".
+#
+# RESTARTS:     Indica cuántos reinicios se han producido en el Pod. Si es >0, suele indicar que algo no va bien y, 
+#               en consecuencia, el orquestador está reiniciando el Pod.
+#
+# AGE:          Indica el tiempo transcurrido desde que se creo el Pod.
+
+
+
+
+
 
 
 
