@@ -248,7 +248,9 @@ minikube start --driver=podman --v=7 --alsologtostderr
 
 
 
-
+#######################
+# FIN DEL LABORATORIO #
+#######################
 
 
 

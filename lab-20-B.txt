@@ -504,6 +504,20 @@ kubectl get pods
 kubectl get replicasets
 
 
+# Otra enorme ventaja de usar archivos YAML es que no solo sirve para crear/modificar objetos.
+# También podemos eliminarlos muy facilmente con la opción 'delete':
+
+kubectl delete -f lab-20-B-nginx-deployment.yaml
+
+
+# Comprobamos que se ha borrado todo (Excepto el servicio 'Kubernetes')
+
+kubectl get all
+
+
+#######################
+# FIN DEL LABORATORIO #
+#######################
 
 
 
