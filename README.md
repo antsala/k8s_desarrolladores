@@ -21,6 +21,12 @@ cd ~/k8s_desarrolladores
 ls -l
 
 
+# Instalar Visual Studio Code
+
+sudo snap install code --classic
+
+
+
 # Laboratorio 20-A: "Instalación de Minikube"
 # Archivo: lab-20-A.txt
 #
