@@ -177,6 +177,18 @@ sudo apt-get -y install uidmap
 # Ejercicio 5: Iniciar Minikube #
 #################################~
 
+# Si ejecutamos el comando 'minikube', se mostrará la ayuda. 
+
+minikube
+
+# Observar los comandos básicos:
+#
+# start          Inicia un cluster local de Kubernetes.
+# status         Muestra el estado del cluster.
+# stop           Detiene la ejecución del cluster de Kubernetes.
+# delete         Elimina el cluster.
+# dashboard      Levanta la interfaz gráfica de administración.
+
 # Para iniciar Minikube no es necesario indicar el runtime de contenedor que queremos usar. Esto solo
 # sería necesario si usamos uno diferente a Docker, que es precísamente nuestro caso. Así que para iniciar
 # Minikube con el driver (runtime) podman, debemos ejecutar el siguiente comando.
@@ -196,6 +208,14 @@ sudo podman container ls
 # Aparecerá información sobre el único nodo de nuestro cluster de Kubernetes.
 
 kubectl get nodes
+
+# Aunque 'kubectl' será la principal herramienta para administrar el cluster, también podemos levantar una
+# interfaz gráfica. Para ello ejecutamos el siguiente comando. Nota: Se abrirá automáticamente el navegador y 
+# conectará con la URL: 'http://127.0.0.1:40743/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/'
+
+minikube dashboard
+
+# La consola ejecuta el dashboard. Para finalizar dicha ejecución pulsamos CTRL+C.
 
 
 # Minikube realmente no se instala en el equipo, simplemente se inicia.
