@@ -326,7 +326,49 @@ kubectl describe pod $mi_pod
 
 kubectl logs $mi_pod
 
-Voy pod video 9:31 (kubectl exec)
+
+# En algunas ocasiones necesitaremos ejecutar comandos en el contenedor del pod o, incluso abrir una
+# shell en él. El siguiente comando hace precisamente eso. Los parámetros '-it' permiten enviar al
+# contenedor MongoDB nuestra entrada estándar al mismo tiempo que vemos la salida estándar del contenedor. 
+#
+# '--' es simplemente un separador. Depués de él, ponemos el comando que queremos ejecutar, p.e. '/bin/bash'
+
+kubectl exec -it $mi_pod -- /bin/bash
+
+
+# Como resultado del comando anterior, estaremos dentro de una shell en el contenedor. Probar a ejecutar cualquier 
+# comando. Para salir del contenedor, escribimos 'exit' y pulsamos 'Enter'
+
+
+# Procedemos a borrar los dos deployments que tenemos corriendo. Al hacerlo se borrarán los ReplicaSets asociados
+# así como los pods (y sus contenedores)
+
+
+kubectl get deployments
+
+kubectl delete deployment mongo-deployment
+
+kubectl delete deployment nginx-deployment
+
+
+# Podemos verificar que no hay objetos en el cluster (excepto el servicio Kubernetes) con el siguiente comando.
+
+kubectl get all
+
+
+# Como hemos aprendido, se puede usar 'kubectl' para crear objetos en el cluster de Kubernetes, pero es necesario
+# escribir todos los parámetros y opciones en la línea de comandos. Esto resulta poco práctico.
+#
+# En realidad lo que se debe hacer es describir los objetos por medio de archivos de manifiesto, en formato YAML.
+# Posteriormente usaremos el comando 'kubectl apply -f archivo.yaml' para crear o actualizar dichos objetos en el
+# cluster.
+
+
+
+
+
+
+
 
 
 
