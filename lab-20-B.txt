@@ -10,7 +10,13 @@
 #
 #   Es decir, haber realizado el laboratorio anterior (lab-20-A)
 
-# Iniciamos el Minikube.
+
+
+#######################################################
+# Ejercicio 1: Primera toma de contacto con 'kubectl' #
+#######################################################
+
+# Iniciamos Minikube.
 
 minikube start --driver=podman
 
@@ -58,6 +64,11 @@ kubectl create --help
 # secret              Crea un secreto en el cluster.
 # service             Crea un servicio.
 # serviceaccount      Crea una cuenta de servicio.
+
+##################################################
+# Ejercicio 2: Crear un deployment con 'kubectl' #
+##################################################
+
 
 
 # El pod es la unidad más pequeña de computación en Kubernetes, pero en la práctica los pods se crearán al 
@@ -133,6 +144,12 @@ kubectl get pods
 # AGE:          Indica el tiempo transcurrido desde que se creo el pod.
 
 
+
+################################
+# Ejercicio 3: El 'ReplicaSet' #
+################################
+
+
 # Como venimos indicando, al crear un deployment, se crea de forma automática otro objeto, de tipo ReplicaSet. Para
 # ver los ReplicaSets del cluster, ejecutamos el siguiente comando:
 
@@ -166,6 +183,11 @@ kubectl get replicasets
 # No debemos tocar el objeto ReplicaSet. Cuando creamos un deployment, éste creará el ReplicaSet. Así mismo, cuando eliminemos
 # el deployment, se eliminará sus ReplicaSets y pods automáticamente.
 
+
+
+###################################################
+# Ejercicio 4: Editar un deployment con 'kubectl' #
+###################################################
 
 # En Kubernetes, es el objeto deployment quien gestiona los pods (nosotros no debemos modificar los pods). Por ejemplo, si 
 # deseamos cambiar la versión de la imagen que ejecutan los contenedores de los pods, debemos hacerlo desde el deployment,
@@ -224,7 +246,12 @@ kubectl get replicasets
 # Los ReplicaSets tienen en la parte izquierda de su nombre el nombre del deployment que lo ha creado. Observar
 # cómo el número de pods del nuevo ReplicaSet es el deseado a la vez que el del antiguo se ha puesto a cero. En
 # consecuencia, ahora existe un pod con la versión '1.16' de nginx y se ha eliminado el pod con la version 'latest'.
-#
+
+
+############################################################
+# Ejercicio 5: 'Rollout undo' del deployment con 'kubectl' #
+############################################################
+
 # Kubernetes no borra los ReplicaSets. La razón es que siguen ahí por si queremos volver a la versión anterior. Esto
 # se conoce como 'Rollout undo'.
 #
@@ -274,6 +301,10 @@ kubectl get pods
 kubectl edit deployment nginx-deployment
 
 
+##################################################
+# Ejercicio 6: Describir un objeto con 'kubectl' #
+##################################################
+
 # Procedemos a crear otro ejemplo. En este caso un deployment de 'MongoDB'.
 
 kubectl create deployment mongo-deployment --image=mongo
@@ -321,11 +352,20 @@ kubectl describe pod $mi_pod
 #  Normal  Started    12m   kubelet            Started container mongo
 
 
+####################################################################
+# Ejercicio 7: Ver la salida estándar del contenedor con 'kubectl' #
+####################################################################
+
 # Otra opción que nos interesa conocer es 'logs', que muestra la salida estándar de los contenedores que se están
 # ejecutando dentro del pod. Por ejemplo, el siguiente comando mostrará la salida del contenedor 'MongoDB'
 
 kubectl logs $mi_pod
 
+
+
+#################################################################
+# Ejercicio 8: Ejecutar comandos en el contenedor con 'kubectl' #
+#################################################################
 
 # En algunas ocasiones necesitaremos ejecutar comandos en el contenedor del pod o, incluso abrir una
 # shell en él. El siguiente comando hace precisamente eso. Los parámetros '-it' permiten enviar al
@@ -335,6 +375,11 @@ kubectl logs $mi_pod
 
 kubectl exec -it $mi_pod -- /bin/bash
 
+
+
+###########################################################
+# Ejercicio 9: Eliminar objetos del cluster con 'kubectl' #
+###########################################################
 
 # Como resultado del comando anterior, estaremos dentro de una shell en el contenedor. Probar a ejecutar cualquier 
 # comando. Para salir del contenedor, escribimos 'exit' y pulsamos 'Enter'
@@ -356,12 +401,26 @@ kubectl delete deployment nginx-deployment
 kubectl get all
 
 
+
+########################################################
+# Ejercicio 10:  Aplicar un archivo YAML con 'kubectl' #
+########################################################
+
+
 # Como hemos aprendido, se puede usar 'kubectl' para crear objetos en el cluster de Kubernetes, pero es necesario
 # escribir todos los parámetros y opciones en la línea de comandos. Esto resulta poco práctico.
 #
 # En realidad lo que se debe hacer es describir los objetos por medio de archivos de manifiesto, en formato YAML.
 # Posteriormente usaremos el comando 'kubectl apply -f archivo.yaml' para crear o actualizar dichos objetos en el
 # cluster.
+
+
+# En la carpeta de los laboratorios del curso tenemos el archivo 'lab-20-B-nginx-deployment.yaml', que contiene
+# la estructura básica de un deployment. Procedemos a abrir el archivo con el editor 'nano' (u otro a elección)
+
+nano lab-20-B-nginx-deployment.yaml
+
+
 
 
 

@@ -21,18 +21,28 @@ cd ~/k8s_desarrolladores
 ls -l
 
 
-
-
-
-
-
-
 # Laboratorio 20-A: "Instalación de Minikube"
 # Archivo: lab-20-A.txt
 #
 # Ejercicios:
 #    1. Instalación de 'Podman'.
 #    2. Instalación de 'Minikube'.
-#    3. Instalación de 'kubectl'
-#    4. Modificar 'sudoers' e instalar 'uidmap'
-#    5. Iniciar Minikube
+#    3. Instalación de 'kubectl',
+#    4. Modificar 'sudoers' e instalar 'uidmap',
+#    5. Iniciar Minikube,
+
+
+# Laboratorio 20-B: "Comandos básicos de kubectl"
+# Archivo: lab-20-B.txt
+#
+# Ejercicios:
+#    1. Primera toma de contacto con 'kubectl',
+#    2. Crear un deployment con 'kubectl'.
+#    3. El 'ReplicaSet'.
+#    4. Editar un deployment con 'kubectl'.
+#    5. 'Rollout undo' del deployment con 'kubectl'.
+#    6. Describir un objeto con 'kubectl'.
+#    7. Ver la salida estándar del contenedor con 'kubectl'.
+#    8. Ejecutar comandos en el contenedor con 'kubectl'.
+#    9. Eliminar objetos del cluster con 'kubectl'.
+#    10. Aplicar un archivo YAML con 'kubectl'.
