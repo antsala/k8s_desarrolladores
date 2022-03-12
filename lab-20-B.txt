@@ -113,7 +113,7 @@ kubectl get pods
 #
 #               'nginx-deployment' es el nombre del deployment que creó el pod.
 #
-#               '7fd6754bf7' hace referencia a un objeto 'ReplicaSet', asociado al Deployment. El objeto
+#               '7fd6754bf7' hace referencia a un objeto 'ReplicaSet', asociado al deployment. El objeto
 #               ReplicaSet es quien está controlando, en todo momento, que el número de pods que forma el 
 #               deployment sea el deseado. Si algún pod cae, el ReplicaSet creará otro nuevo. 
 #
@@ -123,17 +123,17 @@ kubectl get pods
 #               '29ft2' Es el identificador del pod dentro del ReplicaSet. Cada pod en el ReplicaSet, tendrá un
 #               valor único en este campo.
 #
-# READY:        Indican cúantos CONTENEDORES están corriendo en el Pod.
+# READY:        Indican cúantos CONTENEDORES están corriendo en el pod.
 #
-# STATUS:       Indica el estado de ejecución del Pod. Si al menos un Contenedor se inicia, pondrá "Running".
+# STATUS:       Indica el estado de ejecución del pod. Si al menos un Contenedor se inicia, pondrá "Running".
 #
-# RESTARTS:     Indica cuántos reinicios se han producido en el Pod. Si es >0, suele indicar que algo no va bien y, 
-#               en consecuencia, el orquestador está reiniciando el Pod.
+# RESTARTS:     Indica cuántos reinicios se han producido en el pod. Si es >0, suele indicar que algo no va bien y, 
+#               en consecuencia, el orquestador está reiniciando el pod.
 #
-# AGE:          Indica el tiempo transcurrido desde que se creo el Pod.
+# AGE:          Indica el tiempo transcurrido desde que se creo el pod.
 
 
-# Como venimos indicando, al crear un Deployment, se crea de forma automática otro objeto, de tipo ReplicaSet. Para
+# Como venimos indicando, al crear un deployment, se crea de forma automática otro objeto, de tipo ReplicaSet. Para
 # ver los ReplicaSets del cluster, ejecutamos el siguiente comando:
 
 kubectl get replicasets
@@ -147,37 +147,37 @@ kubectl get replicasets
 # Y el significado de las columnas, el siguiente:
 #
 # NAME:         Es el nombre del ReplicaSet, en este ejemplo: 'nginx-deployment-7fd6754bf7'. Este nombre está formado
-#               por la concatenación del nombre del Deployment 'nginx-deployment' que creó este ReplicaSet, y un
+#               por la concatenación del nombre del deployment 'nginx-deployment' que creó este ReplicaSet, y un
 #               identificador único del ReplicaSet: '7fd6754bf7'. Este id único también aparece en los nombres de los
-#               Pods que administra el ReplicaSet.
+#               pods que administra el ReplicaSet.
 #
-# DESIRED:      Como decíamos, la finalidad del ReplicaSet es asegurar que el número de Pods declarado en el Deployment
+# DESIRED:      Como decíamos, la finalidad del ReplicaSet es asegurar que el número de pods declarado en el deployment
 #               coincide con el número de los que están instanciados en el cluster. Por lo tanto, esta columna muestra
-#               el número de Pods que "deseamos" tener corriendo.
+#               el número de pods que "deseamos" tener corriendo.
 #
-# CURRENT:      Indica cuántos Pods ha podido poner en funcionamiento el ReplicaSet. Lo habitual es que el estado deseado,
-#               en cuanto a número de Pods, coincida con el estado actual del Cluster. Esto no será así en el caso
-#               de que el cluster se quede sin recursos y no pueda levantar nuevos Pods.
+# CURRENT:      Indica cuántos pods ha podido poner en funcionamiento el ReplicaSet. Lo habitual es que el estado deseado,
+#               en cuanto a número de pods, coincida con el estado actual del Cluster. Esto no será así en el caso
+#               de que el cluster se quede sin recursos y no pueda levantar nuevos pods.
 #
-# READY:        Indica cuántos Pods se ha iniciado.
+# READY:        Indica cuántos pods se ha iniciado.
 #
 # AGE:          La antiguedad del ReplicaSet.
 #
-# No debemos tocar el objeto ReplicaSet. Cuando creamos un Deployment, éste creará el ReplicaSet. Así mismo, cuando eliminemos
-# el Deployment, se eliminará sus ReplicaSets y Pods automáticamente.
+# No debemos tocar el objeto ReplicaSet. Cuando creamos un deployment, éste creará el ReplicaSet. Así mismo, cuando eliminemos
+# el deployment, se eliminará sus ReplicaSets y pods automáticamente.
 
 
-# En Kubernetes, es el objeto Deployment quien gestiona los Pods (nosotros no debemos modificar los Pods). Por ejemplo, si 
-# deseamos cambiar la versión de la imagen que ejecutan los contenedores de los Pods, debemos hacerlo desde el Deployment,
-# y no editandos los Pods que se han creado en el cluster.
+# En Kubernetes, es el objeto deployment quien gestiona los pods (nosotros no debemos modificar los pods). Por ejemplo, si 
+# deseamos cambiar la versión de la imagen que ejecutan los contenedores de los pods, debemos hacerlo desde el deployment,
+# y no editandos los pods que se han creado en el cluster.
 #
-# En consecuencia, para modificar el Deployment, ejecutamos el siguiente comando:
+# En consecuencia, para modificar el deployment, ejecutamos el siguiente comando:
 
 kubectl edit deployment nginx-deployment
 
-# Se abre el editor con la configuración del Deployment que hemos creado. La sintaxis y las propiedades que aparecen en
+# Se abre el editor con la configuración del deployment que hemos creado. La sintaxis y las propiedades que aparecen en
 # este archivo serán tratadas posteriormente en este curso. Por ahora localicemos las única configuración que hemos aportado
-# a la hora de crear el Deployment: La imagen de contenedor que ser usará.
+# a la hora de crear el deployment: La imagen de contenedor que ser usará.
 #
 # El editor usado es 'vim', que habrá que saber usar.
 #
@@ -205,15 +205,15 @@ kubectl get pods
 # NAME                                READY   STATUS    RESTARTS   AGE
 # nginx-deployment-6bbc464978-tsrb5   1/1     Running   0          116s
 
-# Se ha creado un nuevo Pod (con la versión 1.16 de nginx en su contenedor) y está en ejecución.#
+# Se ha creado un nuevo pod (con la versión 1.16 de nginx en su contenedor) y está en ejecución.#
 #
-# Lo importante es darse cuenta que el ReplicaSet ha cambiado. Lo podemos ver en el nombre del Pod,
+# Lo importante es darse cuenta que el ReplicaSet ha cambiado. Lo podemos ver en el nombre del pod,
 # 'nginx-deployment-6bbc464978-tsrb5'. El id del ReplicaSet es ahora '6bbc464978', que es diferente 
-# al que tenía el Pod anterior ('7fd6754bf7').
+# al que tenía el pod anterior ('7fd6754bf7').
 #
-# Este comportamiento ES NORMAL en Kubernetes. Si se modifica el cambio el en Deployment va más allá de
+# Este comportamiento ES NORMAL en Kubernetes. Si se modifica el cambio el en deployment va más allá de
 # cambiar el número de réplicas, por ejemplo, cambiando la imagen de los contenedores, K8s creará un nuevo
-# ReplicaSet asociado a ese Deployment. Lo podemos ver así:
+# ReplicaSet asociado a ese deployment. Lo podemos ver así:
 
 kubectl get replicasets
 
@@ -221,14 +221,14 @@ kubectl get replicasets
 # nginx-deployment-6bbc464978   1         1         1       7m26s
 # nginx-deployment-7fd6754bf7   0         0         0       68m
 
-# Los ReplicaSets tienen en la parte izquierda de su nombre el nombre del Deployment que lo ha creado. Observar
-# cómo el número de Pods del nuevo ReplicaSet es el deseado a la vez que el del antiguo se ha puesto a cero. En
-# consecuencia, ahora existe un Pod con la versión '1.16' de nginx y se ha eliminado el Pod con la version 'latest'.
+# Los ReplicaSets tienen en la parte izquierda de su nombre el nombre del deployment que lo ha creado. Observar
+# cómo el número de pods del nuevo ReplicaSet es el deseado a la vez que el del antiguo se ha puesto a cero. En
+# consecuencia, ahora existe un pod con la versión '1.16' de nginx y se ha eliminado el pod con la version 'latest'.
 #
 # Kubernetes no borra los ReplicaSets. La razón es que siguen ahí por si queremos volver a la versión anterior. Esto
 # se conoce como 'Rollout undo'.
 #
-# Este comando lista el historial del Deployment (sus ReplicaSets):
+# Este comando lista el historial del deployment (sus ReplicaSets):
 
 kubectl rollout history deployment nginx-deployment
 
@@ -246,7 +246,7 @@ kubectl rollout history deployment nginx-deployment
 kubectl rollout undo deployment nginx-deployment --to-revision=1
 
 
-# Si mostramos los ReplicaSets, podemos comprobar que se ha recuperado el Pod anterior y eliminado el actual.
+# Si mostramos los ReplicaSets, podemos comprobar que se ha recuperado el pod anterior y eliminado el actual.
 # Ahora se está ejecutando 'nginx:latest'
 
 kubectl get replicasets
@@ -258,12 +258,12 @@ kubectl get replicasets
 # nginx-deployment-6bbc464978   0         0         0       16m
 # nginx-deployment-7fd6754bf7   1         1         1       77m
 
-# El id del ReplicaSet activo vuelve a ser '7fd6754bf7', y si listamos los Pods:
+# El id del ReplicaSet activo vuelve a ser '7fd6754bf7', y si listamos los pods:
 
 kubectl get pods
 
 
-# La salida del comando indica que se ha reutilizado el ReplicaSet original y el nuevo Pod es gestionado por éste.
+# La salida del comando indica que se ha reutilizado el ReplicaSet original y el nuevo pod es gestionado por éste.
 #
 # NAME                                READY   STATUS    RESTARTS   AGE
 # nginx-deployment-7fd6754bf7-8xhc9   1/1     Running   0          2m52s
@@ -274,7 +274,72 @@ kubectl get pods
 kubectl edit deployment nginx-deployment
 
 
-VOY POR 7:44 del video.
+# Procedemos a crear otro ejemplo. En este caso un deployment de 'MongoDB'.
+
+kubectl create deployment mongo-deployment --image=mongo
+
+
+# La salida será similar a la siguiente, en la que podemos ver el deployment 'mongo-deployment'
+#
+# NAME                                READY   STATUS    RESTARTS   AGE
+# mongo-deployment-7994f64674-6pnrq   1/1     Running   0          20s
+# nginx-deployment-7fd6754bf7-8xhc9   1/1     Running   0          4h14m
+
+
+# Listamos los pods del deployment. Si queremos filtrar por los pods de un deploymento en concreto
+# usamos el parámetro '-l app=mongo-deployment'
+
+kubectl get pods -l app=mongo-deployment
+
+
+# La salida del comando será similar a la siguiente, mostrando información del único pod del 
+# despliegue.
+#
+# NAME                                READY   STATUS    RESTARTS   AGE
+# mongo-deployment-7994f64674-6pnrq   1/1     Running   0          7m40s
+
+
+# Es muy importante saber qué esta ocurriendo dentro de un pod, sobre todo cuando hay problemas Y
+# no se inicia correctamente. La opción 'describe' aplicada a un pod muestra mucha información sobre el
+# pod, incluso el histórico de eventos que se han producido. Ejecutemos el siguiente comando y
+# estudiemos detenidamente su salida. (Nota: cambiar el nombre del pod por el correcto)
+
+mi_pod=<poner aquí el nombre del pod>
+
+kubectl describe pod $mi_pod
+
+# La salida (parte final de la misma) será similar a la siguiente. Se pueden comprobar los eventos que
+# se han producido dentro del pod.
+#
+#  Events:
+#  Type    Reason     Age   From               Message
+#  ----    ------     ----  ----               -------
+#  Normal  Scheduled  13m   default-scheduler  Successfully assigned default/mongo-deployment-7994f64674-6pnrq to minikube
+#  Normal  Pulling    13m   kubelet            Pulling image "mongo"
+#  Normal  Pulled     12m   kubelet            Successfully pulled image "mongo" in 15.375152034s
+#  Normal  Created    12m   kubelet            Created container mongo
+#  Normal  Started    12m   kubelet            Started container mongo
+
+
+# Otra opción que nos interesa conocer es 'logs', que muestra la salida estándar de los contenedores que se están
+# ejecutando dentro del pod. Por ejemplo, el siguiente comando mostrará la salida del contenedor 'MongoDB'
+
+kubectl logs $mi_pod
+
+Voy pod video 9:31 (kubectl exec)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
