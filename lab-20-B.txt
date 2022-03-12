@@ -274,6 +274,8 @@ kubectl get pods
 kubectl edit deployment nginx-deployment
 
 
+VOY POR 7:44 del video.
+
 
 
 
