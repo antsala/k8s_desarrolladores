@@ -10,3 +10,67 @@
 #
 #   Es decir, haber realizado el laboratorio anterior (lab-20-A)
 
+# Iniciamos el Minikube.
+
+minikube start --driver=podman
+
+
+# En primer lugar verificamos que tenemos un solo nodo en el cluster.
+# El único nodo deberá esta ejecutando el 'Control Plane'.
+
+kubectl get nodes
+
+
+# Consultamos los pods que está ejecutando el cluster. No deben haber ninguno.
+
+kubectl get pods
+
+
+# Comprobamos los servicios que están corriendo en el cluster.
+# De haber uno, llamado 'Kubernetes', que es precisamente el endpoint al que se conecta 
+# la herramienta 'kubectl'. En consecuencia, nunca debemos eliminar este servicio.
+
+kubectl get services
+
+
+# Vamos a proceder a crear objetos en Kubernetes. Para ello hacemos uso del comando 'kubectl create'.
+# La ayuda muestra todos los tipos (kind) de objetos que se pueden crear.
+
+kubectl create --help
+
+
+# Estos son los objetos que iremos creando a lo largo del curso, ya sea con 'kubectl create' o, más
+# habitualmente, en archivos de manifiesto o declarativos con sintaxis YAML.
+
+# clusterrole         Crea un rol en el cluster.
+# clusterrolebinding  Asocia un rol de cluster a un objeto/usuario del cluster
+# configmap           Crea un config map desde un archivo, directorio o valor literal.
+# cronjob             Programa la ejecucion de un pod.
+# deployment          Crea deployments.
+# ingress             Crea un controlador ingress para asociar URIs con los servicios.
+# job                 Crea un job.
+# namespace           Crea un espacio de nombres para conseguir aislar objetos entre aplicaciones.
+# poddisruptionbudget Determina el número mínimos de pods en ejecución durante las operaciones de mantenimiento del cluster.
+# priorityclass       Crea una clase de prioridad, lo que permite desahuciar (evict) pods con prioridad baja si no hay recursos en el cluster.
+# quota               Crea cuotas (cpu, memoria, GPU, storage, ...) para los pods 
+# role                Crea un rol.
+# rolebinding         Asocia el rol.
+# secret              Crea un secreto en el cluster.
+# service             Crea un servicio.
+# serviceaccount      Crea una cuenta de servicio.
+
+
+# El pod es la unidad más pequeña de computación en Kubernetes, pero en la práctica los pods se crearán al 
+# definir otro objeto, el 'deployment', que creará los pods.
+#
+# Para crear un deployment, debemos indicar como mínimo, la imagen que se usará en su contenedor.
+
+kubectl create deployment nginx-deployment --image=nginx:latest
+
+
+
+
+
+
+
+
