@@ -4,7 +4,7 @@
 # Ubuntu 20.04 LTS
 
 # Requisitos:
-#    Una máquina virtual con Ubunto 20.04 LTS a la que poder hacer ssh.
+#    Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
 
 
 ########################################
