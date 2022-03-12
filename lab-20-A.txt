@@ -239,11 +239,12 @@ minikube stop
 # la imagen de contenedor desde el repositorio.
 #
 # Si aun así, Minikube no se inicia, podemos arrancarlo en modo de depuración (DEBUG). Para ello debemos
-# eliminar primero el contenedor y volver a iniciarlo en modo de depuración con los siguientes comandos.
+# eliminar primero el contenedor y volver a iniciarlo en modo de depuración con los siguientes comandos y observar
+# dónde se produce el problema.
 
 minikube delete
 
-minikube start --driver=podman --v==7 --alsologtostderr
+minikube start --driver=podman --v=7 --alsologtostderr
 
 
 
