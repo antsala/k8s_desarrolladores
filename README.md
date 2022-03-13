@@ -35,6 +35,13 @@ sudo snap install code --classic
 #   3. Imágenes con 'Docker'.
 
 
+# Laboratorio 03-b: "Construir imágenes desde Dockerfile"
+# Archivo: lab-03-b.txt
+#
+# Ejercicios:
+#   1. 
+
+
 
 
 # Laboratorio 20-A: "Instalación de Minikube"
