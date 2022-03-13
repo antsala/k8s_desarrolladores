@@ -32,3 +32,252 @@ sudo docker --version
 
 sudo systemctl status docker
 
+
+###################################################
+# Ejercicio 2: Primeros contenedores con 'Docker' #
+###################################################
+
+# Creamos un contenedor y entramos dentro (contenedor interactivo '-i -t')
+
+sudo docker run --name mi_primer_contenedor -i -t ubuntu /bin/bash
+
+
+# Al iniciarse el contenedor, estaremos dentro. Observar el prompt, será parecido a este
+# 'root@141be1940196:/#'. Somos 'root' en una maquina que tiene por nombre '141be1940196', que
+# es un id aleatorio asignado al contenedor.
+#
+# Dentro del contenedor procedemos a realizar cuantas acciones estimemos oportunas. Para salir del
+# contenedor escribimos:
+
+exit
+
+
+# Al salir de un contenedor interactivo, se detiene el programa que estaba ejecutando ('/bin/bash'), 
+# por lo que el contenedor se detiene. Podemos comprobarlo listando los contenedores.
+
+sudo docker container ls -a 
+
+
+# La salida del comando anterior será similar a esto:
+#
+# CONTAINER ID   IMAGE     COMMAND       CREATED         STATUS                    PORTS     NAMES
+# 141be1940196   ubuntu    "/bin/bash"   3 minutes ago   Exited (0) 1 second ago             mi_primer_contenedor 
+#
+# Observar como la columna 'STATUS' indica que el contenedor ha finalizado su ejecución.
+
+
+# Podemos un contenedor detenido con el comando 'start', de esta forma:
+
+sudo docker container start mi_primer_contenedor
+
+
+# y comprobar que está en ejecución listando los contenedores activos:
+
+sudo docker container ls
+
+
+# La salida del comando será así:
+#
+# CONTAINER ID   IMAGE     COMMAND       CREATED         STATUS          PORTS     NAMES
+# 141be1940196   ubuntu    /bin/bash     6 minutes ago   Up 38 seconds             mi_primer_contenedor
+#
+# Comprobar que en la columna 'STATUS'  se indica que el contenedor está corriendo ('UP')
+
+
+# Si necesitamos realizar cambios en un contenedor, podemos "conectarnos" a él con el comando 'attach'
+
+sudo docker container attach mi_primer_contenedor
+
+
+# Volvemos a escribir 'exit' para salir.
+
+exit
+
+
+# Lo que nos lleva a la etapa anterior donde el contenedor se ha detenido. Podemos comprobarlo listando los contenedores y 
+# ver como la columna 'STATUS' indica 'Exited'
+
+sudo docker container ls -a
+
+
+# Para que un contenedor siga en ejecución de forma desatendida (dettached), es necesario indicar el parámetro '-d' y
+# hacer que ejecute un programa que no finalice, como un servidor web, de base de datos, o en este ejemplo, un bucle infinito.
+
+sudo docker run --name mi_daemon -d ubuntu /bin/sh -c "while true; do echo Hello World; sleep 1; done"
+
+
+# Si listamos los contenedores, tendremos uno corriendo ('mi_daemon') y otro detenido ('mi_primer_contenedor')
+
+sudo docker container ls -a 
+
+# La salida del comando mostrará algo similiar a esto:
+#
+# CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS                     PORTS     NAMES
+# 316c46bb5f47   ubuntu    "/bin/sh -c 'while t…"   About a minute ago   Up About a minute                    mi_daemon
+# 141be1940196   ubuntu    "/bin/bash"              15 minutes ago       Exited (0) 6 minutes ago             mi_primer_contenedor
+
+
+# Podemos ver la salida estándar de cualquier contenedor que esté en ejecución con el comando 'logs', por ejemplo:
+
+sudo docker container logs mi_daemon
+
+
+# La salida será similar a esta:
+#
+# Hello World
+# Hello World
+# Hello World
+# Hello World
+# Hello World
+# antonio@ubu:~$ 
+
+
+# Levantemos otro contenedor similar al que está en ejecución, y que llamaremos 'mi_daemon_2' con el siguiente comando:
+
+sudo docker run --name mi_daemon_2 -d ubuntu /bin/sh -c "while true; do echo Hello World; sleep 1; done"
+
+
+# Comprobemos que tenemos dos contenedores corriendo:
+
+sudo docker container ls -a 
+
+
+# La salida será similar a esto:
+#
+# CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                      PORTS     NAMES
+# 209e2796365f   ubuntu    "/bin/sh -c 'while t…"   41 seconds ago   Up 41 seconds                         mi_daemon_2
+# 316c46bb5f47   ubuntu    "/bin/sh -c 'while t…"   5 minutes ago    Up 5 minutes                          mi_daemon
+# 141be1940196   ubuntu    "/bin/bash"              20 minutes ago   Exited (0) 11 minutes ago             mi_primer_contenedor
+
+
+# Un aspecto muy importante a controlar es el consumo de recursos que realizan los contenedores.
+# El comando 'stats' está ahí para eso. Ejecutemos el siguiente comando:
+
+sudo docker container stats mi_daemon mi_daemon_2
+
+
+# La salida muestra el uso de CPU, Memoria, Red, E/S y número de procesos para los contenedores que hemos indicado.
+#
+# CONTAINER ID   NAME          CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       BLOCK I/O    PIDS
+# 316c46bb5f47   mi_daemon     0.12%     684KiB / 3.834GiB   0.02%     3.86kB / 0B   176kB / 0B   2
+# 209e2796365f   mi_daemon_2   0.12%     500KiB / 3.834GiB   0.01%     3.28kB / 0B   0B / 0B      2
+#
+# Salimos con CTRL+c
+
+
+# En otras ocasiones necesitaremos ejecutar un comando en el contenedor, pero no deseamos hacerlo de forma interactiva.
+# Para ello hacemos uso de 'exec', por ejemplo, ver el contenido de un archivo, ejecutamos:
+
+sudo docker container exec mi_daemon cat /etc/lsb-release
+
+
+# Que mostrará la siguiente salida:
+#
+# DISTRIB_ID=Ubuntu
+# DISTRIB_RELEASE=20.04
+# DISTRIB_CODENAME=focal
+# DISTRIB_DESCRIPTION="Ubuntu 20.04.4 LTS"
+
+
+# Para detener un contenedor en ejecución, usamos el comando 'stop'. Por ejemplo:
+
+sudo docker container stop mi_daemon
+
+
+# Comprobamos que 'mi_daemon' se ha detenido.
+
+sudo docker container ls -a 
+
+
+# Lo verificamos en la salida del comando. El códido de salida es '127', que significa que hemos "matado" al contenedor.
+#
+# CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                        PORTS     NAMES
+# 209e2796365f   ubuntu    "/bin/sh -c 'while t…"   10 minutes ago   Up 10 minutes                           mi_daemon_2
+# 316c46bb5f47   ubuntu    "/bin/sh -c 'while t…"   15 minutes ago   Exited (137) 25 seconds ago             mi_daemon
+# 141be1940196   ubuntu    "/bin/bash"              30 minutes ago   Exited (0) 21 minutes ago               mi_primer_contenedor
+
+
+# La inspección de contenedores es una herramienta fundamental, que nos muestra mucha información sobre el estado
+# de ejecución del contenedor. La salida es un objeto JSON con la mencionada información.
+
+sudo docker container inspect mi_daemon_2
+
+# Generalmente estaremos interesado en conocer cierta información del contenedor, como su estado de ejecución o dirección
+# IP. Hacemos uso de las plantilla del lenguaje 'Go' para filtrar la salida del JSON anterior. Por ejemplo, para 
+# mostrar el estado de ejecución de nuestros contnenedores ponemos;
+
+sudo docker container inspect --format='{{.State.Running}}' mi_daemon
+
+sudo docker container inspect --format='{{.State.Running}}' mi_daemon_2
+
+
+# Y para conocer sus direcciones IP los siguiente comandos 
+# (Nota: Observar como los contenedores detenidos no tienen dirección IP)
+
+sudo docker container inspect --format='{{.NetworkSettings.IPAddress}}' mi_daemon
+
+sudo docker container inspect --format='{{.NetworkSettings.IPAddress}}' mi_daemon_2
+
+
+# En cuanto a la eliminación de contenedores, en principio no se pueden eliminar contenedores en ejecución.
+# El siguiente comando dará un error:
+
+sudo docker container rm mi_daemon_2
+
+
+# El mensaje de error es similar a este:
+#
+# Error response from daemon: You cannot remove a running container 209e2796365f182942531bcef47c9ed7c3605d390c8d26bcfa0ab6248a1221a6. 
+# Stop the container before attempting removal or force remove
+#
+# El propio mensaje indica la forma de proceder: O bien, detenemos el contenedor antes de su eliminación, O
+# usamos el modificador '-f' ('--force') para ello. Borremos de nuevo el contenedor.
+
+sudo docker container rm -f mi_daemon_2
+
+
+# Para borrar el resto de contenedores, que están detenidos, procedemos así:
+
+sudo docker container rm mi_daemon
+
+sudo docker container rm mi_primer_contenedor
+
+
+# Listamos los contenedores para verificar que no existe ninguno en este momento.
+
+sudo docker container ls -a 
+
+
+######################################
+# Ejercicio 3: Imágenes con 'Docker' #
+######################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
