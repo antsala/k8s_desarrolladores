@@ -48,6 +48,26 @@ code global.conf
 
 code Dockerfile
 
+# El contenido del archivo es el siguiente:
+#
+# Línea 1:      Usamos una imagen bade de Ubuntu 16.04
+#
+# Línea 2:      Se actualiza el repositorio de paquetes y se instala nginx.
+#
+# Línea 3:      Creamos la carpeta de la aplicación en la ruta '/var/www/html/website'.
+#               Será dentro de esa carpeta 'website' donde coloquemos el archivo de la
+#               aplicación 'index.html' a través de un volumen.
+# 
+# Líneas 4 y 5: Se copian los archivos de configuración 'global.conf' y 'nginx.conf' desde
+#               el directorio de trabajo al sistema de archivos de la imagen de contenedor.
+#               Cuando se inicie nginx, leerá estos archivos.
+#
+# Línea 6:      Se abre el puerto 80 en el contenedor.
+
+# Cerramos el arhivo sin modificarlo y procedemos a compilar la imagen con el siguiente comando:
+
+sudo docker image build -t antsala/nginx .
+
 
 
 
