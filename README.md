@@ -50,7 +50,8 @@ sudo snap install code --classic
 # Archivo: lab-03-C.txt
 #
 # Ejercicios:
-#   1.
+#   1. Publicar aplicación en el contenedor.
+
 
 
 
