@@ -36,14 +36,21 @@ sudo snap install code --classic
 #   3. Imágenes con 'Docker'.
 
 
-# Laboratorio 03-b: "Construir imágenes desde Dockerfile"
-# Archivo: lab-03-b.txt
+# Laboratorio 03-B: "Construir imágenes desde Dockerfile"
+# Archivo: lab-03-B.txt
 #
 # Ejercicios:
 #   1. Creación de imagen desde Dockerfile.
 #   2. Publicación de puertos en el host.
 #   3. 'ENTRYPOINT' en 'Dockerfile'.
 #   4. 'ENTRYPOINT' y 'CMD' en 'Dockerfile'.
+
+
+# Laboratorio 03-C: "Volúmenes"
+# Archivo: lab-03-C.txt
+#
+# Ejercicios:
+#   1.
 
 
 
