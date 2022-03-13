@@ -8,6 +8,46 @@
 #   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
 #   Tener instalado Docker-ce en dicha máquina virtual.
 
-####################################################
-# Ejercicio 1: Creación de imagen desde Dockerfile #
-####################################################
+#####################################################
+# Ejercicio 1: Publicar aplicación en el contenedor #
+#####################################################
+
+# Vamos a crear una aplicación web elemental en un archivo html. Presentaremos este
+# archivo al contenedor a través de un volumen. Cuando actualicemos la aplicación, el
+# contenedor verá el archivo actualizado.
+#
+# Cambiamos al directorio de trabajo
+
+cd ~/k8s_desarrolladores/03/volumen
+
+# En el directorio existen dos archivos de configuración de nginx:
+# 'nginx.conf' y 'global.conf'.
+#
+# Comprobemos el contenido de cada uno.
+
+code nginx.conf
+
+# Este archivo configura a 'nginx' para que se inicie solo con llamar a su ejecutable,
+# sin necesidad de establecer parámetros ('-g daemon off;').
+#
+# Una vez estudiado, lo cerramos sin modificar.
+
+
+# En siguiente archivo 'global.conf' tiene una configuración importante para entender el 
+# laboratorio. Lo editamos con el siguiente comando:
+
+code global.conf
+
+
+# Línea 5: que tiene este valor: '/var/www/html/website;' indica el directorio donde vamos a
+# a incluir el archivo (index.html) de la aplicación. Esto es importante porque posteriormente
+# usaremos un volumen que va a hacer referencia a esa ruta.
+
+# El archivo 'Dockerfile' instala nginx y copia los archivos de configuración a la imagen de 
+# contenedor. Editamos el archivo.
+
+code Dockerfile
+
+
+
+
