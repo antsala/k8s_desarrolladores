@@ -1,0 +1,13 @@
+# Laboratorio 03-A: "Creación de contenedores con Docker"
+ 
+# Este laboratorio repasaremos los conceptos más importantes de Docker y crearemos
+# una imagen de contenedor para su uso posterior.
+
+# Requisitos:
+#   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+
+
+########################################
+# Ejercicio 1: Instalación de 'Docker' #
+########################################
+
