@@ -419,6 +419,8 @@ kubectl get all
 # la estructura básica de un deployment. Procedemos a abrir el archivo con el editor 'VSC' si se dispone de 
 # interfaz gráfica, sino, otro a elección.
 
+cd ~/k8s_desarrolladores/20
+
 code lab-20-B-nginx-deployment.yaml
 
 # La sintaxis y su interpretación para este archivo YAML es la siguiente:

@@ -25,6 +25,7 @@ ls -l
 
 sudo snap install code --classic
 
+# Carpeta 03
 
 # Laboratorio 03-A: "Creación de contenedores con Docker"
 # Archivo: lab-03-A.txt
@@ -43,7 +44,7 @@ sudo snap install code --classic
 
 
 
-
+# Carpeta 20
 
 # Laboratorio 20-A: "Instalación de Minikube"
 # Archivo: lab-20-A.txt
