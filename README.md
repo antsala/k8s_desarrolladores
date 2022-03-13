@@ -42,6 +42,8 @@ sudo snap install code --classic
 # Ejercicios:
 #   1. Creación de imagen desde Dockerfile.
 #   2. Publicación de puertos en el host.
+#   3. 'ENTRYPOINT' en 'Dockerfile'.
+#   4. 'ENTRYPOINT' y 'CMD' en 'Dockerfile'.
 
 
 

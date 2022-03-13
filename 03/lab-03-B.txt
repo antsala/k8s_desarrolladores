@@ -38,7 +38,7 @@ code Dockerfile
 # Procedemos a crear una imagen basada en este Dockerfile, así que cerramos el editor y, en la
 # consola escribimos el siguiente comando:
 
-sudo docker build -t antsala/web_estatica .
+sudo docker image build -t antsala/web_estatica .
 
 
 # Cuando finalice la compilación de la imagen, listamos imágenes.
@@ -99,11 +99,71 @@ curl localhost:8080
 # Debe funcionar correctamente.
 
 
+#############################################
+# Ejercicio 3: 'ENTRYPOINT' en 'Dockerfile' #
+#############################################
+
 # En el Dockerfile suele ponerse el comando 'ENTRYPOINT' o el comando 'CMD', que sirven para indicar el programa
 # o aplicación que se ejecutará al iniciar el contenedor. De esta forma, no será necesario indicar el ejecutable
 # en la línea del 'docker run'.
 #
 # Procedamos a abrir el archivo 'Dockerfile_entry' en el directorio de trabajo
+
+sudo docker image build -t antsala/web_estatica_entry . -f Dockerfile_entry
+
+
+# Comprobamos las imágenes:
+
+sudo docker image ls
+
+
+# La salida del comando debe ser similar a esta:
+#
+# REPOSITORY                   TAG       IMAGE ID       CREATED          SIZE
+# antsala/web_estatica_entry   latest    c0887b707b1c   58 seconds ago   222MB
+# antsala/web_estatica         latest    b1813072ba8d   23 minutes ago   222MB
+# antsala/apache2              latest    9f6e1d4e26ca   5 hours ago      220MB
+# ubuntu                       latest    2b4cba85892a   9 days ago       72.8MB
+# nginx                        latest    c919045c4c2b   12 days ago      142MB
+# ubuntu                       16.04     b6f507652425   6 months ago     135MB
+
+# Procedemos a crear un nuevo contenedor publicando el puerto 80 del host.
+# Nótese que ya no es necesario indicar el ejecutable en la línea de 'docker run'
+
+sudo docker run -d -p 80:80 --name web_estatica_80_entry antsala/web_estatica_entry
+
+
+# Procedemos a listar los contenedores y probar la conexión con 'curl'
+
+sudo docker container ls
+
+curl localhost:80
+
+
+# Subimos la imagen 'antsala/web_estatica' a DockerHub. 
+# Nos autenticamos en DockerHub.
+
+sudo docker login
+
+
+# Subimos la imagen.
+
+sudo docker image push antsala/web_estatica
+
+sudo docker logout
+
+
+# Eliminamos los contenedores:
+
+sudo docker container rm -f `sudo docker container ls -a -q`
+
+
+#####################################################
+# Ejercicio 4: 'ENTRYPOINT' y 'CMD' en 'Dockerfile' #
+#####################################################
+
+
+
 
 
 
