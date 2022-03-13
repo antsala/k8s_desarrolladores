@@ -50,14 +50,126 @@ code Dockerfile
 #
 # Línea 6:      '/opt/webapp/bin/webapp' es el lanzador de la aplicación.
 
+# Compilamos el Dockerfile
+
+sudo docker image build -t antsala/sinatra .
+
+
+# Comprobamos que se ha creado la imagen.
+
+sudo docker image ls
+
+
+# Debe salir algo parecido a esto:
+#
+# REPOSITORY                       TAG       IMAGE ID       CREATED             SIZE
+# antsala/sinatra                  latest    215d44b4b057   2 seconds ago       392MB
+# antsala/nginx                    latest    47e37f7e59ed   About an hour ago   222MB
+# antsala/web_estatica_entry_cmd   latest    958b8110c445   2 hours ago         222MB
+# antsala/web_estatica_entry       latest    c0887b707b1c   3 hours ago         222MB
+# antsala/web_estatica             latest    b1813072ba8d   3 hours ago         222MB
+# antsala/apache2                  latest    9f6e1d4e26ca   7 hours ago         220MB
+# ubuntu                           latest    2b4cba85892a   10 days ago         72.8MB
+# nginx                            latest    c919045c4c2b   12 days ago         142MB
+# ubuntu                           16.04     b6f507652425   6 months ago        135MB
+
+
 # En la carpeta 'sinatra' existen otras dos carpetas, cada una con un archivo:
 #
-#   'sinatra/bin/webapp' es un archivo que tiene el iniciador de la aplicación.
+#   'sinatra/bin/webapp' es un script que tiene el iniciador de la aplicación.
 #   'sinatra/lib/app.rb' es la aplicación en sí.
 # 
 # Procedemos a estudiar los archivos.
 
-code ./sinatra/bin/webapp
+code ./bin/webapp
+
+
+# El código que puede observarse es el lanzador de la aplicación. Realmente ejecuta el archivo 'app.rb'
+# que está en la carpeta 'lib'. Cerramos sin guardar.
+
+# Vamos a darle permiso de ejecución al script, de lo contrario no funcionaría.
+
+chmod +x ./bin/webapp
+
+
+# Procedemos a consultar 'app.rb'
+
+code ./lib/app.rb
+
+
+# 'app.rb' hace lo siguiente:
+#
+# Líneas 1-3:       Carga las dependencias.
+#
+# Línea 7:          El servidor web se enlaza con todas las IPs. 
+#
+# Líneas 9-11:      Si llega una request de tipo 'GET' a la URI '/', entonces la response que se devuelve
+#                   muestra el mensaje 'Aplicación de prueba Sinatra'
+#
+# Líneas 13-15:     Si llega una request de tipo 'POST' a la URI '/json/', entonces la response devuelve los
+#                   parámetros que se han recibido por la request, convertidos a JSON.
+
+# Por el momento este Frontend no hace otra cosa. Procedemos a crear un contenedor para probarlo.
+
+sudo docker run -d -p 4567 --name webapp -v $PWD:/opt/webapp antsala/sinatra
+
+# Verificamos que el contenedor se ha iniciado.
+
+sudo docker container ls
+
+
+# La salida será algo parecido a esto:
+#
+# CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+# 4a7f7fb60528   antsala/sinatra   "/opt/webapp/bin/web…"   27 seconds ago   Up 26 seconds   0.0.0.0:49155->4567/tcp, :::49155->4567/tcp   webapp
+
+puerto_externo=<Poner aquí el puerto externo>
+
+
+# Comprobamos los logs.
+
+sudo docker container logs webapp
+
+
+# La salida debe indicar que el contenedor ha levantado el servidor web, algo así:
+#
+# [2022-03-13 20:02:43] INFO  WEBrick 1.3.1
+# [2022-03-13 20:02:43] INFO  ruby 2.3.1 (2016-04-26) [x86_64-linux-gnu]
+# == Sinatra (v2.2.0) has taken the stage on 4567 for development with backup from WEBrick
+# [2022-03-13 20:02:43] INFO  WEBrick::HTTPServer#start: pid=1 port=4567
+
+
+# La primera prueba será mandar una request (GET) a la URI '/'
+
+curl localhost:$puerto_externo
+
+
+# La respuesta mostrará el mensaje
+# '<h1>Aplicación de prueba Sinatra</h1>'
+
+
+# Ahora vamos a construir una request que mande parámetros. Si en la response vemos esos parámetros convertidos a JSON,
+# entonces el Frontend estará funcionando bien.
+
+curl -i -H 'Accept: application/json' -d 'nombre=Antonio&apellidos=Salazar Graván&teléfono=666123321' http://localhost:$puerto_externo/json/
+
+
+# La respuesta debe ser así:
+# '{"nombre":"Antonio","apellidos":"Salazar Graván","teléfono":"666123321"}'
+
+
+# Como funciona bien, borramos el contenedor.
+
+sudo docker container rm -f webapp
+
+
+
+#####################################
+# Ejercicio 2: Creación del Backend #
+#####################################
+
+crear powerpoint de aclaración para este escenario.
+Voy por diapo 25 de Docker 03
 
 
 

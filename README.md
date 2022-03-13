@@ -58,6 +58,7 @@ sudo snap install code --classic
 #
 # Ejercicios:
 #   1. Creación del Frontend.
+#   2. Creación del Backend.
 
 
 
