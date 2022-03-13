@@ -252,32 +252,126 @@ sudo docker container ls -a
 # Ejercicio 3: Imágenes con 'Docker' #
 ######################################
 
+# Cuando lanzamos un contenedor, Docker descarga la imagen. Podemos ver las imágenes descargadas
+# con el siguiente comando:
+
+sudo docker image ls
+
+# La salida debería ser similar a la siguiente:
+#
+# REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+# ubuntu       latest    2b4cba85892a   9 days ago   72.8MB
+
+
+# Para descargar imágenes con antelación, usamos el comando 'pull':
+
+sudo docker image pull nginx
+
+
+# Si volvemos a listar las imágenes, veremos la de 'nginx'
+
+sudo docker image ls
+
+
+# Esta es la salida:
+#
+# REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+# ubuntu       latest    2b4cba85892a   9 days ago    72.8MB
+# nginx        latest    c919045c4c2b   11 days ago   142MB
+
+
+# En los despliegues es muy importante hacer referencia una imagen concreta. Más adelante hablaremos 
+# del etiquetado de imagen detalladamente, pero por ahora supongamos que queremos ejecutar un
+# contenedor de forma interactiva, basado en la versión 16.04 de Ubuntu:
+
+sudo docker container run -i -t --name mi_ubuntu_16_04 ubuntu:16.04 /bin/bash
+
+
+# Comprobamos versión y salimos del contenedor.
+
+cat /etc/lsb-release
+
+exit
+
+
+# En breve estaremos creando imágenes. El siguiente paso será subirlas a un repositorio como ECR, ACR, Quay, etc.
+# En este caso la subimos a 'DockerHub'. Primero debemos hacer un login.
+
+sudo docker login
+
+
+# Observar el mensaje que aparecer:
+#
+# WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+# Configure a credential helper to remove this warning. See
+# https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+#
+# Dice que las credenciales se almacenan de forma NO ENCRIPTADA. Concretamente en base64. Por lo que
+# si alguien ajeno tiene acceso al archivo '/root/.docker/config.json' puede obtener la credencial en
+# texto plano simplemente usando la herramienta 'base64'.
+#
+# Por eso es muy recomendable hacer un 'logout' cuando hayamos terminado de subir las imágenes:
+
+sudo docker logout
+
+
+# Procedemos a crear una imagen desde un contenedor. Para ello creamos un nuevo contenedor interactivo 
+# basado en Ubuntu al que llamaremos 'mi_servidor_web'.
+
+sudo docker container run --name mi_servidor_web -i -t ubuntu /bin/bash
+
+
+# Dentro del contenedor procedemos a instalar el servidor web.
+
+apt-get -yqq update
+
+apt-get -y install apache2
+
+service apache2 start
+
+exit
+
+# Al ejecutar 'exit' hemos salido del contenedor y éste se detiene. Lo comprobamos.
+
+sudo docker container ls -a 
+
+
+# En la salida comprobamos que 'mi_servidor_web' está detenido.
+#
+# CONTAINER ID   IMAGE          COMMAND       CREATED          STATUS                      PORTS     NAMES
+# 2253067a8f35   ubuntu         "/bin/bash"   2 minutes ago    Exited (0) 7 seconds ago              mi_servidor_web
+# 2b4fc5d72193   ubuntu:16.04   "/bin/bash"   16 minutes ago   Exited (0) 15 minutes ago             mi_ubuntu_16_04
+
+
+# Ahora procedemos a crear una imagen a partir del contenedor. Podemos usar el id del contenedor, 
+# '2253067a8f35' en este ejemplo, o su nombre 'mi_servidor_web', para seleccionarlo.
+#
+# En la última parte del comando ponemos el nombre de la imagen. En este ejemplo será 'antsala/apache2',
+# porque ya la vamos preparando para subirla al registro y 'antsala' es el nombre de un repositorio de
+# imágenes. 'apache2' es el nombre de la imagen.
+
+sudo docker container commit mi_servidor_web antsala/apache2
+
+
+# Listamos las imágenes para ver la nueva:
+
+sudo docker image ls
+
+# Y en la salida podremos verla:
+#
+# REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
+# antsala/apache2   latest    9f6e1d4e26ca   32 seconds ago   220MB
+# ubuntu            latest    2b4cba85892a   9 days ago       72.8MB
+# nginx             latest    c919045c4c2b   11 days ago      142MB
+# ubuntu            16.04     b6f507652425   6 months ago     135MB
+
+
+# Para finalizar este laboratorio, eliminamos TODOS contenedores:
+
+sudo docker container rm -f `sudo docker container ls -a -q`
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#######################
+# FIN DEL LABORATORIO #
+#######################
