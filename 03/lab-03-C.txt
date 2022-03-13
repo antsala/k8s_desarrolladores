@@ -1,0 +1,13 @@
+# Laboratorio 03-C: "Volúmenes"
+ 
+# Este laboratorio repasaremos cómo usar volúmenes para conseguir
+# persistencia en el sistema de archivos del contenedor. También pueden
+# ser usados para pasar configuraciones en tiempo de inicio del contenedor.
+
+# Requisitos:
+#   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#   Tener instalado Docker-ce en dicha máquina virtual.
+
+####################################################
+# Ejercicio 1: Creación de imagen desde Dockerfile #
+####################################################
