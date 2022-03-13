@@ -50,4 +50,63 @@ sudo docker image ls
 # Ejercicio 2: Publicación de puertos en el host #
 ##################################################
 
+# Para poder acceder al contenedor, es necesario publicar un puerto en el host. 
+# Tenemos dos métodos:
+#
+#   1) Dejar que Docker asigne un puerto aleatorio (32768-61000)
+#   2) Elegir nosotros el puerto externo que más nos guste.
+#
+# El siguiente comando abrirá un puerto aleatorio en el host y lo conectará con el puerto 80 del contenedor.
+
+sudo docker run -d -p 80 --name web_estatica antsala/web_estatica nginx -g "daemon off;"
+
+
+# Comprobamos que el contenedor está corriendo:
+
+sudo docker container ls
+
+
+# La salida del comando anterior tendrá la siguiente forma:
+#
+# CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                                     NAMES
+# aeac57545f04   antsala/web_estatica   "nginx -g 'daemon of…"   32 seconds ago   Up 30 seconds   0.0.0.0:49153->80/tcp, :::49153->80/tcp   web_estatica
+#
+# Observar la columna 'PORTS'. Aparecen los nateos para IPv4 e IPv6. En ambos casos, el puerto externo, en este
+# ejemplo es el '49153' (Nota: utilizar el que realmente aparezca)
+
+puerto=<poner aquí el puerto externo>
+
+curl localhost:$puerto
+
+
+# Tras la ejecución de 'curl', veremos la response con el mensaje "Hola, estoy dentro de tu contenedor".
+
+
+# Para poder elegir el puerto externo, usamos la sintaxis '-p puerto_externo:puerto_contenedor'. Por ejemplo,
+# si queremos publicar la web estática en el puerto '8080' del host, el contenedor debe crearse con el
+# siguiente comando:
+
+sudo docker run -d -p 8080:80 --name web_estatica_8080 antsala/web_estatica nginx -g "daemon off;"
+
+
+# Al igual que antes procedemos a listar los contenedores y probar la conexión con 'curl'
+
+sudo docker container ls
+
+curl localhost:8080
+
+
+# Debe funcionar correctamente.
+
+
+# En el Dockerfile suele ponerse el comando 'ENTRYPOINT' o el comando 'CMD', que sirven para indicar el programa
+# o aplicación que se ejecutará al iniciar el contenedor. De esta forma, no será necesario indicar el ejecutable
+# en la línea del 'docker run'.
+#
+# Procedamos a abrir el archivo 'Dockerfile_entry' en el directorio de trabajo
+
+
+
+
+
 
