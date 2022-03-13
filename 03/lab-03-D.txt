@@ -10,3 +10,22 @@
 # Requisitos:
 #   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
 #   Tener instalado Docker-ce en dicha máquina virtual.
+
+######################################
+# Ejercicio 1: Creación del Frontend #
+######################################
+
+# Creamos una applicación de Frontend con un servidor web. Para este ejemplo
+# usaremos 'Sinatra', que es un framework de aplicación web escrito en ruby. 
+# Contiene una biblioteca de aplicación y un DSL sencillo. 
+#
+# Un DSL es un Domain Specific Language que permite crear apps de forma declarativa.
+
+# Cambiamos al directorio de trabajo. En él hay otro directorio llamado 'sinatra', donde 
+# se encuentra el Dockerfile.
+
+
+
+
+
+

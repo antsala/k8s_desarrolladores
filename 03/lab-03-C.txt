@@ -80,7 +80,49 @@ sudo docker image ls
 
 code ./website/index.html
 
+# Una vez observada la aplicación, cerramos sin modificar el archivo.
+
+# Aquí viene lo importante. Vamos a ejecutar un contenedor que monte un volumen. En la sintaxis
+# para montar el volumen, debemos especificar dos rutas:
+#
+#   1) Ruta del host: Es la carpeta donde está la aplicación, el archivo 'index.html'. Si el
+#      directorio actual es '~/k8s_desarrolladores/03/volumen', la ruta de la aplicación es
+#      '$PWD/website'.
+#
+#   2) Ruta en el contenedor: Es la carpeta donde se realizará el montaje en el contenedor.
+#      En este caso, necesitamos que sea la carpeta en la que nginx espera encontrar los
+#      archivos de la aplicación, es decir, '/var/www/html/website' 
+#
+#   El tercer argumento del volumen es 'ro' o 'rw', e indica si el contenedor puede modificar
+#   los archivos del host.
+#
+# El comando que inicia el contenedor con el volumen es el siguiente.
+# (Nota: observar el al final 'docker run' se ejecuta la aplicación 'nginx', sin argumentos)
+
+sudo docker container run -d -p 8080:80 --name website -v $PWD/website:/var/www/html/website:ro antsala/nginx nginx
 
 
+# Comprobamos que nginx "puede ver" al archivo 'index.html' a través del volumen:
+
+curl localhost:8080
 
 
+# Editamos el archivo 'index.html' e insertamos algún mensaje.
+
+code ./website/index.html
+
+
+# Añaadimos, debajo de la línea 6, el siguiente código (sin incluir las comillas simples):
+# '<h2>Acabo de modificar la aplicación desde el host</h2>'
+#
+# Guardamos y salimos.
+
+# Al volver a realizar una request al servidor, veremos la aplicación actualizada.
+
+curl localhost:8080
+
+
+# Eliminamos los contenedores.
+
+
+sudo docker container rm -f `sudo docker container ls -a -q`
