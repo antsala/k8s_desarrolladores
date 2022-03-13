@@ -11,3 +11,5 @@
 # Ejercicio 1: Instalación de 'Docker' #
 ########################################
 
+# Procedemos a instalar Docker en la máquina. Este procedimiento es para Ubuntu 20.04.
+

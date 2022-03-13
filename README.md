@@ -26,6 +26,13 @@ ls -l
 sudo snap install code --classic
 
 
+# Laboratorio 03-A: "Creación de contenedores con Docker"
+# Archivo: lab-03-A.txt
+#
+# Ejercicios:
+#    1. Instalación de 'Docker'.
+
+
 
 # Laboratorio 20-A: "Instalación de Minikube"
 # Archivo: lab-20-A.txt
