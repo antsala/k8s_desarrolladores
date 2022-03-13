@@ -162,6 +162,24 @@ sudo docker container rm -f `sudo docker container ls -a -q`
 # Ejercicio 4: 'ENTRYPOINT' y 'CMD' en 'Dockerfile' #
 #####################################################
 
+# En muchos Dockerfiles, aparacen conjuntamente los comandos 'ENTRYPOINT' y 'CMD'. Cuando se da esta
+# coincidencia se debe interpretar de la siguiente forma: 
+#
+#   1) 'ENTRYPOINT' se utiliza para indicar cual es la aplicación o programa que queremos ejecutar en 
+#       el contenededor. 
+#
+#   2) 'CMD' establece los parámetros por defecto que se usarán al llamar a ese ejecutable. 
+#
+# Docker empleará los parámetros por defecto si en la línea de 'docker run' no se especifican parámetros.
+
+# Veámoslo con un ejemplo. En el directorio de trabajo tenemos el archivo 'Dockerfile_entry_cmd'. Lo editamos:
+
+code Dockerfile_entry_cmd
+
+
+
+
+
 
 
 
