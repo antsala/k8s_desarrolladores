@@ -15,6 +15,8 @@
 # Ejercicio 1: Creación del Frontend #
 ######################################
 
+# Para mayor aclaración, ver diapositiva 18 (Frontend-Backend Version 1)
+#
 # Creamos una applicación de Frontend con un servidor web. Para este ejemplo
 # usaremos 'Sinatra', que es un framework de aplicación web escrito en ruby. 
 # Contiene una biblioteca de aplicación y un DSL sencillo. 
@@ -23,6 +25,46 @@
 
 # Cambiamos al directorio de trabajo. En él hay otro directorio llamado 'sinatra', donde 
 # se encuentra el Dockerfile.
+
+cd ~/k8s_desarrolladores/03/frontend-backend/sinatra
+
+ls -l
+
+code Dockerfile
+
+
+# El Dockerfile hace lo siguiente:
+#
+# Línea 1:      Usamos la imagen base de Ubuntu 16.04
+#
+# Línea 2:      Descargamos e instalamos los paquetes: 'ruby', 'ruby-dev', 'build-essential' 
+#               y las herramientas de desarrollo de redis (redis-tools)
+#
+# Linea 3:      Una vez instalado ruby, procedemos a instalar el framework 'sinatra' y
+#               el cliente de redis.
+#
+# Línea 4:      Creamos el directorio '/opt/webapp' en el sistema de archivos de la imagen
+#               de contenedor. Posteriormente usaremos un volumen para publicar la aplicación.
+#
+# Línea 5:      Sinatra levanta un servidor web que escucha en el puerto '4567'.
+#
+# Línea 6:      '/opt/webapp/bin/webapp' es el lanzador de la aplicación.
+
+# En la carpeta 'sinatra' existen otras dos carpetas, cada una con un archivo:
+#
+#   'sinatra/bin/webapp' es un archivo que tiene el iniciador de la aplicación.
+#   'sinatra/lib/app.rb' es la aplicación en sí.
+# 
+# Procedemos a estudiar los archivos.
+
+code ./sinatra/bin/webapp
+
+
+
+
+
+
+
 
 
 
