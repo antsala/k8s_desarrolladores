@@ -1,0 +1,11 @@
+# Laboratorio 03-B: "Construir imágenes desde Dockerfile"
+ 
+# Este laboratorio repasaremos cómo crear imágenes desde Dockerfile,
+# integrando la compilación del código fuente en tiempo de creación de
+# la imagen.
+
+# Requisitos:
+#   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#   Tener instalado Docker-ce en dicha máquina virtual.
+
+
