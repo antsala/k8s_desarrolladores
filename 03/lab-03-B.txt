@@ -8,4 +8,8 @@
 #   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
 #   Tener instalado Docker-ce en dicha máquina virtual.
 
+####################################################
+# Ejercicio 1: Creación de imagen desde Dockerfile #
+####################################################
+
 

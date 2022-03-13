@@ -39,7 +39,8 @@ sudo snap install code --classic
 # Archivo: lab-03-b.txt
 #
 # Ejercicios:
-#   1. 
+#   1. Creación de imagen desde Dockerfile.
+
 
 
 
