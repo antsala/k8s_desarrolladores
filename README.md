@@ -41,6 +41,8 @@ sudo snap install code --classic
 #
 # Ejercicios:
 #   1. Creación de imagen desde Dockerfile.
+#   2. Publicación de puertos en el host.
+
 
 
 
