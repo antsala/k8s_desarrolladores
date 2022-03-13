@@ -53,6 +53,11 @@ sudo snap install code --classic
 #   1. Publicar aplicación en el contenedor.
 
 
+# Laboratorio 03-D: "Frontend-Backend"
+# Archivo: lab-03-D.txt
+#
+# Ejercicios:
+#   1. Creación del Frontend.
 
 
 
