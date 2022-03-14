@@ -266,4 +266,87 @@ sudo docker swarm init
 sudo apt -y install docker-compose
 
 
-# Ahora procedemos a estudiar un archivo de manifiesto de ejemplo. Este se encuentra en 
+# Ahora procedemos a estudiar un archivo de manifiesto de ejemplo. Este se encuentra en la carpeta:
+# '~/k8s_desarrolladores/03/helloContainerSvc', así que entramos en ella.
+
+cd ~/k8s_desarrolladores/03/helloContainerSvc
+
+
+# En esta carpeta tenemos el archivo 'Docker-compose.yaml'. Lo editamos para estudiarlo:
+
+code ./Docker-compose.yaml
+
+
+# Línea 18 y 19:    Crea una red, llamada 'webnet' para uso exclusivo de los contenedores que van a crearse.
+#
+# Línea 2:          Define los servicios que se implementarán. En este caso uno solo, el servicio 'web', que se
+#                   declara desde la línea 4 hasta la 17.
+#
+# Línea 5:          Indicamos la imagen que usarán los contenedores.
+#
+# Línea 7:          Deseamos 5 réplicas (5 contenedores)
+#
+# Líneas 10-11:     Limitamos cada contenedor a usar el 10% de la CPU total y 50 MB de RAM.
+#
+# Líneas 12-13:     Los contenedores se reiniciarán si la aplicación falla.
+#
+# Línea 15:         Regla de nateo para acceder al servicio. Conectaremos contra la IP de cualquier nodo del cluster,
+#                   al puerto 4000. El balanceador irá repartiendo el tráfico entre los 5 contenedores, que responden
+#                   en el puerto 8080.
+#
+# Línea 17:         Conectamos los contenedores a la red 'webnet'
+
+
+# Salimos sin modificar y procedemos a desplegar este servicio en el cluster. Lo llamaremos 'helloContainerStack'
+
+sudo docker stack deploy -c Docker-compose.yaml helloContainerStack
+
+
+# Swarm responderá que ha creado la red y el servicio. Para comprobarlo ejecutamos el siguiente comando:
+
+sudo docker stack ls
+
+
+# La salida es como esta:
+#
+# NAME                  SERVICES   ORCHESTRATOR
+# helloContainerStack   1          Swarm
+
+
+# Y para ver los contenedores que ha levantado, con este otro comando:
+
+sudo docker stack ps helloContainerStack
+
+
+# Cuya salida será similar a la siguiente, en la que podemos ver los 5 contenedores corriendo.
+#
+# ID             NAME                        IMAGE                            NODE      DESIRED STATE   CURRENT STATE           ERROR     PORTS
+# a69nbga2tm61   helloContainerStack_web.1   antsala/hello_container:latest   ubu       Running         Running 2 minutes ago             
+# mkze4dpg85rz   helloContainerStack_web.2   antsala/hello_container:latest   ubu       Running         Running 2 minutes ago             
+# jfx4eweg2kv1   helloContainerStack_web.3   antsala/hello_container:latest   ubu       Running         Running 2 minutes ago             
+# wqo1cvz212z1   helloContainerStack_web.4   antsala/hello_container:latest   ubu       Running         Running 2 minutes ago             
+# ypqzhk0cp9x1   helloContainerStack_web.5   antsala/hello_container:latest   ubu       Running         Running 2 minutes ago 
+
+
+# Lo que realmente nos interesa demostrar es el funcionamiento del balanceo. Lo conseguimos repitiendo el siguiente comando, con
+# el que verificamos que van contestando los diferentes contenedores que forma en servicio.
+
+curl localhost:4000
+
+
+# Limpiamos los recursos.
+
+sudo docker stack rm helloContainerStack
+
+sudo docker swarm leave --force
+
+# Borramos los contenedores:
+
+sudo docker container rm -f `sudo docker container ls -a -q`
+
+
+#######################
+# FIN DEL LABORATORIO #
+#######################
+
+
