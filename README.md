@@ -85,6 +85,12 @@ sudo snap install code --classic
 #   2.  Instalación de Podman.
 
 
+# Laboratorio 06-B: "Frontend-Backend con POD"
+# Archivo: lab-20-B.txt
+#
+# Ejercicios:
+#   1.  Descargar imágenes de contenedor.
+
 
 
 # Carpeta 20
