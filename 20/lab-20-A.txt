@@ -4,8 +4,10 @@
 # Ubuntu 20.04 LTS
 
 # Requisitos:
-#    Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
-#    Tener instalado el runtime de podman. (ver lab-06-A.txt, Ejercicio 1 y 2)
+#
+#   1)  Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2)  Tener instalado el runtime de podman. (ver lab-06-A.txt, Ejercicio 1 y 2)
 
 
 ##########################################
