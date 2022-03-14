@@ -64,6 +64,13 @@ sudo snap install code --classic
 #   5. Despliegue de la versión de Frontend que conecta con Backend.
 
 
+# Laboratorio 03-E: "Microservicios"
+# Archivo: lab-03-E.txt
+#
+# Ejercicios:
+#   1. Instalación de Go.
+
+
 
 # Carpeta 20
 

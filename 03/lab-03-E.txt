@@ -1,0 +1,63 @@
+# Laboratorio 03-E: "Microservicios"
+ 
+# Este laboratorio crearemos una aplicación el lenguaje Go. Esta app 
+# la compilaremos en el mismo momento de generar la imagen de contenedor.
+#
+# La app levanta un servidor web que, si nos conectamos, nos responde indicando
+# el nombre del host y las direcciones IPs que tiene asignada. 
+#
+# Posteriormente crearemos un servicio en Swarm para demostrar en balanceo.
+
+# Requisitos:
+#   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#   Tener instalado Docker-ce en dicha máquina virtual.
+
+##################################
+# Ejercicio 1: Instalación de Go #
+##################################
+
+# Nos ponemos en HOME.
+
+cd ~
+
+
+# Descargamos el compilador de Go, lo descoprimimos, cambiamos propietario y lo movemos de carpeta
+
+curl -O https://dl.google.com/go/go1.15.5.linux-amd64.tar.gz
+
+tar xvf go1.15.5.linux-amd64.tar.gz
+
+sudo chown -R root:root ./go
+
+sudo mv go /usr/local
+
+
+# Editamos '.profile' para agregar variables en entorno al final del archivo.
+
+code .profile
+
+# Agregar estas dos líneas al final del archivo:
+# (OJO, retirar los caracteres '#')
+
+# export GOPATH=$HOME/work
+# export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
+# Guardar y salir.
+
+
+# Cargamos el profile para que se actualicen las varibles de entorno.
+
+source .profile
+
+
+# Creamos un directorio de trabajo:
+# (Nota: sustituir 'antsala' por tu repositorio de GitHub si quieres subirlo. No es estrictamente necesario)
+
+mkdir -p $HOME/work/src/github.com/antsala/hello
+
+
+# Editamos el archivo hello.go que usaremos para probar el compilador.
+
+code ~/work/src/hello/hello.go
+
+

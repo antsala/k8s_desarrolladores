@@ -371,7 +371,6 @@ sudo docker image ls
 sudo docker container rm -f `sudo docker container ls -a -q`
 
 
-
 #######################
 # FIN DEL LABORATORIO #
 #######################
