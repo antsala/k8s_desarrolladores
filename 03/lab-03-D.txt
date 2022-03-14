@@ -74,10 +74,19 @@ sudo docker image ls
 # ubuntu                           16.04     b6f507652425   6 months ago        135MB
 
 
-# En la carpeta 'sinatra' existen otras dos carpetas, cada una con un archivo:
+# En la carpeta 'sinatra' tenemos la carpeta de la aplicación, llamada 'webapp'. Entramos en ella.
+
+cd webapp
+
+
+# Si listamos el contenido, vemos otras dos carpetas, cada una con un archivo:
+
+ls -l
+
+
 #
-#   'sinatra/bin/webapp' es un script que tiene el iniciador de la aplicación.
-#   'sinatra/lib/app.rb' es la aplicación en sí.
+#   './bin/webapp' es un script que tiene el iniciador de la aplicación.
+#   './lib/app.rb' es la aplicación en sí.
 # 
 # Procedemos a estudiar los archivos.
 
