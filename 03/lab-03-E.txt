@@ -39,7 +39,7 @@ code .profile
 # Agregar estas dos líneas al final del archivo:
 # (OJO, retirar los caracteres '#')
 
-# export GOPATH=$HOME/work
+# export GOPATH=$HOME/k8s_desarrolladores/03/work
 # export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
 # Guardar y salir.
@@ -50,14 +50,35 @@ code .profile
 source .profile
 
 
-# Creamos un directorio de trabajo:
-# (Nota: sustituir 'antsala' por tu repositorio de GitHub si quieres subirlo. No es estrictamente necesario)
+# Editamos el archivo 'hello.go' que usaremos para probar el compilador.
 
-mkdir -p $HOME/work/src/github.com/antsala/hello
+code ~/k8s_desarrolladores/03/work/src/hello/hello.go
 
 
-# Editamos el archivo hello.go que usaremos para probar el compilador.
+# Como se puede comprobar es un código sencillo que muestra el mensaje 'Hola Mundo!!!'
 
-code ~/work/src/hello/hello.go
+# Procedemos a compilarlo, indicando el nombre de la carpeta. Se procederá a compilar todos los
+# archivos .go que existan (solo está 'hello.go')
+
+go install hello
+
+
+# Comprobamos si ha compilado escribiendo el nombre del ejecutable ('hello')
+
+hello
+
+
+# Para determinar la carpeta en la que Go coloca el ejecutable:
+
+which hello
+
+
+# Acabamos de comprobar que el compilador de Go funciona. Procedemos a crear una app que 
+# haga algo más apropiado. Se encuentra en el archivo 
+# '~/k8s_desarrolladores/03/work/src/hellocontainer/helloContainer.go'
+#
+# La editamos.
+
+code ~/k8s_desarrolladores/03/work/src/hellocontainer/helloContainer.go
 
 
