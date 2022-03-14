@@ -1,0 +1,4 @@
+MYSQL_ROOT_PASSWORD=secreto
+MYSQL_USER=nomina_admin
+MYSQL_PASSWORD=secreto
+MYSQL_DATABASE=nominas
