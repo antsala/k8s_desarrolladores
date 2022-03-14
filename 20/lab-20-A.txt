@@ -5,61 +5,11 @@
 
 # Requisitos:
 #    Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
-
-
-########################################
-# Ejercicio 1: Instalación de 'Podman' #
-########################################
-
-# Necesitamos un runtime de contenedor. Si bien podemos instalar Docker, no lo 
-# haremos. En su lugar instalamos podman, que nos servirá para demostrar que
-# Kubernetes puede usar cualquier runtime de contenedor compatible con CRI 
-# Container Runtime Interface.
-
-# Aseguramos que 'curl' está instalado.
-
-sudo apt-get -y update
-
-sudo apt-get -y install curl
-
-
-# Para Ubuntu 20.04 no se puede instalar podman directamente desde los repositorios
-# oficiales. Para conseguirlo, añadimos a la lista de repos, el de podman (RedHat).
-
-echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" | \
-    sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
-
-curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key" | \
-    sudo apt-key add -
-
-
-# Volvemos a actualizar el repositorio de paquetes.
-
-sudo apt-get -y update
-
-
-# Instalamos podman.
-
-sudo apt-get -y install podman
-
-
-# Comprobamos que podman se ha instalado correctamente.
-# El resultado será la versión de podman.
-
-podman --version
-
-
-# Probamos a lanzar un contenedor y ejecutar un comando en el. Como resultado
-# aparecerá información sobre la versión del sistema operativo del contenedor.
-
-podman run --rm docker.io/library/ubuntu:latest cat /etc/lsb-release
-
-
-# Con esto finalizamos la instalación del runtime
+#    Tener instalado el runtime de podman. (ver lab-06-A.txt, Ejercicio 1 y 2)
 
 
 ##########################################
-# Ejercicio 2: Instalación de 'Minikube' #
+# Ejercicio 1: Instalación de 'Minikube' #
 ##########################################
 
 # Ya tenemos el runtime de contenedor instalado. Ahora prodecemos a descargar el binario
@@ -107,7 +57,7 @@ minikube version
 
 
 #########################################
-# Ejercicio 3: Instalación de 'kubectl' #
+# Ejercicio 2: Instalación de 'kubectl' #
 #########################################
 
 # 'kubectl' es la herramienta de línea de comando para interactuar con el API-Server (Control Plane)
@@ -137,7 +87,7 @@ ls -l /usr/local/bin/kubectl
 
 
 ########################################################
-# Ejercicio 4: Modificar 'sudoers' e instalar 'uidmap' #
+# Ejercicio 3: Modificar 'sudoers' e instalar 'uidmap' #
 ########################################################
 
 # Ahora probamos la herramienta 'kubectl' mostrando su versión. Aparecerá un error que indica que no
@@ -174,7 +124,7 @@ sudo apt-get -y install uidmap
 
 
 #################################
-# Ejercicio 5: Iniciar Minikube #
+# Ejercicio 4: Iniciar Minikube #
 #################################~
 
 # Si ejecutamos el comando 'minikube', se mostrará la ayuda. 
@@ -251,21 +201,3 @@ minikube start --driver=podman --v=7 --alsologtostderr
 #######################
 # FIN DEL LABORATORIO #
 #######################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
