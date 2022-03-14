@@ -162,11 +162,11 @@ curl localhost:$puerto_externo
 # Ahora vamos a construir una request que mande parámetros. Si en la response vemos esos parámetros convertidos a JSON,
 # entonces el Frontend estará funcionando bien.
 
-curl -i -H 'Accept: application/json' -d 'nombre=Antonio&apellidos=Salazar Graván&teléfono=666123321' http://localhost:$puerto_externo/json/
+curl -i -H 'Accept: application/json' -d 'nombre=Antonio&apellidos=Salazar Gravan&telefono=666123321' http://localhost:$puerto_externo/json/
 
 
 # La respuesta debe ser así:
-# '{"nombre":"Antonio","apellidos":"Salazar Graván","teléfono":"666123321"}'
+# '{"nombre":"Antonio","apellidos":"Salazar Gravan","telefono":"666123321"}'
 
 
 # Como funciona bien, borramos el contenedor.
@@ -385,7 +385,7 @@ code ./lib/app.rb
 # La diapositiva 23 (Frontend-Backend 6) resume todos estos conceptos:
 
 
-sudo docker run -d -p 8080:4567 --name webapp_redis --net app -v $PWD:/opt/webapp:ro antsala/sinatra
+sudo docker run -d -p 8080:4567 --name webapp_redis --net app -v $PWD:/opt/webap antsala/sinatra
 
 
 # Comprobamos los contenedores en ejecución. 
@@ -405,20 +405,27 @@ sudo docker container ls
 curl localhost:8080
 
 
-# Enviamos una request con POST a '/json/?' con los campos de un formulario. Esta vez se guardará en redis, además de devolverse
+# Enviamos una request con POST a '/json/' con los campos de un formulario. Esta vez se guardará en redis, además de devolverse
 # en formato JSON.
 
-curl -i -H 'Accept: application/json' -d 'nombre=Antonio&apellidos=Salazar Graván&teléfono=666123321' http://localhost:8080/json/
+curl -i -H 'Accept: application/json' -d 'nombre=Antonio&apellidos=Salazar Gravan&telefono=666123321' http://localhost:8080/json/
 
 
-# Por último, una GET a '/json/' que provocará una lectura de Redis para leer los parámetros del formulario, que serán devueltos
+# Por último, una GET a '/json' que provocará una lectura de Redis para leer los parámetros del formulario, que serán devueltos
 # en la response en formato JSON.
 
-curl http://localhost:8080/json/
+curl http://localhost:8080/json
+
+
+# Borramos los contenedores:
+
+sudo docker container rm -f `sudo docker container ls -a -q`
 
 
 
-
+#######################
+# FIN DEL LABORATORIO #
+#######################
 
 
 
