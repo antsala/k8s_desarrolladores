@@ -90,6 +90,9 @@ sudo snap install code --classic
 #
 # Ejercicios:
 #   1.  Descargar imágenes de contenedor.
+#   2.  Archivo con variables de entorno.
+#   3.  Creación del pod.
+#   4.  Eliminación del pod.
 
 
 
