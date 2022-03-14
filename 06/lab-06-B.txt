@@ -130,12 +130,15 @@ podman pod ls
 # pensar que al iniciar el contenedor, debemos crear una regla de nateo con el parámetro '-p 8085:80', pero esto no se 
 # hace así.
 #
-# Al usar pods, las reglas de nateo se deben aplicar en el pod, no en los contenedores. Esto es así porque quien tiene 
-# la dirección IP es el pod, y no los contenedores. Cuando el pod reciba el tráfico lo reenviará a los contenedores.
+# Al usar pods, las reglas de nateo se deben aplicar en el pod, no en los contenedores. Esto es así porque en el modo 'rootless'
+# (no usamos 'sudo') los contenedores no adquieren dirección IP. Cuando el pod reciba el tráfico lo reenviará a los contenedores.
 # La diapositiva 10 (Frontend-Backend con POD 2) aclara el escenario.
 
 # Además, estas reglas se deben poner en el momento de crear el pod, y no a posteriori. La forma más efectiva será 
 # destruir el pod y recrearlo con la regla de nateo.
+
+# Por último, los contenedores dentro del pod se pueden comunicar sin problemas, a pesar de no tener direcciones IPs,
+# no les hace falta.
 
 podman pod rm mi_inventario
 
@@ -175,6 +178,14 @@ podman container run -d --pod mi_inventario --name mi_inventario_db --env-file .
 #       este contenedor.
 
 podman container run -d --pod mi_inventario --name mi_inventario_phpmyadmin --env-file ./lab-06-B-env-vars -e PMA_HOST=127.0.0.1 phpmyadmin
+
+
+
+# Podemos comprobar que el runtime no ha asignado una dirección IP al ninguno de los contenedores:
+
+podman container inspect mi_inventario_phpmyadmin --format '{{.NetworkSettings.IPAddress}}'
+
+podman container inspect mi_inventario_db --format '{{.NetworkSettings.IPAddress}}'
 
 
 # Listamos los contenedores en ejecución:
