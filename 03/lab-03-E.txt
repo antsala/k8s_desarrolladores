@@ -345,8 +345,11 @@ sudo docker swarm leave --force
 sudo docker container rm -f `sudo docker container ls -a -q`
 
 
+# También vamos a limpiar las imágenes.
+
+sudo docker image rm -f `sudo docker image ls -q`
+
+
 #######################
 # FIN DEL LABORATORIO #
 #######################
-
-

@@ -17,7 +17,7 @@
 # Ejecutamos los siguientes comandos para desinstalar podman:
 
 
-sudo apt-get purge docker-ce
+sudo apt-get purge -y docker-ce
 
 sudo apt-get purge -y docker-engine docker docker.io docker-ce
 
@@ -41,10 +41,10 @@ sudo docker container ls
 # Ejercicio 2: Instalación de 'Podman' #
 ########################################
 
-# Necesitamos un runtime de contenedor. Si bien podemos instalar Docker, no lo 
-# haremos. En su lugar instalamos podman, que nos servirá para demostrar que
-# Kubernetes puede usar cualquier runtime de contenedor compatible con CRI 
-# Container Runtime Interface.
+# Necesitamos un runtime de contenedor. Vamos a instalar 'podman', de RedHat, que a diferenciade Docker
+# permite trabajar con la abstracción del POD.
+#
+# Lo que aprendamos aquí sobre los pods, será de directa aplicación en Kubernetes.
 
 # Aseguramos que 'curl' está instalado.
 
@@ -79,13 +79,13 @@ sudo apt-get -y install podman
 podman --version
 
 
-# Probamos a lanzar un contenedor y ejecutar un comando en el. Como resultado
-# aparecerá información sobre la versión del sistema operativo del contenedor.
+# Probamos a lanzar un contenedor y ejecutar un comando en él. Como resultado aparecerá información sobre 
+# la versión del sistema operativo del contenedor.
 
 podman run --rm docker.io/library/ubuntu:latest cat /etc/lsb-release
 
 
-# Con esto finalizamos la instalación del runtime
+# Con esto finalizamos la instalación del runtime Podman.
 
 
 
