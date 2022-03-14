@@ -4,11 +4,11 @@
 # cluster de Kubernetes.
 
 # Requisitos:
-#   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
-#   La VM debe tener descargado el binario de 'Minikube' y la herramienta
-#   'kubectl'.   
 #
-#   Es decir, haber realizado el laboratorio anterior (lab-20-A)
+#   1)  Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2)  La VM debe tener descargado el binario de 'Minikube' y la herramienta
+#       'kubectl'. Es decir, haber realizado el laboratorio anterior (lab-20-A.txt)
 
 
 

@@ -4,7 +4,8 @@
 # para presentar la abstracción del pod, objeto que se usará en Kubernetes.
 
 # Requisitos:
-#   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
 
 
 #########################################

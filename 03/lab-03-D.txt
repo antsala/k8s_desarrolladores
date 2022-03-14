@@ -8,8 +8,10 @@
 # de Docker.
 
 # Requisitos:
-#   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
-#   Tener instalado Docker-ce en dicha máquina virtual.
+#
+#   1)  Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2)  Tener instalado Docker-ce como runtime de contenedor en dicha máquina virtual.
 
 ######################################
 # Ejercicio 1: Creación del Frontend #
@@ -426,15 +428,3 @@ sudo docker container rm -f `sudo docker container ls -a -q`
 #######################
 # FIN DEL LABORATORIO #
 #######################
-
-
-
-
-
-
-
-
-
-
-
-

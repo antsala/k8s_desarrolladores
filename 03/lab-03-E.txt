@@ -9,8 +9,10 @@
 # Posteriormente crearemos un servicio en Swarm para demostrar en balanceo.
 
 # Requisitos:
-#   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
-#   Tener instalado Docker-ce en dicha máquina virtual.
+#
+#   1)  Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2)  Tener instalado Docker-ce como runtime de contenedor en dicha máquina virtual.
 
 ##################################
 # Ejercicio 1: Instalación de Go #

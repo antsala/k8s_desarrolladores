@@ -4,7 +4,8 @@
 # una imagen de contenedor para su uso posterior.
 
 # Requisitos:
-#   Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   1)  Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
 
 
 ########################################
