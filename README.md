@@ -71,7 +71,7 @@ sudo snap install code --classic
 #   1. Instalación de Go.
 #   2. Compilar una app en Go.
 #   3. Contenerizar la app Go.
-
+#   4. Desplegar servicio en Swarm.
 
 
 

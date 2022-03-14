@@ -154,10 +154,116 @@ cd ~/k8s_desarrolladores/03/helloContainerCtx
 
 # Copiamos la carpeta 'helloContainer' (que contiene 'helloContainer.go') a este directorio de contexto.
 
-cp ~/k8s_desarrolladores/03/work/src/helloContainer/ .
+cp -r ~/k8s_desarrolladores/03/work/src/helloContainer/ .
 
 
 # En el directorio de contexto tenemos un archivo Dockerfile que pasamos a detallar.
 
 code ~/k8s_desarrolladores/03/helloContainerCtx/Dockerfile
 
+
+# Este Dockerfile va a hacer dos cosas:
+#
+#   1) Compilará el código fuente (helloContainer.go) y generará el ejecutable.
+#
+#   2) Tomará el ejecutable generado y lo almacenará en la imagen de contenedor.
+#
+# Línea 1:      Crea un contenedor basado en la imagen 'golang:1.11-alpine', que es una imagen
+#               que tiene instalada el compilador de Go.
+#
+# Línea 2:      Añade los archivos del directorio de contexto, en este caso la carpeta 'helloContainer' 
+#               (Que a su vez contiene el archivo 'helloContainer.go') en la carpeta '/go/src' de la
+#               imagen de contenedor.
+#
+# Línea 3:      Compila nuestra aplicación el Go. El ejecutable se almacena en la ruta '/go/bin/helloContainer'
+#
+# En este punto, la imagen de contenedor, a la que podemos llamar 'PREVIA', tiene el ejecutable de nuestra aplicación.
+#
+# El archivo Dockerfile contínua, desde otra imagen base.
+#
+# Línea 5:      Se crea un contenedor con la imagen 'alpine'
+#
+# Línea 6:      Esto es lo importante: Se establece como contexto la imagen 'PREVIA', copia de ella el ejecutable de la
+#               aplicación ('/go/bin/hellocontainer') y lo pone en el directorio actual ('.') de LA NUEVA IMAGEN
+#
+# Línea 7:      Por último. se ejecuta el programa 'helloContainer', que está en el directorio actual ('.')
+
+
+# Con esta técnica se puede compilar el código fuente y crear la imagen de contenedor de la aplicación. Es ideal para usar
+# en los pipelines de CI/CD.
+
+# Creamos la imagen (que a su vez compilará el código fuente)
+
+sudo docker build -t antsala/hello_container .
+
+
+# Comprobamos que la imagen se ha creado correctamente.
+
+sudo docker image ls
+
+# La salida será similar a esta:
+# (Nota: Se han omitido el resto de imágenes previas)
+#
+# REPOSITORY                       TAG           IMAGE ID       CREATED          SIZE
+# antsala/hello_container          latest        b66a10e42c57   52 seconds ago   12.2MB
+
+
+# Subimos la imagen a DockerHub.
+
+sudo docker login
+
+sudo docker push antsala/hello_container
+
+sudo docker logout
+
+
+# Lanzamos un contenedor para probar nuestra aplicación contenerizada.
+
+sudo docker container run --name helloContainer -d -p 85:8080 antsala/hello_container
+
+
+# Probamos
+
+curl localhost:85
+
+
+# La salida será similar a esto:
+# (Nota: Observar como el nombre del host es el id del contenedor)
+#
+# Hola Mundo!
+# Version: 1.0.0
+# Hostname: 93a224a3858d
+# Dirección IP: 172.17.0.2
+
+
+# Una vez comprobado, eliminamos el contenedor.
+
+sudo docker container rm -f helloContainer
+
+
+
+############################################
+# Ejercicio 4: Desplegar servicio en Swarm #
+############################################
+
+
+# En este ejercicio vamos a desplegar un servicio basado en la imagen de contenedor que hemos creado.
+# La práctica va a servirnos para introducir los archivos de manifiesto que definen el servicio (y que
+# serán la clave de Kubernetes). También podremos probar el balanceo, característico de los micro servicios.
+
+# En primer lugar debemos desplegar el cluster de Docker (Swarm). Trabajaremos con un único nodo, pero esto
+# no es importante.
+
+sudo docker swarm init
+
+# Como resultado, un mensaje nos informará que el cluster está levantado, así como el procedimiento a seguir
+# para añadir más nodos al cluster.
+
+
+# Para poder crear archivos YAML de manifiesto, necesitamos que esté instalada la herramienta 'Docker.compose'.
+# La instalamos con el siguiente comando:
+
+sudo apt -y install docker-compose
+
+
+# Ahora procedemos a estudiar un archivo de manifiesto de ejemplo. Este se encuentra en 
