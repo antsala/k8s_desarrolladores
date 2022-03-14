@@ -15,7 +15,7 @@
 # Ejercicio 1: Creación del Frontend #
 ######################################
 
-# Para mayor aclaración, ver diapositiva 18 (Frontend-Backend Version 1)
+# Para mayor aclaración, ver diapositiva 18 (Frontend-Backend 1)
 #
 # Creamos una applicación de Frontend con un servidor web. Para este ejemplo
 # usaremos 'Sinatra', que es un framework de aplicación web escrito en ruby. 
@@ -109,6 +109,8 @@ code ./lib/app.rb
 # Líneas 13-15:     Si llega una request de tipo 'POST' a la URI '/json/', entonces la response devuelve los
 #                   parámetros que se han recibido por la request, convertidos a JSON.
 
+# Para mayor aclaración, ver diapositiva 19 (Frontend-Backend 2)
+
 # Por el momento este Frontend no hace otra cosa. Procedemos a crear un contenedor para probarlo.
 
 sudo docker run -d -p 4567 --name webapp -v $PWD:/opt/webapp antsala/sinatra
@@ -168,8 +170,26 @@ sudo docker container rm -f webapp
 # Ejercicio 2: Creación del Backend #
 #####################################
 
-crear powerpoint de aclaración para este escenario.
-Voy por diapo 25 de Docker 03
+# Procedemos a desplegar el Backend, que será un contenedor Redis que almacenará los parámetros recibidos
+# por el Frontend.
+#
+# Para mayor aclaración, ver diapositiva 20 (Frontend-Backend 3)
+
+# Necesitamos usar una nueva versión del Frontend, en este caso que conecte con el Backend y 
+# almacene datos en él. En el directorio 'webapp_redis' tenemos esta nueva versión del Frontend, así que Cambiamos
+# a dicho directorio.
+
+cd ~/k8s_desarrolladores/03/frontend-backend/sinatra/webapp_redis
+
+
+
+
+
+
+
+
+
+
 
 
 
