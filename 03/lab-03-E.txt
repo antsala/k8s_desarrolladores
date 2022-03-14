@@ -50,6 +50,10 @@ code .profile
 source .profile
 
 
+#######################################
+# Ejercicio 2: Compilar una app en Go #
+#######################################
+
 # Editamos el archivo 'hello.go' que usaremos para probar el compilador.
 
 code ~/k8s_desarrolladores/03/work/src/hello/hello.go
@@ -77,8 +81,83 @@ which hello
 # haga algo más apropiado. Se encuentra en el archivo 
 # '~/k8s_desarrolladores/03/work/src/hellocontainer/helloContainer.go'
 #
-# La editamos.
+# Lo editamos.
 
-code ~/k8s_desarrolladores/03/work/src/hellocontainer/helloContainer.go
+code ~/k8s_desarrolladores/03/work/src/helloContainer/helloContainer.go
 
+
+# El programa hace lo siguiente:
+
+# Líneas 1-9:       Declara módulos a usar.
+#
+# Línea 11:         Función 'main'. Es el punto de entrada a la aplicación.
+#
+# Líneas 12-15:     Inicializa la variable 'port' al valor '8080'. Si se pasa el valor del puerto
+#                   como variable de entorno al iniciar la app, el código puede leer dicha variable
+#                   y actualizar el puerto.
+#
+# Línea 17:         Instancia un objeto servidor web.
+#
+# Línea 18:         Asocia función de respuesta a evento. Si hay una request a la URI '/', el código
+#                   llamará a la función 'helloContainer' para procesar dicha request.
+#
+# Línea 20:         Se muestra mensaje por la salida estándar.
+#
+# Línea 21 y 22:    Se inicia el servidor web. Cualquier error es guardado en el objeto 'err' y almacenado
+#                   en el log.
+#
+# Línea 25:         Inicio de la función de respuesta a evento.
+#
+# Líneas 26-30:     Se disponen diversos mensajes, entre ellos el nombre del host, que serán mostrados en la response.
+#
+# Líneas 32-39:     Se leen todas las IPs asignadas al servidor que se mostrarán en la response.
+
+
+# Salimos sin modificar y procedemos a compilar el programa
+
+go install helloContainer
+
+
+# Lanzamos la aplicación para probarla
+
+helloContainer
+
+
+# Abrimos otra consola, porque en la anterior se está ejecutando el servidor, y hacemos
+# una request al puerto 8080.
+
+curl localhost:8080
+
+
+# La salida será similar a la siguiente, donde se muestra el nombre del host y las direcciones IPs asignadas.
+#
+# Hola Mundo!
+# Version: 1.0.0
+# Hostname: ubu
+# Dirección IP: 192.168.1.45
+# Dirección IP: 172.17.0.1
+# Dirección IP: 172.18.0.1
+
+# Cerramos la última consola y, paramos el servidor con CTRL+C.
+
+
+#######################################
+# Ejercicio 3: Contenerizar la app Go #
+#######################################
+
+
+# Vamos a contenerizar la app. Para ello nos colocamos en el directorio de contexto con el
+# siguiente comando:
+
+cd ~/k8s_desarrolladores/03/helloContainerCtx
+
+
+# Copiamos la carpeta 'helloContainer' (que contiene 'helloContainer.go') a este directorio de contexto.
+
+cp ~/k8s_desarrolladores/03/work/src/helloContainer/ .
+
+
+# En el directorio de contexto tenemos un archivo Dockerfile que pasamos a detallar.
+
+code ~/k8s_desarrolladores/03/helloContainerCtx/Dockerfile
 
