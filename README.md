@@ -69,6 +69,9 @@ sudo snap install code --classic
 #
 # Ejercicios:
 #   1. Instalación de Go.
+#   2. Compilar una app en Go.
+#   3. Contenerizar la app Go.
+
 
 
 
