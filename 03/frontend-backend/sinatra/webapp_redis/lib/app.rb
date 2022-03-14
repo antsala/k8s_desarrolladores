@@ -10,7 +10,7 @@ class App < Sinatra::Application
       set :bind, '0.0.0.0'
 
       get '/' do
-        "<h1>DockerBook Test Redis-enabled Sinatra app</h1>"
+        "<h1>Aplicación Sinatra de ejemplo conectada a Redis</h1>"
       end
 
       get '/json' do

@@ -59,6 +59,9 @@ sudo snap install code --classic
 # Ejercicios:
 #   1. Creación del Frontend.
 #   2. Creación del Backend.
+#   3. Creación de una red.
+#   4. Recreación del Backend conectado a la nueva red.
+#   5. Despliegue de la versión de Frontend que conecta con Backend.
 
 
 
