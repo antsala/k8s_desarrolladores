@@ -202,9 +202,9 @@ podman container ls --pod
 # f6b7cfe407c9  docker.io/library/phpmyadmin:latest  apache2-foregroun...  8 seconds ago       Up 8 seconds ago   0.0.0.0:8085->80/tcp  mi_inventario_phpmyadmin  eea96c70c998  mi_inventario
 
 # Podemos observsar que hay tres reglas de nateo, una para el contenedor de infraestructura, otro para el Frontend y la 
-# última para el Backend. Debería resultar extraño como se permite que el contenedor de infraestructura pase el tráfico
-# http a la base de datos. No tiene ninguna implicación puesto que el contenedor de 'mySQL' no se inició inyectando la 
-# variable de entorno 'PMA_HOST=127.0.0.1', así que esa regla no se aplica.
+# última para el Backend. Debería resultar extraño como se permite tráfico http a los contenedores de infraestructura y
+# de la base de dato, pero no tiene ninguna implicación puesto que la regla sea válida se debe inyectar la variable de 
+# entorno 'PMA_HOST=127.0.0.1' al contenedor que deseemos que reciba tráfico.
 
 
 # Para probar que todo funciona debemos conectar con un navegador a 'http://localhot:8085'. La autenticación usará el
