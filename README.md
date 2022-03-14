@@ -64,7 +64,7 @@ sudo snap install code --classic
 #   5. Despliegue de la versión de Frontend que conecta con Backend.
 
 
-# Laboratorio 03-E: "Microservicios"
+# Laboratorio 03-E: "Micro servicios"
 # Archivo: lab-03-E.txt
 #
 # Ejercicios:
