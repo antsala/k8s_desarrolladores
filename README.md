@@ -75,17 +75,28 @@ sudo snap install code --classic
 
 
 
+# Carpeta 06
+
+# Laboratorio 06-A: "Instalar Podman"
+# Archivo: lab-20-A.txt
+#
+# Ejercicios:
+#   1.  Desinstalación de Docker.
+#   2.  Instalación de Podman.
+
+
+
+
 # Carpeta 20
 
 # Laboratorio 20-A: "Instalación de Minikube"
 # Archivo: lab-20-A.txt
 #
 # Ejercicios:
-#   1. Instalación de 'Podman'.
-#   2. Instalación de 'Minikube'.
-#   3. Instalación de 'kubectl',
-#   4. Modificar 'sudoers' e instalar 'uidmap',
-#   5. Iniciar Minikube,
+#   1. Instalación de 'Minikube'.
+#   2. Instalación de 'kubectl'.
+#   3. Modificar 'sudoers' e instalar 'uidmap'.
+#   4. Iniciar Minikube.
 
 
 # Laboratorio 20-B: "Comandos básicos de kubectl"
