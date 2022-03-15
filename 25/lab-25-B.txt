@@ -397,8 +397,8 @@ code lab-25-B-mongo-express.yaml
 #
 # Línea 47-50:      Protocolo TCP, puerto externo '8081', puerto del contenedor '8081'.
 #
-# Línea 51:         'nodePort: 30000'. En realidad el puerto al que debemos conectar desde el navegador en un nodo del cluster para poder
-#                   acceder al servicio externo. Eso es exactamente lo que significa 'nodePort'. 
+# Línea 51:         'nodePort: 30000'. En realidad el puerto al que debemos conectar desde el navegador en un nodo 
+#                   del cluster para poder acceder al servicio externo. Eso es exactamente lo que significa 'nodePort'. 
 #
 #                   Cuando el cluster tiene varios nodos, se puede poner un balanceador físico (o virtual) por delante, 
 #                   que reenvirá el tráfico al puerto apropiado de los diferentes nodos del cluster.
@@ -412,7 +412,62 @@ code lab-25-B-mongo-express.yaml
 
 # Aun no podemos aplicar el YAML, porque falta por crear el 'Config Map'. El archivo ya está creado, así que lo abrimos.
 
+code lab-25-B-mongodb-configmap.yaml
 
+
+# Línea 2:          Indica que el tipo de objeto a crear es un 'Config Map'
+#
+# Línea 4:          Con nombre 'mongodb-configmap'
+#
+# Línea 5 y 6:      La sección 'data:' define las parejas clave/valor que forman las configuraciones. En este caso indicamos
+#                   para la clave 'database_url' el valor 'mongodb-service'
+
+
+# Salimos sin cambiar nada y aplicamos el configmap.
+
+kubectl apply -f lab-25-B-mongodb-configmap.yaml
+
+
+# Comprobamos que se ha creado el objeto.
+
+kubectl get configmap mongodb-configmap
+
+
+# La salida debe ser similar a esta:
+#
+# NAME                DATA   AGE
+# mongodb-configmap   1      44s
+
+
+# Miramos el contenido.
+
+kubectl describe configmap mongodb-configmap
+
+
+# La salida debe ser como esta:
+# (Nota: se muestra solo parte de ella)
+#
+# Name:         mongodb-configmap
+# ...
+# Data
+# ====
+# database_url:
+# ----
+# mongodb-service
+
+
+# Como se puede observar, a diferencia del secreto, en el configmap se puede ver el valor asociado
+# a clave.
+
+
+# Ahora procedemos a aplicar el YAML del Frontend.
+
+kubectl apply -f lab-25-B-mongo-express.yaml
+
+
+# Comprobamos el deployment:
+
+kubectl get deployment mongo-express-deployment
 
 
 
