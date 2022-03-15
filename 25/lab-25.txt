@@ -296,6 +296,34 @@ code lab-25-helloContainer-deployment.yaml
 kubectl apply -f lab-25-helloContainer-deployment.yaml
 
 
+# Comprobamos que se han desplegado los tres pods.
+
+kubectl get deployment hello-container-deployment
+
+
+# La salida será similar a esta:
+#
+# NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+# hello-container-deployment   3/3     3            3           46s
+
+
+# Aseguramos que los pods están en running:
+
+kubectl get pods
+
+
+# La salida será como esta:
+#
+# NAME                                         READY   STATUS    RESTARTS   AGE
+# hello-container-deployment-566d999d9-4m9kk   1/1     Running   0          96s
+# hello-container-deployment-566d999d9-7296q   1/1     Running   0          96s
+# hello-container-deployment-566d999d9-qfvb9   1/1     Running   0          96s
+
+# Como el pod tiene un único contenedor y 'STATUS' pone 'Running', podemos garantizar
+# que los contenedores se ha iniciado correctemente.
+
+
+# Ahora procedemos a desplegar el servicio. Editamos el archivo:
 
 
 
