@@ -121,4 +121,14 @@ sudo snap install code --classic
 #   7. Ver la salida estándar del contenedor con 'kubectl'.
 #   8. Ejecutar comandos en el contenedor con 'kubectl'.
 #   9. Eliminar objetos del cluster con 'kubectl'.
-#   10. Aplicar un archivo YAML con 'kubectl'.
+
+
+
+# Carpeta 25
+
+# Laboratorio 25-A: "Despliegue de archivos YAML"
+# Archivo: lab-25.txt
+#
+# Ejercicios:
+#   1. Aplicar un deployment desde archivo YAML.
+#   2. Aplicar un servicio desde archivo YAML.
