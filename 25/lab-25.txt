@@ -275,8 +275,25 @@ kubectl get all
 # service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3h
 
 
-# Editamos el archivo '
+# Editamos el archivo 'lab-25-helloContainer-deployment.yaml':
 
+code lab-25-helloContainer-deployment.yaml
+
+
+# El despliegue es muy parecido al anterior. Las líneas más destacables son:
+#
+# Línea 4:          El nombre del deployment es 'helloContainerDeployment'
+#
+# Línea 8:          Queremos 3 pods.
+#
+# Líneas 10 y 11:   Se utiliza el selector 'app: helloContainer'
+#
+# Línea 19:         Se usará la imagen 'antsala/hello_container' para los contenedores.
+
+
+# Salimos sin guardar y aplicamos el objeto.
+
+kubectl apply -f lab-25-helloContainer-deployment.yaml
 
 
 
