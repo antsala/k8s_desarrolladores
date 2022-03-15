@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: hello-container-service
 spec:
+  type: LoadBalancer
   selector:
     app: helloContainer
   ports:
