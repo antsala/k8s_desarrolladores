@@ -157,8 +157,8 @@ code lab-25-B-mongodb.yaml
 # Kubernetes almacena los secretos codificados en Base64 (no se cifran). Procedemos a generar las codificaciones
 # para el nombre de usuario y la contraseña.
 
-username=$(echo -n 'mongodb_admin15032020' | base64)
-password=$(echo -n 'EsteEsUnPasswordSuperRobusto354654@#~~##@@' | base64)
+username=$(echo -n 'mongodb_admin' | base64)
+password=$(echo -n '123WefRR' | base64)
 
 # Comprobamos el contenido de estas variables y las copiamos el algún sitio porque la necesitaremos en un instante.
 
@@ -312,7 +312,6 @@ kubectl describe service mongodb-service
 #                               (no del contenedor, recordemos eso)
 
 
-
 ####################################################
 # Ejercicio 5: Crear el deployment 'Mongo Express' #
 ####################################################
@@ -406,6 +405,8 @@ code lab-25-B-mongo-express.yaml
 #                   En entornos cloud (AWS, Google, Azure) cuando creamos un balanceador externo en Kubernetes, lo que realmente
 #                   se crea es un servicio de balanceo en la nube: Elastic Load Balancer (ELS) para AWS o External Load Balancer 
 #                   (ELB) para Azure.
+#
+#                   En nuestro Minikube debemos ejecutar el comando 'minikube server <Nombre_de_servicio_externo> para que funcione.
 
 
 # Salimos sin modificar nada.
@@ -460,6 +461,12 @@ kubectl describe configmap mongodb-configmap
 # a clave.
 
 
+
+#########################################################
+# Ejercicio 5: Aplicar el deployment de 'Mongo Express' #
+#########################################################
+
+
 # Ahora procedemos a aplicar el YAML del Frontend.
 
 kubectl apply -f lab-25-B-mongo-express.yaml
@@ -470,11 +477,83 @@ kubectl apply -f lab-25-B-mongo-express.yaml
 kubectl get deployment mongo-express-deployment
 
 
+# Comprobamos los pods:
+
+kubectl get pods
+
+
+# La salida debe ser similar a esta:
+#
+# NAME                                        READY   STATUS    RESTARTS   AGE
+# mongo-express-deployment-68c4748bd6-5h4lc   1/1     Running   0          41s
+# mongodb-deployment-7bb6c6c4c7-5b2pw         1/1     Running   0          3m30s
+
+
+# Comprobamos el pod del 'mongo-express'.
+
+kubectl get pod <Poner aquí el nombre del pod de 'mongo-express'>
+
+
+# La salida debe mostrar que está en 'Running'.
+#
+# NAME                                        READY   STATUS    RESTARTS   AGE
+# mongo-express-deployment-68c4748bd6-5h4lc   1/1     Running   0          2m9s
+
+
+# Comprobamos el servicio externo de 'mongo-express'
+
+kubectl get service mongo-express-service
+
+
+# La salida debe mostrar algo así:
+#
+# NAME                    TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+# mongo-express-service   LoadBalancer   10.104.215.72   <pending>     8081:30000/TCP   3m47s
+
+# El servicio es de tipo 'load balancer' y 'NodePort' es 30000, pero la IP está en 'Pending'
+# Al igual que hicimos en el ejercicio anterior, desde otra terminal ejecutamos:
+
+# Cuando se nos asigne la EXTERNAL-IP, debemos conectar con el navegador a su puerto 30000 (NodePort)
+# De este forma, el tráfico iria así:
+#
+# Navegador --> EXTERNAL-IP:30000  //  Minikube --> CLUSTER-IP:8081  //  mongo-express-service --> endpoint_pod:8081
+
+# En otra terminal ejecutamos:
+
+minikube service mongo-express-service
+
+# La salida muestra:
+#
+# |-----------|-----------------------|-------------|---------------------------|
+# | NAMESPACE |         NAME          | TARGET PORT |            URL            |
+# |-----------|-----------------------|-------------|---------------------------|
+# | default   | mongo-express-service |        8081 | http://192.168.49.2:30000 |
+# |-----------|-----------------------|-------------|---------------------------|
+# Opening service default/mongo-express-service in default browser...
 
 
 
+# Se debe abrir el navegador y conectar a 'Mongo-express'.
 
 
+# Limpiamos los recursos:
+
+# Cerramos la terminal de 'minikube service'
+
+# Eliminamos los objetos del cluster:
+
+kubectl delete -f lab-25-B-mongodb.yaml
+
+kubectl delete -f lab-25-B-mongo-express.yaml
+
+kubectl delete -f lab-25-B-mongo-configmap.yaml
+
+kubectl delete -f lab-25-B-mongodb-secret.yaml
+
+
+# Comprobamos:
+
+kubectl get all 
 
 
 
