@@ -142,3 +142,4 @@ sudo snap install code --classic
 # Ejercicios:
 #   1. Descripción del sistema.
 #   2. Crear la base de datos MongoDB.
+#   3. Crear un secreto en Kubernetes.

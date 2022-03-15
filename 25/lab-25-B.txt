@@ -69,11 +69,85 @@ cd ~/k8s_desarrolladores/25
 
 # Abrimos el archivo que contiene el deployment de MongoDB.
 
-code lab-25-B-mongodb-deployment.yaml
+code lab-25-B-mongodb.yaml
 
-# El contenido de las líneas más relevantes del archivo YAML es el siguiente:
+# Lo primero que debemos asimilar es que este archivo está dividido en dos partes.
+# La línea 33 tiene '---'. En la sintaxis YAML esto indica que se está definiendo un objeto
+# diferente.
 #
-# Línea 
+# Por lo tanto, las líneas 1-32 definen el objeto 'mongodb-deployment', mientras que las líneas
+# 34-44 definen el objeto 'mongodb-service'.
+#
+# Esta forma de definir los objetos es genial porque en un solo archivo tenemos todo lo necesario
+# para que Kubernetes despliegue el Backend.
+
+# El contenido de las líneas más relevantes del archivo YAML para el deployment es el siguiente:
+#
+# Línea 2:          Indicamos que es un deployment.
+#
+# Línea 4:          De nombre 'mongodb-deployment'.
+#
+# Línea 8:          El deployment tendrá un solo pod ('replicas: 1')
+#
+# Línea 16:         Empieza la definición de los contenedores que forman el pod (solo hay uno)
+#
+# Línea 18:         El contenedor se llamará 'mongodb'.
+#
+# Línea 19:         Y la imagen el 'mongo' (https://hub.docker.com/_/mongo)
+#
+# Línea 21:         El contenedor del servidor MongoDB trabaja en el puerto '27017'.
+#
+# Línea 22:         Importante. Es la primera vez que vamos a usar secretos de Kubernetes inyectados a través
+#                   de variables de entorno.
+#       
+#                   La sección 'env:' indica que vamos a definir variables de entorno. Estas las podrá leer la
+#                   aplicación que corre en el contenedor cuando éste se inicie.
+#
+# Línea 23:         La primera variable de entorno se llama 'MONGO_INITDB_ROOT_USERNAME', que como vimos en la 
+#                   documentación (https://hub.docker.com/_/mongo) define el nombre de usuario administrador.
+#
+#                   Esta variable debe tener un valor. 
+#
+# Línea 24 y 25:    Indicamos que dicho valor se va a tomar desde un secreto de Kubernetes.
+#
+# Línea 26:         Indicamos el nombre del secreto, en este ejemplo 'mongodb-secret'. Este secreto debe existir en
+#                   el cluster y estará definido en otro archivo YAML que deberá implementarse antes que este.
+#
+# Línea 27:         Un secreto puede contener una lista de parejas clave/valor. Por eso en esta línea indicamos el nombre
+#                   de la clave 'mongodb-root-username', cuyo valor contendrá el nombre de usuario a utilizar.
+#
+#                   Nótese que en el archivo YAML es del todo imposible conocer cual es ese nombre de usuario. El uso de 
+#                   secretos permite que el desarrollador no tenga porqué conocer esta información sensible. La unica persona
+#                   que conocerá realmente este valor será el administrador del cluster, que es quien crea los secretos.
+#
+#                   (Nota: en este ejercicio también tenemos el rol de administrador del cluster, por lo que tendremos que
+#                          crear los secretos. Se verá en breve)
+#
+# Líneas 28-32:     Se define la variable de entorno 'MONGO_INITDB_ROOT_PASSWORD', que de forma similar a las líneas anteriores,
+#                   servirá para almacenar el password de MongoDB.
+
+
+# Ahora procedemos a definir las líneas más relevantes del servicio interno.
+#
+# Línea 35:         El objeto es un servicio.
+#
+# Líneas 36 y 27:   En los metadatos vemos que apacere el nombre del servicio 'mongodb-service', pero NO aparece el parámetro
+#                   'type: LoadBalancer', por lo tanto es un servicio interno.
+#
+# Líneas 39 y 40:   Se utiliza la etiqueta 'app: mongodb' como selector. Esta etiqueta es la misma que se ha declarado en el
+#                   deployment y en el pod.
+#
+# Líneas 41-44:     Se usará protocolo de transporte TCP. El puerto externo del servicio es el '27017' y el tráfico sera reenviado
+#                   al mismo puerto del (único) pod
+
+
+# Aun no podemos aplicar este archivo porque daría un error al no existir el secreto 'mongodb-secret', por lo que procedemos a 
+# crearlo.
+
+
+################################################
+# Ejercicio 3:  Crear un secreto en Kubernetes #
+################################################
 
 
 
