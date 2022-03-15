@@ -149,7 +149,13 @@ code lab-25-B-mongodb.yaml
 # Ejercicio 3:  Crear un secreto en Kubernetes #
 ################################################
 
+# Procedemos a crear el secreto que contendrá el usuario y el password de MongoDB.
 
+# Abrimos el archivo 'lab-25-B-mongodb-secret-initial.yaml'
+# (Nota: 'initial' quiere decir que tendremos que terminar su configuración siguiendo los password
+#        del laboratorio)
+
+code lab-25-B-mongodb-secret-initial.yaml
 
 
 
