@@ -388,7 +388,31 @@ code lab-25-B-mongo-express.yaml
 #
 # Línea 40:         El tipo de objeto es un servicio.
 #
-# Línea 
+# Línea 42:         Se llamará 'mongo-express-service'.
+#
+# Línea 44:         Es de tipo 'LoadBalancer', es decir de tipo externo.
+#
+# Línea 45 y 46:    Mediante el selector, se asociará con el deployment y el pod que tenga definida la etiqueta 
+#                   'app: mongo-express'.
+#
+# Línea 47-50:      Protocolo TCP, puerto externo '8081', puerto del contenedor '8081'.
+#
+# Línea 51:         'nodePort: 30000'. En realidad el puerto al que debemos conectar desde el navegador en un nodo del cluster para poder
+#                   acceder al servicio externo. Eso es exactamente lo que significa 'nodePort'. 
+#
+#                   Cuando el cluster tiene varios nodos, se puede poner un balanceador físico (o virtual) por delante, 
+#                   que reenvirá el tráfico al puerto apropiado de los diferentes nodos del cluster.
+#
+#                   En entornos cloud (AWS, Google, Azure) cuando creamos un balanceador externo en Kubernetes, lo que realmente
+#                   se crea es un servicio de balanceo en la nube: Elastic Load Balancer (ELS) para AWS o External Load Balancer 
+#                   (ELB) para Azure.
+
+
+# Salimos sin modificar nada.
+
+# Aun no podemos aplicar el YAML, porque falta por crear el 'Config Map'. El archivo ya está creado, así que lo abrimos.
+
+
 
 
 
