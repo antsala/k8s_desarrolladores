@@ -132,3 +132,5 @@ sudo snap install code --classic
 # Ejercicios:
 #   1. Aplicar un deployment desde archivo YAML.
 #   2. Aplicar un servicio desde archivo YAML.
+#   3. Obtener el estado de Kubernetes.
+#   4. Crear un servicio de tipo 'LoadBalancer' desde archivo YAML.

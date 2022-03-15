@@ -136,7 +136,7 @@ code lab-25-nginx-service.yaml
 # Línea 5:      Empieza la especificación del servicio.
 #
 # Líneas 6 y 7: Asocian en servicio con un deployment y definición de pod que tengan asignada
-#               la etiqueta 'app: nginx'
+#               la etiqueta 'app: myapp'
 #
 # Línea 8:      Comienza la especificación de puertos en el servicio.
 #
@@ -175,7 +175,7 @@ kubectl get service nginx-service
 # la columna 'TYPE' y, como puede observarse en la columna 'CLUSTER-IP', se ha asignado una
 # IP (10.108.103.253) que solo es accesible dentro del cluster.
 #
-# Más adelante en el curso aprenderemos a crear servicios externos, al que Kubernetes llama
+# En el siguiente ejercicio aprenderemos a crear servicios externos, al que Kubernetes llama
 # 'LoadBalancer'. El nombre no es especialmente acertado, ya que el servicio de tipo 'ClusterIP'
 # también balancea el tráfico.
 
@@ -186,12 +186,11 @@ kubectl describe service nginx-service
 
 
 # La salida ofrece mucha información. y será similar a la siguiente:
-#
 # Name:              nginx-service
 # Namespace:         default
 # Labels:            <none>
 # Annotations:       <none>
-# Selector:          app=nginx
+# Selector:          app=my-app
 # Type:              ClusterIP
 # IP Family Policy:  SingleStack
 # IP Families:       IPv4
@@ -199,9 +198,82 @@ kubectl describe service nginx-service
 # IPs:               10.108.103.253
 # Port:              <unset>  80/TCP
 # TargetPort:        8080/TCP
-# Endpoints:         <none>
+# Endpoints:         172.17.0.3:8080,172.17.0.4:8080,172.17.0.5:8080
 # Session Affinity:  None
 # Events:            <none>
+
+# De la salida anterior destacamos la siguiente información:
+#
+# 'Selector: app=my-app'. Muestra la pareja clave/valor que deberá tener el deployment/pods para la asociación.
+#
+# 'Type: ClusterIP'. El servicio es de tipo 'ClusterIP' (Explicado anteriormente)
+#
+# 'IPs: 10.108.103.253'. Dirección IP (privada e interna) asignada al servicio.
+#
+# 'Port: <unset>  80/TCP'. Puerto externo del servicio (80). '<unset>' indica que no hay controlador Ingress asociado A
+#                          este servicio. Los controladores Ingress serán explicados posteriormente.
+#
+# 'TargetPort: 8080/TCP'. Puerto de los contenedores. El tráfico se mandará a este puerto en el contenedor.
+#
+# 'Endpoints: 172.17.0.3:8080,172.17.0.4:8080,172.17.0.5:8080'. Direcciones IPs (y puerto) de los PODs. Como el Despliegue
+#                                                               tiene 'replicas: 3', se han creado 3 pods y, en consecuencia,
+#                                                               el servicio tiene que repartir el tráfico entre los tres pods.
+
+
+
+
+#################################################
+# Ejercicio 3:  Obtener el estado de Kubernetes #
+#################################################
+
+
+# 'etcd' en Kubernetes almacena en todo momento el estado de todos los objetos que viven en el cluster. Como ya vimos en
+# la parte teórica, Kubernetes intenta que el estado actual de los objetos coincida con el que deseamos y declaramos en
+# los archivos yaml.
+#
+# Es muy conveniente poder consultar este estado, y para ello hacemos uso de 'kubectl', de la siguiente forma:
+
+kubectl get deployment nginx-deployment -o yaml > nginx-deployment-status.yaml
+
+
+# Hemos generado un archivo con el estado. Lo abrimos con el editor.
+
+code nginx-deployment-status.yaml
+
+
+# Estudiar detenidamente el archivo, prestando especial atención a la seccción 'status'
+
+
+
+#############################################################################
+# Ejercicio 4:  Crear un servicio de tipo 'LoadBalancer' desde archivo YAML #
+#############################################################################
+
+
+# En este ejercicio vamos a crear un servicio de tipo 'LoadBalancer', de forma que podamos
+# usarlo desde fuera del cluster. Además, crearemos un deployment que use la imagen 
+# 'antsala/hello_container, para poder verificar el balanceo en Kubernetes.
+
+
+# El primer lugar eliminamos el servicio y el deployment anterior. Aprovechamos la potencia
+# de los archivos YAML para retirar los objetos del cluster.
+
+kubectl delete -f lab-25-nginx-service.yaml
+
+kubectl delete -f lab-25-nginx-deployment.yaml
+
+
+
+# Comprobamos que solo quede el servicio de Kubernetes:
+
+kubectl get all
+
+
+# La salida debe ser similar a esta:
+#
+# NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+# service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3h
+
 
 
 
