@@ -151,6 +151,19 @@ code lab-25-B-mongodb.yaml
 
 # Procedemos a crear el secreto que contendrá el usuario y el password de MongoDB.
 
+# Kubernetes almacena los secretos codificados en Base64 (no se cifran). Procedemos a generar las codificaciones
+# para el nombre de usuario y la contraseña.
+
+username=$(echo -n 'mongodb_admin15032020' | base64)
+password=$(echo -n 'EsteEsUnPasswordSuperRobusto354654@#~~##@@' | base64)
+
+# Comprobamos el contenido de estas variables y las copiamos el algún sitio porque la necesitaremos en un instante.
+
+echo $username
+
+echo $password
+
+
 # Abrimos el archivo 'lab-25-B-mongodb-secret-initial.yaml'
 # (Nota: 'initial' quiere decir que tendremos que terminar su configuración siguiendo los password
 #        del laboratorio)
@@ -158,6 +171,44 @@ code lab-25-B-mongodb.yaml
 code lab-25-B-mongodb-secret-initial.yaml
 
 
+# Las líneas mas importantes y su significado son:
+#
+# Línea 2:      El tipo de objeto a crear es un secreto de Kubernetes.
+#
+# Línea 4:      Aquí ponemos un nombre al secreto. En este caso 'mongodb-secret'. Los objetos que vayan
+#               a usarlo deberán poner este mismo nombre.
+#
+# Línea 5:      Kubernetes puede guardar secretos de diversa índole, por ejemplo, certificados digitales TLS, 
+#               cadenas de conexión (URLs) y, en este caso, parejas clave/valor. A este tipo de información
+#               se le llama 'Opaque'.
+#
+# Línea 7:      Importante. Sustituir el placeholder por el valor del NOMBRE de usuario codificado en Base64.
+#
+# Línea 8:      Importante. Sustituir el placeholder por el valor del PASSWORD de usuario codificado en Base64.
+
+# Guardar los cambios y salir.
+
+# Cambiamos el nombre al archivo.
+
+mv lab-25-B-mongodb-secret-initial.yaml lab-25-B-mongodb-secret.yaml
+
+
+# Ahora solo queda agregar el secreto al cluster:
+
+kubectl apply -f lab-25-B-mongodb-secret.yaml
+
+
+# Comprobamos que el secreto existe:
+
+kubectl get secret mongodb-secret
+
+
+# Pedimos a K8s que nos muestre info sobre el secreto:
+# (Nota: Observar cómo no se muestra el secreto codificado, ya que podríamos decodificarlo de forma simple)
+
+
+
+kubectl describe secret mongodb-secret
 
 
 
