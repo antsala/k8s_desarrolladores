@@ -23,13 +23,16 @@
 #
 # Con la idea de que el servidor MongoDB solo pueda ser administrado desde el pod de Mongo-Express, 
 # implementaremos un servicio interno con nombre 'mongodb-service'.
+#
+# Al crear el pod de MongoDB nos interesa aportar la credencial del usuario 'root'. La credencial
+# la protegeremos mediante un secreto de Kubernetes.
 # 
 # Ver diapositiva 23. Despliegue de MongoDB-1
 #
 #
 # Mongo-Express tendrá su propio pod y deployment, y para conectar con MongoDB, necesitará la URL
 # de la base de datos, así como una credencial (usuario y password). La URL la almacenaremos en un
-# Config Map, mientras que la credendial la guardaremos en un Secreto.
+# Config Map, mientras que la credendial la leeremos desde el secreto.
 #
 # Ver diapositiva 24. Despliegue de MongoDB-2
 #
@@ -182,9 +185,13 @@ code lab-25-B-mongodb-secret-initial.yaml
 #               cadenas de conexión (URLs) y, en este caso, parejas clave/valor. A este tipo de información
 #               se le llama 'Opaque'.
 #
-# Línea 7:      Importante. Sustituir el placeholder por el valor del NOMBRE de usuario codificado en Base64.
+# Línea 7:      Esta línea contiene la clave del secreto para el NOMBRE del usuario. 
+#               En el ejemplo 'mongo-root-username'.
+#               Importante. Sustituir el placeholder por el valor del NOMBRE de usuario codificado en Base64.
 #
-# Línea 8:      Importante. Sustituir el placeholder por el valor del PASSWORD de usuario codificado en Base64.
+# Línea 8:      Esta línea contiene la clave del secreto para el PASSWORD del usuario. 
+#               En el ejemplo 'mongo-root-password'.
+#               Importante. Sustituir el placeholder por el valor del PASSWORD de usuario codificado en Base64.
 
 # Guardar los cambios y salir.
 
@@ -207,8 +214,121 @@ kubectl get secret mongodb-secret
 # (Nota: Observar cómo no se muestra el secreto codificado, ya que podríamos decodificarlo de forma simple)
 
 
-
 kubectl describe secret mongodb-secret
+
+
+
+##################################################
+# Ejercicio 4:  Aplicar el deployment de MongoDB #
+##################################################
+
+
+# Solo queda aplicar el deployment (y su servicio) para que el Backend quede terminado.
+# Recordemos que el archivo de manifiesto lee los secretos para el usuario root de la base de datos.
+
+kubectl apply -f lab-25-B-mongodb.yaml
+
+
+# Salida debería ser similar a esta:
+#
+# deployment.apps/mongodb-deployment created
+# service/mongodb-service created
+
+
+# Comprobamos los objetos creados:
+
+kubectl get deployment mongodb-deployment
+
+
+# La salida debe ser similar a esta:
+#
+# NAME                 READY   UP-TO-DATE   AVAILABLE   AGE
+# mongodb-deployment   1/1     1            1           71s
+
+# Vemos que el pod del deployment está arriba.
+
+
+# Comprobamos el pod.
+
+kubectl get pods
+
+
+# La salida debe ser similar a esta:
+#
+# NAME                                  READY   STATUS    RESTARTS   AGE
+# mongodb-deployment-7bb6c6c4c7-fhrxm   1/1     Running   0          2m48s
+
+# El pod está corriendo, y por definición, su único contenedor también.
+
+
+# Miramos con detalle qué acciones ha realizado el pod:
+
+kubectl describe pod <Poner aquí el nombre del pod>
+
+
+# En la salida, la parte de eventos debería tener algo similar a esto:
+#
+# Events:
+#   Type    Reason     Age    From               Message
+#   ----    ------     ----   ----               -------
+#   Normal  Scheduled  4m55s  default-scheduler  Successfully assigned default/mongodb-deployment-7bb6c6c4c7-fhrxm to minikube
+#   Normal  Pulling    4m54s  kubelet            Pulling image "mongo"
+#   Normal  Pulled     4m38s  kubelet            Successfully pulled image "mongo" in 15.535332691s
+#   Normal  Created    4m38s  kubelet            Created container mongodb
+#   Normal  Started    4m38s  kubelet            Started container mongodb
+
+# Que indica que el contenedor ha sido creado e iniciado sin problemas.
+
+
+# Recordemos que el archivo YAML también declaraba el servicio. Procedemos a comprobar si se ha creado el objeto
+
+kubectl get service mongodb-service
+
+
+# La salida debe ser similar a esta:
+#
+# NAME              TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)     AGE
+# mongodb-service   ClusterIP   10.97.22.152   <none>        27017/TCP   8m10s
+
+# Que es la típica de un servicio de tipo interno: Para acceder a él, el Frontend tiene con la IP 10.97.22.152
+# al puerto 27017. 
+#
+# Usar IPs en las conexiones no se debe hacer en Kubernetes, así que en breve abstraeremos esa IP y usaremos 
+# el nombre del servicio ('mongodb-service') para conectar. Esto se hará por medio de un Config Map.
+
+
+# Por último comprobamos que el servicio tiene el endpoint hacia el pod bien configurado.
+
+kubectl describe service mongodb-service
+
+
+# En la salida, debemos verificar lo siguiente:
+#
+# 'Selector: app=mongodd' Hace que el servicio envíe tráfico a los pods con esta etiqueta.
+#
+# 'TargetPort: 27017/TCP' Se corresponde con el puerto que tiene abierto el contenedor de MongoDB.
+#
+# 'Endpoints: 172.17.0.3:27017' Es el socket al que enviará tráfico el servicio, donde se puede ver la IP del pod 
+#                               (no del contenedor, recordemos eso)
+
+
+
+####################################################
+# Ejercicio 5: Crear el deployment 'Mongo Express' #
+####################################################
+
+
+# 'Mongo Express' es un Frontend gráfico para administrar MongoDB. En este ejercicio explicaremos el achivo
+# YAML que define su deployment y un servicio externo de tipo 'LoadBalancer'. 
+#
+# Para que 'Mongo Express' pueda contectar con el pod de Backend, usaremos un 'Config Map'.
+
+
+
+
+
+
+
 
 
 
