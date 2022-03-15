@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello_container_deployment
+  name: hello-container-deployment
   labels:
     app: helloContainer
 spec:
@@ -15,7 +15,7 @@ spec:
         app: helloContainer
     spec:
       containers:
-        - name: hello_container
+        - name: hello-container
           image: antsala/hello_container
           ports:
             - containerPort: 8080
