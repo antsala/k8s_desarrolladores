@@ -39,7 +39,7 @@ code lab-25-nginx-deployment.yaml
 # Líneas 3-6:       Establece el nombre del deployment ('nginx-deployment') y asigna una etiqueta (label) 'app: my-app'
 #                   que podrá ser usada para asociar este deployment a otros objetos de k8s.
 #
-# Línea 12:         Empieza la definición de los contenedores que contendrá el pod.
+# Línea 12:         Empieza la definición del pod.
 #
 # Líneas 13-15:     Se asigna una etiqueta para identificar el pod ('app: my-app')
 #
@@ -58,7 +58,7 @@ code lab-25-nginx-deployment.yaml
 # Una vez entendido el manifiesto, lo cerramos sin modificar.
 # Ahora vamos a proceder a aplicar el manifiesto por medio de 'kubectl'
 
-kubectl apply -f lab-20-B-nginx-deployment.yaml
+kubectl apply -f lab-25-nginx-deployment.yaml
 
 
 
@@ -87,12 +87,12 @@ kubectl get all
 #
 # Editar el archivo y cambiar 'replicas: 1' por 'replicas: 3'. Salir y guardar el cambio.
 
-nano lab-20-B-nginx-deployment.yaml
+nano lab-25-nginx-deployment.yaml
 
 
 # Ahora volvemos a aplicar el archivo YAML. Observar cómo nos dice que es deployment ha sido configurado.
 
-kubectl apply -f lab-20-B-nginx-deployment.yaml
+kubectl apply -f lab-25-nginx-deployment.yaml
 
 
 # Comprobamos cuantas réplicas tiene el deployment
@@ -113,21 +113,100 @@ kubectl get pods
 kubectl get replicasets
 
 
-# Otra enorme ventaja de usar archivos YAML es que no solo sirve para crear/modificar objetos.
-# También podemos eliminarlos muy facilmente con la opción 'delete':
-
-kubectl delete -f lab-20-B-nginx-deployment.yaml
-
-
-# Comprobamos que se ha borrado todo (Excepto el servicio 'Kubernetes')
-
-kubectl get all
-
-
 
 ########################################################
 # Ejercicio 2:  Aplicar un servicio desde archivo YAML #
 ########################################################
+
+
+# Como ya sabemos, un servicio de Kubernetes permite que el tráfico llegue a los contenedores
+# de los pods. Editemos el siguiente archivo:
+
+code lab-25-nginx-service.yaml
+
+
+# La sintaxis y su interpretación para este archivo YAML es la siguiente:
+#
+# Línea 1:      Declara la versión de la sintaxis.
+#
+# Línea 2:      Declara el tipo de objeto que se creará, en este caso un servicio.
+#
+# Línea 3 y 4:  Asigna, mediante una etiqueta, un nombre al servicio.
+#
+# Línea 5:      Empieza la especificación del servicio.
+#
+# Líneas 6 y 7: Asocian en servicio con un deployment y definición de pod que tengan asignada
+#               la etiqueta 'app: nginx'
+#
+# Línea 8:      Comienza la especificación de puertos en el servicio.
+#
+# Línea 9:      Establece el protocolo de transporte (TCP).
+#
+# Línea 10:     Puerto externo del servicio.
+#
+# Línea 11:     Puerto del contenedor al que se enviará el tráfico (8080)
+
+
+# Salimos sin cambiar nada y procedemos a crear este objeto en el cluster.
+
+kubectl apply -f lab-25-nginx-service.yaml
+
+
+# Comprobamos que el servicio se ha creado:
+
+kubectl get service nginx-service
+
+
+
+# La salida será similar a la siguiente.
+#
+# NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+# nginx-service   ClusterIP   10.108.103.253   <none>        80/TCP    28s
+#
+# Hemos creado un servicio INTERNO. Lo sabemos porque no existe una IP externa, tal
+# y como indica el valor '<none>' en la columna 'EXTERNAL-IP'.
+#
+# Un servicio interno, por definición, no puede ser accedido desde fuera del cluster.
+# Es decir, los usuarios de la aplicación no podrán acceder a los contenedores de nginx a 
+# través de este servicio.
+#
+# En consecuencia, los servicios internos solo pueden ser usados por otros objetos dentro
+# del cluster. Kubernetes expresa esto indicando que el tipo de servicio es 'ClusterIP', en
+# la columna 'TYPE' y, como puede observarse en la columna 'CLUSTER-IP', se ha asignado una
+# IP (10.108.103.253) que solo es accesible dentro del cluster.
+#
+# Más adelante en el curso aprenderemos a crear servicios externos, al que Kubernetes llama
+# 'LoadBalancer'. El nombre no es especialmente acertado, ya que el servicio de tipo 'ClusterIP'
+# también balancea el tráfico.
+
+
+# Procedemos a estudiar la salida de la opción 'describe' sobre el servicio, con este comando:
+
+kubectl describe service nginx-service
+
+
+# La salida ofrece mucha información. y será similar a la siguiente:
+#
+# Name:              nginx-service
+# Namespace:         default
+# Labels:            <none>
+# Annotations:       <none>
+# Selector:          app=nginx
+# Type:              ClusterIP
+# IP Family Policy:  SingleStack
+# IP Families:       IPv4
+# IP:                10.108.103.253
+# IPs:               10.108.103.253
+# Port:              <unset>  80/TCP
+# TargetPort:        8080/TCP
+# Endpoints:         <none>
+# Session Affinity:  None
+# Events:            <none>
+
+
+
+
+
 
 
 
