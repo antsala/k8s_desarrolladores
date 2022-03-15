@@ -41,9 +41,9 @@ kind: Service
 metadata:
   name: mongo-express-service
 spec:
+  type: LoadBalancer  
   selector:
     app: mongo-express
-  type: LoadBalancer  
   ports:
     - protocol: TCP
       port: 8081

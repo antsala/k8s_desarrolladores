@@ -323,6 +323,72 @@ kubectl describe service mongodb-service
 #
 # Para que 'Mongo Express' pueda contectar con el pod de Backend, usaremos un 'Config Map'.
 
+# La imagen de contenedor que usaremos es 'mongo-express' que está aquí: https://hub.docker.com/_/mongo-express
+
+# En la documentación, en la parte 'Configuration' aparecen las variables de entorno que debemos configurar
+# para que funcione. A continuación ponemos un extracto de ella.
+#
+# ...
+# ME_CONFIG_MONGODB_ADMINUSERNAME | ''              | MongoDB admin username
+# ME_CONFIG_MONGODB_ADMINPASSWORD | ''              | MongoDB admin password
+# ...
+# ME_CONFIG_MONGODB_SERVER        | 'mongo'         | MongoDB container name. Use comma delimited list of host names for replica sets.
+
+# Estas variables de entorno debemos proporcionárselas al contenedor. El nombre y usuario del administrador las leeremos
+# de un 'Secret', mientras que el servidor se tomará de un 'Config Map'.
+
+
+# Abrimos el archivo 'lab-25-B-mongo-express.yaml'
+
+code lab-25-B-mongo-express.yaml
+
+
+# Al igual que pasaba en el Backend, comprobamos que este archivo está dividido en dos partes.
+# La línea 38 tiene '---'. En la sintaxis YAML esto indica que se está definiendo un objeto
+# diferente.
+#
+# Por lo tanto, las líneas 1-37 definen el objeto 'mongo-express-deployment', mientras que las líneas
+# 38-51 definen el objeto 'mongo-express-service'.
+
+
+# Las líneas más importante son:
+#
+# Línea 2:          Creamos un deployment.
+#
+# Línea 4:          Su nombre es 'momgo-db-deployment'.
+#
+# Línea 8:          Se instanciará un solo pod.
+#
+# Líneas 10 y 11:   El deployment se asociará al pod que tenga definida la etiqueta 'app: mongo-express'.
+#
+# Línea 17:         Empieza la definición del contenedor (solo hay uno)
+#
+# Línea 18:         Se llamará 'mongo-express'.
+#
+# Línea 19:         Estará basado en la imagen 'mongo-express'.
+#
+# Línea 22:         Empieza la definición de las variables de entorno.
+#
+# Líneas 23-27:     Al igual que el Backend, la variable de entorno 'ME_CONFIG_MONGODB_ADMINUSERNAME' se carga
+#                   desde la clave 'mongo-root-username' del secreto 'mongodb-secret'.
+#
+# Líneas 28-32:     La variable de entorno 'ME_CONFIG_MONGODB_ADMINPASSWORD' se carga
+#                   desde la clave 'mongo-root-password' del secreto 'mongodb-secret'.
+#
+# Líneas 33-37:     La variable de entorno 'ME_CONFIG_MONGODB_SERVER' se carga desde la clave 'database_url' desde
+#                   el Config Map 'mongodb-configmap'.
+#
+#                   Tanto el secreto como el Config Map introducen configuraciones a la app. La diferencia estriba en
+#                   que las configuraciones que puedan ser conocidas por el desarrollador deben ponerse en el Config Map
+#                   para que éste pueda modificaro (el Config Map). Recordemos que para crear/modificar secretos se debe
+#                   estar en el rol de administrador del cluster.
+
+
+# Ahora procedemos a definir las líneas más relevantes del servicio externo.
+#
+# Línea 40:         El tipo de objeto es un servicio.
+#
+# Línea 
 
 
 
