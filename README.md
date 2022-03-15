@@ -134,3 +134,11 @@ sudo snap install code --classic
 #   2. Aplicar un servicio desde archivo YAML.
 #   3. Obtener el estado de Kubernetes.
 #   4. Crear un servicio de tipo 'LoadBalancer' desde archivo YAML.
+
+
+# Laboratorio 25-B: "Despliegue de MongoDB"
+# Archivo: lab-25-B.txt
+#
+# Ejercicios:
+#   1. Descripción del sistema.
+#   2. Crear la base de datos MongoDB.

@@ -1,4 +1,4 @@
-# Laboratorio 25: "Despliegue de archivos YAML"
+# Laboratorio 25-A: "Despliegue de archivos YAML"
  
 # Este laboratorio aprenderemos a desplegar archivos YAML
 

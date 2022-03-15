@@ -1,0 +1,77 @@
+# Laboratorio 25-B: "Despliegue de MongoDB"
+ 
+# Este laboratorio aprenderemos a desplegar MongoDB por medio de archivos YAML
+
+# Requisitos:
+#
+#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2)  Tener instalado el runtime de podman. (ver lab-06-A.txt, Ejercicio 1 y 2)
+
+
+#########################################
+# Ejercicio 1:  Descripción del sistema #
+#########################################
+
+
+# Vamos a hacer un despliegue de MongoDB y Mongo-Express usando archivos YAML.
+#
+# MongoDB es el servidor de bases de datos que correrá en un contenedor dentro de un pod de Kubernetes
+# al que llamaremos 'mongodb-deployment'.
+#
+# Mongo-Express es una interfaz gráfica de administración, que se corre en su propio pod.
+#
+# Con la idea de que el servidor MongoDB solo pueda ser administrado desde el pod de Mongo-Express, 
+# implementaremos un servicio interno con nombre 'mongodb-service'.
+# 
+# Ver diapositiva 23. Despliegue de MongoDB-1
+#
+#
+# Mongo-Express tendrá su propio pod y deployment, y para conectar con MongoDB, necesitará la URL
+# de la base de datos, así como una credencial (usuario y password). La URL la almacenaremos en un
+# Config Map, mientras que la credendial la guardaremos en un Secreto.
+#
+# Ver diapositiva 24. Despliegue de MongoDB-2
+#
+#
+# Por último, para hacer accesible al usuario la conexión al pod Mongo-Express, pondremos un servicio
+# externo, de tipo LoadBalancer.
+#
+# Ver diapositiva 25. Despliegue de MongoDB-3
+
+
+################################################
+# Ejercicio 2:  Crear la base de datos MongoDB #
+################################################
+
+# Para MongoDB usaremos la imagen 'mongo' presente en DockerHub. La documentación se encuentra en esta
+# URL: https://hub.docker.com/_/mongo
+#
+# En la sección 'Environment Variables' se puede leer:
+# (Nota: se muestra solo parte de la documentación)
+#
+# ...
+# When you start the mongo image, you can adjust the initialization of the MongoDB instance by passing one 
+# or more environment variables on the docker run command line. Do note that none of the variables below will 
+# have any effect if you start the container with a data directory that already contains a database: any pre-existing
+# database will always be left untouched on container startup.
+#
+# MONGO_INITDB_ROOT_USERNAME, MONGO_INITDB_ROOT_PASSWORD
+# ...
+
+# En consecuencia, a través de estas variables de entorno, podremos configurar las credenciales de la base de datos.
+
+
+# Nos posicionamos en el directorio de trabajo:
+
+
+
+
+
+
+
+
+
+#######################
+# FIN DEL LABORATORIO #
+#######################
