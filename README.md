@@ -127,7 +127,7 @@ sudo snap install code --classic
 # Carpeta 25
 
 # Laboratorio 25-A: "Despliegue de archivos YAML"
-# Archivo: lab-25.txt
+# Archivo: lab-25-A.txt
 #
 # Ejercicios:
 #   1. Aplicar un deployment desde archivo YAML.
