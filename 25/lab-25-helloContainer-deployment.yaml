@@ -15,7 +15,7 @@ spec:
         app: helloContainer
     spec:
       containers:
-        - name: helloContainer
+        - name: hello_container
           image: antsala/hello_container
           ports:
             - containerPort: 8080
