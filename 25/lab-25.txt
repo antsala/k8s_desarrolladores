@@ -263,7 +263,6 @@ kubectl delete -f lab-25-nginx-service.yaml
 kubectl delete -f lab-25-nginx-deployment.yaml
 
 
-
 # Comprobamos que solo quede el servicio de Kubernetes:
 
 kubectl get all
@@ -323,10 +322,87 @@ kubectl get pods
 # que los contenedores se ha iniciado correctemente.
 
 
-# Ahora procedemos a desplegar el servicio. Editamos el archivo:
+# Ahora procedemos a desplegar el servicio. Editamos el archivo 'lab-25-helloContainer-service.yaml':
+
+code lab-25-helloContainer-service.yaml
 
 
+# Las líneas más importantes son:
+#
+# Línea 3:          El nombre del servicio es 'hello-container-service'.
+#
+# Línea 6:          Aquí tenemos el cambio fundamental. 'type: LoadBalancer' hace que Kubernetes
+#                   genere para el servicio una IP Externa (que puede ser pública o privada). De
+#                   esta forma podemos contactar con el servicio desde fuera del cluster, por ejemplo
+#                   desde el 'localhost'
+#
+# Líneas 7 y 8:     Se utiliza el selector 'app: helloContainer' para asociar este servicio con
+#                   el deployment y definición de pod apropiadas.
 
+
+# Aplicamos el servicio:
+
+kubectl apply -f lab-25-helloContainer-service.yaml
+
+
+# Comprobamos que el servicio está funcionando.
+
+kubectl get service hello-container-service
+
+
+# La salida es la siguiente:
+#
+# NAME                      TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+# hello-container-service   LoadBalancer   10.106.173.212   <pending>     80:32758/TCP   25s
+
+# Como se puede ver en la columna 'TYPE', el servicio es un 'LoadBalancer'. 
+
+
+# En la columna 'EXTERNAL-IP' aparece el valor '<pending>'. Esto es así porque minikube no sabe 
+# qué dirección IP externa debe asignar al servicio. En un proveedor cloud tendremos inmediatamente
+# la IP externa, ya que estos proveedores automatizan la asignación de esta IP.
+#
+# Solo en el caso de Minikube debemos hacer lo siguiente: Levantar un servicio que actúe como
+# router entre el cluster y el mundo externo. 
+
+
+# En una terminal diferente, ejecutamos el siguiente comando:
+
+minikube tunnel
+
+# Cuando se inicie el túnel, se asignará la IP externa al servicio 'hello-container-service'.
+# Si volvemos a mostrar información del servicio, la veremos:
+
+kubectl get service hello-container-service
+
+
+# En este caso la salida es:
+#
+# NAME                      TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)        AGE
+# hello-container-service   LoadBalancer   10.106.173.212   10.106.173.212   80:32758/TCP   6m4s
+
+# En la columna 'EXTERNAL-IP' podemos ver la IP asignada (10.106.173.212)
+
+ip_externa=<poner aquí EXTERNAL-IP>
+
+
+# Ya solo queda probar el balanceo en Kubernetes. Repetir varias veces el siguiente comando:
+
+curl $ip_externa:80
+
+
+# Cerramos la terminal del túnel de Minikube.
+
+# Limpiamos recursos.
+
+kubectl delete -f lab-25-helloContainer-service.yaml
+
+kubectl delete -f lab-25-helloContainer-deployment.yaml
+
+
+# Comprobamos que solo quede el servicio de Kubernetes:
+
+kubectl get all
 
 #######################
 # FIN DEL LABORATORIO #
