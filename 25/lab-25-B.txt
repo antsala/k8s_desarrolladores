@@ -64,6 +64,16 @@
 
 # Nos posicionamos en el directorio de trabajo:
 
+cd ~/k8s_desarrolladores/25
+
+
+# Abrimos el archivo que contiene el deployment de MongoDB.
+
+code lab-25-B-mongodb-deployment.yaml
+
+# El contenido de las líneas más relevantes del archivo YAML es el siguiente:
+#
+# Línea 
 
 
 
