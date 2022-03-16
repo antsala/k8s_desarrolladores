@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Ingress
+metadata: hello-container-ingress
+spec:
+  rules:
+  - host: www.hellocontainer.com
+    http:
+      paths:
+        - backend:
+            serviceName: hello-container-internal-service
+            servicePort: 4000
+
