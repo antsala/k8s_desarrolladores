@@ -145,4 +145,14 @@ sudo snap install code --classic
 #   3. Crear un secreto en Kubernetes.
 #   4. Aplicar el deployment de MongoDB.
 #   5. Crear el deployment 'Mongo Express'.
-#   6. Aplicar el deployment de 'Mongo Express',
+#   6. Aplicar el deployment de 'Mongo Express'.
+
+
+# Carpeta 30
+
+# Laboratorio 30: "Espacios de Nombres"
+# Archivo: lab-30.txt
+#
+# Ejercicios:
+#   1. Creación de un espacio de nombres.
+
