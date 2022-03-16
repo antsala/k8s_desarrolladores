@@ -396,18 +396,12 @@ code lab-25-B-mongo-express.yaml
 #
 # Línea 47-50:      Protocolo TCP, puerto externo '8081', puerto del contenedor '8081'.
 #
-# Línea 51:         'nodePort: 30000'. En realidad el puerto al que debemos conectar desde el navegador en un nodo 
-#                   del cluster para poder acceder al servicio externo. Eso es exactamente lo que significa 'nodePort'. 
+# Línea 51:         'nodePort: 30000'. Para conectar con el servicio no podemos hacerlo directamente contra 
+#                   la CLUSTER-IP (y su puerto), sino que debemos levantar un túnel para el servicio con 'minikube service'.
+#                   Ahora si podemos conectar contra la EXTERNAL-IP y el puerto establecido por 'nodePort', que en este caso
+#                   es 3000. El flujo que cursa la conexión es:
 #
-#                   Cuando el cluster tiene varios nodos, se puede poner un balanceador físico (o virtual) por delante, 
-#                   que reenvirá el tráfico al puerto apropiado de los diferentes nodos del cluster.
-#
-#                   En entornos cloud (AWS, Google, Azure) cuando creamos un balanceador externo en Kubernetes, lo que realmente
-#                   se crea es un servicio de balanceo en la nube: Elastic Load Balancer (ELS) para AWS o External Load Balancer 
-#                   (ELB) para Azure.
-#
-#                   En nuestro Minikube debemos ejecutar el comando 'minikube server <Nombre_de_servicio_externo> para que funcione.
-
+#                   Navegador --> EXTERNAL-IP:30000  //  Minikube --> CLUSTER-IP:8081  //  mongo-express-service --> endpoint_pod:8081
 
 # Salimos sin modificar nada.
 
@@ -510,8 +504,7 @@ kubectl get service mongo-express-service
 # NAME                    TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 # mongo-express-service   LoadBalancer   10.104.215.72   <pending>     8081:30000/TCP   3m47s
 
-# El servicio es de tipo 'load balancer' y 'NodePort' es 30000, pero la IP está en 'Pending'
-# Al igual que hicimos en el ejercicio anterior, desde otra terminal ejecutamos:
+# El servicio es de tipo 'load balancer' y 'NodePort' es 30000, pero la EXTERNAL-IP está en 'Pending'
 
 # Cuando se nos asigne la EXTERNAL-IP, debemos conectar con el navegador a su puerto 30000 (NodePort)
 # De este forma, el tráfico iria así:

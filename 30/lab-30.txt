@@ -157,8 +157,6 @@ external_ip=<Copiar aquí la EXTERNAL-IP asignada>
 
 
 # Probamos que funciona conectacto a la EXTERNAL-IP.
-# (Nota: En el laboratorio anterior, usamos un NodePort, que permitía conectar con la IP del nodo 
-#        del cluster en lugar de como hacemos aquí, conectando a la EXTERNAL-IP)
 
 curl $external_ip:80
 
