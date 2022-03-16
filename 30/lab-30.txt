@@ -322,7 +322,23 @@ kubectl get all --namespace hello-container-namespace
 # Cerrar la terminal de 'minikube tunnel'
 
 
+# Eliminamos el espacio de nombres creado:
+
+kubectl delete namespace hello-container-namespace
+
+
 # Comprobamos:
+
+kubectl get namespaces
+
+# Solo deben quedar los espacios de nombres originales
+#
+# NAME              STATUS   AGE
+# default           Active   56m
+# kube-node-lease   Active   56m
+# kube-public       Active   56m
+# kube-system       Active   56m
+
 
 kubectl get all 
 
