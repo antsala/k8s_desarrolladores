@@ -533,7 +533,8 @@ minikube service mongo-express-service
 
 
 
-# Se debe abrir el navegador y conectar a 'Mongo-express'.
+# Se debe abrir el navegador y conectar a 'Mongo-express'. En este caso estamos conectando a la IP
+# de la máquina (192.168.49.2 en este ejemplo)
 
 
 # Limpiamos los recursos:

@@ -155,4 +155,9 @@ sudo snap install code --classic
 #
 # Ejercicios:
 #   1. Creación de un espacio de nombres.
+#   2. Aplicar un archivo YAML en un espacio de nombres.
+#   3. Predeterminar el espacio de nombres.
+#   4. Predeterminar el espacio de nombres en el archivo YAML.
+
+
 
