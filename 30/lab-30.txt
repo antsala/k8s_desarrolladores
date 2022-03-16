@@ -1,0 +1,122 @@
+# Laboratorio 30: "Espacios de Nombres"
+ 
+# Este laboratorio aprenderemos a usar los espacios de nombres ('Namespaces')
+
+# Requisitos:
+#
+#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2)  Tener instalado el runtime de podman. (ver lab-06-A.txt, Ejercicio 1 y 2)
+
+
+###################################################
+# Ejercicio 1:  Creación de un espacio de nombres #
+###################################################
+
+# Listamos los espacios de nombre que existen el cualquier implementación del cluster de Kubernetes.
+
+kubectl get Namespaces
+
+
+# La salida será similar a esta:
+#
+# NAME              STATUS   AGE
+# default           Active   26h
+# kube-node-lease   Active   26h
+# kube-public       Active   26h
+# kube-system       Active   26h
+
+
+# Vamos a volver a desplegar la aplicación 'helloContainer', pero en este caso usaremos un espacio de nombres.
+
+# Creamos el espacio de nombres 'hello-container-namespace'
+
+kubectl create namespace hello-container-namespace
+
+
+# Comprobamos que se ha creado:
+
+kubectl get namespace hello-container-namespace
+
+
+# La salida será parecida a esta:
+#
+# NAME                        STATUS   AGE
+# hello-container-namespace   Active   52s
+
+
+# Podemos ver las características del espacio de nombre creado, describiéndolo:
+
+kubectl describe namespace hello-container-namespace
+
+
+# La salida es:
+#
+# Name:         hello-container-namespace
+# Labels:       kubernetes.io/metadata.name=hello-container-namespace
+# Annotations:  <none>
+# Status:       Active
+#
+# No resource quota.
+# 
+# No LimitRange resource.
+
+
+# Podemos confirmar que el espacio de nombres se crea sin quotas de recursos. Si queremos aprender cómo
+# funcionan las cuotas en K8s, procedemos a leer este artículo: https://kubernetes.io/docs/concepts/policy/resource-quotas/
+#
+# Para los límites, este artículo lo explica detalladamente: https://kubernetes.io/docs/concepts/policy/limit-range/
+
+
+# El siguiente paso es filtrar los objetos para el espacio de nombres. Para ello hacemos uso del parámetro
+# '--namespace'.
+
+kubectl get all --namespace hello-container-namespace
+
+
+# No debe existir ningún objeto.
+#
+# No resources found in hello-container-namespace namespace.
+
+
+
+###################################################################
+# Ejercicio 2:  Aplicar un archivo YAML en un espacio de nombres  #
+###################################################################
+
+# Si el archivo YAML no contiene indicación alguna sobre el espacio de nombres en el que se deben crear los
+# objetos, podemos especificarlo al aplicar el YAML.
+#
+# Los archivos 'lab-30-helloContainer-deployment.yaml' y 'lab-30-helloContainer-service.yaml' no tienen ninguna
+# propiedad que indique el espacio de nombres en el que deseamos crear los objetos.
+#
+# Podemos comprobarlo abriendo los archivos y buscando la propiedad 'namespace', que no estará.
+
+code lab-30-helloContainer-deployment.yaml
+
+code lab-30-helloContainer-service.yaml
+
+
+
+
+
+
+
+
+
+
+
+# Limpiamos los recursos:
+
+
+
+
+# Comprobamos:
+
+kubectl get all 
+
+
+
+#######################
+# FIN DEL LABORATORIO #
+#######################
