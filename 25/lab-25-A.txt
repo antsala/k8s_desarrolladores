@@ -362,9 +362,7 @@ kubectl get service hello-container-service
 # qué dirección IP externa debe asignar al servicio. En un proveedor cloud tendremos inmediatamente
 # la IP externa, ya que estos proveedores automatizan la asignación de esta IP.
 #
-# Solo en el caso de Minikube debemos hacer lo siguiente: Levantar un servicio que actúe como
-# router entre el cluster y el mundo externo. 
-
+# Solo en el caso de Minikube debemos hacer lo siguiente: 
 
 # En una terminal diferente, ejecutamos el siguiente comando:
 

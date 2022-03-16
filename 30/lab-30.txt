@@ -134,15 +134,24 @@ kubectl get services --namespace hello-container-namespace
 # El resultado debe ser el siguiente:
 #
 # NAME                      TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
-# hello-container-service   LoadBalancer   10.97.21.188   <pending>     80:32204/TCP   40s
+# hello-container-service   LoadBalancer   10.97.21.188   <pending>     80:30000/TCP   40s
 
 
-# La EXTERNAL-IP está pendiente. En otra terminal levantamos el tunnel para que se asigne la IP.
+# La EXTERNAL-IP está pendiente. Pedimos a minikube una URL a la que conectar.
 
-minikube tunnel
+minikube service hello-container-service --namespace hello-container-namespace
 
 
-# En la terminal principal.
+# La salida será similar a esta:
+# |---------------------------|-------------------------|-------------|---------------------------|
+# |         NAMESPACE         |          NAME           | TARGET PORT |            URL            |
+# |---------------------------|-------------------------|-------------|---------------------------|
+# | hello-container-namespace | hello-container-service |          80 | http://192.168.49.2:30000 |
+# |---------------------------|-------------------------|-------------|---------------------------|
+
+
+
+
 # Listamos los servicios en el espacio de nombres.
 
 kubectl get services --namespace hello-container-namespace

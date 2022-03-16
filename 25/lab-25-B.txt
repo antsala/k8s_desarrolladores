@@ -396,12 +396,27 @@ code lab-25-B-mongo-express.yaml
 #
 # Línea 47-50:      Protocolo TCP, puerto externo '8081', puerto del contenedor '8081'.
 #
-# Línea 51:         'nodePort: 30000'. Para conectar con el servicio no podemos hacerlo directamente contra 
-#                   la CLUSTER-IP (y su puerto), sino que debemos levantar un túnel para el servicio con 'minikube service'.
-#                   Ahora si podemos conectar contra la EXTERNAL-IP y el puerto establecido por 'nodePort', que en este caso
-#                   es 3000. El flujo que cursa la conexión es:
+# Línea 51:         En ejemplos anteriores, hemos usado 'minikube tunnel' para que se nos asigne una EXTERNAL-IP.
+#                   De esta forma, conectando contra esa 
+
+'nodePort: 30000':  MUY IMPORTANTE!!!!. Para conectar con el servicio no podemos hacerlo directamente contra la CLUSTER-IP 
+#                   (y su puerto) porque CLUSTER-IP solo funciona dentro del cluster. 
 #
-#                   Navegador --> EXTERNAL-IP:30000  //  Minikube --> CLUSTER-IP:8081  //  mongo-express-service --> endpoint_pod:8081
+#                   La que nos interesa es EXTERNAL-IP, pero como hemos comprobado, al levantar el servicio, se queda en 'Pending'.
+#
+#                   En el ejercicio anterior hemos usado la herramienta 'minikube tunnel' para que el cluster asigne esa 
+#                   IP pendiente y, en consecuencia, podamos conectar con el navegador a la EXTERNAL-IP y al puerto del servicio.
+#
+#                   Pues bien, si observamos la EXTERNAL_IP, es una IP que solo puede ser alcanzada desde el propio nodo, lo que no
+#                   es problema si tenemos una sesión SSH contra él. Nos estamos apoyando en el túnel para poder alcanzar el servicio.
+#       
+#                   El flujo real es:
+#
+#                   Navegador --> EXTERNAL-IP:30000  ==>  Minikube tunnel --> CLUSTER-IP:8081  ==>  mongo-express-service --> endpoint_pod:8081
+#
+#                   Como podemos observar, 'nodePort' sirve para indicar el puerto al que debemos conectar sobre la EXTERNAL-IP para que
+#                   el túnel de Minikube envíe el tráfico al servicio externo.
+
 
 # Salimos sin modificar nada.
 
@@ -507,11 +522,14 @@ kubectl get service mongo-express-service
 # El servicio es de tipo 'load balancer' y 'NodePort' es 30000, pero la EXTERNAL-IP está en 'Pending'
 
 # Cuando se nos asigne la EXTERNAL-IP, debemos conectar con el navegador a su puerto 30000 (NodePort)
+# (Esto ha sido explicado anteriormente)
+#
 # De este forma, el tráfico iria así:
 #
-# Navegador --> EXTERNAL-IP:30000  //  Minikube --> CLUSTER-IP:8081  //  mongo-express-service --> endpoint_pod:8081
+# Navegador --> EXTERNAL-IP:30000  ==>  Minikube --> CLUSTER-IP:8081  ==>  mongo-express-service --> endpoint_pod:8081
 
 # En otra terminal ejecutamos:
+# (Nota: 'mimikube service' devuelve una URL para conectar con el servicio externo)
 
 minikube service mongo-express-service
 
