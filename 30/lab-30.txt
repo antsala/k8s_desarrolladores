@@ -253,18 +253,83 @@ kubectl get all
 # El archivo 'lab-30-helloContainer-deployment-namespace.yaml' ha sido modificado para establecer el
 # espacio de nombres para el deployment.
 
-# Editamos el archivo:k8s_desarrolladores
+# Editamos el archivo:
 
 code lab-30-helloContainer-deployment-namespace.yaml
 
+
+# Línea 5:      Se indica el espacio de nombres en el que deseamos crear el deployment.
+
+
+# Lo mismo ocurre para 'lab-30-helloContainer-service-namespace.yaml'. Lo Editamos
+
+code lab-30-helloContainer-service-namespace.yaml
+
+
+# Línea 5:      Se indica el espacio de nombres en el que deseamos crear el servicio.
+
+
+# Solo queda aplicar los archivos:
+
+kubectl apply -f lab-30-helloContainer-deployment-namespace.yaml
+
+kubectl apply -f lab-30-helloContainer-service-namespace.yaml
+
+
+# Comprobamos
+
+kubectl get all --namespace hello-container-namespace
+
+
+# Listamos los servicios en el espacio de nombres.
+
+kubectl get services --namespace hello-container-namespace
+
+
+# El resultado debe ser el siguiente:
+#
+# NAME                      TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)        AGE
+# hello-container-service   LoadBalancer   10.103.39.1      10.103.39.1      80:30579/TCP   89s
+
+
+external_ip=<Copiar aquí la EXTERNAL-IP asignada>
+
+# Probamos que funciona conectacto a la EXTERNAL-IP.
+
+curl $external_ip:80
+
+
+# Procedemos a borrar el deployment y el servicio.
+
+kubectl delete -f lab-30-helloContainer-deployment.yaml --namespace hello-container-namespace
+
+kubectl delete -f lab-30-helloContainer-service.yaml --namespace hello-container-namespace
+
+
+# Comprobamos que el espacio de nombres está vacío.
+
+kubectl get all --namespace hello-container-namespace
+
+
+# La salida debe indicar:
+#
+# No resources found in hello-container-namespace namespace.
+
+
+
 # Limpiamos los recursos:
 
-
+# Cerrar la terminal de 'minikube tunnel'
 
 
 # Comprobamos:
 
 kubectl get all 
+
+
+# Solo debe quedar el servicio de Kubernetes.
+# NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+# service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   53m
 
 
 
