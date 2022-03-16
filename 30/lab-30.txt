@@ -339,6 +339,8 @@ kubectl get namespaces
 # kube-system       Active   56m
 
 
+# Comprobamos los objetos presentes en el cluster.
+
 kubectl get all 
 
 
