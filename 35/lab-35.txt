@@ -449,9 +449,31 @@ kubectl describe ingress my-ingress
 #
 # Lo que debemos hacer es crear un servidor web que muestre la página de error deseada.
 
-# Para ello creamos 
+# Para ello creamos un deployment que levantará un pod de la imagen 'antsala/page_not_found'. Esta imagen
+# levanta un servidor web que muestra un mensaje amigable de página no encontrada (error 404)
+
+# Abrimos el archivo.
+
+code lab-35-page-404-deployment.yaml
+
+# Es el típico deployment con un pod.
+
+# Cerramos sin modificar y aplicamos.
+
+kubectl apply -f lab-35-page-404-deployment.yaml
 
 
+# Comprobamos que el pod se inicial
+
+kubectl get deployment page-404-deployment
+
+
+# Nos resta por crear un servicio, que debe llamarse obligatoriamente 'default-http-backend', que escucha
+# en el puerto 80 y que reenviará el tráfico al puerto 80 del pod seleccionado por la etiqueta 'app: page-404'.
+
+# Abrimos el archivo lab-35-default-http-backend-internal-service.yaml
+
+code lab-35-default-http-backend-internal-service.yaml
 
 
 
