@@ -192,6 +192,9 @@ kubectl get all
 
 # Vamos a agregar un objeto 'Ingress' que definirá las reglas que aplicará el 'Controlador Ingress' (aun por crear)
 # para enviar el tráfico externo a cada servicio de Frontend.
+#
+# Crearemos dos dominios: 'www.hellocontainer.com' y 'www.mongoexpress.com'. En función de la URL que escriba el usuario
+# en su navegador el controlador ingress redirigirá el tráfico al servicio interno de Frontend apropiado.
 
 # Editamos el archivo 'lab-35-ingress.yaml'
 
