@@ -162,7 +162,7 @@ code redis-config.yaml
 #
 # Línea 2:      Comienza el contenido de datos del archivo.
 #
-# Línea 3:      'redis-config' será el nombre del archivo que verá la app.
+# Línea 3:      'redis-config' será el nombre la clave.
 #
 #               Observar el uso de '|-' que se utiliza para definir un string en varias líneas. 
 #               Elimina el salto de  linea al final y los espacios en blanco si los hubiera.
@@ -226,22 +226,29 @@ code redis-master-deployment_modified.yaml
 # Líneas 24-26: Lanza el contenedor de redis pasándole información sobre el 
 #               archivo de configuración que debe utilizar: "/redis-master/redis.conf"
 #
-# Líneas 27-29: Para al contenedor una variable de entorno: MASTER=true
+# Líneas 27-29: Pasa al contenedor una variable de entorno: 'MASTER=true'.
 #
 # Líneas 30-32: Monta un volumen llamado 'config' en la ruta '/redis-master' del
 #               contenedor.
 #
-# Líneas 39-45: Almacena el valor de la clave 'redis-config' del configmap 'example-redis-config'
+# Líneas 39-45: Almacena el valor de la clave 'redis-config' del configmap 'redis-config-from-yaml'
 #               en el archivo 'redis.conf' en el volumen 'config'.
-#
+
+
 # Cuando el contenedor arranca, lee el archivo '/redis-master/redis.conf', que contiene 
 # los valores del configmap que se creó.
 
 # Desplegamos esta versión actualizada para usar configmap.
-kubectl create -f redis-master-deployment_Modified.yaml
+
+kubectl create -f redis-master-deployment_modified.yaml
 
 # Miramos los pods
 kubectl get pods
+
+# La salida debe mostrar algo parecido a esto, indicando que el pod está en ejecución.
+# NAME                                       READY   STATUS    RESTARTS   AGE
+# redis-master-deployment-754ccc67d4-ctp9v   1/1     Running   0          7s
+
 
 # Ejecutamos un comando dentro del pod para comprobar si realmente ha leido los valores 
 # de configuración.
@@ -250,7 +257,8 @@ kubectl get pods
 #
 # '--' indica que lo que viene después es el comando que ejecutan los contenedores 
 # del pod. En este caso, el pod tiene un único contenedor.
-kubectl exec -it redis-master-<Poner aquí el id apropiado> -- redis-cli
+
+kubectl exec -it <Poner aquí nombre del pod> -- redis-cli
 
 # El comando anterior debe abrir una conexión con REDIS.
 # Ejecutamos los siguientes comandos para verificar que hay 2MB y la politica es 
@@ -259,6 +267,10 @@ CONFIG GET maxmemory
 CONFIG GET maxmemory-policy
 
 # Salimos con 'exit'
+
+
+TOTE, por aqui. Estoy adaptando el lab de devops de AKS con Azure.
+
 
 # Ahora vamos a desplegar un servicio para los pods del deployment redis-master.
 code redis-master-service.yaml
