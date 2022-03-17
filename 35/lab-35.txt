@@ -209,30 +209,32 @@ code lab-35-ingress.yaml
 #
 # Línea 4:          Este objeto se llamará 'my-ingress'.
 #
-# Línea 7:          Empieza la definición de las reglas que se van a aplicar al tráfico.
+# Línea 6:          Empieza la definición de las reglas que se van a aplicar al tráfico.
 #
-# Línea 8:          Se aplicarán si la URL contiene el dominio dns 'midominio.com'
+# Línea 7:          Se aplicará si la URL contiene el dominio dns 'www.hellocontainer.com'
 #
-# Línea 9:          Comienza la definición para las reglas 'http'.
+# Línea 8:          Comienza la definición para las reglas 'http'.
 #
-# Líneas 11-17:     Regla para reenviar tráfico a la aplicación 'helloContainer'.
+# Líneas 9-16:      Regla para reenviar tráfico a la aplicación 'helloContainer'.
 #
-# Línea 11 y 12:    Si la URI comienza por '/hellocontainer'
+# Línea 10 y 11:    Si la URI comienza por '/'
 #
-# Línea 15 y 17:    Se reenvia el tráfico al servicio 'hello-container-internal-service' puerto '4000'.
+# Línea 13-16:      Se reenvia el tráfico al servicio 'hello-container-internal-service' puerto '4000'.
 #
-# Líneas 18-24:     Regla para reenviar tráfico a la aplicación 'mongo-express'.
+# Líneas 17-26:     Regla para reenviar tráfico a la aplicación 'mongo-express'.
 #
-# Línea 18 y 19:    Si la URI comienza por  '/mongoexpress'
+# Línea 17:         Se aplicará si la URL contiene el dominio dns 'www.mongoexpress.com'
 #
-# Línea 22 y 24:    Se reenvia el tráfico al servicio 'mongo-express-internal-service' puerto '5000'.
+# Línea 20:         Si la URI comienza por '/'
+#
+# Línea 23-26:      Se reenvia el tráfico al servicio 'mongo-express-internal-service' puerto '5000'.
 
 
 # En resumen, el flujo de redirecciones será:
 
-# Si usuario conecta a 'http://midominio.com/hellocontainer' --> hello-container-internal-service:4000 --> pod:8080
+# Si usuario conecta a 'http://www.hellocontainer.com/' --> hello-container-internal-service:4000 --> pod:8080
 
-# Si usuario conecta a 'http://midominio.com/mongoexpress' --> mongo-express-internal-service:5000 --> pods:8081
+# Si usuario conecta a 'http://www.mongoexpress.com/' --> mongo-express-internal-service:5000 --> pods:8081
 
 
 # Salimos sin modificar nada.
@@ -248,9 +250,8 @@ kubectl get ingress my-ingress
 
 # La salida es:
 #
-# NAME         CLASS    HOSTS           ADDRESS   PORTS   AGE
-# my-ingress   my-class   midominio.com             80      7m51s
-
+# NAME         CLASS    HOSTS                                         ADDRESS     PORTS   AGE
+# my-ingress   nginx    www.hellocontainer.com,www.mongoexpress.com   localhost   80      78m
 
 # Vemos más información:
 
@@ -263,16 +264,21 @@ kubectl describe ingress my-ingress
 # Name:             my-ingress
 # Labels:           <none>
 # Namespace:        default
-# Address:          
+# Address:          localhost
 # Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
 # Rules:
-#   Host           Path  Backends
-#   ----           ----  --------
-#   midominio.com  
-#                   /hellocontainer   hello-container-internal-service:4000 (172.17.0.3:8080,172.17.0.4:8080,172.17.0.5:8080)
-#                   /mongoexpress     mongo-express-internal-service:5000 (172.17.0.7:8081)
-# Annotations:     <none>
-# Events:          <none>
+#   Host                    Path  Backends
+#   ----                    ----  --------
+#   www.hellocontainer.com  
+#                           /   hello-container-internal-service:4000 (172.17.0.3:8080,172.17.0.5:8080,172.17.0.6:8080)
+#   www.mongoexpress.com    
+#                           /   mongo-express-internal-service:5000 (172.17.0.8:8081)
+# Annotations:              <none>
+# Events:
+#   Type    Reason  Age                 From                      Message
+#   ----    ------  ----                ----                      -------
+#   Normal  Sync    11m (x16 over 79m)  nginx-ingress-controller  Scheduled for sync
+
 
 
 #################################################
@@ -291,6 +297,41 @@ minikube addons enable ingress
 #     Verifying ingress addon...
 #     The 'ingress' addon is enabled
 
+# El 'addon' crea un espacio de nombres (llamado 'ingress-nginx') y una serie de objetos dentro para poder funcionar.
+# Listamos los objetos:
+
+kubectl get all --namespace ingress-nginx
+
+# La salida es similar a la siguiente. Crea 3 pods, 2 servicios, 1 deployment, 1 replicaset y 2 jobs.
+#
+# Los jobs son pods que se instancian, realizan su cometido y cuando finalizan, se destruyen.
+#
+# NAME                                            READY   STATUS      RESTARTS   AGE
+# pod/ingress-nginx-admission-create-pq7zs        0/1     Completed   0          89m
+# pod/ingress-nginx-admission-patch-l86xq         0/1     Completed   0          89m
+# pod/ingress-nginx-controller-6d5f55986b-tdvcf   1/1     Running     0          89m
+#
+# NAME                                         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
+# service/ingress-nginx-controller             NodePort    10.96.44.103   <none>        80:32496/TCP,443:30467/TCP   89m
+# service/ingress-nginx-controller-admission   ClusterIP   10.101.14.77   <none>        443/TCP                      89m
+# 
+# NAME                                       READY   UP-TO-DATE   AVAILABLE   AGE
+# deployment.apps/ingress-nginx-controller   1/1     1            1           89m
+#
+# NAME                                                  DESIRED   CURRENT   READY   AGE
+# replicaset.apps/ingress-nginx-controller-6d5f55986b   1         1         1       89m
+# 
+# NAME                                       COMPLETIONS   DURATION   AGE
+# job.batch/ingress-nginx-admission-create   1/1           5s         89m
+# job.batch/ingress-nginx-admission-patch    1/1           5s         89m
+
+# De todos los objetos anteriores, el pod del controlador de ingress es el más importante. En esta captura es :
+# 'pod/ingress-nginx-controller-6d5f55986b-tdvcf'. Debe estar siempre en 'Running'. Mirando sus 'logs' o con el comando
+# 'describe' podemos ver como entra el tráfico en el cluster.
+
+kubectl logs log <Poner aquí el nombre del pod del controlador> --namespace ingress-nginx 
+
+
 
 
 ##########################################################
@@ -298,9 +339,9 @@ minikube addons enable ingress
 ##########################################################
 
 
-# En el arhchivo YAML del objeto ingress hemos puesto indicado que que host (entrypoint) del
-# cluster es 'midominio.com'. Debemos crear un registro de tipo A en el registrador de forma que
-# se pueda resolver a una IP.
+# En el arhchivo YAML del objeto ingress hemos puesto añadido dos URLs que deben entrar al cluster: 'www.hellocontainer.com' y 
+# 'wwww.mongoexpress.com'. Debemos hacer que se resuelvan a la IP del entrypoint del cluster.
+
 
 # Tomamos las IP del nodo de minikube
 
@@ -311,46 +352,60 @@ echo $minikube_ip
 
 # Copiar la IP en el portapapeles.
 
-# A falta de usar un servidor DNS para crear el registro 'A' para 'midominio.com', editamos el archivo 'hosts'
+# A falta de usar un servidor DNS para crear registros 'A', editamos el archivo 'hosts'
 
 sudo nano /etc/hosts
 
 
-# En la sección IPv4, creamos una línea nueva en la que debe aparecer la IP copiada anteriormente y el nombre 'midominio.com'
+# En la sección IPv4, creamos un par de líneas nuevas en la que debe aparecer la IP copiada anteriormente y los dominios
+# 'www.hellocontainer.com' y 'wwww.mongoexpress.com'
 #
 # Debería ser algo parecido a esto:
+# (Nota: En el archivos 'hosts' no deben aparecer los caracteres '#')
 #
 # 127.0.0.1       localhost
 # 127.0.1.1       ubu
-# 192.168.49.2    midominio.com       # <---- Esta es la línea que hemos añadido.
+# 192.168.49.2    www.hellocontainer.com       # <---- Esta es la línea que hemos añadido.
+# 192.168.49.2    www.mongoexpress.com         # <---- Esta también.
 
 # Salimos y guardamos.
 
 # Comprobamos la resolución DNS:
 
-host midominio.com 
+host www.hellocontainer.com
 
+host www.mongoexpress.com
 
-# La salida será como esta, donde aparece la IP de Minikube.
+# La salida para ambos será como esta, donde aparece la IP de Minikube.
 #
 # midominio.com has address 192.168.49.2
 
 
+# Ya solo queda probar las aplicaciones:
+#
+# Para 'hellocontainer' cogemos un navegador y nos conectamos a 'http://www.hellocontainer.com/" y para 
+# 'mongoexpress' a 'http://www.mongoexpress.com'
+#
+# (Nota: Para 'hellocontainer' se puede verificar el balanceo a los pods)
 
 
 
 
+# Limpiamos los recursos.
 
+kubectl delete -f lab-35-helloContainer-deployment.yaml
 
+kubectl delete -f lab-35-helloContainer-service.yaml
 
+kubectl delete -f lab-35-mongodb.yaml
 
+kubectl delete -f lab-35-mongo-express.yaml
 
+kubectl delete -f lab-35-mongodb-secret.yaml 
 
+kubectl delete -f lab-35-mongodb-configmap.yaml
 
-
-
-
-
+kubectl delete -f lab-35-ingress.yaml
 
 
 # Comprobamos los objetos presentes en el cluster.
