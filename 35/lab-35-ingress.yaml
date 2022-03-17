@@ -21,6 +21,6 @@ spec:
             service:
               name: mongo-express-internal-service
               port:
-                number: 8081
+                number: 5000
 
 
