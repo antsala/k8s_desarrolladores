@@ -206,23 +206,25 @@ code lab-35-ingress.yaml
 #
 # Línea 4:          Este objeto se llamará 'my-ingress'.
 #
-# Línea 6:          Empieza la definición de las reglas que se van a aplicar al tráfico.
+# Línea 6:          Nombre de la clase: Ver https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource
 #
-# Línea 7:          Se aplicarán si la URL contiene el dominio dns 'midominio.com'
+# Línea 7:          Empieza la definición de las reglas que se van a aplicar al tráfico.
 #
-# Línea 8:          Comienza la definición para las reglas 'http'.
+# Línea 8:          Se aplicarán si la URL contiene el dominio dns 'midominio.com'
 #
-# Líneas 10-16:     Regla para reenviar tráfico a la aplicación 'helloContainer'.
+# Línea 9:          Comienza la definición para las reglas 'http'.
 #
-# Línea 10 y 11:    Si la URI comienza por '/hellocontainer'
+# Líneas 11-17:     Regla para reenviar tráfico a la aplicación 'helloContainer'.
 #
-# Línea 14 y 16:    Se reenvia el tráfico al servicio 'hello-container-internal-service' puerto '4000'.
+# Línea 11 y 12:    Si la URI comienza por '/hellocontainer'
 #
-# Líneas 17-23:     Regla para reenviar tráfico a la aplicación 'mongo-express'.
+# Línea 15 y 17:    Se reenvia el tráfico al servicio 'hello-container-internal-service' puerto '4000'.
 #
-# Línea 17 y 18:    Si la URI comienza por  '/mongoexpress'
+# Líneas 18-24:     Regla para reenviar tráfico a la aplicación 'mongo-express'.
 #
-# Línea 21 y 23:    Se reenvia el tráfico al servicio 'mongo-express-internal-service' puerto '5000'.
+# Línea 18 y 19:    Si la URI comienza por  '/mongoexpress'
+#
+# Línea 22 y 24:    Se reenvia el tráfico al servicio 'mongo-express-internal-service' puerto '5000'.
 
 
 # En resumen, el flujo de redirecciones será:
@@ -246,7 +248,104 @@ kubectl get ingress my-ingress
 # La salida es:
 #
 # NAME         CLASS    HOSTS           ADDRESS   PORTS   AGE
-# my-ingress   <none>   midominio.com             80      2m54s
+# my-ingress   my-class   midominio.com             80      7m51s
+
+
+# Vemos más información:
+
+kubectl describe ingress my-ingress
+
+# La salida mostrará algo como esto:
+# (Nota: observar los 'path' y los 'backends')
+#
+#
+# Name:             my-ingress
+# Labels:           <none>
+# Namespace:        default
+# Address:          
+# Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
+# Rules:
+#   Host           Path  Backends
+#   ----           ----  --------
+#   midominio.com  
+#                   /hellocontainer   hello-container-internal-service:4000 (172.17.0.3:8080,172.17.0.4:8080,172.17.0.5:8080)
+#                   /mongoexpress     mongo-express-internal-service:5000 (172.17.0.7:8081)
+# Annotations:     <none>
+# Events:          <none>
+
+
+#################################################
+# Ejercicio 3:  Instalar el Controlador Ingress #
+#################################################
+
+# Minikube ya viene con un controlador ingress instalado, de forma que solo debemos habilitarlo:
+
+minikube addons enable ingress
+
+# La salida mostrará lo siguiente:
+#
+#     ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+#     ▪ Using image k8s.gcr.io/ingress-nginx/controller:v1.1.0
+#     ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+#     Verifying ingress addon...
+#     The 'ingress' addon is enabled
+
+
+
+##########################################################
+# Ejercicio 4:  Configurar el Registro de Recurso de DNS #
+##########################################################
+
+
+# En el arhchivo YAML del objeto ingress hemos puesto indicado que que host (entrypoint) del
+# cluster es 'midominio.com'. Debemos crear un registro de tipo A en el registrador de forma que
+# se pueda resolver a una IP.
+
+# Tomamos las IP del nodo de minikube
+
+minikube_ip=$(minikube ip)
+
+echo $minikube_ip
+
+
+# Copiar la IP en el portapapeles.
+
+# A falta de usar un servidor DNS para crear el registro 'A' para 'midominio.com', editamos el archivo 'hosts'
+
+sudo nano /etc/hosts
+
+
+# En la sección IPv4, creamos una línea nueva en la que debe aparecer la IP copiada anteriormente y el nombre 'midominio.com'
+#
+# Debería ser algo parecido a esto:
+#
+# 127.0.0.1       localhost
+# 127.0.1.1       ubu
+# 192.168.49.2    midominio.com       # <---- Esta es la línea que hemos añadido.
+
+# Salimos y guardamos.
+
+# Comprobamos la resolución DNS:
+
+host midominio.com 
+
+
+# La salida será como esta, donde aparece la IP de Minikube.
+#
+# midominio.com has address 192.168.49.2
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
