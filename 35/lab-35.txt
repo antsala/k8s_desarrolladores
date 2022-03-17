@@ -468,33 +468,64 @@ kubectl apply -f lab-35-page-404-deployment.yaml
 kubectl get deployment page-404-deployment
 
 
-# Nos resta por crear un servicio, que debe llamarse obligatoriamente 'default-http-backend', que escucha
-# en el puerto 80 y que reenviará el tráfico al puerto 80 del pod seleccionado por la etiqueta 'app: page-404'.
+# Nos resta por crear un servicio, al que llamaremos 'page-404-internal-service', que escucha
+# en el puerto 6666 y que reenviará el tráfico al puerto 80 del pod seleccionado por la etiqueta 
+# 'app: page-404'.
 
-# Abrimos el archivo 'lab-35-default-http-backend-internal-service.yaml' para verificarlo.
+# Abrimos el archivo 'lab-35-page-404-internal-service.yaml' para verificarlo.
 
-code lab-35-default-http-backend-internal-service.yaml
+code lab-35-page-404-internal-service.yaml
 
 
 # Cerramos sin cambiar nada.
 
 # Creamos el servicio.
 
-kubectl apply -f lab-35-default-http-backend-internal-service.yaml
+kubectl apply -f lab-35-page-404-internal-service.yaml
 
 
 # Comprobamos que está funcionando.
 
-kubectl get service default-http-backend
+kubectl get service page-404-internal-service
 
 
 # La salida mostrará algo similar a esto:
 #
-# NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
-# default-http-backend   ClusterIP   10.103.162.224   <none>        80/TCP    49s
+# NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+# page-404-internal-service   ClusterIP   10.109.167.175   <none>        6666/TCP   33s
 
 
+# Ahora debemos modifical el objeto ingress para que configure el endpoint para el Default Backend.
 
+# El archivo 'lab-35-ingress-with-default-backend.yaml' ya tiene estas modificaciones.
+
+# Lo editamos para estudiarlo:
+
+code lab-35-ingress-with-default-backend.yaml
+
+
+# Lo aplicamos:
+
+kubectl apply -f lab-35-ingress-with-default-backend.yaml
+
+
+# Mostramos información:
+
+kubectl describe ingress my-ingress
+
+
+# En este caso la salida muestra:
+#
+# Name:             my-ingress
+# Labels:           <none>
+# Namespace:        default
+# Address:          localhost
+# Default backend:  page-404-internal-service:6666 (172.17.0.9:80)
+# ....
+
+# Como se puede observar, el Default backend está actualizado para que se llame al servicio 
+# 'page-404-internal-service:6666', que a su ver redirige el tráfico al pod 172.17.0.9:80, 
+# que mostrará la página error personalizada.
 
 
 
@@ -514,6 +545,10 @@ kubectl delete -f lab-35-mongodb-secret.yaml
 kubectl delete -f lab-35-mongodb-configmap.yaml
 
 kubectl delete -f lab-35-ingress.yaml
+
+kubectl delete -f lab-35-page-404-deployment.yaml 
+
+kubectl delete -f lab-35-page-404-internal-service.yaml 
 
 
 # Comprobamos los objetos presentes en el cluster.
