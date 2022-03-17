@@ -471,10 +471,27 @@ kubectl get deployment page-404-deployment
 # Nos resta por crear un servicio, que debe llamarse obligatoriamente 'default-http-backend', que escucha
 # en el puerto 80 y que reenviará el tráfico al puerto 80 del pod seleccionado por la etiqueta 'app: page-404'.
 
-# Abrimos el archivo lab-35-default-http-backend-internal-service.yaml
+# Abrimos el archivo 'lab-35-default-http-backend-internal-service.yaml' para verificarlo.
 
 code lab-35-default-http-backend-internal-service.yaml
 
+
+# Cerramos sin cambiar nada.
+
+# Creamos el servicio.
+
+kubectl apply -f lab-35-default-http-backend-internal-service.yaml
+
+
+# Comprobamos que está funcionando.
+
+kubectl get service default-http-backend
+
+
+# La salida mostrará algo similar a esto:
+#
+# NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+# default-http-backend   ClusterIP   10.103.162.224   <none>        80/TCP    49s
 
 
 

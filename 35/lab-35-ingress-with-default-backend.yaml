@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: 
+  name: my-ingress
+spec:
+  defaultBackend:
+    service:
+      name: page-404-internal-service
+      port:
+        number: 6666
+  rules:
+  - host: www.hellocontainer.com
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: hello-container-internal-service
+              port: 
+                number: 4000
+  - host: www.mongoexpress.com
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: mongo-express-internal-service
+              port:
+                number: 5000
+
+
