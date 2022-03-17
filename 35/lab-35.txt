@@ -4,7 +4,7 @@
 
 # Requisitos:
 #
-#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#   1)  Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
 #
 #   2)  Tener instalado el runtime de podman. (ver lab-06-A.txt, Ejercicio 1 y 2)
 
@@ -18,7 +18,7 @@
 cd ~/k8s_desarrolladores/35
 
 # Procedemos a redesplegar las aplicaciones 'hellocontainer' y 'mongodb' de los ejercicios anteriores,
-# pero con un cambio notable: Puesto que vamos a usar un controlador Ingress para reenviar el tráfico
+# pero con un cambio NOTABLE: Puesto que vamos a usar un controlador Ingress para reenviar el tráfico
 # a los servicios del Frontend de las aplicaciones, éstos servicios deben convertirse a servicios INTERNOS.
 
 # Para el Frontend de 'helloContainer' no hay cambios. Editamos el archivo para recordar qué contiene.
@@ -371,9 +371,9 @@ sudo nano /etc/hosts
 
 # Comprobamos la resolución DNS:
 
-host www.hellocontainer.com
+nslookup www.hellocontainer.com
 
-host www.mongoexpress.com
+nslookup www.mongoexpress.com
 
 # La salida para ambos será como esta, donde aparece la IP de Minikube.
 #
@@ -398,7 +398,66 @@ host www.mongoexpress.com
 #################################################
 
 
-video 16:17.
+# En nuestro ejemplo, las reglas de ingress reenvían el tráfico al directorio raíz de las dos apps, de los
+# dominios anteriores, pero ¿qué pasa si se pone una URL para la que no hay establecida una propiedad 'path'?
+#
+# Pues el resultado es que no se puede encontrar un Backend apropiado, es decir, no hay ningún servicio 
+# interno al que redirigir el tráfico. 
+#
+# Kubernetes ofrece para estos casos el 'Default Backend', al que será redirigido todo el tráfico que no
+# pueda verificar ninguna de las reglas creadas.
+
+# Por ejemplo, si intentamos conecta a un path que no esta definido en las reglas, obtendremos un error:
+
+curl http://www.mongoexpress.com/path_no_existente
+
+
+# La salida es la siguiente:
+#
+# <!DOCTYPE html>
+# <html lang="en">
+# <head>
+# <meta charset="utf-8">
+# <title>Error</title>
+# </head>
+# <body>
+# <pre>Cannot GET /path_no_existente</pre>
+# </body>
+# </html>
+
+
+# La respuesta es una página de error genérica que podemos mejorar. Ejecutemos el siguiente comando:
+
+kubectl describe ingress my-ingress
+
+
+# La salida es la siguiente 
+#
+# Name:             my-ingress
+# Labels:           <none>
+# Namespace:        default
+# Address:          localhost
+# Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
+# Rules:
+# ...
+
+# Nos interesa la línea 'Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)'
+# 
+# Que especifica el servicio (y puerto) al que se redirigirá al navegador del usuario si el ingress no verifica 
+# ninguna de las reglas. El servicio que será llamado tiene el nombre 'default-http-backend' (puerto 80), Y
+# nos está diciendo que ese servicio no tiene endpoints (pods).
+#
+# Lo que debemos hacer es crear un servidor web que muestre la página de error deseada.
+
+# Para ello creamos 
+
+
+
+
+
+
+
+
 
 
 # Limpiamos los recursos.

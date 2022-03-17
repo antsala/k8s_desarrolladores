@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: page-404-deployment
+  labels:
+    app: page-404
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: page-404
+  template:
+    metadata:
+      labels:
+        app: page-404
+    spec:
+      containers:
+        - name: page-404-containier
+          image: antsala/page_not_found
+          ports:
+            - containerPort: 80
