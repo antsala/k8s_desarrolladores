@@ -81,6 +81,57 @@ kubectl apply -f lab-35-mongodb-secret.yaml
 kubectl apply -f lab-35-mongodb-configmap.yaml
 
 
+# Comprobamos que se ha creado el secreto.
+
+kubectl get secret mongodb-secret
+
+# La salida debe ser parecida a esta:
+# 
+# NAME             TYPE     DATA   AGE
+# mongodb-secret   Opaque   2      40s
+
+
+# Hacemos lo propio para el configmap.
+
+kubectl get configmap mongodb-configmap
+
+
+# Y la salida es:
+#
+# NAME                DATA   AGE
+# mongodb-configmap   1      12h
+
+
+# Procedemos a desplegar el Frontend y el Backend.
+
+
+# El Backend no sufre cambios, editamos el archivo para recordarlo:
+
+code lab-35-mongodb.yaml
+
+# Las líneas 42 y 43 define el puerto en el que escuchará sel servicio de backend ('27017') y 
+# el tráfico será reenviado al puerto '27017' del pod de mongodb server.
+
+# Salimos sin modificar nada.
+
+
+# Por último, para el Frontend si hay cambios. 
+# Editamos el archivo 'lab-35-mongo-express.yaml'
+
+code lab-35-mongo-express.yaml
+
+
+# El cambio más notable es que NO APARECE el parámetro 'type: LoadBalancer' en la especificación del servicio.
+# Esto lo convierte en un SERVICIO INTERNO.
+
+# Además, en la línea 42, se cambia el nombre del servicio a 'mongo-express-internal-service'.
+
+# Por otro lado, el servicio escucha en el puerto 5000 (Línea 49) y reenvía el tráfico al puerto '8081' del
+# pod 'mongo-express' (Línea 50)
+
+# Guardamos sin salir.
+
+
 
 
 # Comprobamos los objetos presentes en el cluster.
