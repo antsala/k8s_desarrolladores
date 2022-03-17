@@ -126,10 +126,17 @@ code lab-35-mongo-express.yaml
 
 # Además, en la línea 42, se cambia el nombre del servicio a 'mongo-express-internal-service'.
 
-# Por otro lado, el servicio escucha en el puerto 5000 (Línea 49) y reenvía el tráfico al puerto '8081' del
-# pod 'mongo-express' (Línea 50)
+# Por otro lado, el servicio escucha en el puerto 5000 (Línea 48) y reenvía el tráfico al puerto '8081' del
+# pod 'mongo-express' (Línea 49)
 
 # Guardamos sin salir.
+
+
+# Aplicamos los archivos YAML.
+
+kubectl apply -f lab-35-mongodb.yaml
+
+kubectl apply -f lab-35-mongo-express.yaml
 
 
 

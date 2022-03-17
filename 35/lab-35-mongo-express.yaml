@@ -41,7 +41,6 @@ kind: Service
 metadata:
   name: mongo-express-internal-service
 spec:
-  type: LoadBalancer  
   selector:
     app: mongo-express
   ports:
