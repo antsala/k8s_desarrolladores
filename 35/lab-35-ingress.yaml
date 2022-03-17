@@ -5,17 +5,20 @@ metadata:
   annotations:
 spec:
   rules:
-  - host: midominio.com
+  - host: www.hellocontainer.com
     http:
       paths:
-        - path: /hellocontainer
+        - path: /
           pathType: Prefix
           backend:
             service:
               name: hello-container-internal-service
               port: 
                 number: 4000
-        - path: /mongoexpress
+  - host: www.mongoexpress.com
+    http:
+      paths:
+        - path: /
           pathType: Prefix
           backend:
             service:
