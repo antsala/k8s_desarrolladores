@@ -21,12 +21,64 @@ cd ~/k8s_desarrolladores/35
 # pero con un cambio notable: Puesto que vamos a usar un controlador Ingress para reenviar el tráfico
 # a los servicios del Frontend de las aplicaciones, éstos servicios deben convertirse a servicios INTERNOS.
 
-# Editamos el archivo 'lab-35-helloContainer-ingress.yaml'
+# Para el Frontend de 'helloContainer' no hay cambios. Editamos el archivo para recordar qué contiene.
 
-code lab-35-helloContainer-ingress.yaml
+code lab-35-helloContainer-deployment.yaml
+
+# La línea 21, expresa que los contenedores estarán dando servicio en el puerto 8080.
+
+# Cerramos el archivo sin modificarlo.
+
+# 'helloContainer' definía un servicio EXTERNO para exponer los pods. Ahora ese servicio debe ser reconvertido
+# a INTERNO.
+
+# Editamos el archivo 'lab-35-helloContainer-service.yaml'
+
+code lab-35-helloContainer-service.yaml
+
+# El cambio más notable es que NO APARECE el parámetro 'type: LoadBalancer' en la especificación del servicio.
+# Esto lo convierte en un SERVICIO INTERNO.
+
+# Además, en la línea 4, se cambia el nombre del servicio a 'hello-container-internal-service'.
+
+# Por otro lado, el servicio escucha en el puerto 4000 (Línea 10) y reenvía el tráfico al puerto '8080' de los
+# pods (Línea 11)
+
+# Guardamos sin salir.
+
+# Aplicamos ambos archivos.
+
+kubectl apply -f lab-35-helloContainer-deployment.yaml
+
+kubectl apply -f lab-35-helloContainer-service.yaml
 
 
+# Comprobamos que se hayan creado los objetos:
 
+kubectl get all
+
+# Miramos cómo ha quedado el servicio interno.
+
+kubectl get service hello-container-internal-service
+
+
+# La salida del comando anterior será similar a esta:
+#
+# NAME                               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+# hello-container-internal-service   ClusterIP   10.101.242.181   <none>        4000/TCP   8m15s
+
+# El tipo 'ClusterIP' y la ausencia de 'EXTERNAL-IP' identifican al servicio como INTERNO.
+
+
+# Procedemos ahora al despliegue de la segunda aplicación.
+
+# Esta contiene un Frontend, un Backend, un secreto y un configmap.
+
+# El objeto 'secret' y el 'configmap' no tienen cambios. Aplicamos directamente sus archivos YAML.
+
+kubectl apply -f lab-35-mongodb-secret.yaml
+
+kubectl apply -f lab-35-mongodb-configmap.yaml
 
 
 
@@ -45,3 +97,4 @@ kubectl get all
 #######################
 # FIN DEL LABORATORIO #
 #######################
+
