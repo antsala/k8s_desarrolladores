@@ -3,10 +3,16 @@ kind: Ingress
 metadata: hello-container-ingress
 spec:
   rules:
-  - host: www.hellocontainer.com
+  - host: midominio.com
     http:
       paths:
-        - backend:
+        - path: /hellocontainer
+          backend:
             serviceName: hello-container-internal-service
             servicePort: 4000
+        - path: /mongoexpress
+          backend:
+            serviceName: mongo-express-internal-service
+            servicePort: 5000
+
 

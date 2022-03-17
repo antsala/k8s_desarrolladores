@@ -160,4 +160,11 @@ sudo snap install code --classic
 #   4. Predeterminar el espacio de nombres en el archivo YAML.
 
 
+# Carpeta 35
+
+# Laboratorio 35: "Ingress"
+# Archivo: lab-35.txt
+#
+# Ejercicios:
+#   1. Despliegue de 'helloContainer' y 'mongodb'.
 

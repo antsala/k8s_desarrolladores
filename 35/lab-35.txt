@@ -1,0 +1,47 @@
+# Laboratorio 35: "Ingress"
+ 
+# Este laboratorio aprenderemos a usar los objetos Ingress
+
+# Requisitos:
+#
+#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2)  Tener instalado el runtime de podman. (ver lab-06-A.txt, Ejercicio 1 y 2)
+
+
+################################################
+# Ejercicio 1:  Despliegue de las aplicaciones #
+################################################
+
+# Entramos en el directorio del laboratorio
+
+cd ~/k8s_desarrolladores/35
+
+# Procedemos a redesplegar las aplicaciones 'hellocontainer' y 'mongodb' de los ejercicios anteriores,
+# pero con un cambio notable: Puesto que vamos a usar un controlador Ingress para reenviar el tráfico
+# a los servicios del Frontend de las aplicaciones, éstos servicios deben convertirse a servicios INTERNOS.
+
+# Editamos el archivo 'lab-35-helloContainer-ingress.yaml'
+
+code lab-35-helloContainer-ingress.yaml
+
+
+
+
+
+
+
+# Comprobamos los objetos presentes en el cluster.
+
+kubectl get all 
+
+
+# Solo debe quedar el servicio de Kubernetes.
+# NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+# service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   53m
+
+
+
+#######################
+# FIN DEL LABORATORIO #
+#######################
