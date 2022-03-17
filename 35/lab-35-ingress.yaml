@@ -3,6 +3,7 @@ kind: Ingress
 metadata: 
   name: my-ingress
 spec:
+  ingressClassName: my-class
   rules:
   - host: midominio.com
     http:

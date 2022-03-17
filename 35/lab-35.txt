@@ -212,17 +212,17 @@ code lab-35-ingress.yaml
 #
 # Línea 8:          Comienza la definición para las reglas 'http'.
 #
-# Líneas 10-13:     Regla para reenviar tráfico a la aplicación 'helloContainer'.
+# Líneas 10-16:     Regla para reenviar tráfico a la aplicación 'helloContainer'.
 #
-# Línea 10:         Si la URI es '/hellocontainer'
+# Línea 10 y 11:    Si la URI comienza por '/hellocontainer'
 #
-# Línea 12 y 13:    Se reenvia el tráfico al servicio 'hello-container-internal-service' puerto '4000'.
+# Línea 14 y 16:    Se reenvia el tráfico al servicio 'hello-container-internal-service' puerto '4000'.
 #
-# Líneas 14-17:     Regla para reenviar tráfico a la aplicación 'mongo-express'.
+# Líneas 17-23:     Regla para reenviar tráfico a la aplicación 'mongo-express'.
 #
-# Línea 14:         Si la URI es '/mongoexpress'
+# Línea 17 y 18:    Si la URI comienza por  '/mongoexpress'
 #
-# Línea 16 y 17:    Se reenvia el tráfico al servicio 'mongo-express-internal-service' puerto '5000'.
+# Línea 21 y 23:    Se reenvia el tráfico al servicio 'mongo-express-internal-service' puerto '5000'.
 
 
 # En resumen, el flujo de redirecciones será:
@@ -237,6 +237,17 @@ code lab-35-ingress.yaml
 # Creamos el objeto 'Ingress'
 
 kubectl apply -f lab-35-ingress.yaml
+
+
+# Comprobamos que se ha creado.
+
+kubectl get ingress my-ingress
+
+# La salida es:
+#
+# NAME         CLASS    HOSTS           ADDRESS   PORTS   AGE
+# my-ingress   <none>   midominio.com             80      2m54s
+
 
 
 
