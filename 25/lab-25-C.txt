@@ -58,30 +58,70 @@ code lab-25-redis-master-deployment.yaml
 kubectl apply -f lab-25-redis-master-deployment.yaml
 
 
-# Examinamos el Despliegue.
+# Examinamos el deployment:
+
 kubectl get deployment redis-master-deployment
 
-# Detalles del deployment.
-kubectl describe deployment/redis-master
 
-# Borramos el deployment desde la línea de comandos.
-kubectl delete deployment/redis-master 
+# La salida será parecida a esta:
+#
+# NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+# redis-master-deployment   1/1     1            1           8s
 
-# Comprobar que se elimina.
+
+# Miramos el detalle:
+# (Nota: Leer detenidamente la salida y observar la información de escalado del ReplicaSet)
+
+kubectl describe deployment/redis-master-deployment
+
+
+# La implementación ha sido una prueba, borramos el deployment desde la línea de comandos.
+
+kubectl delete deployment/redis-master-deployment
+
+
+# Comprobar que se elimina y que solo quede el servicio de Kubernetes:
+
 kubectl get all
 
 # Ahora vamos a hacer lo mismo pero usando un ConfigMap.
 # Hay dos formas de crear un ConfigMap: Desde un archivo de texto o desde un archivo yaml.
 
 
+#########################################################
+# Ejercicio 2:  Creación de ConfigMap desde un archivo. #
+#########################################################
 
-# Limpiamos recursos.
+# Creamos un archivo, llamado 'redis-config' y le ponemos estas dos líneas
+#   maxmemory 2mb
+#   maxmemory-policy allkeys-lru
 
 
+# Realmente no hace falta hacerlo porque en el directorio de ejemplos ya existe ese archivo.
+# Así que nos limitamos a abrirlo para comprobarlo.
 
-# Comprobamos que solo quede el servicio de Kubernetes:
+code redis-config
 
-kubectl get all
+# 'allkeys-lru' --> lru = Less Recently Used
+
+# Para crear el ConfigMap, ejecutamos el siguiente comando.
+kubectl create configmap example-redis-config --from-file=redis-config
+
+# Esto crea el achivo yaml y lo aplica para dar de alta al objeto configmap.
+# Veamos el contenido del archivo creado.
+cat example-redis-config.yaml
+
+# y ahora listamos el configmap.
+kubectl get configmaps
+
+# y observamos contenido en K8s. Observar que hay una clave llamada 'redis-config' 
+# y una lista con los valores de la configuración.
+kubectl describe configmap/example-redis-config
+
+# Ahora practicamos la segunda forma de crear el configmap, es decir, 
+# desde un archivo yaml.
+
+
 
 #######################
 # FIN DEL LABORATORIO #
