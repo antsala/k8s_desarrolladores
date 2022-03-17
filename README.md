@@ -168,6 +168,7 @@ sudo snap install code --classic
 # Ejercicios:
 #   1. Despliegue de 'helloContainer' y 'mongodb'.
 #   2. Creación del objeto Ingress.
-
+#   3. Instalar el Controlador Ingress.
+#   4. Configurar el Registro de Recurso de DNS.
 
 

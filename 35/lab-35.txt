@@ -206,8 +206,6 @@ code lab-35-ingress.yaml
 #
 # Línea 4:          Este objeto se llamará 'my-ingress'.
 #
-# Línea 6:          Nombre de la clase: Ver https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource
-#
 # Línea 7:          Empieza la definición de las reglas que se van a aplicar al tráfico.
 #
 # Línea 8:          Se aplicarán si la URL contiene el dominio dns 'midominio.com'
