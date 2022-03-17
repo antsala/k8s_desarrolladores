@@ -170,5 +170,6 @@ sudo snap install code --classic
 #   2. Creación del objeto Ingress.
 #   3. Instalar el Controlador Ingress.
 #   4. Configurar el Registro de Recurso de DNS.
+#   5. Configurar el 'Default Backend'.
 
 
