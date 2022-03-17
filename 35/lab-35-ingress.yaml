@@ -9,11 +9,15 @@ spec:
       paths:
         - path: /hellocontainer
           backend:
-            serviceName: hello-container-internal-service
-            servicePort: 4000
+            service:
+              name: hello-container-internal-service
+              port: 
+                number: 4000
         - path: /mongoexpress
           backend:
-            serviceName: mongo-express-internal-service
-            servicePort: 5000
+            service:
+              name: mongo-express-internal-service
+              port:
+                number: 5000
 
 
