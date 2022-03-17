@@ -177,24 +177,49 @@ code redis-config.yaml
 #               no es necesario especificarlo.
 
 
-code example-redis-config.yaml
+# Volvemos a crear el configmap, pero esta vez directamente desde el archivo YAML:
 
-# Volvemos a crear el configmap, pero esta vez directamente desde un yaml.
-kubectl create -f example-redis-config.yaml
+kubectl create -f redis-config.yaml
 
-# Y lo describimos.
-kubectl describe configmap/example-redis-config
+
+# Y lo describimos:
+
+kubectl describe configmap/redis-config-from-yaml
+
+
+# La salida es idéntica al caso anterior.
 
 # K8s tiene una opción muy útil, la '-o' ('--output'), que puede ser usada para obtener
-# la salida de un objeto presente en k8s en formato YAML o JSON. Así se# puede tener 
+# la salida de un objeto presente en 'etcd' en formato YAML o JSON. Así se puede tener 
 # el archivo yaml del objeto.
 
-# Lo prodriamos redireccionar a un archivo si lo vemos necesario.
-kubectl get configmap/example-redis-config --output yaml 
 
-# Ahora vamos a usar un configmap para pasar información al contenedor en tiempo de ejecución.
-# Vamos a abrir el archivo modificado.
-code redis-master-deployment_Modified.yaml
+# Lo prodriamos redireccionar a un archivo si lo vemos necesario:
+
+kubectl get configmap/redis-config-from-yaml --output yaml 
+
+
+# La salida (por pantalla): 
+# (Nota: Observar cómo K8s agrega sus propios parámetros)
+
+#  apiVersion: v1
+#  data:
+#   redis-config: |-
+#     maxmemory 2mb
+#     maxmemory-policy allkeys-lru
+# kind: ConfigMap
+# metadata:
+#   creationTimestamp: "2022-03-17T18:34:31Z"
+#   name: redis-config-from-yaml
+#   namespace: default
+#   resourceVersion: "13147"
+#   uid: d22709fa-c5f6-47a2-9e5b-c9f088a85419
+
+
+# Ahora vamos a usar un 'ConfigMap' para pasar información al contenedor en tiempo de ejecución.
+# Vamos a abrir el archivo modificado:
+
+code redis-master-deployment_modified.yaml
 
 # Observar lo siguiente:
 #
