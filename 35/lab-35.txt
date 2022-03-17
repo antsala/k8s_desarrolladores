@@ -333,7 +333,6 @@ kubectl logs log <Poner aquí el nombre del pod del controlador> --namespace ing
 
 
 
-
 ##########################################################
 # Ejercicio 4:  Configurar el Registro de Recurso de DNS #
 ##########################################################
@@ -388,7 +387,18 @@ host www.mongoexpress.com
 #
 # (Nota: Para 'hellocontainer' se puede verificar el balanceo a los pods)
 
+# En el siguiente enlace está toda la documentación de Ingress, en la que podemos ver, todo los
+# detalles, por ejemplo la reescritura de la URL. Un artículo sin duda muy importante que 
+# tenemos que leer: https://kubernetes.io/docs/concepts/services-networking/ingress/
 
+
+
+################################################
+# Ejercicio 5:  Configurar el 'Default Backend #
+################################################
+
+
+video 16:17.
 
 
 # Limpiamos los recursos.
