@@ -22,22 +22,50 @@ cd ~/k8s_desarrolladores/25
 
 code lab-25-redis-master-deployment.yaml
 
+# El contenido a destacar de este archivo lo comentamos a continuación:
+#
+# Línea 2:      Es un 'deployment'
+#
+# Línea 4:      Asignamos el nombre de 'redis-master-deployment'
+#
+# Línea 6:      Se define la etiqueta 'app: redis'
+#
+# Líneas 8-12:  Importante: Hasta el momento hemos usado una sola etiqueta para asociar el deployment a la plantilla
+#               de pod. En este ejemplo se usan varias etiquetas: 'app: redis', 'role: master' y 'tier: backend'.
+#               Esto va a darnos más libertad a la hora de asociar servicios/deployments/pods, a la vez que añade
+#               más información al archivo YAML que servirá para entender mejor el propósito del objeto que se está 
+#               creando.
+#
+#               Para que se produzca la asociación entre objetos, se deben verificar TODAS las etiquetas.
+#
+# Líneas 17-19: En la especificación de la plantilla del pod, volvemos a poner las mismas etiquetas.
+#
+# Líneas 22:    El contenedor ser llamará 'master'.
+#
+# Línea 23:     y estará basado en la imagen es 'k8s.gcr.io/redis:e2e'. 
+#
+# Líneas 24-30: Se especifica la contención de recursos para el contenedor. Si el servidor va sobrado de recursos, el
+#               contenedor podrá usar más recursos de los que se declaran en 'requests', pero en ningún caso más de lo
+#               que aparece en 'limits'.
+#
+#               La CPU se puede expresar en tanto por uno o, como en este caso, usando la unidad 'milis' (m). 1000 milis
+#               equivalen al 100% de la CPU disponible.
+#           
+#               Es muy conveniente leer el siguiente artículo: https://kubernetes.io/es/docs/concepts/configuration/manage-resources-containers/
 
+# Aplicamos el deployment:
 
+kubectl apply -f lab-25-redis-master-deployment.yaml
 
-kubectl apply -f redis-master-deployment.yaml
-
-# Mientras, lo estudiamos.
-code redis-master-deployment.yaml
 
 # Examinamos el Despliegue.
-kubectl get all
+kubectl get deployment redis-master-deployment
 
 # Detalles del deployment.
 kubectl describe deployment/redis-master
 
 # Borramos el deployment desde la línea de comandos.
-kubectl delete deployment/redis-master
+kubectl delete deployment/redis-master 
 
 # Comprobar que se elimina.
 kubectl get all
