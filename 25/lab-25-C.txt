@@ -156,11 +156,27 @@ kubectl delete configmap/redis-configmap-from-file
 # En este caso partiríamos desde un archivo YAML, que tenemos disponible en la carpeta del laboratorio.
 # Abrimos el archivo 'redis-config.yaml' 
 
-code 
+code redis-config.yaml
 
+# El contenido más destacado del archivo es el siguiente:
 #
-# '|-' Se utiliza para definir un string en varias líneas. Elimina el salto de 
-# linea al final y los espacios en blanco si los hubiera.
+# Línea 2:      Comienza el contenido de datos del archivo.
+#
+# Línea 3:      'redis-config' será el nombre del archivo que verá la app.
+#
+#               Observar el uso de '|-' que se utiliza para definir un string en varias líneas. 
+#               Elimina el salto de  linea al final y los espacios en blanco si los hubiera.
+#
+# Línea 6:      El tipo de objeto que se creará es un 'ConfigMap'. Este parámetro se puede poner en
+#               cualquier línea siempre que este sangrado a la izquierda, pero lo más habitual es ponerlo
+#               en las primeras líneas del archivo.
+#
+# Línea 8:      'redis-config-from-yaml' es el nombre del 'ConfigMap'.
+#
+# Línea 9:      Se pone el espacio de nombres en el que se creará este objeto. Si lo queremos en 'default'
+#               no es necesario especificarlo.
+
+
 code example-redis-config.yaml
 
 # Volvemos a crear el configmap, pero esta vez directamente desde un yaml.

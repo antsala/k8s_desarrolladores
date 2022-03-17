@@ -5,5 +5,5 @@ data:
     maxmemory-policy allkeys-lru
 kind: ConfigMap
 metadata:
-  name: example-redis-config
+  name: redis-config-from-yaml
   namespace: default
