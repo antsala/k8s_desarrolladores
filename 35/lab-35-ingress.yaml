@@ -8,13 +8,13 @@ spec:
   - host: midominio.com
     http:
       paths:
-        - path: /hellocontainer
-          pathType: Prefix
-          backend:
-            service:
-              name: hello-container-internal-service
-              port: 
-                number: 4000
+#        - path: /hellocontainer
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: hello-container-internal-service
+#              port: 
+#                number: 4000
         - path: /mongoexpress
           pathType: Prefix
           backend:
