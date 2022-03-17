@@ -167,4 +167,7 @@ sudo snap install code --classic
 #
 # Ejercicios:
 #   1. Despliegue de 'helloContainer' y 'mongodb'.
+#   2. Creación del objeto Ingress.
+
+
 

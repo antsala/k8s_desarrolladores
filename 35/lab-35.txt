@@ -139,6 +139,70 @@ kubectl apply -f lab-35-mongodb.yaml
 kubectl apply -f lab-35-mongo-express.yaml
 
 
+# Verificamos los servicios asociados a la aplicación
+
+kubectl get services mongodb-service mongo-express-internal-service
+
+
+# La salida es:
+#
+# NAME                             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+# mongodb-service                  ClusterIP   10.107.141.33   <none>        27017/TCP   4m25s
+# mongo-express-internal-service   ClusterIP   10.104.152.51   <none>        5000/TCP    3m44s
+
+# Ambos servicios son internos ('ClusterIP')
+
+# A falta de crear el objeto 'Ingress', el cluster debe contener lo siguiente:
+
+kubectl get all
+
+
+# La salida indica que hay 5 pods, 4 servicios, 3 deployments sus respectivos (3) replicasets.
+
+# NAME                                             READY   STATUS    RESTARTS   AGE
+# pod/hello-container-deployment-566d999d9-4wpdw   1/1     Running   0          30m
+# pod/hello-container-deployment-566d999d9-9nf5z   1/1     Running   0          30m
+# pod/hello-container-deployment-566d999d9-xh5cz   1/1     Running   0          30m
+# pod/mongo-express-deployment-68c4748bd6-jwcrx    1/1     Running   0          5m13s
+# pod/mongodb-deployment-7bb6c6c4c7-mp8jq          1/1     Running   0          5m54s
+# 
+# NAME                                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)     AGE
+# service/hello-container-internal-service   ClusterIP   10.101.242.181   <none>        4000/TCP    30m
+# service/kubernetes                         ClusterIP   10.96.0.1        <none>        443/TCP     22h
+# service/mongo-express-internal-service     ClusterIP   10.104.152.51    <none>        5000/TCP    5m13s
+# service/mongodb-service                    ClusterIP   10.107.141.33    <none>        27017/TCP   5m54s
+# 
+# NAME                                         READY   UP-TO-DATE   AVAILABLE   AGE
+# deployment.apps/hello-container-deployment   3/3     3            3           30m
+# deployment.apps/mongo-express-deployment     1/1     1            1           5m13s
+# deployment.apps/mongodb-deployment           1/1     1            1           5m54s
+#
+# NAME                                                   DESIRED   CURRENT   READY   AGE
+# replicaset.apps/hello-container-deployment-566d999d9   3         3         3       30m
+# replicaset.apps/mongo-express-deployment-68c4748bd6    1         1         1       5m13s
+# replicaset.apps/mongodb-deployment-7bb6c6c4c7          1         1         1       5m54s
+
+
+
+#############################################
+# Ejercicio 2:  Creación del objeto Ingress #
+#############################################
+
+# En este momento tenemos las aplicaciones funcionando, pero no son accesibles a ser todos los servicios INTERNOS.
+
+# Vamos a agregar un objeto 'Ingress' que definirá las reglas que aplicará el 'Controlador Ingress' (aun por crear)
+# para enviar el tráfico externo a cada servicio de Frontend.
+
+# Editamos el archivo 'lab-35-ingress.yaml'
+
+code lab-35-ingress.yaml
+
+
+# Este YAML hace lo siguiente:
+
+# Línea 2:          Declara el tipo de objeto como 'Ingress'
+#
+#
 
 
 # Comprobamos los objetos presentes en el cluster.

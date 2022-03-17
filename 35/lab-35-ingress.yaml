@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Ingress
-metadata: my-ingress
+metadata: 
+  name: my-ingress
 spec:
   rules:
   - host: midominio.com
