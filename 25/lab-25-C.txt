@@ -400,10 +400,39 @@ kubectl get deployment redis-replica-deployment
 code lab-25-C-redis-replica-service.yaml
 
 
-kubectl apply -f redis-replica-service.yaml
+# Las líneas más importantes son:
 
-# Comprobamos el despliegue.
-kubectl get all
+# Línea 2:      Se crea un servicio interno.
+#
+# Línea 4:      Con nombre 'redis-replica-internal-service'
+#
+# Línea 11:     Escuchará en el puerto '6379'...
+#
+# Línea 12:     y reenviará al puerto '6379' de los pods.
+#
+# Líneas 13-16: Se asociará con los pods que tengan definidas las etiquetas: 'app: redis', 
+#               'role: replica', 'tier: backend'.
+
+
+# Aplicamos el servicio:
+
+kubectl apply -f lab-25-C-redis-replica-service.yaml
+
+
+# Comprobamos el despliegue del servici:
+kubectl get service redis-replica-internal-service
+
+
+# La salida será similar a esta:
+#
+# NAME                             TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
+# redis-replica-internal-service   ClusterIP   10.109.5.10   <none>        6379/TCP   105s
+
+
+
+##########################################
+# Ejercicio 4: Despliegue del Frontend. #
+##########################################
 
 # Ahora desplegamos en frontend.
 code frontend-deployment.yaml

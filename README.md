@@ -155,6 +155,7 @@ sudo snap install code --classic
 #   1. Despliegue del maestro de Redis.
 #   2. Creación de ConfigMap desde un archivo.
 #   3. Despliegue de las réplicas de Redis.
+#   4. Despliegue del Frontend.
 
 
 # Carpeta 30
