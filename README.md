@@ -25,6 +25,18 @@ ls -l
 
 sudo snap install code --classic
 
+
+# Carpeta 00 (AZURE)
+
+# Laboratorio 00: "Herramientas administración Azure"
+# Archivo: lab-00.txt
+#
+# Ejercicios: 
+#   1. Instalación de Azure CLI.
+#   2. Creación de AKS desde Azure CLI.
+
+
+
 # Carpeta 03
 
 # Laboratorio 03-A: "Creación de contenedores con Docker"
