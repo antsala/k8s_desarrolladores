@@ -269,10 +269,19 @@ CONFIG GET maxmemory-policy
 # Salimos con 'exit'
 
 
-# Ahora vamos a desplegar un servicio para los pods del deployment redis-master.
+# Ahora vamos a desplegar un servicio INTERNO para los pods del deployment redis-master.
 # Abrimo el archivo 'redis-master-service.yaml'
 
 code redis-master-service.yaml
+
+
+# Estudiamos el contenido del archivo.
+#
+# Línea 2:      El objeto es un servicio.
+#
+# Línea 2:      Con nombre 'redis-master-service'.
+
+
 kubectl apply -f redis-master-service.yaml
 
 # Comprobamos el despliegue del servicio.
