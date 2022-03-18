@@ -434,16 +434,37 @@ kubectl get service redis-replica-internal-service
 # Ejercicio 4: Despliegue del Frontend. #
 ##########################################
 
-# Ahora desplegamos en frontend.
-code frontend-deployment.yaml
+# Ahora desplegamos en frontend, que se contectará al servidor máster de Redis o a las réplicas
+# en función del tipo de consulta que necesite hacer.
 
-# Lo más importante en el archivo de despliegue anterior es:
+# Editamos la definición del deployment:
+
+code lab-25-C-frontend-deployment.yaml
+
+# Lo más importante en el archivo de despliegue es:
 #
-# Línea 11:     El número de réplicas del frontend son 3 (3 pods)
+# Línea 9-11:       Este deployment se asociará con la plantilla de pod que tiene definidas las etiquetas 
+#                   'app: guestbook' y 'tier: frontend'.
 #
-# Línea 8-10:   Las etiquetas son 'app: guestbook', 'tier: frontend'
+# Línea 12:         El número de réplicas del frontend son 3 (3 pods)
 #
-# Línea 20:     Se está usando la imagen de contenedor: gb-frontend:v4
+# Línea 21:         Se está usando la imagen de contenedor: gb-frontend:v4
+#
+# Líneas 27 y 28:   La variable de entorno 'GET_HOST_FROM' sirve para determinar dónde está el máster de Redis. 
+#                   El valor es 'env'.
+#
+#                   El código del Frontend en este punto es:
+#
+#                   $host = 'redis-master';
+#                   if (getenv('GET_HOSTS_FROM') == 'env') {
+#                       $host = getenv('REDIS_MASTER_SERVICE_HOST');
+#                   }
+#
+#                   Es decir, que se servidor máster de Redis será el que indique la variable del sistema 'REDIS_MASTER_SERVICE_HOST'.
+#                   Esta variable la crea Kubernetes cuando se despliega el master.
+#
+# Líneas 29 y 30:   Se inicializa la variable de entorno 'REDIS_SLAVE_SERVICE_HOST' al valor 'redis-replica-internal-service', para 
+#                   que los contenedores de Frontend puedan contactar con la réplicas.
 
 # en K8s existe tres formas de exponer un servicio:
 #
