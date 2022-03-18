@@ -378,7 +378,9 @@ az aks nodepool scale \
     --cluster-name myaks
 
 
+# Volvemos a poner el contexto en Minikube:
 
+kubectl config use-context minikube
 
 
 #######################
