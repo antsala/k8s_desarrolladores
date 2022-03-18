@@ -199,8 +199,10 @@ sudo snap install code --classic
 
 # Carpeta 45
 
-# Laboratorio 45-A: "Horizontal POD Autoscaler (HPA) en Azure."
-# Archivo: lab-35-A.txt
+# Laboratorio 45: "Horizontal POD Autoscaler (HPA) en Azure y autoescalado de nodos."
+# Archivo: lab-45.txt
 #
 # Ejercicios:
 #   1. Desplegar la aplicación de ejemplo.
+#   2. Escalar el frontend de GuestBook.
+#   3. Autoescalado de nodos.
