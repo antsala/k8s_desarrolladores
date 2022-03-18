@@ -60,14 +60,18 @@ az login
 
 # Creamos un grupo de recursos para el cluster:
 
-az group create --name myaks-rg --location westeurope
+az group create \
+    --name myaks-rg \
+    --location westeurope
 
 
 # Habilitamos la supervisión de clusteres:
 
-az provider register --namespace Microsoft.OperationsManagement
+az provider register \
+    --namespace Microsoft.OperationsManagement
 
-az provider register --namespace Microsoft.OperationalInsights
+az provider register \
+    --namespace Microsoft.OperationalInsights
 
 
 # Creamos el cluster
