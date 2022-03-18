@@ -217,6 +217,8 @@ kubectl get all
 
 # Solo debe quedar el servicio de Kubernetes.
 
+kubectl get all
+
 
 
 #######################################
@@ -240,33 +242,98 @@ az aks nodepool scale \
     --cluster-name myaks
 
 
+# Mostramos los nodos.
+
+kubectl get nodes
+
+
+# La salida debe ser como esta:
+# (Nota: Solo debe quedar un único nodo)
+#
+# NAME                                STATUS   ROLES   AGE   VERSION
+# aks-nodepool1-19313883-vmss000000   Ready    agent   38m   v1.21.9
+
 # Desplegamos la app en el único nodo que tenemos:
 
-kubectl create -f guestbook-all-in-one.yaml
+kubectl create -f lab-45-guestbook-all-in-one.yaml
 
-# Confirmamos que se ha desplegado correctamente.
+# Confirmamos que se ha desplegado correctamente:
+
 kubectl get all
 
+# La salida debe ser similar a esta:
+#
+# NAME                                 READY   STATUS    RESTARTS   AGE
+# pod/frontend-7c8cb4c59f-74bpf        1/1     Running   0          11s
+# pod/frontend-7c8cb4c59f-csx4w        1/1     Running   0          11s
+# pod/frontend-7c8cb4c59f-lb2mh        1/1     Running   0          11s
+# pod/redis-master-f46ff57fd-kmpm5     1/1     Running   0          11s
+# pod/redis-replica-5bc7bcc9c4-45vbr   1/1     Running   0          11s
+# pod/redis-replica-5bc7bcc9c4-6kxrf   1/1     Running   0          11s
+# 
+# NAME                    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+# service/frontend        ClusterIP   10.0.56.255    <none>        80/TCP     11s
+# service/kubernetes      ClusterIP   10.0.0.1       <none>        443/TCP    42m
+# service/redis-master    ClusterIP   10.0.250.238   <none>        6379/TCP   11s
+# service/redis-replica   ClusterIP   10.0.114.105   <none>        6379/TCP   11s
+# 
+# NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+# deployment.apps/frontend        3/3     3            3           11s
+# deployment.apps/redis-master    1/1     1            1           11s
+# deployment.apps/redis-replica   2/2     2            2           11s
+# 
+# NAME                                       DESIRED   CURRENT   READY   AGE
+# replicaset.apps/frontend-7c8cb4c59f        3         3         3       11s
+# replicaset.apps/redis-master-f46ff57fd     1         1         1       11s
+# replicaset.apps/redis-replica-5bc7bcc9c4   2         2         2       11s
 
-############################
-# Autoescalado del cluster #
-############################
 
 # El autoescalado del cluster vigila el número de pods que no pueden ser planificados debido 
 # a recursos insuficientes (falta CPU o de RAM en los nodos). Para demostrar el autoescalado, 
 # forzaremos el deployment de forma que no se puedan poner a correr todos los pods. 
 
 # Para forzar que el cluster se quede sin recursos, modificamos el deployment 'redis-replica'
+# subiéndolo a 5 pods de Redis (Debería ser suficiente para agotar la CPU)
+
 kubectl scale deployment redis-replica --replicas 5
 
-# Coprobamos que hay pods que no se pueden planificar porque no hay recursos.
-# Mostrarán el estado 'pending'
+
+# Comprobamos que hay pods que no se pueden planificar porque no hay recursos.
+# Importante: Mostrarán el estado 'Pending'
+
 kubectl get pods
 
-# Para ver que no hay CPU, ejecutar este comando.
+
+# La salida será parecida a esta:
+# (Nota: Comprobar que hay dos réplicas en 'Pending')
+#
+# NAME                             READY   STATUS    RESTARTS   AGE
+# frontend-7c8cb4c59f-74bpf        1/1     Running   0          3m
+# frontend-7c8cb4c59f-csx4w        1/1     Running   0          3m
+# frontend-7c8cb4c59f-lb2mh        1/1     Running   0          3m
+# redis-master-f46ff57fd-kmpm5     1/1     Running   0          3m
+# redis-replica-5bc7bcc9c4-45vbr   1/1     Running   0          3m
+# redis-replica-5bc7bcc9c4-6kxrf   1/1     Running   0          3m
+# redis-replica-5bc7bcc9c4-9dlvk   0/1     Pending   0          32s
+# redis-replica-5bc7bcc9c4-dvsqf   1/1     Running   0          32s
+# redis-replica-5bc7bcc9c4-fhx2v   0/1     Pending   0          32s
+
+
+# Para ver que no hay CPU, ejecutar este comando:
+
 kubectl describe pod <Poner el nombre de un pod que esté en estado 'pending'>
 
-# Habilitamos el autoescalado del cluster.
+# La salida (recortada) mostrará algo como lo siguiente:
+# (Nota: Localizar el mensaje 'Insufficient cpu')
+#
+# Events:
+#   Type     Reason            Age                  From               Message
+#   ----     ------            ----                 ----               -------
+#    Warning  FailedScheduling  11s (x4 over 2m25s)  default-scheduler  0/1 nodes are available: 1 Insufficient cpu.
+
+
+# Ahora habilitamos el autoescalado del cluster:
+
 az aks nodepool update \
     --name nodepool1 \
     --enable-cluster-autoscaler \
@@ -277,16 +344,24 @@ az aks nodepool update \
 
 # Hay que esperar unos minutos (aprox. 5) a que se despliegue el nuevo nodo y se replanifiquen los pods.
 # Comprobarlo con:
+
 kubectl get pods
+
 kubectl get nodes
 
-# Limpiamos los recursos.
-kubectl delete -f guestbook-all-in-one.yaml
 
-# Comprobamos que se han eliminado.
+# Limpiamos los recursos:
+
+kubectl delete -f lab-45-guestbook-all-in-one.yaml
+
+
+# Comprobamos que se han eliminado:
+
 kubectl get all
 
-# Quitamos autoescalado.
+
+# Quitamos autoescalado ponemos 2 nodos  (o destruimos el cluster: Ver lab-00.txt Ejercicio 3)
+
 az aks nodepool update \
     --name nodepool1 \
     --disable-cluster-autoscaler \
