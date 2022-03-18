@@ -352,6 +352,10 @@ kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master-.internal-
 code lab-25-C-redis-replica-deployment.yaml
 
 
+# Las líneas más importantes del archivo son:
+#
+# Línea 2:      Indicamos que es un deployment.
+
 kubectl apply -f redis-replica-deployment.yaml
 
 # Comprobamos que arrancan los pods.
