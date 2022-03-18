@@ -34,6 +34,7 @@ sudo snap install code --classic
 # Ejercicios: 
 #   1. Instalación de Azure CLI.
 #   2. Creación de AKS desde Azure CLI.
+#   3. Eliminación de AKS desde Azure CLI.
 
 
 
@@ -198,8 +199,8 @@ sudo snap install code --classic
 
 # Carpeta 45
 
-# Laboratorio 45: "Horizontal POD Autoscaler (HPA)."
-# Archivo: lab-35.txt
+# Laboratorio 45-A: "Horizontal POD Autoscaler (HPA) en Azure."
+# Archivo: lab-35-A.txt
 #
 # Ejercicios:
 #   1. Desplegar la aplicación de ejemplo.

@@ -1,4 +1,4 @@
-# Laboratorio 45: "Horizontal POD Autoscaler (HPA) AZURE"
+# Laboratorio 45-A: "Horizontal POD Autoscaler (HPA) en AZURE"
  
 # Este laboratorio aprenderemos a usar el HPA.
 
@@ -6,7 +6,9 @@
 #
 #   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
 #
-#   2)  Tener instalado el runtime de podman. (ver lab-06-A.txt, Ejercicio 1 y 2)
+#   2) TENER UNA SUBSCRIPCIÓN DE AZURE PARA DESPLEGAR AKS.
+#
+#   3) Desplegar el cluster AKS en Azure (Ver lab-00.txt)
 
 
 ####################################################
@@ -31,12 +33,12 @@ cd ~/k8s_desarrolladores/45
 # Desplegamos la aplicación Guestbook de ejemplo de Google, que es la misma del laboratorio 25-C.
 # Editamos el archivo para comprobarlo:
 
-code lab-45-guestbook-all-in-one.yaml
+code lab-45-A-guestbook-all-in-one.yaml
 
 
 # Creamos todos los objetos en el cluster:
 
-kubectl create -f lab-45-guestbook-all-in-one.yaml
+kubectl create -f lab-45-A-guestbook-all-in-one.yaml
 
 # Comprobamos que se han iniciado todos los objetos.
 
