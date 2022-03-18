@@ -221,7 +221,7 @@ kubectl get configmap/redis-config-from-yaml --output yaml
 # Ahora vamos a usar un 'ConfigMap' para pasar información al contenedor en tiempo de ejecución.
 # Vamos a abrir el archivo modificado:
 
-code redis-master-deployment_modified.yaml
+code lab-25-C-redis-master-deployment-modified.yaml
 
 # Observar lo siguiente:
 #
@@ -347,9 +347,11 @@ kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master-.internal-
 
 # Ahora vamos a desplegar las réplicas (2) de redis, que se sincronizarán desde redis-master.
 
-# Para ello estudiamos el archivo 'redis-replica-deployment.yaml'
+# Para ello estudiamos el archivo 'lab-25-C-redis-replica-deployment.yaml'
 
-code redis-replica-deployment.yaml
+code lab-25-C-redis-replica-deployment.yaml
+
+
 kubectl apply -f redis-replica-deployment.yaml
 
 # Comprobamos que arrancan los pods.
