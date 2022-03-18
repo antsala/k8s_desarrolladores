@@ -360,7 +360,7 @@ kubectl delete -f lab-45-guestbook-all-in-one.yaml
 kubectl get all
 
 
-# Quitamos autoescalado ponemos 2 nodos  (o destruimos el cluster: Ver lab-00.txt Ejercicio 3)
+# Quitamos autoescalado ponemos 2 nodos  (o destruimos el cluster: Ver lab-00.txt Ejercicio 3):
 
 az aks nodepool update \
     --name nodepool1 \
@@ -368,7 +368,9 @@ az aks nodepool update \
     --resource-group myaks-rg \
     --cluster-name myaks 
 
-# Ponemos dos nodos.
+
+# Ponemos dos nodos:
+
 az aks nodepool scale \
     --name nodepool1 \
     --node-count 2 \

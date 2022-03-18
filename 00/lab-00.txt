@@ -132,8 +132,6 @@ kubectl config use-context myaks-admin
 
 
 
-
-
 ####################################################
 # Ejercicio 3: Eliminación de AKS desde Azure CLI. #
 ####################################################
@@ -146,7 +144,7 @@ az aks delete \
     --resource-group myaks-rg \
     --yes
 
-# Eliminamos el grupo de recurso que contiene el cluster:
+# Eliminamos el grupo de recursos que contiene el cluster:
 
 az group delete \
     --resource-group myaks-rg \
@@ -183,17 +181,17 @@ az feature unregister \
     --name EnablePodIdentityPreview \
     --namespace Microsoft.ContainerService
 
-# Como el aviso indica, también hay que elecutar el siguiente comando para que se propage el cambio:
+# Como el aviso indica, también hay que ejecutar el siguiente comando para que se propage el cambio:
 
 az provider register \
     --name Microsoft.ContainerService
 
-# Quitamos la extensión 'aks-preview' de la CLI:
+# Quitamos la extensión 'aks-preview' de la CLI si estuviera instalada:
 
 az extension remove \
     --name aks-preview
 
-# Eliminamos el ACR:
+# Eliminamos el ACR si fue creado:
 
 az group delete \
     --resource-group myACR-rg \
