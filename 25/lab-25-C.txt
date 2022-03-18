@@ -255,7 +255,7 @@ kubectl get pods
 # Ejecutamos un comando dentro del pod para comprobar si realmente ha leido los valores 
 # de configuración.
 #
-# Cambiar el id del pod.
+# Cambiar el nombre del pod.
 #
 # '--' indica que lo que viene después es el comando que ejecutan los contenedores 
 # del pod. En este caso, el pod tiene un único contenedor.
@@ -281,7 +281,7 @@ code lab-25-C-redis-master-service.yaml
 #
 # Línea 2:      El objeto es un servicio.
 #
-# Línea 4:      Con nombre 'redis-master-service'.
+# Línea 4:      Con nombre 'redis-master'.
 #
 # Líneas 5-8:   El servicio crea las etiquetas 'app: redis', 'role: master' y 'tier: backend'.
 #
