@@ -148,12 +148,13 @@ sudo snap install code --classic
 #   6. Aplicar el deployment de 'Mongo Express'.
 
 
-# Laboratorio 25-C: "Backend de Redis con dos réplicas"
+# Laboratorio 25-C: "Backend de Redis con un master y dos réplicas"
 # Archivo: lab-25-C.txt
 #
 # Ejercicios:
 #   1. Despliegue del maestro de Redis.
 #   2. Creación de ConfigMap desde un archivo.
+#   3. Despliegue de las réplicas de Redis.
 
 
 # Carpeta 30

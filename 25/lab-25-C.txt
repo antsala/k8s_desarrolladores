@@ -1,6 +1,8 @@
-# Laboratorio 25-C: "Backend de Redis con dos réplicas"
+# Laboratorio 25-C: "Backend de Redis con un master y dos réplicas"
  
-# Este laboratorio aprenderemos a desplegar una app con in Fronend y un  Backend de Redis con dos réplicas (master y slave)
+# Este laboratorio aprenderemos a desplegar una app con in Frontend y un  Backend de Redis con un master y
+# dos réplicas (master y dos slaves)
+#
 # Requisitos:
 #
 #   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
@@ -92,7 +94,7 @@ kubectl get all
 # Ejercicio 2:  Creación de ConfigMap desde un archivo. #
 #########################################################
 
-# Creamos un archivo, llamado 'redis-config' y le ponemos estas dos líneas
+# Creamos un archivo, llamado 'lab-25-C-redis-config' y le ponemos estas dos líneas
 #   maxmemory 2mb
 #   maxmemory-policy allkeys-lru
 
@@ -100,13 +102,13 @@ kubectl get all
 # Realmente no hace falta hacerlo porque en el directorio de ejemplos ya existe ese archivo.
 # Así que nos limitamos a abrirlo para comprobarlo.
 
-code redis-config
+code lab-25-C-redis-config
 
 # 'allkeys-lru' --> lru = Less Recently Used
 
 # Para crear el ConfigMap, ejecutamos el siguiente comando.
 
-kubectl create configmap redis-configmap-from-file --from-file=redis-config
+kubectl create configmap redis-configmap-from-file --from-file=lab-25-C-redis-config
 
 
 # y ahora listamos el configmap.
@@ -156,7 +158,7 @@ kubectl delete configmap/redis-configmap-from-file
 # En este caso partiríamos desde un archivo YAML, que tenemos disponible en la carpeta del laboratorio.
 # Abrimos el archivo 'redis-config.yaml' 
 
-code redis-config.yaml
+code lab-25-C-redis-config.yaml
 
 # El contenido más destacado del archivo es el siguiente:
 #
@@ -179,7 +181,7 @@ code redis-config.yaml
 
 # Volvemos a crear el configmap, pero esta vez directamente desde el archivo YAML:
 
-kubectl create -f redis-config.yaml
+kubectl create -f lab-25-C-redis-config.yaml
 
 
 # Y lo describimos:
@@ -240,7 +242,7 @@ code redis-master-deployment_modified.yaml
 
 # Desplegamos esta versión actualizada para usar configmap.
 
-kubectl create -f redis-master-deployment_modified.yaml
+kubectl create -f lab-25-C-redis-master-deployment-modified.yaml
 
 # Miramos los pods
 kubectl get pods
@@ -272,20 +274,38 @@ CONFIG GET maxmemory-policy
 # Ahora vamos a desplegar un servicio INTERNO para los pods del deployment redis-master.
 # Abrimo el archivo 'redis-master-service.yaml'
 
-code redis-master-service.yaml
+code lab-25-C-redis-master-service.yaml
 
 
 # Estudiamos el contenido del archivo.
 #
 # Línea 2:      El objeto es un servicio.
 #
-# Línea 2:      Con nombre 'redis-master-service'.
+# Línea 4:      Con nombre 'redis-master-service'.
+#
+# Líneas 5-8:   El servicio crea las etiquetas 'app: redis', 'role: master' y 'tier: backend'.
+#
+# Línea 12:     El servicio atiende en el puerto '6379'...
+#
+# Línea 13:     y reenvía el tráfico a los pod al puerto '6379'.
+#
+# Líneas 13-16: El servicio enviará tráfico a los pods que tengan definidas las etiquetas 'app: redis', 
+#               'role: master' y 'tier: backend'.
 
 
-kubectl apply -f redis-master-service.yaml
+# Creamos el objeto:
 
-# Comprobamos el despliegue del servicio.
-kubectl get service
+kubectl apply -f lab-25-C-redis-master-service.yaml
+
+
+# Comprobamos el despliegue del servicio:
+
+kubectl get service redis-master-internal-service
+
+# La salida del comando anterior es:
+#
+# NAME                            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+# redis-master-internal-service   ClusterIP   10.100.15.241   <none>        6379/TCP   32s
 
 # Comprobar que el tipo de servicio es 'ClusterIP', por lo que solo se puede acceder a él
 # desde dentro del cluster (desde otros pods) y no desde el exterior del cluster.
@@ -293,25 +313,42 @@ kubectl get service
 # Un servicio también introduce un nombre DNS para dicho servicio, en la forma:
 # <nombreServicio>.<espacioDeNombres>svc.cluster.local. Puesto que estamos usando el
 # espacio de nombres 'default', la DNS del servicio 'redis-master' es:
-# redis-master.default.svc.cluster.local.
+# 'redis-master-internal-service.default.svc.cluster.local'.
 #
 # Para ver esto funcionando, nos metemos en el pod para ver si hay resolución DNS.
 # Lo vamos a hacer con 'ping' ya que 'nslookup' no está instalado en el pod. No va 
 # a haber respuesta de ping, solo nos interesa la resolución DNS.
 
-# Listamos pods y nos quedamos con su id.
-kubectl get pods
-kubectl exec -it redis-master-<Poner aquí el ID apropiado> -- ping redis-master
+# Listamos pods y nos quedamos con su nombre:
 
-# Comprobar que el registro A redis-master.default.svc.cluster.local. se resuelve a la IP 
-# de cluster anterior. CTRL+C para salir.
+kubectl get pods
+
+
+# La salida se parecerá a esta:
+#
+# NAME                                       READY   STATUS    RESTARTS   AGE
+# redis-master-deployment-754ccc67d4-ctp9v   1/1     Running   0          13h
+
+
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master-internal-service
+
+# Comprobar que el registro A redis-master.default.svc.cluster.local. se resuelve a la CLUSTER-IP
+# anterior. CTRL+C para salir.
 
 # Convolución. Se completa el dominio si no se especifica completamente.
-kubectl exec -it redis-master-<Poner aquí el ID apropiado> -- ping redis-master
-kubectl exec -it redis-master-<Poner aquí el ID apropiado> -- ping redis-master.default
-kubectl exec -it redis-master-<Poner aquí el ID apropiado> -- ping redis-master.default.svc.cluster.local
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master-internal-service
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master-internal-service.default
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master-.internal-service.default.svc.cluster.local
+
+
+######################################################
+# Ejercicio 3:  Despliegue de las réplicas de Redis. #
+######################################################
 
 # Ahora vamos a desplegar las réplicas (2) de redis, que se sincronizarán desde redis-master.
+
+# Para ello estudiamos el archivo 'redis-replica-deployment.yaml'
+
 code redis-replica-deployment.yaml
 kubectl apply -f redis-replica-deployment.yaml
 
