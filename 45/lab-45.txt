@@ -9,9 +9,9 @@
 #   2)  Tener instalado el runtime de podman. (ver lab-06-A.txt, Ejercicio 1 y 2)
 
 
-#####################################################
-# Ejercicio 1:  Desplegar la aplicación de ejemplo. #
-#####################################################
+####################################################
+# Ejercicio 1: Desplegar la aplicación de ejemplo. #
+####################################################
 
 # Entramos en el directorio del laboratorio
 
@@ -28,18 +28,148 @@ cd ~/k8s_desarrolladores/45
 # (uno solo para Minikube)
 
 
-# Desplegamos la aplicación Guestbook. Editamos el archivo:
+# Desplegamos la aplicación Guestbook de ejemplo de Google, que es la misma del laboratorio 25-C.
+# Editamos el archivo para comprobarlo:
 
 code lab-45-guestbook-all-in-one.yaml
 
+
+# Creamos todos los objetos en el cluster:
+
 kubectl create -f lab-45-guestbook-all-in-one.yaml
+
+# Comprobamos que se han iniciado todos los objetos.
+
+kubectl get all
+
 
 # Vamos a cambiar el servicio de frontend de ClusterIP a LoadBalancer.
 # Para ello editamos el servicio directamente.
+
 kubectl edit service frontend
 
-# Se usa el editor 'vi'. Pulsar 'i'. Cambiar en el código el tipo de 'ClusterIP' a 
+# Se usa el editor 'vim'. Pulsar 'i'. Cambiar en el código el tipo de 'ClusterIP' a 
 # 'LoadBalancer'. Luego :wq!
+
+# Comprobamos que el servicio se ha actualizado a 'LoadBalancer'
+
+kubectl get service frontend
+
+
+# Salida debe ser así:
+#
+# NAME       TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)        AGE
+# frontend   LoadBalancer   10.107.119.101   10.107.119.101   80:31325/TCP   5m11s
+
+# Si 'EXTERNAL-IP' se quedan en 'Pending' abrir otra terminal y ejecutar 'minikube tunnel' para que se
+# asigne una IP.
+
+
+
+##################################################
+# Ejercicio 2: Escalar el frontend de GuestBook. #
+##################################################
+
+# El frontend tiene actualmente 3 réplicas. Podemos escalarlo dinámicamente con el siguiente comando.
+
+kubectl scale deployment frontend --replicas=6
+
+# Para ver dónde están corriendo los 6 pods...
+
+kubectl get pods -o wide
+
+
+# La salida del comando anterior será similar a esta:
+#
+# NAME                            READY   STATUS    RESTARTS   AGE    IP            NODE       NOMINATED NODE   READINESS GATES
+# frontend-7c8899b9cc-48hz8       1/1     Running   0          10s    172.17.0.12   minikube   <none>           <none>
+# frontend-7c8899b9cc-6hpcq       1/1     Running   0          10s    172.17.0.11   minikube   <none>           <none>
+# frontend-7c8899b9cc-7c8pn       1/1     Running   0          8m2s   172.17.0.7    minikube   <none>           <none>
+# frontend-7c8899b9cc-jddr8       1/1     Running   0          10s    172.17.0.10   minikube   <none>           <none>
+# frontend-7c8899b9cc-k2qmb       1/1     Running   0          8m2s   172.17.0.6    minikube   <none>           <none>
+# frontend-7c8899b9cc-zhrr5       1/1     Running   0          8m2s   172.17.0.4    minikube   <none>           <none>
+# redis-master-55db8bb568-mps7s   1/1     Running   0          8m2s   172.17.0.5    minikube   <none>           <none>
+# redis-replica-5679fcd5b-477rg   1/1     Running   0          8m2s   172.17.0.3    minikube   <none>           <none>
+# redis-replica-5679fcd5b-l5wqf   1/1     Running   0          8m2s   172.17.0.9    minikube   <none>           <none>
+
+# Comprobar que hay 6 instancias de pod del frontend y que están corriendo en el únido nodo que tenemos
+# (columna 'NODE') Minikube. 
+
+# (NOTA: Las columnas 'NOMINATED NODE' y 'READINESS GATES' serán tratadas en un laboratorio posterior)
+
+# En K8s se puede configurar el autoescalado de los pods usando el objeto HPA.
+#
+# HPA monitoriza las métricas a intervalos regulares, basándose en las reglas que definimos. 
+# Por ejemplo, que se añadan pods adicionales si el uso de CPU es superior al 50% y que se quiten
+# si es inferior al 10%.
+
+# Para probar HPA, primero reducimos el escalado de forma manual.
+
+kubectl scale deployment frontend --replicas=1
+
+# Comprobar que solo hay un pod en el frontend
+
+kubectl get pods
+
+
+# La salida debe ser similar a esta:
+#
+# NAME                            READY   STATUS    RESTARTS   AGE
+# frontend-7c8899b9cc-7c8pn       1/1     Running   0          12m
+# redis-master-55db8bb568-mps7s   1/1     Running   0          12m
+# redis-replica-5679fcd5b-477rg   1/1     Running   0          12m
+# redis-replica-5679fcd5b-l5wqf   1/1     Running   0          12m
+
+
+# Abrimos el archivo de ejemplo 'hpa.yaml'
+code hpa.yaml
+
+# Las líneas más importantes son:
+#
+# Línea 2:      Se define el tipo de objeto a crear como 'HorizontalPodAutoscaler'
+#
+# Línea 6-9:    Definen el deployment que se auto escalará.
+#
+# Línea 10-11:  Configuramos número mínimo y máximo de pods para el autoescalado.
+#
+# Línea 12:     Definimos el porcentaje de CPU para que se dispare el autoescalado.
+
+# Realizamos el despliegue del HPA.
+kubectl create -f hpa.yaml
+
+# Comprobamos el objeto de autoescalado.
+kubectl get hpa
+
+# Ahora vamos a ver el autoescalado en acción.
+# Creamos una nueva shell y ejecutamos el comando.
+kubectl get pods -w
+
+# En la terminal original vamos a instalar un programa llamado 'hey' cuya finalidad
+# es meter carga en el servidor web. Antes instalamos 'go'
+sudo apt install golang-go
+export GOPATH=~/go
+export PATH=$GOPATH/bin:$PATH
+go get -u github.com/rakyll/hey
+
+# Metemos carga (20 millones de Request) Usar la IP Externa del servicio de frontend.
+hey -z 20m http://<Poner aqúi la IP Externa del Servicio>
+
+# Esperar unos minutos y ver en la segunda terminal como se escalan los pods.
+# Hacer CTRL+C en 'hey' y esperar un tiempo para ver como se quitan los pods.
+# Tarda un buen rato (al menos 10 minutos) Lo podemos ver con detalle describiendo el HPA.
+# En una tercera terminal:
+kubectl describe hpa frontend-scaler
+
+# Parar (CTRL+C) 'hey' y comprobar como se hace el desescalado (Tarda un buen rato)
+
+# Limpiamos los recursos.
+kubectl delete -f hpa.yaml
+kubectl delete -f guestbook-all-in-one.yaml
+
+# Comprobamos
+kubectl get all
+
+
 
 # Comprobamos los objetos presentes en el cluster.
 

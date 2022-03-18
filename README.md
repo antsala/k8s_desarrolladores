@@ -184,3 +184,10 @@ sudo snap install code --classic
 #   5. Configurar el 'Default Backend'.
 
 
+# Carpeta 45
+
+# Laboratorio 45: "Horizontal POD Autoscaler (HPA)."
+# Archivo: lab-35.txt
+#
+# Ejercicios:
+#   1. Desplegar la aplicación de ejemplo.
