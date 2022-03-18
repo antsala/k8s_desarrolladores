@@ -1,0 +1,57 @@
+# Laboratorio 45: "Horizontal POD Autoscaler (HPA)"
+ 
+# Este laboratorio aprenderemos a usar el HPA.
+
+# Requisitos:
+#
+#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2)  Tener instalado el runtime de podman. (ver lab-06-A.txt, Ejercicio 1 y 2)
+
+
+#####################################################
+# Ejercicio 1:  Desplegar la aplicación de ejemplo. #
+#####################################################
+
+# Entramos en el directorio del laboratorio
+
+cd ~/k8s_desarrolladores/45
+
+
+# Hay dos dimensiones para realizar el escalado de una aplicación en Kubernetes.
+# La primera dimensión del escalado consiste en determinar el número de pods,
+# mientras que la segunda es el número de nodos del cluster.
+
+# El escalado de nodos es una característica nativa en los clusters administrados del 
+# cloud, que dejaremos para más adelante. En ese laboratorio aprenderemos a usar HPA,
+# que desplegará las instancias de POD en los nodos que el cluster tenga disponibles
+# (uno solo para Minikube)
+
+
+# Desplegamos la aplicación Guestbook. Editamos el archivo:
+
+code lab-45-guestbook-all-in-one.yaml
+
+kubectl create -f lab-45-guestbook-all-in-one.yaml
+
+# Vamos a cambiar el servicio de frontend de ClusterIP a LoadBalancer.
+# Para ello editamos el servicio directamente.
+kubectl edit service frontend
+
+# Se usa el editor 'vi'. Pulsar 'i'. Cambiar en el código el tipo de 'ClusterIP' a 
+# 'LoadBalancer'. Luego :wq!
+
+# Comprobamos los objetos presentes en el cluster.
+
+kubectl get all 
+
+
+# Solo debe quedar el servicio de Kubernetes.
+# NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+# service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   53m
+
+
+
+#######################
+# FIN DEL LABORATORIO #
+#######################
