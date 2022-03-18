@@ -523,18 +523,53 @@ kubectl get pods
 
 code lab-25-C-frontend-service.yaml
 
+# Las líneas más importantes son:
+#
+# Línea 2:          Define un servicio.
+#
+# Línea 9:          Es de tipo 'LoadBalancer'.
+#
+# Línea 11:         Define el puerto en el que escuchará el servicio (80)
+#
+# Línea 12:         Puerto del pod al que se reenviará el tráfico (80)
+#
+# Líneas 13-15:     Se enviará tráfico a los pods que declaren las etiquetas 'app: guestbook', 'tier: frontend'.
 
 
-kubectl create -f frontend-service.yaml
+# Aplicamos el servicio:
+kubectl create -f lab-25-C-frontend-service.yaml
 
-# Comprobamos los servicios. La IP Externa tarda un rato, hasta que se cree la regla en el balanceador.
-kubectl get service
+# Comprobamos los servicios.
+kubectl get service frontend-load-balancer
+
+
+# La salida es:
+#
+# NAME                     TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+# frontend-load-balancer   LoadBalancer   10.102.188.44   <pending>     80:30087/TCP   50s
+
+
+# El servicio es de tipo 'load balancer' y la EXTERNAL-IP está en 'Pending'
+
+# Cuando se nos asigne la EXTERNAL-IP, debemos conectar con el navegador al puerto 80
+#
+# De este forma, el tráfico iria así:
+#
+# Navegador --> EXTERNAL-IP:80  --> frontend_load_balancer --> endpoint_pod:80
+
+# En otra terminal ejecutamos:
+
+minikube tunnel
+
 
 # Tomar nota de la IP External del frontend y conectarse con un navegador.
 
 # Limpiamos recursos del cluster.
-kubectl delete deployment frontend redis-master redis-replica
-kubectl delete service frontend redis-master redis-replica
+
+kubectl delete deployment frontend redis-master-deployment redis-replica-deployment
+
+kubectl delete service frontend-load-balancer redis-master-internal-service redis-replica-internal-service
+
 
 # Comprobamos que solo queda el servicio de Kubernetes
 kubectl get all
