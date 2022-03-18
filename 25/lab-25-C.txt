@@ -22,7 +22,7 @@ cd ~/k8s_desarrolladores/25
 # Desplegamos el backend del maestro de redis. Abrimos el achivo 'lab-25-redis-master-deployment.yaml'
 
 
-code lab-25-redis-master-deployment.yaml
+code lab-25-C-redis-master-deployment.yaml
 
 # El contenido a destacar de este archivo lo comentamos a continuación:
 #
@@ -57,7 +57,7 @@ code lab-25-redis-master-deployment.yaml
 
 # Aplicamos el deployment:
 
-kubectl apply -f lab-25-redis-master-deployment.yaml
+kubectl apply -f lab-25-C-redis-master-deployment.yaml
 
 
 # Examinamos el deployment:
@@ -123,7 +123,7 @@ kubectl get configmaps redis-configmap-from-file
 
 
 # Observamos contenido. Nótese que hay una clave llamada 'redis-config' y una lista con los valores 
-#de la configuración:
+# de la configuración:
 
 kubectl describe configmap/redis-configmap-from-file
 
