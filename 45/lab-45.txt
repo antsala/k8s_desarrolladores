@@ -1,4 +1,4 @@
-# Laboratorio 45: "Horizontal POD Autoscaler (HPA)"
+# Laboratorio 45: "Horizontal POD Autoscaler (HPA) AZURE"
  
 # Este laboratorio aprenderemos a usar el HPA.
 
@@ -121,43 +121,84 @@ kubectl get pods
 # redis-replica-5679fcd5b-l5wqf   1/1     Running   0          12m
 
 
-# Abrimos el archivo de ejemplo 'hpa.yaml'
-code hpa.yaml
+# Abrimos el archivo de ejemplo para configurar el Horizontal POD Autoscaler 'lab-45-hpa.yaml'
+
+code lab-45-hpa.yaml
 
 # Las líneas más importantes son:
 #
 # Línea 2:      Se define el tipo de objeto a crear como 'HorizontalPodAutoscaler'
 #
-# Línea 6-9:    Definen el deployment que se auto escalará.
+# Línea 6-9:    Lo asocia con el deployment que se auto escalará.
 #
 # Línea 10-11:  Configuramos número mínimo y máximo de pods para el autoescalado.
 #
 # Línea 12:     Definimos el porcentaje de CPU para que se dispare el autoescalado.
 
+# Salimos sin modificar.
+
+
 # Realizamos el despliegue del HPA.
-kubectl create -f hpa.yaml
+
+kubectl create -f lab-45-hpa.yaml
+
 
 # Comprobamos el objeto de autoescalado.
-kubectl get hpa
 
-# Ahora vamos a ver el autoescalado en acción.
-# Creamos una nueva shell y ejecutamos el comando.
+kubectl get hpa frontend-scaler
+
+
+# La salida será similar a esta:
+#
+# NAME              REFERENCE             TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+# frontend-scaler   Deployment/frontend   <unknown>/50%   1         10        1          65s
+
+# En la columna 'TARGETS' aparece el valor '<unknown>' porque el HPA aun no se ha puesto en
+# funcionamiento y no tiene estádistica que mostrar.
+
+# Ahora vamos a ver el autoescalado en acción. Creamos una nueva terminal y ejecutamos el comando.
+
 kubectl get pods -w
 
-# En la terminal original vamos a instalar un programa llamado 'hey' cuya finalidad
-# es meter carga en el servidor web. Antes instalamos 'go'
-sudo apt install golang-go
+# La idea es que vayamos viendo en tiempo real cómo se van creando los pods.
+
+# En la terminal original vamos a instalar un programa llamado 'hey' cuya finalidad es meter carga 
+# en el servidor web, pero para ello, antes instalamos 'go'
+
+sudo apt-get update
+
+sudo apt install -y golang-go
+
 export GOPATH=~/go
+
 export PATH=$GOPATH/bin:$PATH
+
 go get -u github.com/rakyll/hey
 
-# Metemos carga (20 millones de Request) Usar la IP Externa del servicio de frontend.
-hey -z 20m http://<Poner aqúi la IP Externa del Servicio>
 
-# Esperar unos minutos y ver en la segunda terminal como se escalan los pods.
+# Copiamos la EXTERNAL-IP del servicio de frontend.
+
+kubectl get service frontend
+
+
+# La salida será parecida a esto:
+#
+# NAME       TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)        AGE
+# frontend   LoadBalancer   10.107.119.101   10.107.119.101   80:31325/TCP   34m
+
+
+# Metemos carga (20 millones de Request) Usar la IP Externa del servicio de frontend.
+
+hey -z 20m http://<Poner aquí la IP Externa del Servicio>
+
+# Esperar unos minutos (tener paciencia) y ver en la segunda terminal como se escalan los pods.
+
+
 # Hacer CTRL+C en 'hey' y esperar un tiempo para ver como se quitan los pods.
 # Tarda un buen rato (al menos 10 minutos) Lo podemos ver con detalle describiendo el HPA.
+
 # En una tercera terminal:
+
 kubectl describe hpa frontend-scaler
 
 # Parar (CTRL+C) 'hey' y comprobar como se hace el desescalado (Tarda un buen rato)

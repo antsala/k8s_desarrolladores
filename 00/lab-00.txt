@@ -1,0 +1,99 @@
+# Laboratorio 00: "Herramientas de administración de Azure"
+ 
+# Este laboratorio instalaremos las herramientas que necesitaremos para administra Azure.
+
+# Requisitos:
+#
+#   1)  Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+
+
+#########################################
+# Ejercicio 1: Instalación de Azure CLI #
+#########################################
+
+
+# En primer lugar desinstalamos versiones previas si estuvieran:
+
+sudo apt remove azure-cli -y 
+
+sudo apt autoremove -y
+
+# Actualizamos repositorios e instalamos dependencias:
+
+sudo apt-get update
+
+sudo apt-get install -y  ca-certificates curl apt-transport-https lsb-release gnupg
+
+# Descargamos la clave de firma de Microsoft:
+
+curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
+    gpg --dearmor | \
+    sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+
+# Agregamos repositoritos de Azure-CLI:
+
+AZ_REPO=$(lsb_release -cs) 
+
+echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
+    sudo tee /etc/apt/sources.list.d/azure-cli.list
+
+# Actualizamos repos e instalamos azure-CLI:
+
+sudo apt-get update
+
+sudo apt-get install azure-cli
+
+# Comprobamos versión de azure-cli y actualizarla con 'az upgrade' si se recomienda.
+
+az version
+
+
+
+#################################################
+# Ejercicio 2: Creación de AKS desde Azure CLI. #
+#################################################
+
+# Iniciamos sesión con el usuario administrador de la subscripción:
+
+az login
+
+
+# Creamos un grupo de recursos para el cluster:
+
+az group create --name myaks-rg --location westeurope
+
+
+# Habilitamos la supervisión de clusteres:
+
+az provider register --namespace Microsoft.OperationsManagement
+
+az provider register --namespace Microsoft.OperationalInsights
+
+
+# Creamos el cluster
+az aks create \
+    --resource-group myaks-rg \
+    --name myaks \
+    --location westeurope \
+    --node-count 2 \
+    --node-vm-size Standard_DS2_v2 \
+    --enable-addons monitoring \
+    --generate-ssh-keys
+
+# Una vez conectado a la subscripción, el siguiente paso es conectar al servicio AKS.
+
+# El siguiente comando descarga las credenciales y las almacena en ./kube/config
+az aks get-credentials \
+    --resource-group myaks-rg \
+    --name myaks \
+    --admin \
+    --overwrite-existing
+
+# Comprobación del estado del cluster
+az aks show \
+    --resource-group myaks-rg \
+    --name myaks
+
+#######################
+# FIN DEL LABORATORIO #
+#######################
