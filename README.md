@@ -156,6 +156,7 @@ sudo snap install code --classic
 #   2. Creación de ConfigMap desde un archivo.
 #   3. Despliegue de las réplicas de Redis.
 #   4. Despliegue del Frontend.
+#   5. Despliegue del balanceador para el Frontend.
 
 
 # Carpeta 30

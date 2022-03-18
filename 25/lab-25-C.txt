@@ -431,7 +431,7 @@ kubectl get service redis-replica-internal-service
 
 
 ##########################################
-# Ejercicio 4: Despliegue del Frontend. #
+# Ejercicio 4: Despliegue del Frontend.  #
 ##########################################
 
 # Ahora desplegamos en frontend, que se contectará al servidor máster de Redis o a las réplicas
@@ -466,24 +466,65 @@ code lab-25-C-frontend-deployment.yaml
 # Líneas 29 y 30:   Se inicializa la variable de entorno 'REDIS_SLAVE_SERVICE_HOST' al valor 'redis-replica-internal-service', para 
 #                   que los contenedores de Frontend puedan contactar con la réplicas.
 
+# Desplegamos el frontend.
+
+kubectl apply -f lab-25-C-frontend-deployment.yaml
+
+
+# Comprobamos
+kubectl get deployment frontend
+
+
+# La salida será parecida a esta:
+#
+# NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+# frontend   3/3     3            3           26s
+
+# Lo vemos con más detalle:
+
+kubectl describe deployment frontend
+
+# Estudiar la salida.
+
+# Comprobamos los pods.
+
+kubectl get pods
+
+
+# La salida será similar a la siguiente. Comprobar que todos los pods están en 'Running'.
+# NAME                                        READY   STATUS    RESTARTS   AGE
+# frontend-69bff8766c-r5mv9                   1/1     Running   0          4m10s
+# frontend-69bff8766c-thqh7                   1/1     Running   0          4m10s
+# frontend-69bff8766c-x67rg                   1/1     Running   0          4m10s
+# redis-master-deployment-754ccc67d4-ctp9v    1/1     Running   0          14h
+# redis-replica-deployment-6bf68ddfbd-dvj62   1/1     Running   0          40m
+# redis-replica-deployment-6bf68ddfbd-zzzdv   1/1     Running   0          40m
+
+
+
+#############################################################
+# Ejercicio 5: Despliegue del balanceador para el Frontend. #
+#############################################################
+
+# Vamos a crear un servicio de tipo 'LoadBalancer' para el frontend.
+
 # en K8s existe tres formas de exponer un servicio:
 #
 #   ClusterIP:      Por defecto. Se crea una IP para el servicio y k8s redirige el tráfico al nodo apropiado.
-#                   Al ser una IP privada, el servicio no puede ser accedido desde Internet.
+#                   Al ser una IP privada, el servicio no puede ser accedido desde fuera del cluster.
 #
 #   NodePort:       El servicio puede ser accedido desde fuera del cluster, conectándose a la IP (y puerto)
 #                   del nodo.
 #
 #   LoadBalancer:   Se creará un balanceador externo, con una IP pública. Se balancea entre los pods.
 
-# Desplegamos el frontend.
-kubectl apply -f frontend-deployment.yaml
 
-# Comprobamos
-kubectl get pods
+# Editamos el archivo:
 
-# Vamos a crear un servicio de tipo 'LoadBalancer' para el frontend.
-code frontend-service.yaml
+code lab-25-C-frontend-service.yaml
+
+
+
 kubectl create -f frontend-service.yaml
 
 # Comprobamos los servicios. La IP Externa tarda un rato, hasta que se cree la regla en el balanceador.
