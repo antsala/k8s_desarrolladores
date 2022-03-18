@@ -9,6 +9,7 @@ metadata:
 spec:
   ports:
   - port: 6379
+    targetPort: 6379
   selector:
     app: redis
     role: replica
