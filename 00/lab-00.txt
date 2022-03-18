@@ -103,6 +103,36 @@ az aks show \
     --name myaks
 
 
+# Nota sobre los contextos: Si se quiere cambiar de cluster, debemos cambiar el contexto. 
+# Primero listamos los contextos configurados:
+
+kubectl get contexts
+
+
+# La salida del comando anterior mostrará algo como esto:
+# 
+# CURRENT   NAME          CLUSTER    AUTHINFO                      NAMESPACE
+#           minikube      minikube   minikube                      default
+# *         myaks-admin   myaks      clusterAdmin_myaks-rg_myaks  
+
+# Podemos apreciar que el contexto actual es 'myaks-admin' (El cluster AKS), para conmutar al otro 
+# contexto (Minikube) usamos el siguiente comando:
+
+kubectl config use-context minikube
+
+
+# La salida indicará lo siguiente:
+#
+# Switched to context "minikube".
+
+
+# Para volver al contexto de Azure:
+
+kubectl config use-context myaks-admin
+
+
+
+
 
 ####################################################
 # Ejercicio 3: Eliminación de AKS desde Azure CLI. #
