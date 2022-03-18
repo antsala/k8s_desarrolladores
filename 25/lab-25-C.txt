@@ -568,7 +568,7 @@ minikube tunnel
 
 kubectl delete deployment frontend redis-master-deployment redis-replica-deployment
 
-kubectl delete service frontend-load-balancer redis-master-internal-service redis-replica-internal-service
+kubectl delete service frontend-load-balancer redis-master redis-replica
 
 
 # Comprobamos que solo queda el servicio de Kubernetes
