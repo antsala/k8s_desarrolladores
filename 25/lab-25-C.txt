@@ -355,25 +355,51 @@ code lab-25-C-redis-replica-deployment.yaml
 # Las líneas más importantes del archivo son:
 #
 # Línea 2:      Indicamos que es un deployment.
-
-kubectl apply -f redis-replica-deployment.yaml
-
-# Comprobamos que arrancan los pods.
-kubectl get all
-
-# Del archivo 'redis-replica-deployment.yaml' que estamos editando, destacamos:
 #
-# Línea 13:     Desplegamos 2 pods (2 réplicas)
+# Línea 4:      Su nombre es 'redis-replica-deployment'
 #
-# Línea 23:     Se usa la imagen 'follower', que se conectará a una máquina llamada 'redis-server'
+# Líneas 8-12:  El deployment se asociará con una plantilla de pod que tenga definidas las etiquetas: 
+#               'app: redis', 'role: replica' y 'tier: backend'.
 #
-# Línea 39-30:  Le decimos que la resolución se hace por DNS. De esta forma, los followers se conectará
-#               a la IP asociada a 'redis-server', es decir a 'redis-server.default.svc.cluster.local',
-#               que es la IP del pod de redis-server.
+# Línea 13:     Se instanciarán dos pods.
+#
+# Línea 21:     Comienza la definición del contenedor.
+#
+# Línea 22:     El nombre del contenedor será 'replica'.
+#
+# Línea 23:     Estará basado en la imagen de réplica de redis 'gcr.io/google_samples/gb-redis-follower:v1'.
+#
+# Línea 25:     Se le asignará el 10% de la CPU (100 milis)
+#
+# Línea 26:     y 100 Mebibits de memoria. (Leer este artículo: https://es.wikipedia.org/wiki/Mebibit)
+#
+# Línea 28-30:  Se crea la variable de entorno 'GET_HOST_FROM' con el valor 'dns'. Cuando el contenedor se inicie
+#               se conectará a una máquina (su master) llamada 'redis-server', es decir a 
+#               'redis-server-internal-service.default.svc.cluster.local',  que es la IP del servicio de redis-server.
+
+# Aplicamos el deployment:
+
+kubectl apply -f lab-25-C-redis-replica-deployment.yaml
+
+# Comprobamos que arranca el deployment:
+
+kubectl get deployment redis-replica-deployment
+
+
+# La salida será similar a esta:
+#
+# NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+# redis-replica-deployment   2/2     2            2           41s
 
 
 # Para que el frontend (aún por desplegar) pueda contactar con las réplicas (además del master de redis), 
 # es necesario exponerlas mediante un servicio, que nos dará la respectiva ClusterIP.
+
+# Editamos el archivo:
+
+code lab-25-C-redis-replica-service.yaml
+
+
 kubectl apply -f redis-replica-service.yaml
 
 # Comprobamos el despliegue.
