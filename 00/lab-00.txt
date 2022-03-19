@@ -1,6 +1,6 @@
 # Laboratorio 00: "Herramientas de administración de Azure"
  
-# Este laboratorio instalaremos las herramientas que necesitaremos para administra Azure.
+# Este laboratorio instalaremos las herramientas que necesitaremos para administrar Azure.
 
 # Requisitos:
 #

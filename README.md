@@ -37,6 +37,19 @@ sudo snap install code --classic
 #   3. Eliminación de AKS desde Azure CLI.
 
 
+# Carpeta 01 (AWS)
+
+# Laboratorio 01: "Herramientas administración AWS"
+# Archivo: lab-01.txt
+#
+# Ejercicios: 
+#   1. Instalación de AWS CLI.
+#   2. Configuración de la credencial AWS para la cli.
+#   3. Instalación y configuración de 'eksctl'.
+#   4. Creación de EKS desde AWS CLI.
+#   5. Eliminación de EKS desde AWS CLI.
+
+
 
 # Carpeta 03
 
@@ -199,10 +212,18 @@ sudo snap install code --classic
 
 # Carpeta 45
 
-# Laboratorio 45: "Horizontal POD Autoscaler (HPA) en Azure y autoescalado de nodos."
-# Archivo: lab-45.txt
+# Laboratorio 45-A: "Horizontal POD Autoscaler (HPA) en Azure y autoescalado de nodos."
+# Archivo: lab-45-A.txt
 #
 # Ejercicios:
 #   1. Desplegar la aplicación de ejemplo.
 #   2. Escalar el frontend de GuestBook.
 #   3. Autoescalado de nodos.
+
+
+# Laboratorio 45-B: "Horizontal POD Autoscaler (HPA) en AWS."
+# Archivo: lab-45-B.txt
+#
+# Ejercicios:
+#   1. Desplegar la aplicación de ejemplo.
+#   2. Escalar el frontend de GuestBook.
