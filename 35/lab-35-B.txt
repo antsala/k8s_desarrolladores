@@ -168,18 +168,24 @@ az network vnet peering create \
 cd ~/k8s_desarrolladores/35
 
 # Vamos a desplegar la aplicación 'Guestbook' y exponerla por medio de una ingress. Editemos
-# el archivo para conocer el despliegue:
+# el archivo para conocer el despliegue. Es la app de ejemplo de Google.
 
 code lab-35-B-guestbook-all-in-one.yaml
 
 
-# Creamos los objetos:
+# Salimos sin modificar el archivo y creamos los objetos:
 
-kubectl create -f guestbook-all-in-one.yaml
+kubectl create -f lab-35-B-guestbook-all-in-one.yaml
 
-# En el directorio tenemos el archivo 'simple-frontend-ingress.yaml'
-# Lo Abrimos.
-code simple-frontend-ingress.yaml
+
+# En la carpeta del laboratorio, tenemos el archivo 'lab-35-B-simple-frontend-ingress.yaml'
+# Lo abrimos:
+
+
+code lab-35-B-simple-frontend-ingress.yaml
+
+
+# Las líneas más importantes a tener en cuenta son:
 
 # Línea 1:      Versión de la API de Kubernetes para el objeto que se crea.
 #
@@ -192,12 +198,31 @@ code simple-frontend-ingress.yaml
 # Líneas 13-17: Servicio al que se enviará el tráfico.
 
 
-# Creamos el objeto ingress.
-kubectl apply -f simple-frontend-ingress.yaml
+# Creamos el objeto ingress:
 
-# Probar la app. El tráfico ya entra por el AGIC.
-# Las reglas ya no se configuran desde Azure, sino desde archivos
+kubectl apply -f lab-35-B-simple-frontend-ingress.yaml
+
+
+# Comprobamos que se ha creado el objeto:
+
+kubectl get ingress
+
+# La salida monstrará algo así:
+#
+# NAME                      CLASS    HOSTS   ADDRESS        PORTS   AGE
+# simple-frontend-ingress   <none>   *       20.126.12.28   80      45s
+
+# Probar la app. El tráfico ya entra por el AGIC. Conectar con un navegador a:
+# 'http://<Poner aquí la IP del ingress>
+# 
+# Aún no hay SSL, pero eso lo solucionaremos en breve.
+
+# Es importante recordar que las reglas ya no se configuran desde Azure, sino desde archivos
 # YAML. El driver AGIC se las pasará a Azure.
+
+
+# Azure crea un registro A para la IP del entrypoint del ingress:
+
 URL_APP=http://$PUBLIC_IP_DNS_NAME.westeurope.cloudapp.azure.com
 
 # Comprobamos.
@@ -205,26 +230,22 @@ echo $URL_APP
 
 # Conectar con un navegador.
 
-# Comprobar que el servicio de frontend NO TIENE IP EXTERNA PÚBLICA.
+# Comprobar que el servicio de frontend NO TIENE IP EXTERNA PÚBLICA, es un servicio INTERNO.
+# Esto será así porque es de tipo ClusterIP y no LoadBalancer:
 kubectl get service
 
-# Esto será así porque es de tipo ClusterIP y no LoadBalancer.
+
+# El tráfico queda así:
 #
-# Así que el tráfico queda así:
+# Navegador Usuario --> Ingress (IP Pública) --> Servicio frontednd (IP Privada)
+
+
+# Vamos a dar soporte HTTPS a la aplicación. Para ello necesitaremos un certificado, que lo proporcionará
+# Let's Encrypt,  y el complemento 'cert-manager' de Kubernetes (que pedirá certificados a Let's Encrypt)
 #
-# Usuario --> Ingress (IP Pública) --> Servicio frontednd (IP Privada)
-
-
-
-#########################################
-# Ejercicio 3: Añadir TLS a la Ingress. #
-#########################################
-
-# Vamos a dar soporte HTTPS a la aplicación. Para ello necesitaremos un 
-# certificado (lo proporcionará Let's Encrypt) y el complemento 'cert-manager'
-# de Kubernetes, que se lo pedirá a Let's Encrypt)
+# Los pasos a realizar son los siguiente:
 #
-# 1) Instalar 'cert-manager'
+# 1) Instalar 'cert-manager'.
 # 
 # 2) Instalar el emisor (issuer) de certificados.
 #
@@ -233,21 +254,29 @@ kubectl get service
 # 4) Asegurar el servicio frontend creando un ingress con SSL.
 
 
-# Instalación de cert-manager
+###############################################
+# Ejercicio 3: Instalación de 'cert-manager'. #
+###############################################
+
+# Instalamos 'cert-manager':
 
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml
 
-# 'cert-manager' hace uso de una funcionalidad de Kubernetes llamada 
-# 'CustomResourceDefinition' (CRD), que es una funcionalidad usada para extender
-# el API Server de Kubernetes para crear recursos personalizados. Algunos de
+# 'cert-manager' hace uso de una funcionalidad de Kubernetes llamada 'CustomResourceDefinition' (CRD), 
+# que es usada para extender el API Server de Kubernetes y crear recursos personalizados. Algunos de
 # ellos serán utilizados en breve.
 
 
+
+#################################################################
+# Ejercicio 4: Instalación del emisor de certificador (issuer). #
+#################################################################
+
 # Instalación del emisor de certificador (issuer)
 
-# El archivo 'certificate-issuer.yaml' contiene el código para este
-# emisor. Lo abrimos.
-code certificate-issuer.yaml
+# El archivo 'certificate-issuer.yaml' contiene el código para este emisor. Lo abrimos para estudiarlo:
+
+code lab-35-B-certificate-issuer.yaml
 
 # Líneas 1-2:       Apuntamos a uno de los CRDs que creó 'cert-manager'. Un 'issuer' es un
 #                   enlace entre el cluste de k8s y la CA que crea el certificado, que en este 

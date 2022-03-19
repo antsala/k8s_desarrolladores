@@ -216,7 +216,8 @@ sudo snap install code --classic
 # Ejercicios:
 #   1. Configuración de un Gateway de aplicación de Azure como Ingress de K8s.
 #   2. Añadir una regla de entrada (Ingress) a la aplicación.
-#   3. Añadir TLS a la Ingress.
+#   3. Instalación de 'cert-manager'.
+#   4. Instalación del emisor de certificador (issuer).
 
 
 # Carpeta 45
