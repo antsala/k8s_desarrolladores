@@ -390,13 +390,17 @@ echo https://$INGRESS_DNS
 
 code lab-35-B-certificate-issuer-prod.yaml
 
-# En la línea 7, ponemos el email, Guardamos el archivo.
+
+# IMPORTANTE. En la línea 7, ponemos el email, Guardamos el archivo.
 
 # Copiar el valor.
+
 echo $INGRESS_DNS
 
-# Editamos el archivo 'ingress-with-tls-prod.yaml'
-code ingress-with-tls-prod.yaml
+# Editamos el archivo 'lab-35-B-ingress-with-tls-prod.yaml':
+
+code lab-35-B-ingress-with-tls-prod.yaml
+
 
 # En la fila 20 y en la 23 ponemos la DNS de nuestra ingress. Guardamos.
 
