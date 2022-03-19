@@ -165,10 +165,16 @@ az network vnet peering create \
 
 
 # Cambiamos al directorio de trabajo.
-cd ~/k8sAzure/HTTPS
+cd ~/k8s_desarrolladores/35
 
-# Vamos a desplegar la aplicación 'Guestbook' y exponerla por medio 
-# de una ingress. 
+# Vamos a desplegar la aplicación 'Guestbook' y exponerla por medio de una ingress. Editemos
+# el archivo para conocer el despliegue:
+
+code lab-35-B-guestbook-all-in-one.yaml
+
+
+# Creamos los objetos:
+
 kubectl create -f guestbook-all-in-one.yaml
 
 # En el directorio tenemos el archivo 'simple-frontend-ingress.yaml'
