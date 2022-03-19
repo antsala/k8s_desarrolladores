@@ -20,5 +20,5 @@ spec:
     host: <Poner aquí el nombre dns del ingress>
   tls:
     - hosts:
-      - nf-aks-book.westus2.cloudapp.azure.com
+      - <Poner aquí el nombre dns del ingress>
       secretName: frontend-tls
