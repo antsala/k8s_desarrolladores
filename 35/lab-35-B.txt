@@ -402,18 +402,25 @@ echo $INGRESS_DNS
 code lab-35-B-ingress-with-tls-prod.yaml
 
 
-# En la fila 20 y en la 23 ponemos la DNS de nuestra ingress. Guardamos.
+# IMPORTANTE!!!. En la fila 20 y en la 23 ponemos la DNS de nuestra ingress. Guardamos.
 
-# Aplicamos los archivos yaml.
-kubectl create -f certificate-issuer-prod.yaml
-kubectl apply -f ingress-with-tls-prod.yaml
+# Aplicamos los archivos yaml:
 
-# Hay que esperar un minuto a que se descargue e instale el certificado.
-# Esperar a que READY sea 'true'
+kubectl create -f lab-35-B-certificate-issuer-prod.yaml
+
+kubectl apply -f lab-35-B-ingress-with-tls-prod.yaml
+
+
+# Hay que esperar un minuto a que se descargue e instale el certificado Tarda 1 minuto.
+# Esperar a que READY sea 'true':
+
 kubectl get certificates -w
+
 
 # Comprobar, de nuevo,  que todo funciona conectando por TLS con un navegador. 
 echo https://$INGRESS_DNS
+
+
 
 # Para borrar los recursos que dimos de alta.
 kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.yaml
@@ -424,7 +431,15 @@ az aks disable-addons \
     --addon ingress-appgw
 
 # Recordar que el Application Gateway sigue estando en Azure, habría que eliminarlo.
-# Mirar al final del documento, borrar el grupo de recursos 'agic-rg'
+# Mirar en el documento lab-00.txt como se borra el cluster y sus recursos.
+
+
+# Eliminamos las aplicación:
+
+
+kubectl delete -f lab-35-B-guestbook-all-in-one.yaml
+
+# Comprobamos:
 
 kubectl get all 
 
