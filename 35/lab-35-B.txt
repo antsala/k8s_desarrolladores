@@ -307,9 +307,10 @@ kubectl describe issuer letsencrypt-staging
 
 
 
-#################################################################
-# Ejercicio 5: Crear el certificado TLS y assegurar la Ingress. #
-#################################################################
+################################################################
+# Ejercicio 5: Crear el certificado TLS y asegurar la Ingress. #
+################################################################
+
 
 # Hay dos formas de configurar certificados: O bien creamos un certificado manualmente y lo enlazamos con 
 # la ingress, o podemos configurar al controlador ingress, de forma que 'cert-manager' cree el certificado automáticamente. 
@@ -328,50 +329,66 @@ echo $INGRESS_DNS
 
 code lab-35-B-ingress-with-tls.yaml 
 
+
+# Las líneas más interesantes son:
+
 # Líneas 7-8:       Se añaden dos anotaciones al ingress que apuntan al emisor de certificado y al 
 #                   'acme-challenge' para demostrar la propiedad del dominio.
 #
-# Línea 20:         ¡¡¡¡¡¡¡¡IMPORTANTE!!!!!!Poner aquí el nombre de dominio del ingress. 
-#                   $INGRESS_DNS. Esto es obligatorio porque Let's Encrypt solo entrega certificados 
-#                   a los dominios (no IPs)
+# Línea 20:         ¡¡¡¡¡¡¡¡IMPORTANTE!!!!!!Poner aquí el nombre de dominio del ingress $INGRESS_DNS. 
+#                   Esto es obligatorio porque Let's Encrypt solo entrega certificados a los dominios (no IPs)
 #
-# Línea 23:         Esta es la configuració TLS del ingress. También hay que poner el nombre DNS anterior,
+# Línea 23:         Esta es la configuración TLS del ingress. También hay que poner el nombre DNS anterior,
 #                   $INGRESS_DNS.
 #
 # Línea 24:         Este es el nombre del secreto que será creado para almacenar el certificado.
 
-# Guardar el archivo y actualizar el objeto ingress con el siguiente comando.
-kubectl apply -f ingress-with-tls.yaml
+
+# Guardar el archivo y actualizar el objeto ingress con el siguiente comando:
+
+
+kubectl apply -f lab-35-B-ingress-with-tls.yaml
+
 
 # 'cert-manager' tardará aproximadamente 1 minuto en solicitar el certificado y configurar la ingress para 
 # que lo use. Los objetos intermedios que se crean son:
 #
-# Un objeto 'certificate', que podemos ver así (esperar a que ponga 'True')
+# Un objeto 'certificate', que podemos ver así (esperar a que ponga 'True'):
+
 kubectl get certificate -w
+
 
 # Hay otro objeto que 'cert-manager' creó para obtener el certificado. Es la petición. 
 # Podemos verificar su estado así:
+
 kubectl get certificaterequest
 
+
 # Podemos ver el flujo de la petición así:
+
 kubectl describe certificaterequest
 
 
 # Comprobar que todo funciona conectando por TLS con un navegador. 
 echo https://$INGRESS_DNS
 
-# Dará un error de certificado porque estamos usando el servidor de staging de Let's Encrypt.
+
+# IMPORTANTE: Dará un error de certificado porque estamos usando el servidor de staging de Let's Encrypt.
 # https://letsencrypt.org/docs/staging-environment/ y así no le sobrecargamos sus sistemas. 
 
 
 
+###################################################################
+# Ejercicio 6: Cambiar al entorno de producción de Let´s Encrypt. #
+###################################################################
+
 # Cambiar del entorno de staging al de producción de Let's Encrypt
 
-# Vamos a crear un nuevo 'issuer' en el cluster, pero esta vez que pida certificados de
-# producción.
+# Vamos a crear un nuevo 'issuer' en el cluster, pero esta vez que pida certificados de producción.
 
-# editamos el archivo 'certificate-issuer-prod.yaml'
-code certificate-issuer-prod.yaml
+# editamos el archivo 'lab-25-B-certificate-issuer-prod.yaml'
+
+code lab-35-B-certificate-issuer-prod.yaml
 
 # En la línea 7, ponemos el email, Guardamos el archivo.
 
