@@ -278,9 +278,11 @@ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2
 
 code lab-35-B-certificate-issuer.yaml
 
-# Líneas 1-2:       Apuntamos a uno de los CRDs que creó 'cert-manager'. Un 'issuer' es un
-#                   enlace entre el cluste de k8s y la CA que crea el certificado, que en este 
-#                   caso es Let's Encrypt.
+
+# Las líneas más importantes son:
+
+# Líneas 1-2:       Un objeto 'issuer' es un enlace entre el cluster de k8s y la CA que crea el certificado, 
+#                   que en este caso es Let's Encrypt.
 #
 # Líneas 6-10:      Aquí ponemos la configuración de Let's Encrypt y apuntamos al 
 #                   servidor staging. ¡¡¡¡¡MUY IMPORTANTE!!!!!. Poner el email.
@@ -290,31 +292,41 @@ code lab-35-B-certificate-issuer.yaml
 #                   para que verifique que somos el propietario del dominio para el que solicitamos un
 #                   certificado. Más info: https://letsencrypt.org/es/docs/client-options/
 
-# Guardarmos los cambios en el archivo y creamos el objeto.
-kubectl create -f certificate-issuer.yaml
+# Guardarmos los cambios en el archivo y creamos el objeto:
 
-# Comprobamos que se haya creado el issuer. Observar que el campo READY ponga True.
+kubectl create -f lab-35-B-certificate-issuer.yaml
+
+# Comprobamos que se haya creado el issuer. Observar que el campo READY ponga 'True':
+
 kubectl get issuer
 
-Si hubiera problemas, lo describimos.
+
+Si hubiera problemas, lo describimos:
+
 kubectl describe issuer letsencrypt-staging
 
 
-# Crear el certificado TLS y asegurar el ingress 
 
-# Hay dos formas de configurar certificados. O bien creamos un certificado
-# manualmente y lo enlazamos con la ingress, o podemos configurar al controlador ingress, 
-# de forma que 'cert-manager' cree el certificado automáticamente. 
+#################################################################
+# Ejercicio 5: Crear el certificado TLS y assegurar la Ingress. #
+#################################################################
+
+# Hay dos formas de configurar certificados: O bien creamos un certificado manualmente y lo enlazamos con 
+# la ingress, o podemos configurar al controlador ingress, de forma que 'cert-manager' cree el certificado automáticamente. 
 #
 # Utilizaremos el segundo método.
 
 INGRESS_DNS=$PUBLIC_IP_DNS_NAME.westeurope.cloudapp.azure.com
 
-# Copiar el valor.
+
+# Mostramos y copiamos el valor en el portapapeles:
+
 echo $INGRESS_DNS
 
-# Abrimos el archivo 'ingress-with-tls.yaml'
-code ingress-with-tls.yaml 
+
+# Abrimos el archivo 'lab-35-B-ingress-with-tls.yaml':
+
+code lab-35-B-ingress-with-tls.yaml 
 
 # Líneas 7-8:       Se añaden dos anotaciones al ingress que apuntan al emisor de certificado y al 
 #                   'acme-challenge' para demostrar la propiedad del dominio.

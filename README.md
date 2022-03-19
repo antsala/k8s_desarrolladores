@@ -218,6 +218,7 @@ sudo snap install code --classic
 #   2. Añadir una regla de entrada (Ingress) a la aplicación.
 #   3. Instalación de 'cert-manager'.
 #   4. Instalación del emisor de certificador (issuer).
+#   5. Crear el certificado TLS y assegurar la Ingress.
 
 
 # Carpeta 45
