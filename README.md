@@ -199,8 +199,8 @@ sudo snap install code --classic
 
 # Carpeta 35
 
-# Laboratorio 35: "Ingress"
-# Archivo: lab-35.txt
+# Laboratorio 35-A: "Ingress"
+# Archivo: lab-35-A.txt
 #
 # Ejercicios:
 #   1. Despliegue de 'helloContainer' y 'mongodb'.
@@ -208,6 +208,15 @@ sudo snap install code --classic
 #   3. Instalar el Controlador Ingress.
 #   4. Configurar el Registro de Recurso de DNS.
 #   5. Configurar el 'Default Backend'.
+
+
+# Laboratorio 35-B: "Asegurar el Ingress con TLS"
+# Archivo: lab-35-B.txt
+#
+# Ejercicios:
+#   1. Configuración de un Gateway de aplicación de Azure como Ingress de K8s.
+#   2. Añadir una regla de entrada (Ingress) a la aplicación.
+#   3. Añadir TLS a la Ingress.
 
 
 # Carpeta 45

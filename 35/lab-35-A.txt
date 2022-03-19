@@ -1,4 +1,4 @@
-# Laboratorio 35: "Ingress"
+# Laboratorio 35-A: "Ingress"
  
 # Este laboratorio aprenderemos a usar los objetos Ingress
 
@@ -23,7 +23,7 @@ cd ~/k8s_desarrolladores/35
 
 # Para el Frontend de 'helloContainer' no hay cambios. Editamos el archivo para recordar qué contiene.
 
-code lab-35-helloContainer-deployment.yaml
+code lab-35-A-A-helloContainer-deployment.yaml
 
 # La línea 21, expresa que los contenedores estarán dando servicio en el puerto 8080.
 
@@ -32,9 +32,9 @@ code lab-35-helloContainer-deployment.yaml
 # 'helloContainer' definía un servicio EXTERNO para exponer los pods. Ahora ese servicio debe ser reconvertido
 # a INTERNO.
 
-# Editamos el archivo 'lab-35-helloContainer-service.yaml'
+# Editamos el archivo 'lab-35-A-A-helloContainer-service.yaml'
 
-code lab-35-helloContainer-service.yaml
+code lab-35-A-A-helloContainer-service.yaml
 
 # El cambio más notable es que NO APARECE el parámetro 'type: LoadBalancer' en la especificación del servicio.
 # Esto lo convierte en un SERVICIO INTERNO.
@@ -48,9 +48,9 @@ code lab-35-helloContainer-service.yaml
 
 # Aplicamos ambos archivos.
 
-kubectl apply -f lab-35-helloContainer-deployment.yaml
+kubectl apply -f lab-35-A-A-helloContainer-deployment.yaml
 
-kubectl apply -f lab-35-helloContainer-service.yaml
+kubectl apply -f lab-35-A-A-helloContainer-service.yaml
 
 
 # Comprobamos que se hayan creado los objetos:
@@ -76,9 +76,9 @@ kubectl get service hello-container-internal-service
 
 # El objeto 'secret' y el 'configmap' no tienen cambios. Aplicamos directamente sus archivos YAML.
 
-kubectl apply -f lab-35-mongodb-secret.yaml
+kubectl apply -f lab-35-A-A-mongodb-secret.yaml
 
-kubectl apply -f lab-35-mongodb-configmap.yaml
+kubectl apply -f lab-35-A-A-mongodb-configmap.yaml
 
 
 # Comprobamos que se ha creado el secreto.
@@ -107,7 +107,7 @@ kubectl get configmap mongodb-configmap
 
 # El Backend no sufre cambios, editamos el archivo para recordarlo:
 
-code lab-35-mongodb.yaml
+code lab-35-A-A-mongodb.yaml
 
 # Las líneas 42 y 43 define el puerto en el que escuchará sel servicio de backend ('27017') y 
 # el tráfico será reenviado al puerto '27017' del pod de mongodb server.
@@ -116,9 +116,9 @@ code lab-35-mongodb.yaml
 
 
 # Por último, para el Frontend si hay cambios. 
-# Editamos el archivo 'lab-35-mongo-express.yaml'
+# Editamos el archivo 'lab-35-A-A-mongo-express.yaml'
 
-code lab-35-mongo-express.yaml
+code lab-35-A-A-mongo-express.yaml
 
 
 # El cambio más notable es que NO APARECE el parámetro 'type: LoadBalancer' en la especificación del servicio.
@@ -134,9 +134,9 @@ code lab-35-mongo-express.yaml
 
 # Aplicamos los archivos YAML.
 
-kubectl apply -f lab-35-mongodb.yaml
+kubectl apply -f lab-35-A-A-mongodb.yaml
 
-kubectl apply -f lab-35-mongo-express.yaml
+kubectl apply -f lab-35-A-A-mongo-express.yaml
 
 
 # Verificamos los servicios asociados a la aplicación
@@ -196,9 +196,9 @@ kubectl get all
 # Crearemos dos dominios: 'www.hellocontainer.com' y 'www.mongoexpress.com'. En función de la URL que escriba el usuario
 # en su navegador el controlador ingress redirigirá el tráfico al servicio interno de Frontend apropiado.
 
-# Editamos el archivo 'lab-35-ingress.yaml'
+# Editamos el archivo 'lab-35-A-A-ingress.yaml'
 
-code lab-35-ingress.yaml
+code lab-35-A-ingress.yaml
 
 
 # Este YAML hace lo siguiente:
@@ -241,7 +241,7 @@ code lab-35-ingress.yaml
 
 # Creamos el objeto 'Ingress'
 
-kubectl apply -f lab-35-ingress.yaml
+kubectl apply -f lab-35-A-ingress.yaml
 
 
 # Comprobamos que se ha creado.
@@ -454,13 +454,13 @@ kubectl describe ingress my-ingress
 
 # Abrimos el archivo.
 
-code lab-35-page-404-deployment.yaml
+code lab-35-A-page-404-deployment.yaml
 
 # Es el típico deployment con un pod.
 
 # Cerramos sin modificar y aplicamos.
 
-kubectl apply -f lab-35-page-404-deployment.yaml
+kubectl apply -f lab-35-A-page-404-deployment.yaml
 
 
 # Comprobamos que el pod se inicial
@@ -472,16 +472,16 @@ kubectl get deployment page-404-deployment
 # en el puerto 6666 y que reenviará el tráfico al puerto 80 del pod seleccionado por la etiqueta 
 # 'app: page-404'.
 
-# Abrimos el archivo 'lab-35-page-404-internal-service.yaml' para verificarlo.
+# Abrimos el archivo 'lab-35-A-page-404-internal-service.yaml' para verificarlo.
 
-code lab-35-page-404-internal-service.yaml
+code lab-35-A-page-404-internal-service.yaml
 
 
 # Cerramos sin cambiar nada.
 
 # Creamos el servicio.
 
-kubectl apply -f lab-35-page-404-internal-service.yaml
+kubectl apply -f lab-35-A-page-404-internal-service.yaml
 
 
 # Comprobamos que está funcionando.
@@ -497,16 +497,16 @@ kubectl get service page-404-internal-service
 
 # Ahora debemos modifical el objeto ingress para que configure el endpoint para el Default Backend.
 
-# El archivo 'lab-35-ingress-with-default-backend.yaml' ya tiene estas modificaciones.
+# El archivo 'lab-35-A-ingress-with-default-backend.yaml' ya tiene estas modificaciones.
 
 # Lo editamos para estudiarlo:
 
-code lab-35-ingress-with-default-backend.yaml
+code lab-35-A-ingress-with-default-backend.yaml
 
 
 # Lo aplicamos:
 
-kubectl apply -f lab-35-ingress-with-default-backend.yaml
+kubectl apply -f lab-35-A-ingress-with-default-backend.yaml
 
 
 # Mostramos información:
@@ -532,23 +532,23 @@ kubectl describe ingress my-ingress
 
 # Limpiamos los recursos.
 
-kubectl delete -f lab-35-helloContainer-deployment.yaml
+kubectl delete -f lab-35-A-helloContainer-deployment.yaml
 
-kubectl delete -f lab-35-helloContainer-service.yaml
+kubectl delete -f lab-35-A-helloContainer-service.yaml
 
-kubectl delete -f lab-35-mongodb.yaml
+kubectl delete -f lab-35-A-mongodb.yaml
 
-kubectl delete -f lab-35-mongo-express.yaml
+kubectl delete -f lab-35-A-mongo-express.yaml
 
-kubectl delete -f lab-35-mongodb-secret.yaml 
+kubectl delete -f lab-35-A-mongodb-secret.yaml 
 
-kubectl delete -f lab-35-mongodb-configmap.yaml
+kubectl delete -f lab-35-A-mongodb-configmap.yaml
 
-kubectl delete -f lab-35-ingress.yaml
+kubectl delete -f lab-35-A-ingress.yaml
 
-kubectl delete -f lab-35-page-404-deployment.yaml 
+kubectl delete -f lab-35-A-page-404-deployment.yaml 
 
-kubectl delete -f lab-35-page-404-internal-service.yaml 
+kubectl delete -f lab-35-A-page-404-internal-service.yaml 
 
 
 # Comprobamos los objetos presentes en el cluster.

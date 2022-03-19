@@ -106,14 +106,15 @@ az aks show \
 # Nota sobre los contextos: Si se quiere cambiar de cluster, debemos cambiar el contexto. 
 # Primero listamos los contextos configurados:
 
-kubectl get contexts
+kubectl config get-contexts
 
 
 # La salida del comando anterior mostrará algo como esto:
 # 
-# CURRENT   NAME          CLUSTER    AUTHINFO                      NAMESPACE
-#           minikube      minikube   minikube                      default
-# *         myaks-admin   myaks      clusterAdmin_myaks-rg_myaks  
+# CURRENT   NAME                                               CLUSTER                                            AUTHINFO                                           NAMESPACE
+#           arn:aws:eks:eu-west-1:779450087377:cluster/myeks   arn:aws:eks:eu-west-1:779450087377:cluster/myeks   arn:aws:eks:eu-west-1:779450087377:cluster/myeks   
+#           minikube                                           minikube                                           minikube                                           default
+# *         myaks-admin                                        myaks                                              clusterAdmin_myaks-rg_myaks  
 
 # Podemos apreciar que el contexto actual es 'myaks-admin' (El cluster AKS), para conmutar al otro 
 # contexto (Minikube) usamos el siguiente comando:
