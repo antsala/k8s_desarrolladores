@@ -249,7 +249,7 @@ sudo snap install code --classic
 # Ejercicios:
 #   1. Instalar Helm.
 #   2. Instalar WordPress con Helm.
-
+#   3. Desinstalar WordPress con Helm.
 
 
 
