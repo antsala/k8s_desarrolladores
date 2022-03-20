@@ -1,0 +1,42 @@
+# Laboratorio 50: "Instalar aplicaciones usando HELM"
+ 
+# Este laboratorio aprenderemos a usar Helm.
+
+# Requisitos:
+#
+#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2) Tener instalado Minikube.
+
+
+###############################
+# Ejercicio 1: Instalar Helm. #
+###############################
+
+# Entramos en el directorio del laboratorio
+
+cd ~/k8s_desarrolladores/50
+
+
+# Helm es el administrador de paquetes de Kubernetes. Permite desplegar, actualizar,
+# y administrar las aplicaciones de Kubernetes. Para ello, se escribe algo llamado
+# 'charts'.
+#
+# Puedes pensar en los charts de Helm como archivos YAML parametrizados.
+
+# Vamos a instalar Helm:
+
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+
+chmod 700 get_helm.sh
+
+./get_helm.sh
+
+source ~/.profile
+
+
+
+
+#######################
+# FIN DEL LABORATORIO #
+#######################

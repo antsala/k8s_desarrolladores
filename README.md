@@ -239,3 +239,16 @@ sudo snap install code --classic
 # Ejercicios:
 #   1. Desplegar la aplicación de ejemplo.
 #   2. Escalar el frontend de GuestBook.
+
+
+# Carpeta 50
+
+# Laboratorio 50: ""Instalar aplicaciones usando HELM."
+# Archivo: lab-50.txt
+#
+# Ejercicios:
+#   1. Instalar Helm.
+
+
+
+
