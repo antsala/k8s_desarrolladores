@@ -71,53 +71,65 @@ code lab-55-redis-config
 
 # 'allkeys-lru' --> lru = Less Recently Used
 
-# Para crear el ConfigMap, ejecutamos el siguiente comando.
-kubectl create configmap example-redis-config --from-file=redis-config
+# Para crear el ConfigMap, ejecutamos el siguiente comando:
 
-# Esto crea el achivo yaml y lo aplica para dar de alta al objeto configmap.
-# Veamos el contenido del archivo creado.
-cat example-redis-config.yaml
+kubectl create configmap example-redis-config --from-file=lab-55-redis-config
 
-# y ahora listamos el configmap.
+
+# Ahora listamos el configmap:
+
 kubectl get configmaps
 
-# y observamos contenido en K8s. Observar que hay una clave llamada 'redis-config' 
-# y una lista con los valores de la configuración.
+
+# Observar que hay una clave llamada 'redis-config' y una lista con los valores de la configuración:
+
 kubectl describe configmap/example-redis-config
 
-# Ahora practicamos la segunda forma de crear el configmap, es decir, 
-# desde un archivo yaml.
+# Practicamos la segunda forma de crear el configmap, es decir, desde un archivo YAML.
 
-###############################################
-# Creación de un ConfigMap desde archivo YAML #
-###############################################
 
-# Para ello borramos el objeto recién creado.
+
+#############################################################
+# Ejercicio 3: Creación de un ConfigMap desde archivo YAML. #
+#############################################################
+
+# Para ello borramos el objeto recién creado:
+
 kubectl delete configmap/example-redis-config
 
-# En este caso partiríamos de un archivo yaml, que coincidirá exactamente con el 
-# que se creó anteriormente. Lo visualizamos. 
+
+# En este caso partiríamos de un archivo YAML, que coincidirá exactamente con el 
+# que se creó anteriormente. Lo visualizamos:
 #
 # '|-' Se utiliza para definir un string en varias líneas. Elimina el salto de 
 # linea al final y los espacios en blanco si los hubiera.
-code example-redis-config.yaml
 
-# Volvemos a crear el configmap, pero esta vez directamente desde un yaml.
-kubectl create -f example-redis-config.yaml
+code lab-55-example-redis-config.yaml
 
-# Y lo describimos.
+
+# Volvemos a crear el configmap, pero esta vez directamente desde el YAML:
+
+kubectl create -f lab-55-example-redis-config.yaml
+
+
+# Y lo describimos:
+
 kubectl describe configmap/example-redis-config
 
-# K8s tiene una opción muy útil, la '-o' ('--output'), que puede ser usada para obtener
-# la salida de un objeto presente en k8s en formato YAML o JSON. Así se# puede tener 
-# el archivo yaml del objeto.
 
-# Lo prodriamos redireccionar a un archivo si lo vemos necesario.
+# K8s tiene una opción muy útil, la '-o' ('--output'), que puede ser usada para obtener
+# la salida de cualquier objeto presente en el cluster en formato YAML o JSON. Así se
+# puede generar el archivo yaml del objeto.
+
+# Lo prodriamos redireccionar a un archivo si lo vemos necesario:
+
 kubectl get configmap/example-redis-config --output yaml 
 
-# Ahora vamos a usar un configmap para pasar información al contenedor en tiempo de ejecución.
-# Vamos a abrir el archivo modificado.
-code redis-master-deployment_Modified.yaml
+
+# Ahora vamos a usar un ConfigMap para pasar información al contenedor en tiempo de ejecución.
+# Vamos a abrir el archivo modificado:
+
+code lab-55-redis-master-deployment_modified.yaml
 
 # Observar lo siguiente:
 #
