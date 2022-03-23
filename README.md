@@ -258,7 +258,8 @@ sudo snap install code --classic
 # Archivo: lab-55.txt
 #
 # Ejercicios:
-#   1.
+#   1. Despliegue del servidor Redis.
+#   2. Creación de un ConfigMap desde un archivo.
 
 
 

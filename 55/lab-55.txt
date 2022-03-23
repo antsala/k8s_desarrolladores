@@ -1,6 +1,8 @@
 # Laboratorio 55: "Usar volúmenes en la aplicaciones."
  
-# Este laboratorio aprenderemos a usar Helm.
+# Este laboratorio aprenderemos a usar Volúmenes, ConfigMaps y Secrets.
+
+# Vamos desplegar una app con un frontend y backend de redis (un master y dos réplicas)
 
 # Requisitos:
 #
@@ -9,50 +11,63 @@
 #   2) Tener un cluster con con plugin de Storage Class configurado, por ejemplo AKS.
 
 
-###############################
-# Ejercicio 1: . #
-###############################
+###############################################
+# Ejercicio 1: Despliegue del servidor Redis. #
+###############################################
 
 # Entramos en el directorio del laboratorio
 
 cd ~/k8s_desarrolladores/55
 
-# Vamos desplegar una app con un frontend y backend de redis (un master y dos réplicas)
-# Cambiamos al directorio de trabajo.
-cd ~/k8sAzure/Despliegue_APPs
 
-# Desplegamos el backend del maestro de redis.
-kubectl apply -f redis-master-deployment.yaml
+# Estudiamos el YAML:
 
-# Mientras, lo estudiamos.
-code redis-master-deployment.yaml
+code lab-55-redis-master-deployment.yaml
 
-# Examinamos el Despliegue.
+
+# Desplegamos el backend del maestro de redis:
+
+kubectl apply -f lab-55-redis-master-deployment.yaml
+
+
+# Examinamos el Despliegue:
+# (Nota: No continuar hasta que se haya desplegado completamente)
+
 kubectl get all
 
-# Detalles del deployment.
+
+# Comprobar los detalles del deployment:
+
 kubectl describe deployment/redis-master
 
-# Borramos el deployment desde la línea de comandos.
+
+# Deseamos pasar configuraciones al servidor Redis así que borramos el deployment actual
+# desde la línea de comandos:
+
 kubectl delete deployment/redis-master
 
-# Comprobar que se elimina.
+
+# Comprobar que se elimina:
+
 kubectl get all
 
 # Ahora vamos a hacer lo mismo pero usando un ConfigMap.
 # Hay dos formas de crear un ConfigMap: Desde un archivo de texto o desde un archivo yaml.
 
-#############################################
-# Creación de un ConfigMap desde un archivo #
-#############################################
 
-# Creamos un archivo, llamado 'redis-config' y le ponemos estas dos líneas
+
+###########################################################
+# Ejercicio 2: Creación de un ConfigMap desde un archivo. #
+###########################################################
+
+# Creamos un archivo, llamado 'lab-55-redis-config' y le ponemos estas dos líneas
 #   maxmemory 2mb
 #   maxmemory-policy allkeys-lru
 #
 # Realmente no hace falta hacerlo porque en el directorio de ejemplos ya existe ese archivo.
-# Así que nos limitamos a abrirlo para comprobarlo.
-code redis-config
+# Así que nos limitamos a abrirlo para comprobarlo:
+
+code lab-55-redis-config
 
 # 'allkeys-lru' --> lru = Less Recently Used
 
