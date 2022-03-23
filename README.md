@@ -243,13 +243,22 @@ sudo snap install code --classic
 
 # Carpeta 50
 
-# Laboratorio 50: ""Instalar aplicaciones usando HELM."
+# Laboratorio 50: "Instalar aplicaciones usando HELM."
 # Archivo: lab-50.txt
 #
 # Ejercicios:
 #   1. Instalar Helm.
 #   2. Instalar WordPress con Helm.
 #   3. Desinstalar WordPress con Helm.
+
+
+# Carpeta 55
+
+# Laboratorio 55: "Usar volúmenes en la aplicaciones."
+# Archivo: lab-55.txt
+#
+# Ejercicios:
+#   1.
 
 
 
