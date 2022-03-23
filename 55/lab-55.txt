@@ -178,12 +178,19 @@ CONFIG GET maxmemory-policy
 # Salimos con 'exit'
 
 
-# Ahora vamos a desplegar un servicio para los pods del deployment redis-master:
+# Ahora vamos a desplegar un servicio para los pods del deployment redis-master.
 
-code redis-master-service.yaml
-kubectl apply -f redis-master-service.yaml
+# Echamos un vistazo al YAML:
 
-# Comprobamos el despliegue del servicio.
+code lab-55-redis-master-service.yaml
+
+
+# Desplegamos:
+
+kubectl apply -f lab-55-redis-master-service.yaml
+
+# Comprobamos el despliegue del servicio:
+
 kubectl get service
 
 # Comprobar que el tipo de servicio es 'ClusterIP', por lo que solo se puede acceder a él
@@ -198,19 +205,28 @@ kubectl get service
 # Lo vamos a hacer con 'ping' ya que 'nslookup' no está instalado en el pod. No va 
 # a haber respuesta de ping, solo nos interesa la resolución DNS.
 
-# Listamos pods y nos quedamos con su id.
+# Listamos pods y nos quedamos con su id:
+
 kubectl get pods
+
 kubectl exec -it redis-master-<Poner aquí el ID apropiado> -- ping redis-master
 
 # Comprobar que el registro A redis-master.default.svc.cluster.local. se resuelve a la IP 
 # de cluster anterior. CTRL+C para salir.
 
-# Convolución. Se completa el dominio si no se especifica completamente.
+# Convolución. Se completa el dominio si no se especifica completamente:
+
 kubectl exec -it redis-master-<Poner aquí el ID apropiado> -- ping redis-master
+
 kubectl exec -it redis-master-<Poner aquí el ID apropiado> -- ping redis-master.default
+
 kubectl exec -it redis-master-<Poner aquí el ID apropiado> -- ping redis-master.default.svc.cluster.local
 
+
 # Ahora vamos a desplegar las réplicas (2) de redis, que se sincronizarán desde redis-master.
+#
+# Estudiamos el YAML:
+
 code redis-replica-deployment.yaml
 kubectl apply -f redis-replica-deployment.yaml
 

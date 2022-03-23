@@ -260,6 +260,7 @@ sudo snap install code --classic
 # Ejercicios:
 #   1. Despliegue del servidor Redis.
 #   2. Creación de un ConfigMap desde un archivo.
+#   3. Creación de un ConfigMap desde archivo YAML.
 
 
 
