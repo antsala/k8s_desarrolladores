@@ -136,7 +136,7 @@ code lab-55-redis-master-deployment_modified.yaml
 # Líneas 24-26: Lanza el contenedor de redis pasándole información sobre el 
 #               archivo de configuración que debe utilizar: "/redis-master/redis.conf"
 #
-# Líneas 27-29: Para al contenedor una variable de entorno: MASTER=true
+# Líneas 27-29: Pasa al contenedor una variable de entorno: MASTER=true
 #
 # Líneas 30-32: Monta un volumen llamado 'config' en la ruta '/redis-master' del
 #               contenedor.
@@ -147,30 +147,39 @@ code lab-55-redis-master-deployment_modified.yaml
 # Cuando el contenedor arranca, lee el archivo '/redis-master/redis.conf', que contiene 
 # los valores del configmap que se creó.
 
-# Desplegamos esta versión actualizada para usar configmap.
-kubectl create -f redis-master-deployment_Modified.yaml
+# Desplegamos esta versión actualizada para usar configmap:
 
-# Miramos los pods
+kubectl create -f lab-55-redis-master-deployment_modified.yaml
+
+
+# Miramos los pods:
+
 kubectl get pods
 
-# Ejecutamos un comando dentro del pod para comprobar si realmente ha leido los valores 
+
+# Ejecutamos un comando dentro del pod para comprobar si realmente ha leído los valores 
 # de configuración.
 #
-# Cambiar el id del pod.
+# (Nota: Cambiar el id del pod por el apropiado)
 #
 # '--' indica que lo que viene después es el comando que ejecutan los contenedores 
-# del pod. En este caso, el pod tiene un único contenedor.
+# del pod. En este caso, el pod tiene un único contenedor:
+
 kubectl exec -it redis-master-<Poner aquí el id apropiado> -- redis-cli
 
 # El comando anterior debe abrir una conexión con REDIS.
+#
 # Ejecutamos los siguientes comandos para verificar que hay 2MB y la politica es 
-# LRU: Borra las claves que se usan menos Less Recently Used cuando le haga falta memoria.
+# LRU: Borra las claves que se usan menos Less Recently Used cuando le haga falta memoria:
+
 CONFIG GET maxmemory
 CONFIG GET maxmemory-policy
 
 # Salimos con 'exit'
 
-# Ahora vamos a desplegar un servicio para los pods del deployment redis-master.
+
+# Ahora vamos a desplegar un servicio para los pods del deployment redis-master:
+
 code redis-master-service.yaml
 kubectl apply -f redis-master-service.yaml
 
