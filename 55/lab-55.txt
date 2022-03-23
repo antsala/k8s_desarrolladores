@@ -227,40 +227,50 @@ kubectl exec -it redis-master-<Poner aquí el ID apropiado> -- ping redis-master
 #
 # Estudiamos el YAML:
 
-code redis-replica-deployment.yaml
-kubectl apply -f redis-replica-deployment.yaml
+code lab-55-redis-replica-deployment.yaml
 
-# Comprobamos que arrancan los pods.
-kubectl get all
-
-# Del archivo 'redis-replica-deployment.yaml' que estamos editando, destacamos:
-#
 # Línea 13:     Desplegamos 2 pods (2 réplicas)
 #
-# Línea 23:     Se usa la imagen 'follower', que se conectará a una máquina llamada 'redis-server'
+# Línea 23:     Se usa la imagen 'follower', que se conectará a una máquina llamada 'redis-server'.
+#               (Realmente es un servicio)
 #
 # Línea 39-30:  Le decimos que la resolución se hace por DNS. De esta forma, los followers se conectará
 #               a la IP asociada a 'redis-server', es decir a 'redis-server.default.svc.cluster.local',
-#               que es la IP del pod de redis-server.
+#               que es la IP del pod de redis-server. (Aun nos queda por crear el servicio)
+
+# Aplicamos:
+
+kubectl apply -f lab-55-redis-replica-deployment.yaml
+
+
+# Comprobamos que arrancan los pods:
+
+kubectl get all
 
 
 # Para que el frontend (aún por desplegar) pueda contactar con las réplicas (además del master de redis), 
-# es necesario exponerlas mediante un servicio, que nos dará la respectiva ClusterIP.
+# es necesario exponerlas mediante un servicio, que nos dará la respectiva ClusterIP:
+
 kubectl apply -f redis-replica-service.yaml
 
-# Comprobamos el despliegue.
+
+# Comprobamos el despliegue:
+
 kubectl get all
 
+
 # Ahora desplegamos en frontend.
-code frontend-deployment.yaml
+
+code lab-55-frontend-deployment.yaml
+
 
 # Lo más importante en el archivo de despliegue anterior es:
 #
-# Línea 11:     El número de réplicas del frontend son 3 (3 pods)
+# Línea 12:     El número de réplicas del frontend son 3 (3 pods)
 #
-# Línea 8-10:   Las etiquetas son 'app: guestbook', 'tier: frontend'
+# Línea 10-11:  Las etiquetas son 'app: guestbook', 'tier: frontend'
 #
-# Línea 20:     Se está usando la imagen de contenedor: gb-frontend:v4
+# Línea 21:     Se está usando la imagen de contenedor: gb-frontend:v4
 
 # en K8s existe tres formas de exponer un servicio:
 #
@@ -272,27 +282,46 @@ code frontend-deployment.yaml
 #
 #   LoadBalancer:   Se creará un balanceador externo, con una IP pública. Se balancea entre los pods.
 
-# Desplegamos el frontend.
-kubectl apply -f frontend-deployment.yaml
+# Desplegamos el frontend:
 
-# Comprobamos
+kubectl apply -f lab-55-frontend-deployment.yaml
+
+
+# Comprobamos:
+
 kubectl get pods
 
 # Vamos a crear un servicio de tipo 'LoadBalancer' para el frontend.
-code frontend-service.yaml
-kubectl create -f frontend-service.yaml
 
-# Comprobamos los servicios. La IP Externa tarda un rato, hasta que se cree la regla en el balanceador.
+code lab-55-frontend-service.yaml
+
+
+# Aplicamos:
+
+kubectl create -f lab-55-frontend-service.yaml
+
+
+# Comprobamos los servicios. La IP Externa tarda un rato, hasta que se cree la regla en el balanceador:
+
 kubectl get service
+
 
 # Tomar nota de la IP External del frontend y conectarse con un navegador.
 
-# Limpiamos recursos del cluster.
+# Limpiamos recursos del cluster:
+
 kubectl delete deployment frontend redis-master redis-replica
+
 kubectl delete service frontend redis-master redis-replica
 
 # Comprobamos que solo queda el servicio de Kubernetes
 kubectl get all
+
+
+
+TOTE, POR AQUÍ
+
+
 
 *************************************************************
 * Instalar aplicaciones complejas en Kubernetes usando Helm * (SI HAY ERROR, AL REDESPLEGAR, BORRAR PVCs y los PVs)
