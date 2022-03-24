@@ -1,0 +1,37 @@
+# Laboratorio 55-B: "MySQL replicado con StatefulSet"
+ 
+# Este laboratorio aprenderemos a usar el objeto 'StatefulSet'.
+
+# Vamos desplegar topología replicada de MySQL (Fuente Kunernetes.io)
+
+# Requisitos:
+#
+#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2) Minikube
+
+
+En este laboratorio desplegaremos un ConfigMap, dos servicios y un StatefulSet.
+
+
+####################################
+# Ejercicio 1: Crear el ConfigMap. #
+####################################
+
+# Cambiamos al directorio de trabajo:
+
+cd ~/K8s_desarrolladores/55
+
+
+# Editamos el YAML del ConfigMap para estudiarlo.
+
+code lab-55-B-MySQL-ConfigMap.YAML
+
+
+
+
+
+
+#######################
+# FIN DEL LABORATORIO #
+#######################

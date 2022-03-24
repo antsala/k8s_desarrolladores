@@ -254,8 +254,8 @@ sudo snap install code --classic
 
 # Carpeta 55
 
-# Laboratorio 55: "Usar volúmenes en la aplicaciones."
-# Archivo: lab-55.txt
+# Laboratorio 55-A: "Usar volúmenes en la aplicaciones."
+# Archivo: lab-55-A.txt
 #
 # Ejercicios:
 #   1. Despliegue del servidor Redis.
@@ -263,6 +263,13 @@ sudo snap install code --classic
 #   3. Creación de un ConfigMap desde archivo YAML.
 #   4. Instalar aplicaciones con estado en el cluster.
 #   5. Persistent Volume Claims.
+
+
+# Laboratorio 55-B: "MySQL replicado con StatefulSet."
+# Archivo: lab-55-B.txt
+#
+# Ejercicios:
+#   1. Crear el ConfigMap.
 
 
 
