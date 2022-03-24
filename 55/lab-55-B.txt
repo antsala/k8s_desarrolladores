@@ -155,6 +155,86 @@ kubectl get services
 code lab-55-B-statefulset.yaml
 
 
+# Debido a la importancia de los contenidos que vamos a aprender, comentamos las líneas más importantes:
+#
+# Línea 2:          Definimos un objeto 'StatefulSet'.
+#
+# Líneas 6-8:       Este 'StatefulSet' gestionará las réplicas del pod que tiene declarada la etiqueta 'app: mysql'.
+#
+# Línea 9:          Nombre del servicio (mysql) con el que está asociado este StatefulSet.
+#
+# Línea 10:         Deseamos 3 réplicas (1 primaria y 2 en RO)
+#
+# Línea 11-Final:   Blueprint. Definición de los contenedores del pod.
+#
+# Línea 16:         'initContainers'. Kubernetes se asegura de iniciar los contenedores de esta sección antes de proceder
+#                   con el inicio del resto de contenedores declarados en el pod.
+#
+# Línea 17-63:      Se define el contenedor de inicio.
+#
+# Línea 17:         Se llama 'init-mysql'. Su misión solo es la de copiar el archivo de configuración de MySQL en función de
+#                   si el pod va a tener el rod de primario o réplica.
+#
+# Líneas 19-35:     'CMD' Comando que se ejecuta al iniciar el contenedor. 
+#                   MUY IMPORTANTE!!! Observar cómo se copia al volumen el archivo de configuración 
+#                   del ConfigMap en función del rol de la instancia. La primera (id 0) será la maestra.
+#
+# Línea 65:         Su nombre es 'mysql'
+#
+# Línea 72:         El contenedor se expone en el puerto '3306'.        
+#
+# Líneas 73-78:     Volúmenes que monta el contenedor.
+#
+# Líneas 74-76:     Monta el archivo 'mysql' en '/var/lib/mysql'. Ver líneas 159-166.
+#
+# Líneas 37 y 38:   Monta un volumen local de tipo 'EmptyDir' en '/mnt/conf.d'. Ver líneas 154 y 155.
+#
+# Líneas 39 y 40:   Monta el volumen '/mnt/config-map' con el ConfigMap llamado 'config-map'.
+#
+# Líneas 41-63:     Definición de otro contenedor de inicio.
+#
+# Línea 41:         Su nombre es 'clone-mysql'. 
+#
+# Líneas 43-57:     Determina si el pod se corresponde con la instancia primaria o con una réplica.
+#                   Si es una réplica y el volumen ya contiene el archivo de la base de datos, entonces termina.
+#                   Si el pod es el master, no hace nada y termina.
+#                   En este último caso, el pod es una réplica y no tiene el archivo de la base de datos, así que se
+#                   lo copia desde el pod anterior.
+#                   Por último se asegura de que el archivo de la base de datos sea consistente para que sea restaurado
+#                   cuando se levante el pod de la instancia.
+#
+# Líneas 58-62:     Monta los volúmenes 'data' en '/var/lib/mysql' y el ConfigMap en '/etc/mysql/conf.d'.
+#
+#                   En este punto se ha terminado con la definición de los contenedores de incio. A continuación
+#                   tenemos los contenedores que quedarán funcionando en el pod.
+#
+# Líneas 65-95:     Definición del contenedor llamado 'mysql'.
+#
+# Líneas 73-78:     Monta el volumen 'data' en '/var/lib/mysql' (el archivo de de la base de datos) y el volumen
+#                   'conf' en '/etc/mysql/conf.d' que contiene el ConfigMap.
+#
+# Líneas 79-82:     500 milis de CPU y 1 Gi de RAM para el contenedor.
+#
+# Líneas 83-95:     Sondas 'Liveness' y 'Readiness' que serán explicadas más adelante.
+#
+# Líneas 96-152:    Definición del contenedor sidecar o helper 'xtrabackup'. Su misión es iniciar/continuar la replicación
+#                   desde el master (si el pod es el de una réplica). Luego monta un servidor de backup y 
+#                   se queda a la espera de que otro contenedor (de inicio) le pida el backup.
+
+
+# Aplicamos el 'StatefulSet'.
+
+kubectl apply -f lab-55-B-statefulset.yaml 
+
+
+# Comprobamos:
+
+kubectl get all
+
+TOTE, estoy haciendo este lab.
+https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/
+
+
 
 
 #######################
