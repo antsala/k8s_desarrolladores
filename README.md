@@ -261,6 +261,8 @@ sudo snap install code --classic
 #   1. Despliegue del servidor Redis.
 #   2. Creación de un ConfigMap desde un archivo.
 #   3. Creación de un ConfigMap desde archivo YAML.
+#   4. Instalar aplicaciones con estado en el cluster.
+#   5. Persistent Volume Claims.
 
 
 
