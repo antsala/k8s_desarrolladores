@@ -2,7 +2,7 @@
  
 # Este laboratorio aprenderemos a usar el objeto 'StatefulSet'.
 
-# Vamos desplegar topología replicada de MySQL (Fuente Kunernetes.io)
+# Vamos desplegar topología replicada de MySQL (Basado en ejemplo de web Kunernetes.io)
 
 # Requisitos:
 #
@@ -66,21 +66,93 @@ kubectl describe configmap mysql
 # servicio de la forma que hemos aprendido hasta el momento, es preciso conocer formas más eficientes.
 #
 # Para hacer operaciones de escritura en la base de datos, necesitamos enviar el tráfico al pod primario,
-# es decir, a un único pod. Por lo tanto, no es estrictamente necesario hablar de un servicio con capacidad
-# de balanceo, porque no se balancea al existir un solo pod.
+# es decir, a un único pod. Por lo tanto, podríamos decir que el pod de frontend debería conectar directamente
+# con el pod primario de MySQL. Esto contradice las buenas prácticas que hemos visto, y que 'obligan' a que 
+# el tráfico pase por un servicio.
 #
-# Para estos escenarios debemos usar un servicio 'Headless'.
+# Para solventar esta necesidad, Kubernetes permite crear un tipo de servicio especial llamado 'Headless'.
 #
-# Un servicio 'Headless' no asigna dirección IP ni reenvía tráfico. En Kubernetes decimos que queremos un
-# servicio de estas características cambiando el tipo de 'ClusterIP' a 'None' en el archivo de manifiesto.
+# Un servicio 'Headless' no asigna dirección IP ni reenvía tráfico, ni balancea. Lo que realmente ofrece 
+# un servicio Headless, y por esto es buena práctica su uso, es un nombre DNS que podrá usar que el Frontend
+# para alcanzar la instancia primaria (pod) de una base de datos.
+
+# En Kubernetes decimos que queremos un servicio 'Headless' de estas características cambiando el tipo del 
+# servicio de 'ClusterIP' a 'None' en el archivo de manifiesto.
 #
-# Lo que realmente ofrece un servicio Headless, y por esto es buena práctica su uso, es un nombre DNS que 
-# podemos usar que el Frontend alcance a la instancia primaria (master) de una base de datos.
 
 # El archivo 'lab-55-B-MySQL-services.yaml' define los dos servicios que necesita esta app.
 
 code lab-55-B-MySQL-services.yaml
 
+
+# Las líneas más interesantes son:
+#
+# Líneas: 1-14:     Declaración del servicio 'Headless' para alcanzar el servidor primario de MySQL.
+#
+# Línea 5:          Este servicio se llamará 'mysql'.
+#
+# Línea 11:         Se usará el puerto '3306' en el servicio.
+#
+# Línea 12:         Al poner 'ClusterIP: None' estamos definiendo un servicio 'Headless'.
+#
+# Línea 16:         En YAML, los caracteres '---' indican que se procede a definir un nuevo objeto.
+#
+# Líneas 13-14:     Este segundo servicio de asociará con pods que tenga definida la etiqueta 'app: mysql'.
+#
+# Líneas: 18-30:    Definición del sergundo servicio que será usado para balancear las operaciones de lectura
+#                   a los pods de la base de datos.
+#
+# Línea 22:         El servicio se llamará 'mysql-read'.
+
+
+# Creamos los servicios:
+
+kubectl apply -f lab-55-B-MySQL-services.yaml
+
+
+# Comprobamos:
+
+kubectl get services
+
+
+# La salida será similar a esta:
+# (Nota: Observar como el servicio Headless no tiene 'CLUSTER-IP')
+#
+# NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+# kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP    5d15h
+# mysql        ClusterIP   None            <none>        3306/TCP   26s
+# mysql-read   ClusterIP   10.99.195.131   <none>        3306/TCP   26s
+
+# Como hemos comentado, un servicio 'Headless' proporciona un sufijo de DNS común para los pods que crea 
+# el 'StatefulSet'. Puesto que al servicio 'Headless' le hemos asignado el nombre 'mysql', los pods
+# pueden ser resueltos en la forma de '<nombre_del_pod>.mysql' DESDE CUALQUIER OTRO POD en el
+# que esté en el mismo espacio de nombres.
+#
+# En breve crearemos el 'StatefulSet', que tendrá un nombre, por ejemplo 'mysql'. 
+#
+# A diferencia del 'Deployment' que genera identificadores aleatorios para el nombre del pod, el 'StatefulSet'
+# los NUMERA. En consecuencia los nombres de los pods serán: mysql-0, mysql-1, mysql-2, etc...
+#
+# Pues ahora lo ponemos todo junto. Si el primer pod del StatefulSet es el primario de MySQL, su nombre 
+# DNS será 'mysql-0.mysql', donde '.mysql' es el sufijo DNS que aporta el servicio HeadLess.
+#
+# En consecuencia el Frontend deberá conectar con 'mysql-0.mysql' (o 'mysql-0.mysql.default.svc.cluster.local' 
+# si se prefiere) para hacer operaciones de escritura. Realmente estamos contactando con un pod, pero
+# usando la DNS que proporciona el servicio Headless.
+#
+# Para las consultas de lectura, los pods de Frontend contactan contra el servicio 'mysql-read'.
+
+
+
+##########################################
+# Ejercicio 3: Creación del StatefulSet. #
+##########################################
+
+# Procedemos a crear el 'StatefullSet'.
+
+# Editamos el archivo lab-55-B-statefulset.yaml
+
+code lab-55-B-statefulset.yaml
 
 
 
