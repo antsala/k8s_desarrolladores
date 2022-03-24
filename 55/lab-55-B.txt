@@ -8,7 +8,7 @@
 #
 #   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
 #
-#   2) Minikube
+#   2) Cluster Minikube iniciado.
 
 
 En este laboratorio desplegaremos un ConfigMap, dos servicios y un StatefulSet.
@@ -25,8 +25,61 @@ cd ~/K8s_desarrolladores/55
 
 # Editamos el YAML del ConfigMap para estudiarlo.
 
-code lab-55-B-MySQL-ConfigMap.YAML
+code lab-55-B-MySQL-ConfigMap.yaml 
 
+
+# Las líneas más relevantes son:
+#
+# Línea 2:          Es un 'ConfigMap'.
+#
+# Líneas 7-15:      Define dos claves: 'primary.cnf' y 'replica-cnf' que serán tenidas en cuenta en función
+#                   del rol que asignemos a cada pod de MySQL. Se aplican de la siguiente forma:
+#
+#                   'primary.cnf': Se aplicará al servidor MySQL que actúe como master o primario. En este
+#                   ejemplo el servidor primario enviará logs de replicación a los servidores que actúan 
+#                   como réplicas.
+#
+#                   'replica.cnf': Las réplicas de MySQL leerán esta clave que significa que rechazarán todas 
+#                   las operaciones de escritura que no provengan desde logs de replicación del primario.
+
+
+# Creamos el ConfigMap.
+
+kubectl apply -f lab-55-B-MySQL-ConfigMap.yaml
+
+
+# Comprobamos que se ha creado correctamente:
+
+kubectl get configmap mysql 
+
+kubectl describe configmap mysql 
+
+
+
+###########################################
+# Ejercicio 2: Creación de los servicios. #
+###########################################
+
+# Procedemos a crear los servicios de la app.
+#
+# El primer servicio servirá para enviar tráfico al pod maestro de MySQL. Si bien podemos usar un
+# servicio de la forma que hemos aprendido hasta el momento, es preciso conocer formas más eficientes.
+#
+# Para hacer operaciones de escritura en la base de datos, necesitamos enviar el tráfico al pod primario,
+# es decir, a un único pod. Por lo tanto, no es estrictamente necesario hablar de un servicio con capacidad
+# de balanceo, porque no se balancea al existir un solo pod.
+#
+# Para estos escenarios debemos usar un servicio 'Headless'.
+#
+# Un servicio 'Headless' no asigna dirección IP ni reenvía tráfico. En Kubernetes decimos que queremos un
+# servicio de estas características cambiando el tipo de 'ClusterIP' a 'None' en el archivo de manifiesto.
+#
+# Lo que realmente ofrece un servicio Headless, y por esto es buena práctica su uso, es un nombre DNS que 
+# podemos usar que el Frontend alcance a la instancia primaria (master) de una base de datos.
+
+# El archivo 'lab-55-B-MySQL-services.yaml' define los dos servicios que necesita esta app.
+
+code lab-55-B-MySQL-services.yaml
 
 
 

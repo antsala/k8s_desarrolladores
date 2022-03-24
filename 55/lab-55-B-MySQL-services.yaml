@@ -1,0 +1,31 @@
+# Servicio Headless para generar entrada DNS hacia el master de MySQL
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  ports:
+  - name: mysql
+    port: 3306
+  clusterIP: None
+  selector:
+    app: mysql
+
+---
+
+# Servicio interno para balancear operaciones de LECTURA a cualquier pod con instancias de MySQL.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-read
+  labels:
+    app: mysql
+spec:
+  ports:
+  - name: mysql
+    port: 3306
+  selector:
+    app: mysql
+

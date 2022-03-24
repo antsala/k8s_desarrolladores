@@ -270,6 +270,7 @@ sudo snap install code --classic
 #
 # Ejercicios:
 #   1. Crear el ConfigMap.
+#   2. Creación de los servicios.  
 
 
 
