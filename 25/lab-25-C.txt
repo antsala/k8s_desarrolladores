@@ -300,12 +300,12 @@ kubectl apply -f lab-25-C-redis-master-service.yaml
 
 # Comprobamos el despliegue del servicio:
 
-kubectl get service redis-master-internal-service
+kubectl get service redis-master
 
 # La salida del comando anterior es:
 #
-# NAME                            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-# redis-master-internal-service   ClusterIP   10.100.15.241   <none>        6379/TCP   32s
+# NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+# redis-master        ClusterIP   10.100.15.241   <none>        6379/TCP   32s
 
 # Comprobar que el tipo de servicio es 'ClusterIP', por lo que solo se puede acceder a él
 # desde dentro del cluster (desde otros pods) y no desde el exterior del cluster.
@@ -313,7 +313,7 @@ kubectl get service redis-master-internal-service
 # Un servicio también introduce un nombre DNS para dicho servicio, en la forma:
 # <nombreServicio>.<espacioDeNombres>svc.cluster.local. Puesto que estamos usando el
 # espacio de nombres 'default', la DNS del servicio 'redis-master' es:
-# 'redis-master-internal-service.default.svc.cluster.local'.
+# 'redis-master.default.svc.cluster.local'.
 #
 # Para ver esto funcionando, nos metemos en el pod para ver si hay resolución DNS.
 # Lo vamos a hacer con 'ping' ya que 'nslookup' no está instalado en el pod. No va 
@@ -330,14 +330,14 @@ kubectl get pods
 # redis-master-deployment-754ccc67d4-ctp9v   1/1     Running   0          13h
 
 
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master-internal-service
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master
 
 # Comprobar que el registro A redis-master.default.svc.cluster.local. se resuelve a la CLUSTER-IP
 # anterior. CTRL+C para salir.
 
 # Convolución. Se completa el dominio si no se especifica completamente.
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master-internal-service
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master-internal-service.default
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master.default
 kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master-.internal-service.default.svc.cluster.local
 
 
