@@ -20,7 +20,7 @@ En este laboratorio desplegaremos un ConfigMap, dos servicios y un StatefulSet.
 
 # Cambiamos al directorio de trabajo:
 
-cd ~/K8s_desarrolladores/55
+cd ~/k8s_desarrolladores/55
 
 
 # Editamos el YAML del ConfigMap para estudiarlo.
@@ -231,10 +231,199 @@ kubectl apply -f lab-55-B-statefulset.yaml
 
 kubectl get all
 
-TOTE, estoy haciendo este lab.
-https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/
+
+##################################################
+# Ejercicio 4: Enviar tráfico desde el Frontend. #
+##################################################
 
 
+# Vamos a probar la conexión desde el Frontend contra el servidor primario de MySQL ('pod/mysql-0').
+# Lo haremos usando un contenedor temporal para realizar las pruebas:
+# (Nota: Se crea una tabla y se almacena un registro con el mensaje 'Hola')
+
+kubectl run mysql-client --image=mysql:5.7 -i --rm --restart=Never --\
+  mysql -h mysql-0.mysql <<EOF
+CREATE DATABASE test;
+CREATE TABLE test.messages (message VARCHAR(250));
+INSERT INTO test.messages VALUES ('Hola');
+EOF
+
+
+# Ahora comprobamos con otro contenedor de Frontend operaciones de lectura.
+# (Nota: Observar como el Frontend se contecta contra el servicio del StatefullSet ('mysql-read'))
+
+kubectl run mysql-client --image=mysql:5.7 -i -t --rm --restart=Never --\
+  mysql -h mysql-read -e "SELECT * FROM test.messages"
+
+
+# Probamos en balanceo del servicio 'mysql-read':
+# (Nota: Se crea un bucle infinito tomando info del servidor que atiende la consulta)
+
+kubectl run mysql-client-loop --image=mysql:5.7 -i -t --rm --restart=Never --\
+  bash -ic "while sleep 1; do mysql -h mysql-read -e 'SELECT @@server_id,NOW()'; done"
+
+
+# Vamos a probar la HA frente a la caída de un pod de réplica de MySQL.
+
+# La sonda 'readiness' del contenedor 'mysql' ejecuta el comando 'mysql -h 127.0.0.1 -e SELECT 1' para
+# comprobar que el servidor está funcionando.
+#
+# Una forma de hacer que la sonda falle es la siguiente:
+# (Nota: Vamos a renombrar el ejecutable del comando 'mysql' en la instancia 'mysql-2' del StatefulSet)
+
+# En otra terminal:
+
+kubectl exec mysql-2 -c mysql -- mv /usr/bin/mysql /usr/bin/mysql.off
+
+
+# El la terminal principal solo responderán las instancias '100' y '101, que se corresponden con 
+# 'mysql-0' (master) y 'mysql-1' (primera réplica). El servicio 'mysql-read' no envía tráfico al pod
+# 'mysql-2' (segunda instancia de réplica) porque la sonda no responde.
+
+# Esto se puede comprobar con
+
+kubectl get pod mysql-2
+
+
+# La salida será como esta:
+#
+# NAME      READY   STATUS    RESTARTS   AGE
+# mysql-2   1/2     Running   0          20m
+#
+# Se puede apreciar como '1/2' indica que 1 contenedor no está respondiendo a la sonda 'Readiness'.
+
+# Volvemos a renombrar el comando.
+
+kubectl exec mysql-2 -c mysql -- mv /usr/bin/mysql.off /usr/bin/mysql
+
+
+# El la terminal principal, observar como se empieza a enviar tráfico al pod 'mysql-2' (segunda réplica)
+
+
+# Ahora probamos la HA eliminando un pod:
+# (Nota: El StatefulSet detectará que falta un pod y volverá a crear uno nuevo)
+
+# En la segunda terminal:
+
+kubectl delete pod mysql-2
+
+kubectl get statefulset mysql
+
+
+# Probamos las aplicación aumentando el número de réplicas del StatefulSet 'mysql'
+
+kubectl scale statefulset mysql --replicas=5
+
+kubectl get pods
+
+# La salida es como la siguiente.
+# (Nota: Observar como tenemos 5 pods de MySQL.)
+#
+# NAME                READY   STATUS    RESTARTS   AGE
+# mysql-0             2/2     Running   0          29m
+# mysql-1             2/2     Running   0          28m
+# mysql-2             2/2     Running   0          2m32s
+# mysql-3             2/2     Running   0          36s
+# mysql-4             2/2     Running   0          20s
+# mysql-client-loop   1/1     Running   0          11m
+
+# En la terminal principal podemos ver como se reparte el tráfico entre las 5 instancias.
+
+
+kubectl run mysql-client --image=mysql:5.7 -i -t --rm --restart=Never --\
+  mysql -h mysql-3.mysql -e "SELECT * FROM test.messages"
+  
+
+# Podemos comprobar como las nuevas instancias han replicado la base de datos:
+
+kubectl run mysql-client --image=mysql:5.7 -i -t --rm --restart=Never --\
+  mysql -h mysql-3.mysql -e "SELECT * FROM test.messages"
+
+
+# Cuando se crean réplicas, la Persistent Volume Claim crea nuevos volúmenes:
+
+kubectl get pvc
+
+# La salida es como la siguiente:
+# (Nota: puede verse la PVC y el volumen)
+#
+# NAME           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+# data-mysql-0   Bound    pvc-91e328d7-db30-4c99-97d5-ce47b518187e   10Gi       RWO            standard       33m
+# data-mysql-1   Bound    pvc-4186206f-ce33-432f-9cdc-60974acf1be9   10Gi       RWO            standard       32m
+# data-mysql-2   Bound    pvc-a06b0957-9397-48e7-a81b-5e8374f21b1e   10Gi       RWO            standard       32m
+# data-mysql-3   Bound    pvc-a75a2c39-b97d-439f-a7e2-48486fda3279   10Gi       RWO            standard       4m26s
+# data-mysql-4   Bound    pvc-7d283858-efda-46f1-87ad-a010cc439dac   10Gi       RWO            standard       4m10s
+
+
+# Mostramos los volúmenes persistentes (PVs)
+
+kubectl get pv
+
+
+# La salida es:
+#
+# NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                  STORAGECLASS   REASON   AGE
+# pvc-3f34e81d-8bd8-431c-8d1e-0b67955bd00c   10Gi       RWO            Delete           Bound    default/data-mysql-4   standard                66s
+# pvc-4186206f-ce33-432f-9cdc-60974acf1be9   10Gi       RWO            Delete           Bound    default/data-mysql-1   standard                39m
+# pvc-8ea5d05d-48cc-4e13-9c2c-8199776bdcf6   10Gi       RWO            Delete           Bound    default/data-mysql-3   standard                82s
+# pvc-91e328d7-db30-4c99-97d5-ce47b518187e   10Gi       RWO            Delete           Bound    default/data-mysql-0   standard                40m
+# pvc-a06b0957-9397-48e7-a81b-5e8374f21b1e   10Gi       RWO            Delete           Bound    default/data-mysql-2   standard                39m
+
+# Si un pod vuelve a reclamar el volumen, la 'RECLAIM POLICY' a 'Delete' garantiza que se borrarán los datos previos.
+
+
+# Realizamos un scale-in. Pasamos a 3 réplicas.
+
+kubectl scale statefulset mysql  --replicas=3
+
+
+# Volvemosa mostrar las PVCs
+
+kubectl get pvc
+
+# Comprobar que siguen existiendo las 5 PVCs, a pesar de que se han destruidos dos pods. 
+# Es muy importante entender que la eliminación de las PVCs (y sus respectivos PV) deberá
+# realizarse de forma explícita.
+# (Nota: Si se borra la PVC, se borrará el PV asociado)
+
+kubectl delete pvc data-mysql-3
+
+kubectl delete pvc data-mysql-4
+
+kubectl get pvc
+
+kubectl get pv
+
+# Cerramos la segunda terminal.
+
+# En la terminal principal CTRL+C.
+
+# Limpiamos los recursos:
+
+kubectl delete statefulset mysql
+
+kubectl delete service mysql
+
+kubectl delete service mysql-read
+
+
+# No olvidemos borrar las PVCs.
+
+kubectl get pvc
+
+kubectl delete pvc data-mysql-0
+
+kubectl delete pvc data-mysql-1
+
+kubectl delete pvc data-mysql-2
+
+
+
+# Comprobamos:
+
+kubectl get all
+
+kubectl get pv
 
 
 #######################

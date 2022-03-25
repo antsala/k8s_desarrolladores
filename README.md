@@ -271,6 +271,8 @@ sudo snap install code --classic
 # Ejercicios:
 #   1. Crear el ConfigMap.
 #   2. Creación de los servicios.  
+#   3. Creación del StatefulSet.
+#   4. Enviar tráfico desde el Frontend.
 
 
 
