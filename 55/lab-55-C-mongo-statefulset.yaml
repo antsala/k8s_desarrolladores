@@ -29,12 +29,12 @@
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mongosecret
+                  name: mongo-secret
                   key: mongoRootPassword
             - name: SECOND_USER_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mongosecret
+                  name: mongo-secret
                   key: mongoUserPassword
             ports:
               - containerPort: 27017
