@@ -83,7 +83,7 @@ code lab-55-C-mongo-configmap.yaml
 
 # Cerramos sin modificar nada y aplicamos el ConfigMap:
 
-kubectl appy -f lab-55-C-configmap.yaml
+kubectl apply -f lab-55-C-mongo-configmap.yaml
 
 
 
