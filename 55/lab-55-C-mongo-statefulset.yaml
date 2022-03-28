@@ -65,7 +65,7 @@
               - name: MONGODB_PASSWORD
                 valueFrom:
                   secretKeyRef:
-                    name: mongosecret
+                    name: mongo-secret
                     key: mongoRootPassword
         volumes:
           - name: "mongoinit"
