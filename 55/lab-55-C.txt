@@ -52,13 +52,12 @@ code lab-55-C-mongo-secret.yaml
 # Líneas 7 y 8: Codificación en Base64 de los passwords para los usuarios 'root' y 'mi_database_user'.
 #               El password de 'root' es 'Pa55w.rdRoot'. El password de 'mi_database_user' es 'Pa55w.rdUser'.
 
-# Salimos sin modificar nada y aplicamos:
-
-kubectl apply -f lab-55-C-mongo-secret.yaml
+# Salimos sin modificar nada. Aplicaremos más tarde.
 
 
 # A continuación declaramos un 'ConfigMap' que almacenará el script. Este script leerá el nombre de 
 # del usuario administrador y su password desde variables de entorno cargadas a su vez desde el secreto.
+# Posteriormente crea una base de datos y un usuario.
 
 # Echamos un vistazo al siguiente archivo:
 
@@ -82,14 +81,7 @@ code lab-55-C-mongo-init-configmap.yaml
 #               'SECOND_USER_DB_PASSWORD'. A este usuario se le da el permiso RW en la base de datoa que se acaba
 #               de crear.
 
-# Cerramos sin modificar nada y aplicamos el ConfigMap:
-
-kubectl apply -f lab-55-C-mongo-init-configmap.yaml
-
-
-# Comprobamos que se ha creado correctamente:
-
-kubectl describe configmap mongo-init-script
+# Cerramos sin modificar nada. Aplicamos más tarde.
 
 
 
@@ -115,14 +107,8 @@ code lab-55-C-mongo-key.yaml
 # Línea 5 y 6:  Nombre de la clave y su valor.
 
 
-# Salimos sin modificar nada y aplicamos:
+# Salimos sin modificar nada. Aplicamos más tarde.
 
-kubectl apply -f lab-55-C-mongo-key.yaml
-
-
-# Comprobamos:
-
-kubectl get configmap mongo-key
 
 
 ############################################
@@ -150,26 +136,35 @@ code lab-55-C-mongo-script-permissions.yaml
 #
 # Línea 2:      Es un 'ConfigMap'.
 #
-# Línea 4:      El nombre es 'mongo-scripts-permissions'.
+# Línea 4:      El nombre es 'mongo-script-permissions'.
 #
 # Línea 6:      Nombre del script.
 #
 # Línea 7:      Se copia el directorio temporal a la ruta '/var/lib/mongoKey', se cambia propietario y se
 #               asigna permiso de lectura al archivo de la clave.
 
-# Cerramos sin cambiar nada y aplicamos:
-
-kubectl apply -f lab-55-C-mongo-script-permissions.yaml
+# Cerramos sin cambiar nada. Aplicamos más tarde.
 
 
-# Comprobamos:
 
-kubectl get configmap mongo-script-permissions
+###################################################
+# Ejercicio 4: Creación de un espacio de nombres. #
+###################################################
+
+# Vamos a crear un 'NameSpace' para tener organizados los objetos de la aplicación.
+
+# editamos el archivo:
+
+code lab-55-C-namespace.yaml
+
+# El archivo es muy sencillo y permite ver como se crea el espacio de nombres 'mongodb-repl-system'
+
+# Salimos sin cambiar nada. Aplicamos más tarde.
 
 
 
 ############################################################
-# Ejercicio 4: Creación del servicio y cuenta de servicio. #
+# Ejercicio 5: Creación del servicio y cuenta de servicio. #
 ############################################################
 
 # Procedemos a crear un servicio interno de tipo headless.
@@ -293,7 +288,7 @@ kubectl describe clusterrolebinding mongo-role-binding --namespace mongodb-repl-
 
 
 #######################################################
-# Ejercicio 5: Creación del 'StatefulSet' de MongoDB. #
+# Ejercicio 6: Creación del 'StatefulSet' de MongoDB. #
 #######################################################
 
 # Procedemos a crear el 'StatefulSet' con dos contenedores. El primero es el de MongoDB, mientras que el
@@ -306,10 +301,11 @@ code lab-55-C-mongo-statefulset.yaml
 
 # Las líneas más importantes:
 
+TOTE, comentar el archivo.
 
 # Salimos sin guardar y aplicamos:
 
-kubectl apply -f lab-55-C-mongo-statefullset.yaml
+kubectl apply -f lab-55-C-mongo-statefulset.yaml
 
 
 
