@@ -133,7 +133,7 @@ kubectl get configmap mongo-key
 # los valores almacenador por los 'ConfigMaps' se cargarán en el sistema de archivos del contenedor Mongo, 
 # debemos tener cuidado con los permisos de archivo.
 #
-# El contenedor Mongo se inicia con el usuario 'mongo' y no con el 'root', así que tenemos que cambiar los
+# El contenedor Mongo se inicia con el usuario 'mongodb' y no con el 'root', así que tenemos que cambiar los
 # permisos y luego iniciar Mongo. Para conseguirlo cargamos temporalmente el ConfigMap 'mongo-key' en una
 # carpeta temporal, que luego copiaremos en otra ruta mejor. 
 #
@@ -145,6 +145,21 @@ kubectl get configmap mongo-key
 
 code lab-55-C-mongo-script-permissions.yaml
 
+
+# Las líneas más importantes son:
+#
+# Línea 2:      Es un 'ConfigMap'.
+#
+# Línea 4:      El nombre es 'mongo-scripts-permissions'.
+#
+# Línea 6:      Nombre del script.
+#
+# Línea 7:      Se copia el directorio temporal a la ruta '/var/lib/mongoKey', se cambia propietario y se
+#               asigna permiso de lectura al archivo de la clave.
+
+# Cerramos sin cambiar nada y aplicamos:
+
+kubectl apply -f lab-55-C-mongo-script-permissions.yaml
 
 
 
