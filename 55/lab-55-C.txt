@@ -202,6 +202,11 @@ kubectl get service mongo
 # NAME    TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)     AGE
 # mongo   ClusterIP   None         <none>        27017/TCP   20s
 
+# Vamos a crear un espacio de nombres para tener organizado los roles que vamos a crear:
+
+kubectl create namespace mongodb-repl-system
+
+
 
 # Procedemos a crear una 'Service Account' y un 'Cluster Role Binding' ya que los sidecars necesitan 
 # permisos para observar al pod. Solo es necesario aportar el permiso 'watch' y 'list', pero en este
@@ -248,9 +253,28 @@ code lab-55-C-service-account-rbac.yaml
 kubectl apply -f lab-55-C-service-account-rbac.yaml
 
 
+# Comprobamos que se ha creado el rol:
+
+kubectl describe clusterrole mongo-role --namespace mongodb-repl-system
 
 
+# La salida es como esta:
+#
+# Name:         mongo-role
+# Labels:       <none>
+# Annotations:  <none>
+# PolicyRule:
+#   Resources      Non-Resource URLs  Resource Names  Verbs
+#   ---------      -----------------  --------------  -----
+#   configmaps.*   []                 []              [*]
+#   services.*     []                 []              [*]
+#   pods.*         []                 []              [get list watch]
+#   deployments.*  []                 []              [list watch]
 
+
+# Comprobamos el 'roleBinding':
+
+kubectl describe clusterrolebinding mongo-role-binding --namespace mongodb-repl-system
 
 
 
