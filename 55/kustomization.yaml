@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-#- lab-55-C-mongo-namespace.yaml
+- lab-55-C-mongo-namespace.yaml
 - lab-55-C-mongo-init-configmap.yaml
 - lab-55-C-mongo-service.yaml
 - lab-55-C-mongo-statefulset.yaml
