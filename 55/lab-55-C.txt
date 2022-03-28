@@ -43,6 +43,21 @@ cd ~/k8s_desarrolladores/55
 code lab-55-C-mongo-secret.yaml
 
 
+# Las líneas más destacables son:
+#
+# Línea 2:      Indica que estamos creando un secreto.
+#
+# Línea 5:      Con nombre 'mongo-secret'.
+#
+# Líneas 7 y 8: Codificación en Base64 para el nombre de usuario 'root' y un password robusto.
+
+# Salimos sin modificar nada y aplicamos:
+
+kubectl apply -f lab-55-C-mongo-secret.yaml
+
+
+
+
 
 
 #######################
