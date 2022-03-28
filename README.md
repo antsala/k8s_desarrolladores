@@ -283,6 +283,9 @@ sudo snap install code --classic
 #   2. Proteger las comunicaciones de MongoDB.
 #   3. Cambiar permisos al script.
 #   4. Creación del servicio y cuenta de servicio.
+#   5. Creación del 'StatefulSet' de MongoDB.
+
+
 
 
 

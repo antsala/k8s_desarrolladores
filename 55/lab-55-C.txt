@@ -277,6 +277,33 @@ kubectl describe clusterrole mongo-role --namespace mongodb-repl-system
 kubectl describe clusterrolebinding mongo-role-binding --namespace mongodb-repl-system
 
 
+# La salida es como la siguiente:
+#
+# Name:         mongo-role-binding
+# Labels:       <none>
+# Annotations:  <none>
+# Role:
+#   Kind:  ClusterRole
+#   Name:  mongo-role
+# Subjects:
+#   Kind            Name           Namespace
+#   ----            ----           ---------
+#   ServiceAccount  mongo-account  mongodb-repl-system
+
+
+
+#######################################################
+# Ejercicio 5: Creación del 'StatefulSet' de MongoDB. #
+#######################################################
+
+# Procedemos a crear el 'StatefulSet' con dos contenedores. El primero es el de MongoDB, mientras que el
+# segundo será el 'Sidecar'.
+
+# Editamos el archivo:
+
+code lab-55-C-mongo-statefulset.yaml
+
+
 
 
 #######################
