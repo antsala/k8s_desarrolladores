@@ -1,0 +1,13 @@
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+  name: mongo-init-script
+  data:
+  mongo-user.sh: |
+    mongo admin -u ${MONGO_INITDB_ROOT_USERNAME} -p ${MONGO_INITDB_ROOT_PASSWORD} <<EOF
+        use mi_database
+        db.createUser({user: "mi_database_user", pwd: "${SECOND_USER_DB_PASSWORD}", roles: [
+            { role: "readWrite", db: "mi_database" }
+        ]});
+    EOF
+
