@@ -1,7 +1,7 @@
   apiVersion: v1
   kind: ConfigMap
   metadata:
-  name: mongo-init-script
+    name: mongo-init-script
   data:
     mongo-user.sh: |-
       mongo admin -u ${MONGO_INITDB_ROOT_USERNAME} -p ${MONGO_INITDB_ROOT_PASSWORD} <<EOF
