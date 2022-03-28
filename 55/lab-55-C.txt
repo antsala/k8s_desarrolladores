@@ -304,6 +304,14 @@ kubectl describe clusterrolebinding mongo-role-binding --namespace mongodb-repl-
 code lab-55-C-mongo-statefulset.yaml
 
 
+# Las líneas más importantes:
+
+
+# Salimos sin guardar y aplicamos:
+
+kubectl apply -f lab-55-C-mongo-statefullset.yaml
+
+
 
 
 #######################
