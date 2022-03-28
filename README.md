@@ -279,7 +279,8 @@ sudo snap install code --classic
 # Archivo: lab-55-B.txt
 #
 # Ejercicios:
-#   1. MongoDB con StatefulSet y Sidecar.
+#   1. Crear secretos y script de inicio.
+#   2. Proteger las comunicaciones de MongoDB.
 
 
 

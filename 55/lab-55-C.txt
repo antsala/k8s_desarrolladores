@@ -24,7 +24,7 @@
 
 
 ###################################################
-# Ejercicio 1: Crear secretos y ejecutar scripts. #
+# Ejercicio 1: Crear secretos y script de inicio. #
 ###################################################
 
 # La documentación de MongoDB nos dice que la imagen tiene la posibilidad de configurar scripts
@@ -91,6 +91,19 @@ kubectl apply -f lab-55-C-mongo-configmap.yaml
 
 kubectl describe configmap mongo-init-script
 
+
+
+########################################################
+# Ejercicio 3: Proteger las comunicaciones de MongoDB. #
+########################################################
+
+# MongoDB puede (y debe) cifrar las comunicaciones entre sus instancias. Para ello simplemente debemos
+# proporcionar una clave a modo de vector de inicialización para el algoritmo de cifrado. Esta clave la
+# almacenamos en un ConfigMap.
+
+# Editamos el archivo:
+
+code lab-55-C-mongo-key.yaml
 
 
 
