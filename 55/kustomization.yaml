@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
 - lab-55-C-mongo-namespace.yaml
 - lab-55-C-mongo-init-configmap.yaml
+- lab-55-C-mongo-script-permissions.yaml
 - lab-55-C-mongo-secret.yaml
 - lab-55-C-mongo-key.yaml
 - lab-55-C-mongo-service.yaml
