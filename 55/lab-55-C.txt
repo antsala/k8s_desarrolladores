@@ -155,7 +155,7 @@ code lab-55-C-mongo-script-permissions.yaml
 
 # editamos el archivo:
 
-code lab-55-C-namespace.yaml
+code lab-55-C-mongo-namespace.yaml
 
 # El archivo es muy sencillo y permite ver como se crea el espacio de nombres 'mongodb-repl-system'
 
@@ -190,7 +190,7 @@ code lab-55-C-mongo-service.yaml
 
 # Editamos el siguiente archivo:
 
-code lab-55-C-service-account-rbac.yaml
+code lab-55-C-mongo-service-account-rbac.yaml
 
 
 # El contenido más interesante es el siguiente:
@@ -198,8 +198,6 @@ code lab-55-C-service-account-rbac.yaml
 # Líneas 1-5:   Define una 'Service Account'.
 # 
 # Línea 4:      El nombre de la cuenta es 'mongo-account'.
-#
-# Línea 5:      MUY IMPORTANTE: Se crea el espacio de nombres 'mongodb-repl-system'.
 
 
 # Líneas 7-23:  Se crea un Rol en el cluster.
@@ -240,8 +238,30 @@ code lab-55-C-mongo-statefulset.yaml
 
 
 # Las líneas más importantes:
+#
+# Línea 2:      Se declara un 'StatefulSet'.
+#
+# Línea 6:      'podManagementPolicy: Parallel' indica al controlador del StatefulSet que inicie o elimine
+#               todos los pods a la vez (en paralelo). En consecuencia, no espera a que un pod se inicie o se
+#               elimine para procesar el siguiente.
+#
+#               La otra opción es 'OrderedReady', en la que no se procesa un nuevo pod hasta que el anterior está
+#               en 'Ready' o 'Terminated'. 
+#
+# Línea 7:      En principio levantamos un solo pod, el maestro de MongoDB.
+#
+# Línea 11:     Conectamos el StatefulSet al servicio 'mongo'.
+#
+# Línea 17:     Usamos la cuenta de servicio llamada 'mongo-account'.
+#
+# Líneas 20-49: Declaramos el contenedor principal del pod. Pueden observarse todas las propiedades.
+#
+# Líneas 51-69: Declaramos un contenedor helper o sidecar. 
+#
+# Líneas 70-82: Declaración de los volúmenes que montarán los contenedores.
+#
+# Líneas 85-93: PVCs 
 
-TOTE, comentar el archivo.
 
 # Salimos sin guardar. Aplicamos más tarde.
 
@@ -250,9 +270,52 @@ TOTE, comentar el archivo.
 # Ejercicio 7: Creación del objeto 'Kustomization'. #
 #####################################################
 
+# En Kubernetes existe una clase de objeto muy útil llamada 'Kustomization'. Su principal utilidad es
+# agrupar los archivos YAML que forman una aplicación o proyecto y crear un espacio de nombres para aislarlo
+# del resto.
 
 
+# Editamos el archivo y lo consultamos:
 
+code kustomize.yaml
+
+
+# Las líneas más interesantes son:
+#
+# Línea 2:      Indicamos que es un objeto 'Kustomization'.
+#
+# Líneas 5-12:  Aquí indicamos todos los archivos YAML que forman el proyecto.
+#
+# Línea 5:      Creamos un espacio de nombres para el proyecto.
+#
+# Línea 13:     Establece el espacio de nombres 'mongodb-repl-system' para la creación de los
+#               objetos que pueden ser creados en el ámbito de un espacio de nombres.
+
+
+# A continuación debemos ejecutar el siguiente comando para generar un único archivo YAML que contendrá
+# todos los objetos.
+
+kubectl kustomize . > mongo-backend.yaml
+
+
+# Editamos el archivo:
+
+code mongo-backend.yaml
+
+
+# Observar como aparecen todos los objetos en el archivo, y como ciertas líneas (10, 56, 70, 79, 92, 101,
+# 110 y 123 declaran el espacio de nombres en el que deseamos que se creen los objetos.
+
+
+TOTE, POR AQUI.
+# Ahora solo queda aplicar:
+
+kubectl apply -f mongo-backend.yaml 
+
+kubectl describe pod mongo-0 --namespace mongodb-repl-system
+
+
+Borrar y limpiar PVCs y PVs.
 
 #######################
 # FIN DEL LABORATORIO #
