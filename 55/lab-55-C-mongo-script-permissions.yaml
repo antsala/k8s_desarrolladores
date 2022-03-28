@@ -1,0 +1,13 @@
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: mongo-scripts-permissions
+  data:
+    mongo-data-dir-permission.sh: |
+      chown -R mongodb:mongodb ${MONGO_DATA_DIR}
+      cp -r /var/lib/mongoKeyTemp /var/lib/mongoKey
+      chown -R mongodb:mongodb /var/lib/mongoKey
+      chmod 400 /var/lib/mongoKey/mongo.key
+      chown -R mongodb:mongodb /var/lib/mongoKey/mongo.key
+
+      

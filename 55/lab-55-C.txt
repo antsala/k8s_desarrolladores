@@ -62,7 +62,7 @@ kubectl apply -f lab-55-C-mongo-secret.yaml
 
 # Echamos un vistazo al siguiente archivo:
 
-code lab-55-C-mongo-configmap.yaml
+code lab-55-C-mongo-init-configmap.yaml
 
 
 # Las líneas más importantes son:
@@ -84,7 +84,7 @@ code lab-55-C-mongo-configmap.yaml
 
 # Cerramos sin modificar nada y aplicamos el ConfigMap:
 
-kubectl apply -f lab-55-C-mongo-configmap.yaml
+kubectl apply -f lab-55-C-mongo-init-configmap.yaml
 
 
 # Comprobamos que se ha creado correctamente:
@@ -94,7 +94,7 @@ kubectl describe configmap mongo-init-script
 
 
 ########################################################
-# Ejercicio 3: Proteger las comunicaciones de MongoDB. #
+# Ejercicio 2: Proteger las comunicaciones de MongoDB. #
 ########################################################
 
 # MongoDB puede (y debe) cifrar las comunicaciones entre sus instancias. Para ello simplemente debemos
@@ -104,6 +104,47 @@ kubectl describe configmap mongo-init-script
 # Editamos el archivo:
 
 code lab-55-C-mongo-key.yaml
+
+
+# Las líneas más importantes son:
+#
+# Línea 2:      Es un 'ConfigMap'.
+#
+# Línea 4:      El nombre del ConfigMap es 'mongo-key'.
+#
+# Línea 5 y 6:  Nombre de la clave y su valor.
+
+
+# Salimos sin modificar nada y aplicamos:
+
+kubectl apply -f lab-55-C-mongo-key.yaml
+
+
+# Comprobamos:
+
+kubectl get configmap mongo-key
+
+
+############################################
+# Ejercicio 3: Cambiar permisos al script. #
+############################################
+
+# Cuando Mongo se ejecute necesitaremos proporcionar permisos para la 'mongo-key'. Debido a que se
+# los valores almacenador por los 'ConfigMaps' se cargarán en el sistema de archivos del contenedor Mongo, 
+# debemos tener cuidado con los permisos de archivo.
+#
+# El contenedor Mongo se inicia con el usuario 'mongo' y no con el 'root', así que tenemos que cambiar los
+# permisos y luego iniciar Mongo. Para conseguirlo cargamos temporalmente el ConfigMap 'mongo-key' en una
+# carpeta temporal, que luego copiaremos en otra ruta mejor. 
+#
+# La razón de hacer esto es que el contenedor carga el 'ConfigMap' como un enlace simbólico en el sistema de
+# archivos y por ello no nos permitirá cambiar ni el propietario ni los permisos del archivo. Para conseguir
+# esto nos apoyamos en otro script.
+
+# Abrimos el archivo:
+
+code lab-55-C-mongo-script-permissions.yaml
+
 
 
 
