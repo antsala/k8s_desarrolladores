@@ -179,6 +179,41 @@ kubectl get configmap mongo-script-permissions
 code lab-55-C-mongo-service.yaml
 
 
+# Las líneas más importantes son:
+#
+# Línea 2:      Es un servicio.
+#
+# Línea 11:     'ClusterIP: none' indica que es un servicio 'Headless' (Sin dirección IP).
+
+
+# Salimos sin modificar y aplicamos:
+
+kubectl apply -f lab-55-C-mongo-service.yaml
+
+
+# Comprobamos
+
+kubectl get service mongo
+
+
+# La salida es parecida a la siguiente:
+# (Nota: Observar como no tiene 'CLUSTER-IP')
+#
+# NAME    TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)     AGE
+# mongo   ClusterIP   None         <none>        27017/TCP   20s
+
+
+# Procedemos a crear una 'Service Account' y un 'Cluster Role Binding' ya que los sidecars necesitan 
+# permisos para observar al pod. Solo es necesario aportar el permiso 'watch' y 'list', pero en este
+# ejemplo asignamos más para que podamos entender cómo se asignan.
+
+# Editamos el siguiente archivo:
+
+code lab-55-C-service-account-rbac.yaml
+
+
+
+
 
 
 
