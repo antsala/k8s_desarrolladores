@@ -285,6 +285,7 @@ sudo snap install code --classic
 #   4. Creación de un espacio de nombres.
 #   5. Creación del servicio y cuenta de servicio.
 #   6. Creación del 'StatefulSet' de MongoDB.
+#   7. Creación del objeto 'Kustomization'.
 
 
 
