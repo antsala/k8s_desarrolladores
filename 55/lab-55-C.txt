@@ -212,6 +212,43 @@ kubectl get service mongo
 code lab-55-C-service-account-rbac.yaml
 
 
+# El contenido más interesante es el siguiente:
+#
+# Líneas 1-5:   Define una 'Service Account'.
+# 
+# Línea 4:      El nombre de la cuenta es 'mongo-account'.
+#
+# Línea 5:      MUY IMPORTANTE: Se crea el espacio de nombres 'mongodb-repl-system'.
+
+
+# Líneas 7-23:  Se crea un Rol en el cluster.
+#
+# Línea 10:     El rol se llama 'mongo-role'.
+# 
+# Líneas 12-14: Se asignan todos los permisos para los 'ConfigMaps'.
+#
+# Líneas 15-17: Se asignan los permisos 'list' y 'watch' en el contexto de los 'Deployments'.
+#
+# Líneas 18-20: Se asignan todos los permisos en el contexto de 'Services'.
+#
+# Líneas 21-23: Se asignan los permisos 'get', 'list' y 'watch' en los 'Pods'.
+
+
+# Líneas 25-36: Se asigna el rol y la cuenta de servicio al cluster
+#
+# Línea 28:     El 'ClusterRoleBinding' se llama 'mongo_role_binding'
+#
+# Líneas 30-32: Se asigna la cuenta de servicio al cluster en el espacio de nombres 'mongodb-repl-system'.
+#
+# Líneas 33-36: Se signa el rol al cluster en el mismo espacio de nombres.
+
+
+# Salimos sin modificar nada y aplicamos:
+
+kubectl apply -f lab-55-C-service-account-rbac.yaml
+
+
+
 
 
 
