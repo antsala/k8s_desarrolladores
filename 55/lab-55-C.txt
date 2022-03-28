@@ -1,0 +1,50 @@
+# Laboratorio 55-C: "MySQL replicado con StatefulSet"
+ 
+# Este laboratorio aprenderemos a usar el objeto 'StatefulSet'.
+
+# Vamos desplegar topología replicada de MongoDB, usando un contenedor Sidecar
+
+# Requisitos:
+#
+#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2) Cluster Minikube iniciado.
+
+
+# Como ya hemos aprendido en este curso, deseamos aportar la capacidad de autoescalado al
+# ReplicaSet, pero en este caso usaremos otra técnica que hace uso de un 'Sidecar'.
+#
+# El 'Sidecar' monitorizará los pods y, si se levanta una nueva réplica de MongoDB, el Sidecar la
+# añadirá al ReplicaSet. Así mismo, si realizamos retiramos pods, el Sidecar lo tendrá en cuenta.
+#
+# Otra cuestión a aprender es conseguir que nuestros despliegues en Kubernetes sean seguros, así que
+# tendremos en cuenta las buenas prácticas a usar con MongoDB. Protegeremos las comunicaciones entre
+# los nodos MongoDB por medio de una clave, crearemos un usuario y habilitaremos la autenticación.
+
+
+
+###################################################
+# Ejercicio 1: Crear secretos y ejecutar scripts. #
+###################################################
+
+# La documentación de MongoDB nos dice que la imagen tiene la posibilidad de configurar scripts
+# y ejecutarlos la primera vez que se inicia el contenedor. Utilizaremos esta técnica para configurar
+# un usuarios (y passwords)
+
+# Cambiamos al directorio de trabajo:
+
+cd ~/k8s_desarrolladores/55
+
+# Una técnica muy interesante el crear un script y almacenarlo en un CONFIGMAP. El script leerá
+# información confidencial que se almacena en un secreto.
+
+# Estudiemos el archivo del secreto.
+
+code lab-55-C-mongo-secret.yaml
+
+
+
+
+#######################
+# FIN DEL LABORATORIO #
+#######################

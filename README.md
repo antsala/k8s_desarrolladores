@@ -275,6 +275,12 @@ sudo snap install code --classic
 #   4. Enviar tráfico desde el Frontend.
 
 
+# Laboratorio 55-C: "MySQL replicado con StatefulSet."
+# Archivo: lab-55-B.txt
+#
+# Ejercicios:
+#   1. MongoDB con StatefulSet y Sidecar.
+
 
 
 
