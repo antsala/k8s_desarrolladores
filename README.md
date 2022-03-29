@@ -299,6 +299,8 @@ sudo snap install code --classic
 # Archivo: lab-65-A.txt
 #
 # Ejercicios:
-#   1. Creación del endpoint
+#   1. Creación del endpoint.
+#   2. Creación del servicio interno.
+#   3. Prueba del endpoint.
 
 

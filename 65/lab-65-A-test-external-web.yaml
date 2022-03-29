@@ -19,4 +19,3 @@ spec:
           image: docker.io/ubuntu:latest
           command: ["/bin/sh", "-c"]
           args: ["while true; do echo Hello World; sleep 1; done"]
-          
