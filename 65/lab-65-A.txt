@@ -49,7 +49,7 @@ code lab-65-A-external-web-endpoint.yaml
 #
 # Línea 2:          Declaramos un objeto 'Endpoints'
 #
-# Línea 4:          Su nombre es 'external_web'. Esta etiqueta debe coincidir con la del servicio internos
+# Línea 4:          Su nombre es 'external-web'. Esta etiqueta debe coincidir con la del servicio internos
 #                   que crearemos luego.
 #
 # Línea 9:          IMPORTANTE!!!! Poner aquí la IP del nodo capturada antes.
@@ -62,8 +62,73 @@ code lab-65-A-external-web-endpoint.yaml
 kubectl apply -f lab-65-A-external-web-endpoint.yaml
 
 
+# Comprobamos:
+
+kubectl get endpoints external-web 
 
 
+# La salida mostrará algo similar a esto:
+# (Nota: Observar la IP del servicio externo)
+#
+# NAME           ENDPOINTS         AGE
+# external-web   192.168.1.38:80   44s
+
+
+# Aun es necesario dar otro paso, ya que los pods del cluster necesitan conectar con un servicio 
+# (no lo pueden resolver el nombre del endpoint)
+
+
+
+###############################################
+# Ejercicio 2: Creación del servicio interno. #
+###############################################
+
+# Procedemos a crear el servicio interno y asociarlo con el endpoint. 
+
+# Abrimos el siguiente archivo:
+
+code lab-65-A-external-web-service.yaml 
+
+
+# La línea más importante aquí es la 4. Esta etiqueta debe coincidir con la declarada en el Endpoint.
+
+# En las líneas 9 y 10 se crea la regla de natting.
+
+
+# Aplicamos:
+
+kubectl apply -f lab-65-A-external-web-service.yaml 
+
+
+# Observamos el resultado:
+
+kubectl describe service external-web
+
+
+# Comprobar en la salida como 'Endpoints' es '192.168.1.38:80', que realmente no es un pod, sino el
+# objeto 'Endpoint' que hemos creado antes.
+
+
+
+#####################################
+# Ejercicio 3: Prueba del endpoint. #
+#####################################
+
+# Ahora necesitamos 'simular' ser servicio externo. Para ello vamos a usar directamente el runtime, es decir,
+# Kubernetes no interviene para nada. Usaremos 'podman' para levantar un contenedor de la aplicación 'hello_container'
+# sobre la propia IP del nodo.
+
+sudo podman run -d --name mi_servicio_web_externo -p 80:8080 docker.io/antsala/hello_container
+
+# Ya tenemos nuestro servidor web funcionando. Se ha publicado en el puerto 80.
+
+# El siguiente paso es levantar un pod en Kubernetes que, usando el nombre del servicio interno 'external-web'
+# pueda alcanzar a 'hello_container'.
+
+
+# Editamos el siguiente archivo y lo estudiamos:
+
+code lab-55-A-test-external-web.yaml
 
 
 
