@@ -1,0 +1,58 @@
+# Laboratorio 60: "Despliegue de Prometeus con Operator"
+ 
+# Este laboratorio aprenderemos desplegar una app que hace uso de Operator.
+
+
+# Requisitos:
+#
+#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2) Cluster Minikube iniciado.
+
+
+# La monitorización del cluster es crítica. Prometheus es una solución de monitorización para Kubernetes
+# muy usada. Su arquitectura tiene tres capas:
+#
+# La capa de captura de métrica, que recopìla información del cluster de Kunernetes.
+# Una capa de almacenamiento, que ingiere y almacena en una base de datos toda esta información.
+# Un frontend con el que puede interactuar otras app, como Grafana, para consultar los datos.
+#
+# El servidor de Prometheus también puede emitir alertas a otros servicios.
+#
+# La cuestión es que para desplegar un servidor Prometheus podemos actuar de dos formas:
+#
+# 1)    Crear nosotros mismos los archivos de configuración YAML para agregar los respectivos objetos
+#       al cluster (STS, CM, Secret, Deployment, ...) y aplicarlos en el orden correcto.
+#
+# 2)    Usar un Operator que se encargará de desplegar y mantener todos los componentes de Prometheus.
+#
+# Parece claro que la primera solución es muy ineficiente, compleja y requiere mantenimiento manual.
+#
+# Para proceder con la segunda, debemos encontrar un operador para Prometheus que suele encontrarse en
+# la forma de un chart de Helm.
+
+
+########################################################
+# Ejercicio 1: Instalación del Operator de Prometheus. #
+########################################################
+
+# Cambiamos al directorio de trabajo:
+
+cd ~/k8s_desarrolladores/60
+
+# En este link: https://prometheus-community.github.io/helm-charts/ tenemos la documentación del chart de
+# Prometheus. Si la leemos atentamente, veremos que se instala el Operator, con las ventajas que este ofrece.
+
+
+# Añadimos los repos de Helm para Prometheus.
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+
+helm repo update
+
+
+#######################
+# FIN DEL LABORATORIO #
+#######################
