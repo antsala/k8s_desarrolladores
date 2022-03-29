@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-external-service
+  labels:
+    app: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+        - name: test_container
+          image: docker.io/ubuntu:latest
+          command: ["/bin/sh", "-c"]
+          args: ["while true; do echo Hello World; sleep 1; done"]
+          
