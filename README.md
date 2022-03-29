@@ -288,6 +288,11 @@ sudo snap install code --classic
 #   7. Creación del objeto 'Kustomization'.
 
 
+# Laboratorio 60: "Despliegue de Prometeus con Operator"
+# Archivo: lab-60.txt
+#
+# Ejercicios:
+#   1. Instalación del Operator de Prometheus.
 
 
 
