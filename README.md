@@ -295,5 +295,10 @@ sudo snap install code --classic
 #   1. Instalación del Operator de Prometheus.
 
 
+# Laboratorio 65-A: "Endpoints externos"
+# Archivo: lab-65-A.txt
+#
+# Ejercicios:
+#   1. Creación del endpoint
 
 

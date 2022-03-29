@@ -25,6 +25,13 @@
 # En este laboratorio aprenderemos a indicar a los pods que el servicio a consultar está fuera del cluster
 # de Kubernetes. Para ello haremos uso de un nuevo objeto llamado 'Endpoint'.
 
+
+
+#######################################
+# Ejercicio 1: Creación del endpoint. #
+#######################################
+
+
 # El siguiente archivo contiene un ejemplo de cómo alcanzar un servicio externo, por ejemplo, un servidor web
 # Lo abrimos para estudiarlo:
 
