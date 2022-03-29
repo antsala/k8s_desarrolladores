@@ -295,6 +295,8 @@ code kustomize.yaml
 # A continuación debemos ejecutar el siguiente comando para generar un único archivo YAML que contendrá
 # todos los objetos.
 
+TOTE, POR AQUI. hacer pull y seguir.
+
 kubectl kustomize . > mongo-backend.yaml
 
 
@@ -306,16 +308,42 @@ code mongo-backend.yaml
 # Observar como aparecen todos los objetos en el archivo, y como ciertas líneas (10, 56, 70, 79, 92, 101,
 # 110 y 123 declaran el espacio de nombres en el que deseamos que se creen los objetos.
 
-
-TOTE, POR AQUI.
 # Ahora solo queda aplicar:
 
 kubectl apply -f mongo-backend.yaml 
 
+
+# Comprobamos que todos los objetos se ha iniciado correctamente:
+
+kubectl get all --namespace mongodb-repl-system
+
+
+# Comprobar que el maestro de MongoDB (mongo-0) se ha iniciado:
+
 kubectl describe pod mongo-0 --namespace mongodb-repl-system
 
 
-Borrar y limpiar PVCs y PVs.
+# Podemos comprobar el escalado del StatefulSet de la siguiente forma:
+
+kubectl scale --replicas=3 statefulset mongo --namespace mongodb-repl-system
+
+
+# Comprobamos:
+
+kubectl get all --namespace mongodb-repl-system
+
+
+# Limpiamos:
+
+kubectl delete -f mongo-backend.yaml 
+
+
+# Listamos los PVCs y los PVs para comprobar que se han eliminado.
+
+kubectl get pvc 
+
+
+
 
 #######################
 # FIN DEL LABORATORIO #
