@@ -1,0 +1,40 @@
+# Laboratorio 65-A: "Endpoints externos"
+ 
+# Este laboratorio aprenderemos a conectar pods de Kubernetes con servicios que corren fuera del
+# cluster de Kubernetes.
+
+# Requisitos:
+#
+#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+#
+#   2) Cluster Minikube iniciado.
+
+
+# Durante el curso hemos hablado mucho sobre los servicios en Kubernetes. Vimos que pueden ser internos,
+# externos, e incluso no tener IP como los Headless. Todos ellos ser caracterizan porque envían tráfico
+# a una serie de pods que son balanceados por el servicio.
+#
+# También hemos hablado de la dificultad existente en Kubernetes hacer que una applicación con estado 
+# funciones bien en un contexto de alta disponibilidad, y los objetos de Kubernetes implicados en ello
+# (PV, PVC, StatefulSet) así como la posibilidad de usar Operators.
+#
+# En ciertos escenarios, se prefiere no implementar el servicio en el cluster de Kubernetes. Ejemplos típicos
+# son las bases de datos, que se suelen desplegar en máquinas virtuales. La propia tecnología de la base
+# de datos ofrece la alta disponibilidad.
+#
+# En este laboratorio aprenderemos a indicar a los pods que el servicio a consultar está fuera del cluster
+# de Kubernetes. Para ello haremos uso de un nuevo objeto llamado 'Endpoint'.
+
+# El siguiente archivo contiene un ejemplo de cómo alcanzar un servicio externo, por ejemplo, un servidor web
+# Lo abrimos para estudiarlo:
+
+code lab-65-A-external-service.yaml
+
+
+
+
+
+
+#######################
+# FIN DEL LABORATORIO #
+#######################
