@@ -32,10 +32,36 @@
 #######################################
 
 
-# El siguiente archivo contiene un ejemplo de cómo alcanzar un servicio externo, por ejemplo, un servidor web
-# Lo abrimos para estudiarlo:
+# Lo primero que debemos conocer es la IP del servicio externo. En este ejemplo será la aplicación 'hello_container'
+# y estará en la única máquina que tenemos, pero funcionará igualmente.
 
-code lab-65-A-external-service.yaml
+# Tomamos la IP del nodo de Minikube y la anotamos:
+# (Nota: hay muchas. Consultar al formador)
+
+IP=192.168.1.38
+
+
+# A continuación editamos el siguiente archivo:
+
+code lab-65-A-external-web-endpoint.yaml
+
+# Las líneas más interesantes son:
+#
+# Línea 2:          Declaramos un objeto 'Endpoints'
+#
+# Línea 4:          Su nombre es 'external_web'. Esta etiqueta debe coincidir con la del servicio internos
+#                   que crearemos luego.
+#
+# Línea 9:          IMPORTANTE!!!! Poner aquí la IP del nodo capturada antes.
+#
+# Línea 12:         Puerto al que se redirigirá el tráfico al servicio externo.
+
+
+# Aplicamos:
+
+kubectl apply -f lab-65-A-external-web-endpoint.yaml
+
+
 
 
 
