@@ -128,8 +128,53 @@ sudo podman run -d --name mi_servicio_web_externo -p 80:8080 docker.io/antsala/h
 
 # Editamos el siguiente archivo y lo estudiamos:
 
-code lab-55-A-test-external-web.yaml
+code lab-65-A-test-external-web.yaml
 
+
+# Las líneas más interesantes son:
+#
+# Líneas 17-21:     Se levanta un contenedor de ubuntu que realiza un simple bucle infinito para que no
+#                   se detenga el contenedor. El contenedor se llamará 'test-container'
+
+
+# Aplicamos:
+
+kubectl apply -f lab-65-A-test-external-web.yaml
+
+
+# Comprobamos:
+
+kubectl get pods
+
+
+# Ahora necesitamos entrar en el contenedor del pod. Ajustar el nombre del pod según convenga:
+# (Nota: Esto debe devolver un prompt dentro del contenedor)
+
+
+kubectl exec -i -t test-external-service-96c77b685-n2smg test-container -- /bin/bash
+
+
+# Ejecutar los comandos siguientes dentro del contenedor:
+
+apt-get update -y 
+
+apt-get install -y curl
+
+
+# Ahora probamos si desde dentro del contenedor se puede alcanzar el servicio externo:
+
+curl external-web
+
+
+# Como resultado debemos ver la salida de la aplicación 'hello_container'.
+
+
+# Salimos del contenedor con 'exit' y borramos los recursos:
+
+
+kubectl delete -f lab-65-A-external-web-endpoint.yaml
+kubectl delete -f lab-65-A-external-web-service.yaml 
+kubectl delete -f lab-65-A-test-external-web.yaml
 
 
 
