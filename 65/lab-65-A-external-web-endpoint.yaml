@@ -1,12 +1,12 @@
 apiVersion: v1
-  kind: Endpoints
-  metadata:
-    name: "external-web" 
-  subsets: 
-    -
-      addresses:
-        -
-          ip: "192.168.1.38" # Aquí habría que poner la IP del servicio externo.
-      ports:
-        -
-          port: 80 
+kind: Endpoints
+metadata:
+  name: "external-web" 
+subsets: 
+  -
+    addresses:
+      -
+        ip: "192.168.1.38" # Aquí habría que poner la IP del servicio externo.
+    ports:
+      -
+        port: 80 
