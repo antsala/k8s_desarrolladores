@@ -18,7 +18,7 @@
     -
       addresses:
         -
-          ip: "localhost" # Aquí habría que poner la IP del servicio externo.
+          ip: "192.168.1.38" # Aquí habría que poner la IP del servicio externo.
       ports:
         -
           port: 80 
