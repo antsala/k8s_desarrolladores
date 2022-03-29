@@ -1,6 +1,5 @@
-apiVersion: apps/v1
+apiVersion: v1
 kind: "Service"
-  apiVersion: "v1"
   metadata:
     name: "external-web"
   spec:
@@ -11,8 +10,8 @@ kind: "Service"
         port: 80
         targetPort: 80 
 ---
+  apiVersion: v1
   kind: "Endpoints"
-  apiVersion: "v1"
   metadata:
     name: "external-web" 
   subsets: 
