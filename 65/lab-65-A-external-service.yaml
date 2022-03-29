@@ -18,7 +18,7 @@
     -
       addresses:
         -
-          ip: "10.10.50.53" #The IP Address of the external web server
+          ip: "localhost" # Aquí habría que poner la IP del servicio externo.
       ports:
         -
           port: 80 
