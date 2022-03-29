@@ -15,7 +15,7 @@ spec:
         app: test
     spec:
       containers:
-        - name: test_container
+        - name: test-container
           image: docker.io/ubuntu:latest
           command: ["/bin/sh", "-c"]
           args: ["while true; do echo Hello World; sleep 1; done"]
