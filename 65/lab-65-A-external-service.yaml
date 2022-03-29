@@ -1,17 +1,17 @@
 apiVersion: v1
-kind: "Service"
-  metadata:
-    name: "external-web"
-  spec:
-    ports:
-      -
-#        name: "apache"
-        protocol: "TCP"
-        port: 80
-        targetPort: 80 
+kind: Service
+metadata:
+  name: "external-web"
+spec:
+  ports:
+    -
+#      name: "apache"
+      protocol: "TCP"
+      port: 80
+      targetPort: 80 
 ---
   apiVersion: v1
-  kind: "Endpoints"
+  kind: Endpoints
   metadata:
     name: "external-web" 
   subsets: 
