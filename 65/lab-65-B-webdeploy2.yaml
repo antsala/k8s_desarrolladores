@@ -42,7 +42,7 @@ spec:
               mountPath: /tmp/lab-55-B-healthy.html
               subPath: lab-55-B-healthy.html
           command: ["/bin/sh", "-c"]
-          args: ["cp /tmp/index2.html /usr/share/nginx/html/index.html; cp /tmp/healthy.html /usr/share/nginx/html/healthy.html; nginx; sleep inf"]
+          args: ["cp /tmp/lab-55-B-index2.html /usr/share/nginx/html/index.html; cp /tmp/lab-55-B-healthy.html /usr/share/nginx/html/healthy.html; nginx; sleep inf"]
       volumes:
         - name: index
           configMap:
