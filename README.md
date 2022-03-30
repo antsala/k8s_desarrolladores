@@ -304,3 +304,10 @@ sudo snap install code --classic
 #   3. Prueba del endpoint.
 
 
+
+# Laboratorio 65-B: "Monitorización del cluster. (AZURE)"
+# Archivo: lab-65-B.txt
+#
+# Ejercicios:
+#   1. Sondas 'Readiness' y 'Liveness'.
+
