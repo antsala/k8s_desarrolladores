@@ -45,9 +45,11 @@ kubectl get pods -w
 #
 # Columna 'AGE':        Edad del pod desde su creación.
 
+
 # Podemos mostrar columnas adicionales con:
 
 kubectl get pods -o wide
+
 
 # El significado de las nuevas columnas es:
 #
@@ -69,27 +71,27 @@ kubectl get pods -o wide
 # coinciden los recursos no se conectarán.
 
 
-##############################
-# Depuración de aplicaciones #
-##############################
 
-# En esta sección vamos a introducir una serie de errores comunes, lo depuraremos y arreglaremos.
+##############################################################
+# Ejercicio 2: Depuración de errores en el pull de imágenes. #
+##############################################################
 
-##################################
-# Errores en el pull de imágenes #
-##################################
 
 # Vamos a elegir un tag de imagen que no existe.
-# Editamos el deployment 'frontend'
+
+# Editamos el deployment 'frontend':
+
 kubectl edit deployment/frontend
 
 # Cambiamos la etiqueta de la imagen de 'v4' a 'v_no_existente'
-# Escribimos '/gb-frontend' y 'Enter' para posicionarnos.
+# Escribimos '/gb-frontend' y 'Enter' para localizar el texto.
 # Ir hasta el final de la línea con la tecla derecha. Pulsar 'i' para entrar en modo de inserción.
 # Borramos 'v4' y escribimos 'v_no_existente'
+# 'x' borra el caracter en la posición del cursor. 'X' borra el caracter anterior.
 # Guardamos con ':wq!'
 
-# Miramos los pods.
+# Miramos los pods:
+
 kubectl get pods
 
 # Aparecerá el error 'ErrImagePull' o el error 'ImagePullBackOff'. Ambos errores se refieren al 
@@ -99,31 +101,42 @@ kubectl get pods
 # reintentar la descarga. El intervalo de espera es exponencial, empezando en 10 segundos, 
 # luego 20, 40, ..., hasta 5 minutos.
 
-# Más info al describir.
+# Más info al describir:
+
 FAILED_POD=<Poner aquí el nombre de un pod que esté dando error>
+
 kubectl describe pod $FAILED_POD
 
-# Editar el deployment y cambiamos de nuevo a 'v4'
+
+# Editar el deployment y cambiamos de nuevo a 'v4':
+
 kubectl edit deployment/frontend
+
 
 # Escribimos '/gb-frontend' y 'Enter' para posicionarnos.
 # Ir hasta el final de la línea con la tecla derecha. Pulsar 'i' para entrar en modo de inserción.
 # Borramos 'v_no_existente' y volvemos a poner 'v4'
 # Guardamos con ':wq!'
 
-# Esto deberia resolver el problema.
+
+# Esto deberia resolver el problema:
+
 kubectl get pods
+
 
 # NOTA: Debido a que Kubernetes hizo una 'rolling update', el frontend estuvo disponible sin downtime.
 # K8s reconoció el problema al cambiar la imagen y detuvo el 'rolling update' automáticamente.
 
-############################
-# Errores en la aplicación #
-############################
+
+
+##########################################
+# Ejercicio 3: Errores de la aplicación. #
+##########################################
 
 # Veamos como depurar un error en la aplicación.
 
-# Obtenermos la IP pública del servicio 'frontend'
+# Obtenermos la IP pública del servicio 'frontend':
+
 kubectl get service
 
 # Almacenamos la IP Externa.

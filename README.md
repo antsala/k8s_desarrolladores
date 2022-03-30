@@ -310,4 +310,6 @@ sudo snap install code --classic
 #
 # Ejercicios:
 #   1. Sondas 'Readiness' y 'Liveness'.
+#   2. Depuración de errores en el pull de imágenes.
+#   3. Errores de la aplicación.
 
