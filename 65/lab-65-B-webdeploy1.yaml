@@ -28,7 +28,7 @@ spec:
             periodSeconds: 3
           readinessProbe:
             httpGet:
-              path: /index.html
+              path: /index1.html
               port: 80
             initialDelaySeconds: 3
             periodSeconds: 3
@@ -36,13 +36,13 @@ spec:
             - name: html
               mountPath: /usr/share/nginx/html
             - name: index
-              mountPath: /tmp/index1.html
-              subPath: index1.html
+              mountPath: /tmp/lab-65-B-index1.html
+              subPath: lab-65-B-index1.html
             - name: healthy
-              mountPath: /tmp/healthy.html
-              subPath: healthy.html
+              mountPath: /tmp/lab-65-B-healthy.html
+              subPath: lab-65-B-healthy.html
           command: ["/bin/sh", "-c"]
-          args: ["cp /tmp/index1.html /usr/share/nginx/html/index.html; cp /tmp/healthy.html /usr/share/nginx/html/healthy.html; nginx; sleep inf"]
+          args: ["cp /tmp/lab-65-B-index1.html /usr/share/nginx/html/index.html; cp /tmp/lab-65-B-healthy.html /usr/share/nginx/html/healthy.html; nginx; sleep inf"]
       volumes:
         - name: index
           configMap:

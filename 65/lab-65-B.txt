@@ -285,6 +285,7 @@ kubectl create configmap healthy --from-file=lab-65-B-healthy.html
 
 kubectl describe configmap/server1
 
+
 # Ahora vamos a crear dos despliegues web, muy parecidos uno al otro, cambiando solo el ConfigMap.
 
 # Editamos el archivo 'lab-65-B-webdeploy1.yaml'
@@ -309,7 +310,6 @@ code lab-65-B-webdeploy1.yaml
 kubectl create -f lab-65-B-webdeploy1.yaml
 
 kubectl create -f lab-65-B-webdeploy2.yaml
-
 
 
 # Comprobamos:
