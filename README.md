@@ -313,4 +313,5 @@ sudo snap install code --classic
 #   2. Depuración de errores en el pull de imágenes.
 #   3. Errores de la aplicación.
 #   4. Sondas 'Readiness' y 'liveness'.
+#   5. Experimentos con 'liveness' y 'readiness'.
 
