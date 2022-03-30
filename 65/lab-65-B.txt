@@ -258,30 +258,42 @@ kubectl delete pod $FRONTEND_POD_NAME
 
 # Editamos el erchivo 'index1.html':
 
-code lab-55-B-index1.html
+code lab-65-B-index1.html
+
 
 # Editamos el erchivo 'index2.html':
 
-code lab-55-B-index2.html
+code lab-65-B-index2.html
 
-# Editamos el archivo 'healthy.html'
-code healthy.html
 
-# Vamos a montar estos archivos en el despliegue. Usaremos 'configmap' para cada uno, lo que
-# nos permitirá conectarlos a los pods.
-kubectl create configmap server1 --from-file=index1.html
-kubectl create configmap server2 --from-file=index2.html
-kubectl create configmap healthy --from-file=healthy.html
+# Editamos el archivo 'healthy.html':
 
-# A modo de recordatorio, para el primer configmap tenemos
+code lab-65-B-healthy.html
+
+
+# Vamos a montar estos archivos en el despliegue. Usaremos 'ConfigMap' para cada uno, lo que
+# nos permitirá conectarlos a los pods:
+
+kubectl create configmap server1 --from-file=lab-65-B-index1.html
+
+kubectl create configmap server2 --from-file=lab-65-B-index2.html
+
+kubectl create configmap healthy --from-file=lab-65-B-healthy.html
+
+
+# A modo de recordatorio, para el primer configmap tenemos:
+
 kubectl describe configmap/server1
 
-# Ahora vamos a crear dos despliegues web, muy parecidos uno al otro, cambiando solo el
-# configmap.
+# Ahora vamos a crear dos despliegues web, muy parecidos uno al otro, cambiando solo el ConfigMap.
 
-# Editamos el archivo 'webdeploy1.yaml'
-code webdeploy1.yaml
+# Editamos el archivo 'lab-65-B-webdeploy1.yaml'
 
+code lab-65-B-webdeploy1.yaml
+
+
+# Las líneas más destacables son:
+#
 # Líneas 23-28:     Es la sonda 'liveness'. Apunta a la página 'healthy.html'. Recordemos 
 #                   que si la página 'healthy.html falla, el pod (contenedor) se reiniciará.
 #
@@ -292,16 +304,22 @@ code webdeploy1.yaml
 # Líneas 44-45:     Al lanzar nginx, se copian las páginas a su ubicación correcta. Luego 
 #                   inicia nginx.
 
-# Vamos a lanzar estos dos despliegues.
-kubectl create -f webdeploy1.yaml
-kubectl create -f webdeploy2.yaml
+# Vamos a lanzar estos dos despliegues:
 
-# Comprobamos.
+kubectl create -f lab-65-B-webdeploy1.yaml
+
+kubectl create -f lab-65-B-webdeploy2.yaml
+
+
+
+# Comprobamos:
+
 kubectl get deployments -w
 
-# Por último, un servicio que enrute el tráfico a los dos deployments.
-# Comprobamos el manifiesto.
-code webservice.yaml
+# Por último, un creamos un servicio que enrute el tráfico a los dos deployments.
+# Comprobamos el manifiesto:
+
+code lab-65-B-webservice.yaml
 
 # Lo creamos.
 kubectl create -f webservice.yaml
