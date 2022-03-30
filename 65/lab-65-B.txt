@@ -307,9 +307,9 @@ code lab-65-B-webdeploy1.yaml
 
 # Vamos a lanzar estos dos despliegues:
 
-kubectl create -f lab-65-B-webdeploy1.yaml
+kubectl apply -f lab-65-B-webdeploy1.yaml
 
-kubectl create -f lab-65-B-webdeploy2.yaml
+kubectl apply -f lab-65-B-webdeploy2.yaml
 
 
 # Comprobamos:
