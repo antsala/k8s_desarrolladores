@@ -1,4 +1,4 @@
-# Laboratorio 65-B: "Monitorización del cluster (AZURE)"
+# Laboratorio 65-B: "Monitorización del cluster (Minikube/AZURE)"
  
 # Este laboratorio aprenderemos a conectar pods de Kubernetes con servicios que corren fuera del
 # cluster de Kubernetes.
@@ -8,6 +8,7 @@
 #   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
 #
 #   2) Cluster AKS iniciado (Ver lab-00.txt para el despliegue)
+#      (Nota: La mayor parte de los ejercicios también se pueden hacer en Minikube) 
 
 
 #################################################
@@ -135,6 +136,10 @@ kubectl get pods
 
 # Veamos como depurar un error en la aplicación.
 
+# Si se usa Minukube, en otra terminal levantar el tunel.
+
+minikube tunnel
+
 # Obtenermos la IP pública del servicio 'frontend':
 
 kubectl get service
@@ -147,52 +152,72 @@ echo http://$IP_EXTERNA
 
 # Conectamos con un navegador a 'http://$IP_EXTERNA' y comprobamos que funciona.
 
-# Vamos a escalar el frontend para dejarlo con una sola réplica.
+# Vamos a escalar el frontend para dejarlo con una sola réplica:
+
 kubectl scale --replicas=1 deployment/frontend
+
+
+# Comprobamos:
+
 kubectl get pods -w
+
 
 # Esperar a que solo quede un pod del frontend y capturar su nombre.
 FRONTEND_POD_NAME=<Poner aquí el nombre del único pod del frontend.
 
-# Vamos a usar 'kubectl exec' para simular un error de la app.
+# Vamos a usar 'kubectl exec' para simular un error de la app:
+# (Nota: los siguiente comandos se ejecutan dentro del contenedor)
+
 kubectl exec -it $FRONTEND_POD_NAME -- bash
 
-# Actualizamos el repo e instalamos editor.
-apt update
+# Actualizamos el repo e instalamos editor:
+
+apt update -y
+
 apt install -y nano
 
-# Editamos el 'guestkook.php'
+
+# Editamos el 'guestkook.php':
+
 nano guestbook.php
 
 # Localizar la línea que tiene 'if ($_GET['cmd'] == 'set') {' en la línea 17.
-# debajo de ella insertar el siguiente código.
+# debajo de ella insertar el siguiente código:
+
 $host = 'localhost';
 if(!defined('STDOUT')) define('STDOUT', fopen('php://stdout', 'w'));
-fwrite(STDOUT, "hostname at the beginning of 'set' command "); 
+fwrite(STDOUT, "hostname al principio del comando 'set' :"); 
 fwrite(STDOUT, $host);
 fwrite(STDOUT, "\n");
 
+
 # Guardamos CTRL+X + Y + Enter.
+
+
 # Se ha introducido un error donde la lectura de los mensajes seguirá funcionando,
 # pero no la escritura. Se ha hecho pidiendo al frontend que se conecte al 
-# redis master en un servidor 'localhost' que no es el correcto, así que la
+# 'redis master' en un servidor 'localhost' que no es el correcto, así que la
 # escritura fallará.
 #
-# Salimos del contenedor.
+# Salimos del contenedor con 'exit'
+
 
 echo http://$IP_EXTERNA
+
 # Con el navegador conectar a 'http://$IP_EXTERNA'
 
 # Escribir algún mensaje.
 # Al refrescar el navegador, el mensaje ya no está, debido a que la escritura falló.
 
-# Obtenermos el log del pod.
+# Obtenermos el log del pod:
+
 kubectl logs $FRONTEND_POD_NAME
 
 # Se puede ver el mensaje de depuración que pusimos:
-# 'hostname at the beginning of 'set' command localhost'
+# 'hostname al principio del comando 'set': localhost',
 # que provocará el error de escritura, porque el cliente de redis no puede conectar
-# con un servidor de redis llamado 'localhost'
+# con un servidor de redis llamado 'localhost'.
+#
 # Por lo tanto, habilitar la depuración el contenedor, ayuda a solucionar problemas.
 
 # La solución del error en este caso es sencilla, puesto que la provocamos al entrar
@@ -200,14 +225,18 @@ kubectl logs $FRONTEND_POD_NAME
 #
 # Al eliminar el pod, se borra el contenedor, y la capa reescribible de éste, que es
 # la que contenía los cambios problemáticos. Como hay un ReplicaSet, se instanciará un
-# nuevo pod desde la imagen de contenedor original.
+# nuevo pod desde la imagen de contenedor original:
+
 kubectl delete pod $FRONTEND_POD_NAME
 
 # Probar desde el navegador que los mensajes se guardan.
 
-###################################
-# Sondas 'Readiness' y 'liveness' #
-###################################
+
+
+#################################################
+# Ejercicio 4: Sondas 'Readiness' y 'liveness'. #
+#################################################
+
 
 # Kubernetes utiliza las sondas para monitorizar la disponibilidad de la 
 # aplicación. Estas son:
@@ -227,11 +256,13 @@ kubectl delete pod $FRONTEND_POD_NAME
 # Vamos a crear dos despliegues de nginx. Cada uno con una página index y una página health.
 # La página de índice servirá como sonda 'liveness'.
 
-# Editamos el erchivo 'index1.html'
-code index1.html
+# Editamos el erchivo 'index1.html':
 
-# Editamos el erchivo 'index2.html'
-code index2.html
+code lab-55-B-index1.html
+
+# Editamos el erchivo 'index2.html':
+
+code lab-55-B-index2.html
 
 # Editamos el archivo 'healthy.html'
 code healthy.html
