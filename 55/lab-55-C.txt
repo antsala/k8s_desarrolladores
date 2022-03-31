@@ -295,7 +295,6 @@ code kustomize.yaml
 # A continuación debemos ejecutar el siguiente comando para generar un único archivo YAML que contendrá
 # todos los objetos.
 
-TOTE, POR AQUI. hacer pull y seguir.
 
 kubectl kustomize . > mongo-backend.yaml
 
