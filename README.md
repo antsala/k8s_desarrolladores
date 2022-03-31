@@ -326,5 +326,7 @@ sudo snap install code --classic
 #   3. Añadir al usuario administrador del tenant al grupo 'aks admins'.
 #   4. Crear un usuario y un grupo de seguridad para asignar roles.
 #   5. Configurar RBAC en AKS.
+#   6. Verificar RBAC para el usuario Luke.
+
 
 
