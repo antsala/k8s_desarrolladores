@@ -305,7 +305,7 @@ sudo snap install code --classic
 
 
 
-# Laboratorio 65-B: "Monitorización del cluster. (AZURE)"
+# Laboratorio 65-B: "Monitorización del cluster."
 # Archivo: lab-65-B.txt
 #
 # Ejercicios:
@@ -314,4 +314,17 @@ sudo snap install code --classic
 #   3. Errores de la aplicación.
 #   4. Sondas 'Readiness' y 'liveness'.
 #   5. Experimentos con 'liveness' y 'readiness'.
+#   6. Métricas simples.
+
+
+# Laboratorio 65-C: "RBAC en AKS (Azure)"
+# Archivo: lab-65-C.txt
+#
+# Ejercicios:
+#   1. Introduccion a RBAC.
+#   2. Habilitar la integración de Azure AD en AKS.
+#   3. Añadir al usuario administrador del tenant al grupo 'aks admins'.
+#   4. Crear un usuario y un grupo de seguridad para asignar roles.
+#   5. Configurar RBAC en AKS.
+
 
