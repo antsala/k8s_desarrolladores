@@ -10,4 +10,4 @@ roleRef:
 subjects:
 - kind: User
   apiGroup: rbac.authorization.k8s.io
-  name: "tim@handsonaksbookoutlook913.onmicrosoft.com"
+  name: "<poner aquí el usuario>"

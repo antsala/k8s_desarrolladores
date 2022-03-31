@@ -305,18 +305,25 @@ code lab-65-C-role.yaml
 #
 # Líneas 7-9:   Los tipos de recursos afectados y los verbos permitidos.
 
-# Creamoe el rol.
-kubectl create -f role.yaml
+# Creamos el rol:
 
-# Comprobamos (ojo con el espacio de nombres)
+kubectl create -f lab-65-C-role.yaml
+
+
+# Comprobamos (ojo con el espacio de nombres):
+
 kubectl get role --namespace delete-access
 
-# Inspeccionamos.
+
+# Inspeccionamos:
+
 kubectl describe role deleteRole  --namespace delete-access
 
 # Por último creamos una instancia de 'RoleBinding' para asignar el role al usuario 'Luke'.
-# Editamos el archivo 'roleBinding.yaml'
-code roleBinding.yaml
+# Editamos el archivo 'lab-65-C-roleBinding.yaml':
+
+code lab-65-C-roleBinding.yaml
+
 
 # Línea 2:      Crea una instancia de un 'RoleBinding' y no de un 'ClusterRoleBinding' porque lo que se 
 #               está asociando es un 'Role' y no un 'ClusterRole'.
@@ -325,7 +332,8 @@ code roleBinding.yaml
 #
 # Línea 7:      Hacer referencia a una instancia 'Role' y no a una 'ClusterRole'
 #
-# Líneas 11-13: Define un usuario en lugar de un grupo. OJO: Poner el usuario que hemos creado.
+# Líneas 11-13: Define un usuario en lugar de un grupo. 
+#               IMPORTANTE. Poner el usuario que hemos creado en la línea 13.
 
 # Creamos la instancia.
 kubectl create -f roleBinding.yaml
