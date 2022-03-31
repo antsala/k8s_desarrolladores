@@ -1,4 +1,4 @@
-# Laboratorio 55-C: "MySQL replicado con StatefulSet"
+# Laboratorio 55-C: "MongoDB con StatefulSet y Sidecar"
  
 # Este laboratorio aprenderemos a usar el objeto 'StatefulSet'.
 
