@@ -1,4 +1,4 @@
-# Laboratorio 03-A: "Instalar podman"
+# Laboratorio 06-A: "Instalar podman"
  
 # Este laboratorio instalaremos el runtime de contenedor 'podman' que nos servirá
 # para presentar la abstracción del pod, objeto que se usará en Kubernetes.
