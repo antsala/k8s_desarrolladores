@@ -207,7 +207,7 @@ podman container ls --pod
 # entorno 'PMA_HOST=127.0.0.1' al contenedor que deseemos que reciba tráfico.
 
 
-# Para probar que todo funciona debemos conectar con un navegador a 'http://localhot:8085'. La autenticación usará el
+# Para probar que todo funciona debemos conectar con un navegador a 'http://localhost:8085'. La autenticación usará el
 # usuario 'root' con la contraseña 'secreto'.
 #
 # Cuando phpMyAdmin conecte, mostrará la base de datos 'nominas', que podremos administrar perfectamente.
