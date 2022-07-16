@@ -29,20 +29,20 @@ sudo systemctl status docker
 
 ## Ejercicio 2: Primeros contenedores con ***Docker***
 
-Creamos un contenedor y entramos dentro (contenedor interactivo '-i -t')
+Creamos un contenedor y entramos dentro (contenedor interactivo ***-i -t***)
 ```
 sudo docker run --name mi_primer_contenedor -i -t ubuntu /bin/bash
 ```
 
 Al iniciarse el contenedor, estaremos dentro. Observar el prompt, será parecido a este
-***root@141be1940196:/#***. Somos 'root' en una maquina que tiene por nombre ***141be1940196***, que # es un id aleatorio asignado al contenedor.
+***root@141be1940196:/#***. Somos ***root*** en una maquina que tiene por nombre ***141be1940196***, que es un id aleatorio asignado al contenedor.
 
 Dentro del contenedor procedemos a realizar cuantas acciones estimemos oportunas. Para salir del contenedor escribimos:
 ```
 exit
 ```
 
-Al salir de un contenedor interactivo, se detiene el programa que estaba ejecutando ('/bin/bash'), por lo que el contenedor se detiene. Podemos comprobarlo listando los contenedores:
+Al salir de un contenedor interactivo, se detiene el programa que estaba ejecutando (***/bin/bash***), por lo que el contenedor se detiene. Podemos comprobarlo listando los contenedores:
 ```
 sudo docker container ls -a 
 ```
@@ -52,9 +52,9 @@ La salida del comando anterior será similar a esto:
 CONTAINER ID   IMAGE     COMMAND       CREATED         STATUS                    PORTS     NAMES
 141be1940196   ubuntu    "/bin/bash"   3 minutes ago   Exited (0) 1 second ago             mi_primer_contenedor 
 ```
-Observar como la columna 'STATUS' indica que el contenedor ha finalizado su ejecución.
+Observar como la columna ***STATUS*** indica que el contenedor ha finalizado su ejecución.
 
-Podemos iniciar un contenedor detenido con el comando 'start', de esta forma:
+Podemos iniciar un contenedor detenido con el comando ***start***, de esta forma:
 ```
 sudo docker container start mi_primer_contenedor
 ```
@@ -76,7 +76,7 @@ Si necesitamos realizar cambios en un contenedor, podemos "conectarnos" a él co
 sudo docker container attach mi_primer_contenedor
 ```
 
-Volvemos a escribir 'exit' para salir.
+Volvemos a escribir ***exit*** para salir.
 ```
 exit
 ```
@@ -86,7 +86,7 @@ Lo que nos lleva a la etapa anterior donde el contenedor se ha detenido. Podemos
 sudo docker container ls -a
 ```
 
-Para que un contenedor siga en ejecución de forma desatendida (dettached), es necesario indicar el parámetro ***-d*** y hacer que ejecute un programa que no finalice, como un servidor web, de base de datos, o en este ejemplo, un bucle infinito.
+Para que un contenedor siga en ejecución de forma desatendida (***dettached***), es necesario indicar el parámetro ***-d*** y hacer que ejecute un programa que no finalice, como un servidor web, de base de datos, o en este ejemplo, un bucle infinito.
 ```
 sudo docker run --name mi_daemon -d ubuntu /bin/sh -c "while true; do echo Hello World; sleep 1; done"
 ```
@@ -146,7 +146,7 @@ CONTAINER ID   NAME          CPU %     MEM USAGE / LIMIT   MEM %     NET I/O    
 316c46bb5f47   mi_daemon     0.12%     684KiB / 3.834GiB   0.02%     3.86kB / 0B   176kB / 0B   2
 209e2796365f   mi_daemon_2   0.12%     500KiB / 3.834GiB   0.01%     3.28kB / 0B   0B / 0B      2
 ```
-Salimos con CTRL+c
+Salimos con ***CTRL+C***
 
 En otras ocasiones necesitaremos ejecutar un comando en el contenedor, pero no deseamos hacerlo de forma interactiva. Para ello hacemos uso de ***exec***, por ejemplo, ver el contenido de un archivo, ejecutamos:
 ```
@@ -171,7 +171,7 @@ Comprobamos que ***mi_daemon*** se ha detenido.
 sudo docker container ls -a 
 ```
 
-Lo verificamos en la salida del comando. El códido de salida es '127', que significa que hemos "matado" al contenedor.
+Lo verificamos en la salida del comando. El códido de salida es ***127***, que significa que hemos "matado" al contenedor.
 ```
 CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                        PORTS     NAMES
 209e2796365f   ubuntu    "/bin/sh -c 'while t…"   10 minutes ago   Up 10 minutes                           mi_daemon_2
@@ -187,6 +187,8 @@ sudo docker container inspect mi_daemon_2
 Generalmente estaremos interesado en conocer cierta información del contenedor, como su estado de ejecución o dirección IP. Hacemos uso de las plantilla del lenguaje ***Go*** para filtrar la salida del JSON anterior. Por ejemplo, para mostrar el estado de ejecución de nuestros contnenedores ponemos:
 ```
 sudo docker container inspect --format='{{.State.Running}}' mi_daemon
+```
+```
 sudo docker container inspect --format='{{.State.Running}}' mi_daemon_2
 ```
 
