@@ -22,10 +22,10 @@ code Dockerfile
 
 Este archivo Dockerfile es muy sencillo y realiza lo siguiente:
 
-* Línea 2: Utiliza como imagen base ***Ubuntu 16.04***.
-* Línea 3: Actualiza repositorio de paquetes e instala ***nginx***.
-* Línea 4: Crea el archivo ***/var/www/html/index.html*** y le añade el contenido *Hola,               estoy dentro de tu contenedor*. De ahí el nombre de web estática.
-* Línea 5:  Expone el puerto ***80*** en el contenedor.
+* *Línea 2*: Utiliza como imagen base ***Ubuntu 16.04***.
+* *Línea 3*: Actualiza repositorio de paquetes e instala ***nginx***.
+* *Línea 4*: Crea el archivo ***/var/www/html/index.html*** y le añade el contenido *Hola,               estoy dentro de tu contenedor*. De ahí el nombre de web estática.
+* *Línea 5*:  Expone el puerto ***80*** en el contenedor.
 
 Procedemos a crear una imagen basada en este Dockerfile, así que cerramos el editor y, en la consola escribimos el siguiente comando:
 ```
