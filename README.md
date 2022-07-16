@@ -31,67 +31,44 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - Eliminación de AKS desde Azure CLI.
 
 
-# Carpeta 01 (AWS)
+##  Carpeta 01 (AWS)
 
-# Laboratorio 01: "Herramientas administración AWS"
-# Archivo: lab-01.txt
-#
-# Ejercicios: 
-#   1. Instalación de AWS CLI.
-#   2. Configuración de la credencial AWS para la cli.
-#   3. Instalación y configuración de 'eksctl'.
-#   4. Creación de EKS desde AWS CLI.
-#   5. Eliminación de EKS desde AWS CLI.
+1. Laboratorio 01: ***Herramientas de administración en AWS***. Ejercicios:
+   - Instalación de ***AWS CLI***.
+   - Configuración de la credencial AWS para la ***cli***.
+   - Instalación y configuración de ***eksctl***.
+   - Creación de ***EKS*** desde ***AWS CLI***.
+   - Eliminación de ***EKS*** desde ***AWS CLI***.
 
 
+## Carpeta 03
 
-# Carpeta 03
+1. Laboratorio 03-A: ***Creación de contenedores con Docker***. Ejercicios:
+   - Instalación de ***Docker***.
+   - Primeros contenedores con ***Docker***.
+   - Imágenes con ***Docker***.
 
-# Laboratorio 03-A: "Creación de contenedores con Docker"
-# Archivo: lab-03-A.txt
-#
-# Ejercicios:
-#   1. Instalación de 'Docker'.
-#   2. Primeros contenedores con 'Docker',
-#   3. Imágenes con 'Docker'.
+2. Laboratorio 03-B: ***Construir imágenes desde Dockerfile***. Ejercicios:
+   - Creación de imagen desde ***Dockerfile***.
+   - Publicación de puertos en el host.
+   - ***ENTRYPOINT*** en ***Dockerfile***.
+   - ***ENTRYPOINT*** y ***CMD*** en ***Dockerfile***.
 
+3. Laboratorio 03-C: ***Volúmenes***. Ejercicios:
+   - Publicar aplicación en el contenedor.
 
-# Laboratorio 03-B: "Construir imágenes desde Dockerfile"
-# Archivo: lab-03-B.txt
-#
-# Ejercicios:
-#   1. Creación de imagen desde Dockerfile.
-#   2. Publicación de puertos en el host.
-#   3. 'ENTRYPOINT' en 'Dockerfile'.
-#   4. 'ENTRYPOINT' y 'CMD' en 'Dockerfile'.
+4. Laboratorio 03-D: ***Frontend-Backend***. Ejercicios:
+   - Creación del ***Frontend***.
+   - Creación del ***Backend***.
+   - Creación de una ***red***.
+   - Recreación del Backend conectado a la nueva red.
+   - Despliegue de la versión de Frontend que conecta con Backend.
 
-
-# Laboratorio 03-C: "Volúmenes"
-# Archivo: lab-03-C.txt
-#
-# Ejercicios:
-#   1. Publicar aplicación en el contenedor.
-
-
-# Laboratorio 03-D: "Frontend-Backend"
-# Archivo: lab-03-D.txt
-#
-# Ejercicios:
-#   1. Creación del Frontend.
-#   2. Creación del Backend.
-#   3. Creación de una red.
-#   4. Recreación del Backend conectado a la nueva red.
-#   5. Despliegue de la versión de Frontend que conecta con Backend.
-
-
-# Laboratorio 03-E: "Micro servicios"
-# Archivo: lab-03-E.txt
-#
-# Ejercicios:
-#   1. Instalación de Go.
-#   2. Compilar una app en Go.
-#   3. Contenerizar la app Go.
-#   4. Desplegar servicio en Swarm.
+5. Laboratorio 03-E: ***Micro servicios***. Ejercicios:
+   - Instalación de ***Go***.
+   - ***Compilar*** una app en Go.
+   - ***Contenerizar*** la app Go.
+   - Desplegar servicio en ***Swarm***.
 
 
 
