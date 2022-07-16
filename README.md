@@ -1,13 +1,11 @@
 # k8s_desarrolladores
 
-# Para poder realizar los laboratorios es necesario clonar el repo desde github. 
-# Para ello realizamos lo siguiente:
+Para poder realizar los laboratorios es necesario clonar el repo desde github.Para ello realizamos abrimos una consola de comandos e instalamos git en la máquina virtual.
 
-# Abrir una consola de comandos e instalar git en la máquina virtual
-
+```
 sudo apt-get -y update
-
 sudo apt-get -y install git
+```
 
 
 # Clonar el repositorio con los laboratorios del curso.
