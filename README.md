@@ -157,7 +157,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
 
 ## Carpeta 45
 
-1. Laboratorio 45-A: *Horizontal POD Autoscaler (HPA) en Azure y autoescalado de nodos***. Ejercicios:
+1. Laboratorio 45-A: ***Horizontal POD Autoscaler (HPA) en Azure y autoescalado de nodos***. Ejercicios:
    - Desplegar la aplicación de ejemplo.
    - ***Escalar*** el frontend de GuestBook.
    - ***Autoescalado*** de nodos.
@@ -177,7 +177,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
 
 ## Carpeta 55
 
-1. Laboratorio 55-A: ***Usar volúmenes en la aplicaciones***. Ejercicios:
+1. Laboratorio 55-A: ***Usar volúmenes en las aplicaciones***. Ejercicios:
    - Despliegue del servidor Redis.
    - Creación de un ***ConfigMap*** desde un archivo.
    - Creación de un ConfigMap desde archivo YAML.
@@ -212,7 +212,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - Creación del ***servicio interno***.
    - Prueba del endpoint.
 
-2. Laboratorio 65-B: ***Monitorización del cluster.***. Ejercicios: 
+2. Laboratorio 65-B: ***Monitorización del cluster***. Ejercicios: 
    - Sondas ***Readiness*** y ***Liveness***.
    - ***Depuración de errores*** en el pull de imágenes.
    - Errores de la aplicación.
