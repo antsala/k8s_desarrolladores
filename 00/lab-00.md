@@ -126,62 +126,69 @@ kubectl config get-contexts
 La salida del comando anterior mostrará algo como esto:
 ```
 CURRENT   NAME                                               CLUSTER                                            AUTHINFO                                           NAMESPACE
-           arn:aws:eks:eu-west-1:779450087377:cluster/myeks   arn:aws:eks:eu-west-1:779450087377:cluster/myeks   arn:aws:eks:eu-west-1:779450087377:cluster/myeks   
-           minikube                                           minikube                                           minikube                                           default
- *         myaks-admin                                        myaks                                              clusterAdmin_myaks-rg_myaks  
+          arn:aws:eks:eu-west-1:779450087377:cluster/myeks   arn:aws:eks:eu-west-1:779450087377:cluster/myeks   arn:aws:eks:eu-west-1:779450087377:cluster/myeks   
+          minikube                                           minikube                                           minikube                                           default
+*         myaks-admin                                        myaks                                              clusterAdmin_myaks-rg_myaks  
 ```
 
-# Podemos apreciar que el contexto actual es 'myaks-admin' (El cluster AKS), para conmutar al otro 
-# contexto (Minikube) usamos el siguiente comando:
+Podemos apreciar que el contexto actual es ***myaks-admin*** (El cluster AKS), para conmutar al otro contexto (Minikube) usamos el siguiente comando.
 
+```
 kubectl config use-context minikube
+```
 
+La salida indicará lo siguiente:
 
-# La salida indicará lo siguiente:
-#
-# Switched to context "minikube".
+```
+Switched to context "minikube".
+```
 
+Para volver al contexto de Azure:
 
-# Para volver al contexto de Azure:
-
+```
 kubectl config use-context myaks-admin
+```
 
 
+## Ejercicio 3: Eliminación de AKS desde ***Azure CLI***
 
-####################################################
-# Ejercicio 3: Eliminación de AKS desde Azure CLI. #
-####################################################
+Eliminamos el cluster.
 
-
-# Eliminamos el cluster:
-
+```
 az aks delete \
     --name myaks \
     --resource-group myaks-rg \
     --yes
+```
 
-# Eliminamos el grupo de recursos que contiene el cluster:
+Eliminamos el grupo de recursos que contiene el cluster.
 
+```
 az group delete \
     --resource-group myaks-rg \
     --yes
+```
 
-# Eliminamos el grupo de recursos que contiene los objetos de las Azure Functions:
+Eliminamos el grupo de recursos que contiene los objetos de las ***Azure Functions***.
 
+```
 az group delete \
     --resource-group functions-rg \
     --yes
+```
 
-# Si se ha creado el Application Gateway, eliminamos el grupo de recursos.
-# Tarda mucho, lo eliminamos de forma asíncrona con '--no-wait':
+Si se ha creado el ***Application Gateway***, eliminamos el grupo de recursos. Tarda mucho, lo eliminamos de forma asíncrona con ***--no-wait***.
 
+```
 az group delete \
     --resource-group agic-rg \
     --yes \
     --no-wait
+```
 
-# Si se han creado Grupos y usuario en Azure AD para la integración de AKS con AAD, los eliminamos:
+Si se han creado ***Grupos*** y ***usuarios*** en Azure AD para la integración de AKS con AAD, los eliminamos.
 
+```
 az ad group delete \
     --group "aks admins"
 
@@ -190,31 +197,34 @@ az ad group delete \
 
 az ad user delete \
     --id luke@antsalgrahotmail.onmicrosoft.com
+```
 
-# Si se registró la característica EnablePodIdentityPreview, la desregistramos de la subscripción:
+Si se registró la característica ***EnablePodIdentityPreview***, la desregistramos de la subscripción.
 
+```
 az feature unregister \
     --name EnablePodIdentityPreview \
     --namespace Microsoft.ContainerService
+```
 
-# Como el aviso indica, también hay que ejecutar el siguiente comando para que se propage el cambio:
+Como el aviso indica, también hay que ejecutar el siguiente comando para que se ***propage el cambio***.
 
+```
 az provider register \
     --name Microsoft.ContainerService
+```
 
-# Quitamos la extensión 'aks-preview' de la CLI si estuviera instalada:
+Quitamos la extensión ***aks-preview*** de la CLI si estuviera instalada.
 
+```
 az extension remove \
     --name aks-preview
+```
 
-# Eliminamos el ACR si fue creado:
+Eliminamos el ACR si fue creado.
 
+```
 az group delete \
     --resource-group myACR-rg \
     --yes
-
-
-
-#######################
-# FIN DEL LABORATORIO #
-#######################
+```
