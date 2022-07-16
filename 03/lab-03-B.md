@@ -187,7 +187,7 @@ nginx                            latest    c919045c4c2b   12 days ago      142MB
 ubuntu                           16.04     b6f507652425   6 months ago     135MB
 ```
 
-Creamos un contenedor con la nueva imagen. Observar que no ponemos ningún parámetro al final de la línea de ***d***ocker run***.
+Creamos un contenedor con la nueva imagen. Observar que no ponemos ningún parámetro al final de la línea de ***docker run***.
 ```
 sudo docker run -d -p 80:80 --name web_estatica_80_entry_cmd antsala/web_estatica_entry_cmd
 ```
