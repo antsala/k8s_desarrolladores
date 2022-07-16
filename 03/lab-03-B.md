@@ -1,40 +1,31 @@
-# Laboratorio 03-B: "Construir imágenes desde Dockerfile"
+# Laboratorio 03-B: ***Construir imágenes desde Dockerfile****
  
-# Este laboratorio repasaremos cómo crear imágenes desde Dockerfile,
-# integrando la compilación del código fuente en tiempo de creación de
-# la imagen.
+En este laboratorio repasaremos cómo crear imágenes desde Dockerfile, integrando la compilación del  código fuente en tiempo de creación de la imagen.
 
-# Requisitos:
-#
-#   1)  Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
-#
-#   2) Tener instalado Docker-ce como runtime de contenedo en dicha máquina virtual.
+Requisitos:
 
-####################################################
-# Ejercicio 1: Creación de imagen desde Dockerfile #
-####################################################
+1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o escritorio remoto.
+2. Tener instalado ***Docker-ce*** como runtime de contenedo en dicha máquina virtual.
 
-# Cambiamos al directorio del laboratorio:
 
+## Ejercicio 1: ***Creación de imagen desde Dockerfile***
+
+Cambiamos al directorio del laboratorio:
+```
 cd ~/k8s_desarrolladores/03/web_estatica
+```
 
-
-# En este directorio tenemos un archivo de ejemplo llamado 'Dockerfile', que editamos para
-# estudiarlo
-
+En este directorio tenemos un archivo de ejemplo llamado ***Dockerfile***, que editamos para estudiarlo
+```
 code Dockerfile
+```
 
+Este archivo Dockerfile es muy sencillo y realiza lo siguiente:
 
-# Este archivo Dockerfile es muy sencillo y realiza lo siguiente:
-#
-# Línea 2:      Utiliza como imagen base Ubuntu 16.04.
-#
-# Línea 3:      Actualiza repositorio de paquetes e instala nginx.
-#
-# Línea 4:      Crea el archivo /var/www/html/index.html y le añade el contenido 'Hola, 
-#               estoy dentro de tu contenedor'. De ahí el nombre de web estática.
-#
-# Línea 5:      Expone el puerto 80 en el contenedor.
+* Línea 2:      Utiliza como imagen base ***Ubuntu 16.04****.
+* Línea 3:      Actualiza repositorio de paquetes e instala ***nginx***.
+* Línea 4:      Crea el archivo ***/var/www/html/index.html*** y le añade el contenido *Hola,               estoy dentro de tu contenedor*. De ahí el nombre de web estática.
+* Línea 5:      Expone el puerto ***80*** en el contenedor.
 
 
 # Procedemos a crear una imagen basada en este Dockerfile, así que cerramos el editor y, en la
