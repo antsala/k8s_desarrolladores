@@ -131,7 +131,7 @@ CURRENT   NAME                                               CLUSTER            
 *         myaks-admin                                        myaks                                              clusterAdmin_myaks-rg_myaks  
 ```
 
-Podemos apreciar que el contexto actual es ***myaks-admin*** (El cluster AKS señalizado por el asterisco (*)), para conmutar al otro contexto (Minikube) usamos el siguiente comando.
+Podemos apreciar que el contexto actual es ***myaks-admin*** (El cluster AKS señalizado por el asterisco *), para conmutar al otro contexto (Minikube) usamos el siguiente comando.
 
 ```
 kubectl config use-context minikube
