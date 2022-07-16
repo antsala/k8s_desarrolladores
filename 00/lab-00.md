@@ -1,15 +1,15 @@
 # Laboratorio 00: ***Herramientas de administración de Azure***
-<br />
+
 En este laboratorio instalaremos las herramientas que necesitaremos para administrar Azure.
-<br />
+
 Los requisitos son:
-<br />
+
 1. Una máquina virtual con ***Ubuntu 20.04 LTS*** a la que poder hacer ssh o tener un escritorio remoto.
 2. Una subscripción de Azure que ***permita*** crear clústeres de AKS
-<br />
-<br />
+
+
 ## Ejercicio 1: ***Instalación de Azure CLI***
-<br />
+
 En primer lugar desinstalamos versiones previas si estuvieran presentes:
 ```
 sudo apt remove azure-cli -y
@@ -17,8 +17,7 @@ sudo apt remove azure-cli -y
 ```
 sudo apt autoremove -y
 ```
-<br />
-<br />
+
 Actualizamos repositorios e instalamos dependencias:
 ```
 sudo apt-get update
@@ -26,8 +25,7 @@ sudo apt-get update
 ```
 sudo apt-get install -y  ca-certificates curl apt-transport-https lsb-release gnupg
 ```
-<br/>
-<br/>
+
 Descargamos la clave de firma de Microsoft:
 
 ```
