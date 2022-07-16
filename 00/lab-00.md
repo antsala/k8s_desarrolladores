@@ -1,16 +1,15 @@
 # Laboratorio 00: ***Herramientas de administración de Azure***
- 
+<br/>
 En este laboratorio instalaremos las herramientas que necesitaremos para administrar Azure.
 
 Los requisitos son:
 
 1. Una máquina virtual con ***Ubuntu 20.04 LTS*** a la que poder hacer ssh o tener un escritorio remoto.
 2. Una subscripción de Azure que ***permita*** crear clústeres de AKS
-
-
-
-
-
+<br/>
+<br/>
+<br/>
+<br/>
 ## Ejercicio 1: ***Instalación de Azure CLI***
 
 En primer lugar desinstalamos versiones previas si estuvieran presentes:
