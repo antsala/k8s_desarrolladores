@@ -61,7 +61,7 @@ aeac57545f04   antsala/web_estatica   "nginx -g 'daemon of…"   32 seconds ago 
 ```
 Observar la columna ***PORTS***. Aparecen los nateos para IPv4 e IPv6. En ambos casos, el puerto externo, en este ejemplo es el ***49153*** (Nota: pegar el comando y poner el  puerto correcto)
 ```
-puerto=`#FF0000<poner aquí el puerto externo>`
+puerto=<span style="color: red">poner aquí el puerto externo</span>
 ```
 ```
 curl localhost:$puerto
