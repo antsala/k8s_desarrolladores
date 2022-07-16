@@ -12,7 +12,9 @@ Los requisitos son:
 En primer lugar desinstalamos versiones previas si estuvieran presentes:
 
 ```
-sudo apt remove azure-cli -y 
+sudo apt remove azure-cli -y
+```
+```
 sudo apt autoremove -y
 ```
 
