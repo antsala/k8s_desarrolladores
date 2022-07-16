@@ -7,16 +7,15 @@ sudo apt-get -y update
 sudo apt-get -y install git
 ```
 
+Ahora clonamos el repositorio con los laboratorios del curso.
 
-# Clonar el repositorio con los laboratorios del curso.
-
+```
 cd ~
-
 git clone https://github.com/antsala/k8s_desarrolladores.git
-
 cd ~/k8s_desarrolladores
-
 ls -l
+```
+
 
 
 # Instalar Visual Studio Code
