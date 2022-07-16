@@ -59,9 +59,11 @@ La salida del comando anterior tendrá la siguiente forma:
 CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                                     NAMES
 aeac57545f04   antsala/web_estatica   "nginx -g 'daemon of…"   32 seconds ago   Up 30 seconds   0.0.0.0:49153->80/tcp, :::49153->80/tcp   web_estatica
 ```
-Observar la columna ***PORTS***. Aparecen los nateos para IPv4 e IPv6. En ambos casos, el puerto externo, en este ejemplo es el ***49153*** (Nota: utilizar el que realmente aparezca)
+Observar la columna ***PORTS***. Aparecen los nateos para IPv4 e IPv6. En ambos casos, el puerto externo, en este ejemplo es el ***49153*** (Nota: pegar el comando y poner el  puerto correcto)
 ```
-puerto=<poner aquí el puerto externo>
+puerto=`#FF0000<poner aquí el puerto externo>`
+```
+```
 curl localhost:$puerto
 ```
 
