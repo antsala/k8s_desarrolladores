@@ -1,22 +1,20 @@
-# Laboratorio 00: "Herramientas de administración de Azure"
+# Laboratorio 00: ***Herramientas de administración de Azure***
  
-# Este laboratorio instalaremos las herramientas que necesitaremos para administrar Azure.
+En este laboratorio instalaremos las herramientas que necesitaremos para administrar Azure.
 
-# Requisitos:
-#
-#   1)  Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+Los requisitos son:
 
-
-#########################################
-# Ejercicio 1: Instalación de Azure CLI #
-#########################################
+1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o tener un escritorio remoto.
 
 
-# En primer lugar desinstalamos versiones previas si estuvieran:
+## Ejercicio 1: ***Instalación de Azure CLI***
 
+En primer lugar desinstalamos versiones previas si estuvieran presentes:
+
+```
 sudo apt remove azure-cli -y 
-
 sudo apt autoremove -y
+```
 
 # Actualizamos repositorios e instalamos dependencias:
 
