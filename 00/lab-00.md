@@ -18,34 +18,45 @@ sudo apt remove azure-cli -y
 sudo apt autoremove -y
 ```
 
-# Actualizamos repositorios e instalamos dependencias:
+Actualizamos repositorios e instalamos dependencias:
 
+```
 sudo apt-get update
-
+```
+```
 sudo apt-get install -y  ca-certificates curl apt-transport-https lsb-release gnupg
+```
 
-# Descargamos la clave de firma de Microsoft:
+Descargamos la clave de firma de Microsoft:
 
+```
 curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
     gpg --dearmor | \
     sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+```
 
-# Agregamos repositoritos de Azure-CLI:
+Agregamos repositoritos de Azure-CLI:
 
+```
 AZ_REPO=$(lsb_release -cs) 
-
 echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
     sudo tee /etc/apt/sources.list.d/azure-cli.list
+```
 
-# Actualizamos repos e instalamos azure-CLI:
+Actualizamos repos e instalamos azure-CLI:
 
+```
 sudo apt-get update
-
+```
+```
 sudo apt-get install azure-cli
+```
 
-# Comprobamos versión de azure-cli y actualizarla con 'az upgrade' si se recomienda.
+Comprobamos versión de azure-cli y actualizarla con 'az upgrade' si se recomienda.
 
+```
 az version
+```
 
 
 
