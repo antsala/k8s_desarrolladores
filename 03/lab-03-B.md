@@ -1,4 +1,4 @@
-# Laboratorio 03-B: ***Construir imágenes desde Dockerfile****
+# Laboratorio 03-B: ***Construir imágenes desde Dockerfile***
  
 En este laboratorio repasaremos cómo crear imágenes desde Dockerfile, integrando la compilación del  código fuente en tiempo de creación de la imagen.
 
