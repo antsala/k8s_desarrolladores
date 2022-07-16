@@ -4,7 +4,8 @@ En este laboratorio instalaremos las herramientas que necesitaremos para adminis
 
 Los requisitos son:
 
-1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o tener un escritorio remoto.
+1. Una máquina virtual con ***Ubuntu 20.04 LTS*** a la que poder hacer ssh o tener un escritorio remoto.
+2. Una subscripción de Azure que ***permita*** crear clústeres de AKS
 
 
 ## Ejercicio 1: ***Instalación de Azure CLI***
@@ -52,41 +53,42 @@ sudo apt-get update
 sudo apt-get install azure-cli
 ```
 
-Comprobamos versión de azure-cli y actualizarla con 'az upgrade' si se recomienda.
+Comprobamos versión de ***azure-cli*** y actualizarla con ***az upgrade*** si se recomienda.
 
 ```
 az version
 ```
 
+# Ejercicio 2: ***Creación de AKS desde Azure CLI*** 
 
+Iniciamos sesión con el usuario ***administrador*** de la subscripción de Azure.
 
-#################################################
-# Ejercicio 2: Creación de AKS desde Azure CLI. #
-#################################################
-
-# Iniciamos sesión con el usuario administrador de la subscripción:
-
+```
 az login
+```
 
+Creamos un grupo de recursos para el cluster.
 
-# Creamos un grupo de recursos para el cluster:
-
+```
 az group create \
     --name myaks-rg \
     --location westeurope
+```
 
+Habilitamos la supervisión de clusteres.
 
-# Habilitamos la supervisión de clusteres:
-
+```
 az provider register \
     --namespace Microsoft.OperationsManagement
 
 az provider register \
     --namespace Microsoft.OperationalInsights
+```
 
 
-# Creamos el cluster: 
+Creamos el cluster. 
 
+```
 az aks create \
     --resource-group myaks-rg \
     --name myaks \
@@ -95,37 +97,39 @@ az aks create \
     --node-vm-size Standard_DS2_v2 \
     --enable-addons monitoring \
     --generate-ssh-keys
+```
 
-# Una vez conectado a la subscripción, el siguiente paso es conectar al servicio AKS.
+Una vez conectado a la subscripción, el siguiente paso es conectar al servicio AKS. El siguiente comando descarga las credenciales y las almacena en ***./kube/config***.
 
-# El siguiente comando descarga las credenciales y las almacena en './kube/config':
-
-
+```
 az aks get-credentials \
     --resource-group myaks-rg \
     --name myaks \
     --admin \
     --overwrite-existing
+```
 
-# Comprobación del estado del cluster:
+Comprobamos el estado del cluster
 
+```
 az aks show \
     --resource-group myaks-rg \
     --name myaks
+```
 
+***Nota sobre los contextos***. Si se quiere cambiar de cluster, debemos cambiar el contexto. Primero listamos los contextos configurados:
 
-# Nota sobre los contextos: Si se quiere cambiar de cluster, debemos cambiar el contexto. 
-# Primero listamos los contextos configurados:
-
+```
 kubectl config get-contexts
+```
 
-
-# La salida del comando anterior mostrará algo como esto:
-# 
-# CURRENT   NAME                                               CLUSTER                                            AUTHINFO                                           NAMESPACE
-#           arn:aws:eks:eu-west-1:779450087377:cluster/myeks   arn:aws:eks:eu-west-1:779450087377:cluster/myeks   arn:aws:eks:eu-west-1:779450087377:cluster/myeks   
-#           minikube                                           minikube                                           minikube                                           default
-# *         myaks-admin                                        myaks                                              clusterAdmin_myaks-rg_myaks  
+La salida del comando anterior mostrará algo como esto:
+```
+CURRENT   NAME                                               CLUSTER                                            AUTHINFO                                           NAMESPACE
+           arn:aws:eks:eu-west-1:779450087377:cluster/myeks   arn:aws:eks:eu-west-1:779450087377:cluster/myeks   arn:aws:eks:eu-west-1:779450087377:cluster/myeks   
+           minikube                                           minikube                                           minikube                                           default
+ *         myaks-admin                                        myaks                                              clusterAdmin_myaks-rg_myaks  
+```
 
 # Podemos apreciar que el contexto actual es 'myaks-admin' (El cluster AKS), para conmutar al otro 
 # contexto (Minikube) usamos el siguiente comando:
