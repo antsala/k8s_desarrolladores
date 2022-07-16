@@ -162,8 +162,8 @@ code Dockerfile_entry_cmd
 
 Observemos los cambios:
 
-* Línea 6: Ahora ***ENTRYPOINT*** solo establece el ejecutable. No indica ningún parámetro.
-* Línea 7: ***CMD*** establece ***-h*** como parámetro por defecto, que mostrará la ayuda de nginx.
+* *Línea 6*: Ahora ***ENTRYPOINT*** solo establece el ejecutable. No indica ningún parámetro.
+* *Línea 7*: ***CMD*** establece ***-h*** como parámetro por defecto, que mostrará la ayuda de nginx.
 
 Cerramos el editor y procedemos a compilar una nueva imagen.
 ```
