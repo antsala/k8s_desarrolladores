@@ -10,7 +10,7 @@ Los requisitos son:
 
 ## Ejercicio 1: ***Instalación de Azure CLI***
 
-- [ ]En primer lugar desinstalamos versiones previas si estuvieran presentes:
+- [ ] En primer lugar desinstalamos versiones previas si estuvieran presentes:
 
 ```
 sudo apt remove azure-cli -y
