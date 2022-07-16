@@ -8,6 +8,9 @@ Los requisitos son:
 2. Una subscripción de Azure que ***permita*** crear clústeres de AKS
 
 
+
+
+
 ## Ejercicio 1: ***Instalación de Azure CLI***
 
 En primer lugar desinstalamos versiones previas si estuvieran presentes:
@@ -20,6 +23,8 @@ sudo apt autoremove -y
 ```
 
 
+
+
 Actualizamos repositorios e instalamos dependencias:
 
 ```
@@ -28,6 +33,8 @@ sudo apt-get update
 ```
 sudo apt-get install -y  ca-certificates curl apt-transport-https lsb-release gnupg
 ```
+
+
 
 
 Descargamos la clave de firma de Microsoft:
@@ -39,6 +46,8 @@ curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
 ```
 
 
+
+
 Agregamos repositoritos de Azure-CLI:
 
 ```
@@ -46,6 +55,8 @@ AZ_REPO=$(lsb_release -cs)
 echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
     sudo tee /etc/apt/sources.list.d/azure-cli.list
 ```
+
+
 
 
 Actualizamos repos e instalamos azure-CLI:
@@ -58,11 +69,14 @@ sudo apt-get install azure-cli
 ```
 
 
+
+
 Comprobamos versión de ***azure-cli*** y actualizarla con ***az upgrade*** si se recomienda.
 
 ```
 az version
 ```
+
 
 
 
@@ -75,6 +89,8 @@ az login
 ```
 
 
+
+
 Creamos un grupo de recursos para el cluster.
 
 ```
@@ -82,6 +98,8 @@ az group create \
     --name myaks-rg \
     --location westeurope
 ```
+
+
 
 
 Habilitamos la supervisión de clusteres.
@@ -93,6 +111,8 @@ az provider register \
 az provider register \
     --namespace Microsoft.OperationalInsights
 ```
+
+
 
 
 Creamos el cluster. 
@@ -109,6 +129,8 @@ az aks create \
 ```
 
 
+
+
 Una vez conectado a la subscripción, el siguiente paso es conectar al servicio AKS. El siguiente comando descarga las credenciales y las almacena en ***./kube/config***.
 
 ```
@@ -120,6 +142,8 @@ az aks get-credentials \
 ```
 
 
+
+
 Comprobamos el estado del cluster
 
 ```
@@ -129,11 +153,15 @@ az aks show \
 ```
 
 
+
+
 ***Nota sobre los contextos***. Si se quiere cambiar de cluster, debemos cambiar el contexto. Primero listamos los contextos configurados.
 
 ```
 kubectl config get-contexts
 ```
+
+
 
 
 La salida del comando anterior mostrará algo como esto:
@@ -144,12 +172,17 @@ CURRENT   NAME                                               CLUSTER            
 *         myaks-admin                                        myaks                                              clusterAdmin_myaks-rg_myaks  
 ```
 
+Podemos apreciar que el contexto actual es ***myaks-admin*** (El cluster AKS señalizado por el asterisco *).
 
-Podemos apreciar que el contexto actual es ***myaks-admin*** (El cluster AKS señalizado por el asterisco *), para conmutar al otro contexto (Minikube) usamos el siguiente comando.
+
+
+Para conmutar al otro contexto (Minikube) usamos el siguiente comando.
 
 ```
 kubectl config use-context minikube
 ```
+
+
 
 
 La salida indicará lo siguiente:
@@ -159,11 +192,15 @@ Switched to context "minikube".
 ```
 
 
+
+
 Para volver al contexto de Azure:
 
 ```
 kubectl config use-context myaks-admin
 ```
+
+
 
 
 
@@ -179,6 +216,8 @@ az aks delete \
 ```
 
 
+
+
 Eliminamos el grupo de recursos que contiene el cluster.
 
 ```
@@ -186,6 +225,8 @@ az group delete \
     --resource-group myaks-rg \
     --yes
 ```
+
+
 
 
 Eliminamos el grupo de recursos que contiene los objetos de las ***Azure Functions***.
@@ -197,6 +238,8 @@ az group delete \
 ```
 
 
+
+
 Si se ha creado el ***Application Gateway***, eliminamos el grupo de recursos. Tarda mucho, lo eliminamos de forma asíncrona con ***--no-wait***.
 
 ```
@@ -205,6 +248,8 @@ az group delete \
     --yes \
     --no-wait
 ```
+
+
 
 
 Si se han creado ***Grupos*** y ***usuarios*** en Azure AD para la integración de AKS con AAD, los eliminamos.
@@ -221,6 +266,8 @@ az ad user delete \
 ```
 
 
+
+
 Si se registró la característica ***EnablePodIdentityPreview***, la desregistramos de la subscripción.
 
 ```
@@ -228,6 +275,8 @@ az feature unregister \
     --name EnablePodIdentityPreview \
     --namespace Microsoft.ContainerService
 ```
+
+
 
 
 Como el aviso indica, también hay que ejecutar el siguiente comando para que se ***propage el cambio***.
@@ -238,12 +287,16 @@ az provider register \
 ```
 
 
+
+
 Quitamos la extensión ***aks-preview*** de la CLI si estuviera instalada.
 
 ```
 az extension remove \
     --name aks-preview
 ```
+
+
 
 
 Eliminamos el ACR si fue creado.
