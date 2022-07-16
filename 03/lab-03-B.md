@@ -89,7 +89,12 @@ Debe funcionar correctamente.
 
 En el Dockerfile suele ponerse el comando ***ENTRYPOINT*** o el comando ***CMD***, que sirven para indicar el programa o aplicación que se ejecutará al iniciar el contenedor. De esta forma, no será necesario indicar el ejecutable en la línea del ***docker run***.
 
-Procedamos a abrir el archivo ***Dockerfile_entry*** en el directorio de trabajo
+Procedamos a abrir el archivo ***Dockerfile_entry*** en el directorio de trabajo y le echamos un vistazo.
+```
+code Dockerfile_entry
+```
+
+Cerramos el editor y procedemos a compilar la imagen a partir de este Dockerfile:
 ```
 sudo docker image build -t antsala/web_estatica_entry . -f Dockerfile_entry
 ```
