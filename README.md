@@ -7,6 +7,7 @@ sudo apt-get -y update
 sudo apt-get -y install git
 ```
 
+
 Ahora clonamos el repositorio con los laboratorios del curso.
 
 ```
@@ -15,13 +16,17 @@ git clone https://github.com/antsala/k8s_desarrolladores.git
 cd ~/k8s_desarrolladores
 ```
 
+
 Instalamos ***Visual Studio Code*** (Si lo prefieres instala tu editor preferido)
 
 ```
 sudo snap install code --classic
 ```
 
+
 El repositorio GIT está organizado en una serie de carpetas. Las presentaciones de PowerPoint irán indicando en cada momento el laboratorio a realizar. No obstante, te presento la lista de actividades que se realizarán en el curso, y la carpeta en la que se ubica.
+
+
 
 ## Carpeta 00 (AZURE)
 
@@ -29,6 +34,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - Instalación de Azure CLI.
    - Creación de AKS desde Azure CLI.
    - Eliminación de AKS desde Azure CLI.
+
 
 
 ##  Carpeta 01 (AWS)
@@ -39,6 +45,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - Instalación y configuración de ***eksctl***.
    - Creación de ***EKS*** desde ***AWS CLI***.
    - Eliminación de ***EKS*** desde ***AWS CLI***.
+
 
 
 ## Carpeta 03
@@ -71,6 +78,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - Desplegar servicio en ***Swarm***.
 
 
+
 ## Carpeta 06
 
 1. Laboratorio 06-A: ***Instalar Podman***. Ejercicios:
@@ -82,6 +90,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - Archivo con ***variables de entorno***.
    - ***Creación*** del pod.
    - ***Eliminación*** del pod.
+
 
 
 ## Carpeta 20
@@ -102,6 +111,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - Ver la ***salida estándar*** del contenedor con kubectl.
    - ***Ejecutar comandos*** en el contenedor con kubectl.
    - ***Eliminar objetos*** del cluster con kubectl.
+
 
 
 ## Carpeta 25
@@ -128,6 +138,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - Despliegue del ***balanceador*** para el Frontend.
 
 
+
 ## Carpeta 30
 
 1. Laboratorio 30: ***Espacios de Nombres***. Ejercicios:
@@ -135,6 +146,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - ***Aplicar*** un archivo YAML en un espacio de nombres.
    - ***Predeterminar*** el espacio de nombres.
    - Predeterminar el espacio de nombres en el ***archivo YAML***.
+
 
 
 ## Carpeta 35
@@ -155,6 +167,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - Cambiar al entorno de producción de Let´s Encrypt.
 
 
+
 ## Carpeta 45
 
 1. Laboratorio 45-A: ***Horizontal POD Autoscaler (HPA) en Azure y autoescalado de nodos***. Ejercicios:
@@ -167,12 +180,14 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - ***Escalar*** el frontend de GuestBook.
 
 
+
 ## Carpeta 50
 
 1. Laboratorio 50: ***Instalar aplicaciones usando HELM***. Ejercicios:
    - Instalar ***Helm***.
    - ***Instalar WordPress*** con Helm.
    - ***Desinstalar WordPress*** con Helm.
+
 
 
 ## Carpeta 55
@@ -200,10 +215,13 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - Creación del objeto ***Kustomization***.
 
 
+
 ## Carpeta 60
 
 1. Laboratorio 60: ***Despliegue de Prometeus con Operator***. Ejercicios:
    - Instalación del ***Operator*** de Prometheus.
+
+
 
 ## Carpeta 65
 
@@ -227,4 +245,3 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - Crear un usuario y un grupo de seguridad para asignar roles.
    - ***Configurar*** RBAC en AKS.
    - ***Verificar*** RBAC para el usuario Luke.
-
