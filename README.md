@@ -1,6 +1,6 @@
 # k8s_desarrolladores
 
-Para poder realizar los laboratorios es necesario clonar el repo desde github.Para ello realizamos abrimos una consola de comandos e instalamos git en la máquina virtual.
+Para poder realizar los laboratorios es necesario clonar el repo desde GitHub.Para ello realizamos abrimos una consola de comandos e instalamos ***git*** en la máquina virtual.
 
 ```
 sudo apt-get -y update
@@ -13,25 +13,22 @@ Ahora clonamos el repositorio con los laboratorios del curso.
 cd ~
 git clone https://github.com/antsala/k8s_desarrolladores.git
 cd ~/k8s_desarrolladores
-ls -l
 ```
 
+Instalamos ***Visual Studio Code*** (Si lo prefieres instala tu editor preferido)
 
-
-# Instalar Visual Studio Code
-
+```
 sudo snap install code --classic
+```
 
+El repositorio GIT está organizado en una serie de carpetas. Las presentaciones de PowerPoint irán indicando en cada momento el laboratorio a realizar. No obstante, te presento la lista de actividades que se realizarán en el curso, y la carpeta en la que se ubica.
 
-# Carpeta 00 (AZURE)
+## Carpeta 00 (AZURE)
 
-# Laboratorio 00: "Herramientas administración Azure"
-# Archivo: lab-00.txt
-#
-# Ejercicios: 
-#   1. Instalación de Azure CLI.
-#   2. Creación de AKS desde Azure CLI.
-#   3. Eliminación de AKS desde Azure CLI.
+1. Laboratorio 00: ***Herramientas de administración en Azure***. Los ejercicios a realizar son:
+   - Instalación de Azure CLI.
+   - Creación de AKS desde Azure CLI.
+   - Eliminación de AKS desde Azure CLI.
 
 
 # Carpeta 01 (AWS)
