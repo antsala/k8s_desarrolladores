@@ -215,7 +215,7 @@ El servidor Redis está en ejecución, pero aparece un problema de seguridad muy
 
 Para poder controlar este comportamiento, debemos crear siempre redes nuevas. Esta red conectará Frontend y Backend, pero no crearemos reglas de nateo para el backend. La ***diapositiva 22*** (Frontend-Backend 5) lo visualiza. Por lo tanto, el contenedor ***db*** que está corriendo debe ser eliminado para crear uno nuevo conectado a la nueva red.
 
-# Eliminamos el conteenedor
+# Eliminamos el contenedor
 ```
 sudo docker container rm -f db
 ```
