@@ -305,7 +305,7 @@ El contenido del archivo es similar a la versión anterior, pero contiene cambio
 * *Líneas 21-24*: Si hay una request de tipo POST que envíe parámetros a la URI ***/json/***, se almacenan en la base de datos  por medio de la llamada ***redis.set***. A continuación se devuelve en la response los parámetros convertidos a JSON.
 * *Líneas 16-19*: Si hay una request de tipo GET a la URI ***/json***, se hace una lectura de la base de datos para recuperar los parámetros almacenados. A continuación se devuelve en la response los parámetros convertidos a JSON.
 
-Otro aspecto notable a tener en cuenta es que no debemos volver a compilar la imagen del contenedor de Frontend, ya que los archivos de la aplicación se los pasaremos por medio del volumen. Así que solo queda volver a levantar el contenedor, desde el directorio ***webapp_redis*** y conectarlo a la red ***app***. En este caso si le creamos la regla de nateo para que podamos conectar con el servidor web desde el exterior. La ***diapositiva 23*** (Frontend-Backend 6) resume todos estos conceptos.
+Otro aspecto notable a tener en cuenta es que no debemos volver a compilar la imagen del contenedor de Frontend, ya que los archivos de la aplicación se los pasaremos por medio del volumen. Así que solo queda volver a levantar el contenedor, desde el directorio ***webapp_redis*** y conectarlo a la red ***app***. En este caso sí le creamos la regla de nateo para que podamos conectar con el servidor web desde el exterior. La ***diapositiva 23*** (Frontend-Backend 6) resume todos estos conceptos.
 ```
 sudo docker run -d -p 8080:4567 --name webapp_redis --net app -v $PWD:/opt/webapp antsala/sinatra
 ```
