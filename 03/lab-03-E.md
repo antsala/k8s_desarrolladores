@@ -172,6 +172,8 @@ antsala/hello_container          latest        b66a10e42c57   52 seconds ago   1
 Subimos la imagen a DockerHub.
 ```
 sudo docker login
+```
+```
 sudo docker push antsala/hello_container
 sudo docker logout
 ```
