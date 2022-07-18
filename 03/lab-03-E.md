@@ -1,6 +1,6 @@
 # Laboratorio 03-E: ***Microservicios***
  
-En este laboratorio crearemos una aplicación el lenguaje ***Go***. Esta app la compilaremos en el mismo momento de generar la imagen de contenedor. La app levanta un servidor web que, si nos conectamos, nos responde indicando el nombre del host y las direcciones IPs que tiene asignada. Posteriormente crearemos un servicio en Swarm para demostrar en balanceo.
+En este laboratorio crearemos una aplicación el lenguaje ***Go***. Esta app la compilaremos en el mismo momento de generar la imagen de contenedor. La app levanta un servidor web que, si nos conectamos, nos responde indicando el nombre del host y las direcciones IPs que tiene asignada. Posteriormente crearemos un servicio en ***Swarm*** para demostrar en balanceo.
 
 Requisitos:
 
@@ -14,11 +14,19 @@ Nos ponemos en ***HOME***.
 cd ~
 ```
 
-Descargamos el compilador de Go, lo descoprimimos, cambiamos propietario y lo movemos de carpeta.
+Descargamos el compilador de Go, lo descoprimimos.
 ```
 curl -O https://dl.google.com/go/go1.15.5.linux-amd64.tar.gz
 tar xvf go1.15.5.linux-amd64.tar.gz
+```
+
+Cambiamos propietario.
+```
 sudo chown -R root:root ./go
+```
+
+Lo cambiamos de carpeta.
+```
 sudo mv go /usr/local
 ```
 
