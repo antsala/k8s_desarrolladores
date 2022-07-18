@@ -274,14 +274,19 @@ Lo que realmente nos interesa demostrar es el funcionamiento del balanceo. Lo co
 curl localhost:4000
 ```
 
-Limpiamos los recursos del sluster. 
+Eliminamos la aplicación. 
 ```
 sudo docker stack rm helloContainerStack
 ```
 
-Borramos los contenedores y la imágenes.
+Destruimos el cluster.
 ```
 sudo docker swarm leave --force
+```
+
+Borramos los contenedores y la imágenes.
+```
 sudo docker container rm -f `sudo docker container ls -a -q`
 sudo docker image rm -f `sudo docker image ls -q`
 ```
+
