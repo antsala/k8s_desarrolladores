@@ -24,7 +24,7 @@ La salida mostrará que no hay contenedores.
 CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
 ```
 
-Procedemos a descargar las imagenes mencionadas:(Nota, elegir DockerHub como registro)
+Procedemos a descargar las imagenes mencionadas. (Nota: elegir DockerHub como registro)
 ```
 podman image pull phpmyadmin
 podman image pull mysql:8
@@ -101,7 +101,7 @@ b9323ddee5de  mi_inventario  Created     About a minute ago  43004cb9a3a3  1
 
 Deseamos que ***phpMyAdmin*** sea alcanzable desde el exterior a través del puerto ***8085***, por lo que lo más lógico sería pensar que al iniciar el contenedor, debemos crear una regla de nateo con el parámetro ***-p 8085:80***, pero esto no se hace así.
 
-Al usar pods, las reglas de nateo se deben ***aplicar en el pod***, no en los contenedores. Esto es así porque en el modo ***rootless***  (no usamos ***sudo***) los contenedores ***no adquieren dirección IP***. Cuando el pod reciba el tráfico lo reenviará a los contenedores. La ***diapositiva 10 ***(Frontend-Backend con POD 2) aclara el escenario.
+Al usar pods, las reglas de nateo se deben ***aplicar en el pod***, no en los contenedores. Esto es así porque en el modo ***rootless***  (no usamos ***sudo***) los contenedores ***no adquieren dirección IP***. Cuando el pod reciba el tráfico lo reenviará a los contenedores. La ***diapositiva 10***(Frontend-Backend con POD 2) aclara el escenario.
 
 Además, estas reglas se deben poner en el momento de crear el pod, y no a posteriori. La forma más efectiva será destruir el pod y recrearlo con la regla de nateo.
 
