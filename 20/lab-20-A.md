@@ -66,6 +66,8 @@ ls -l
 Procedemos a moverlo a una ubicación más apropiada y asignarle permisos de ejecución.
 ```
 sudo mv kubectl /usr/local/bin/
+```
+```
 chmod +x /usr/local/bin/kubectl
 ```
 
