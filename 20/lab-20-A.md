@@ -139,7 +139,7 @@ El comando ***minikube status*** mostrará información de estado de ejecución 
 minikube status
 ```
 
-Aunque ***kubectl*** será la principal herramienta para administrar el cluster, también podemos levantar una interfaz gráfica. Para ello ejecutamos el siguiente comando. Nota: Se abrirá automáticamente el navegador y conectará con la URL: 'http://127.0.0.1:40743/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/'
+Aunque ***kubectl*** será la principal herramienta para administrar el cluster, también podemos levantar una interfaz gráfica. Para ello ejecutamos el siguiente comando. Nota: Se abrirá automáticamente el navegador y conectará con la URL: (http://127.0.0.1:40743/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/)
 ```
 minikube dashboard
 ```
