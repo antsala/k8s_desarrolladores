@@ -2,12 +2,12 @@ Laboratorio 06-B: ***Frontend-Backend con POD***
  
 En este laboratorio crearemos una aplicación de dos capas. Para ello implementaremos un pod con dos contenedores. El contenedor de ***Frontend*** tendrá una imagen de ***phpMyAdmin***, mientras que el contenedor de ***Backend*** usará una imagen de ***mySQL***. La información de usuario y contraseña se inyectará a los contenedores en tiempo de ejecución, mediante un archivo de variables de entorno.
 
-#Requisitos:
+Requisitos:
 
 1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o escritorio remoto.
 2. Tener instalado el runtime de contenedor ***podmam***, o lo que es lo mismo, haber realizado el ejercico anterior ***lab-06-A.md***
 
-#3 Ejercicio 1: ***Descargar imágenes de contenedor***
+## Ejercicio 1: ***Descargar imágenes de contenedor***
 
 Nos ubicamos en el directorio de trabajo
 ```
