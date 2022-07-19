@@ -24,7 +24,7 @@ La salida mostrará que no hay contenedores.
 CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
 ```
 
-Procedemos a descargar las imagenes mencionadas:
+Procedemos a descargar las imagenes mencionadas:(Nota, elegir DockerHub como registro)
 ```
 podman image pull phpmyadmin
 podman image pull mysql:8
