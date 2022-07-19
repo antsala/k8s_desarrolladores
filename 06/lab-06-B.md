@@ -167,10 +167,6 @@ Para probar que todo funciona debemos conectar con un navegador a ***http://loca
 
 Cuando phpMyAdmin conecte, mostrará la base de datos ***nominas***, que podremos administrar perfectamente.
 
-```
-curl http://localhost:8085
-```
-
 
 ## Ejercicio 4: ***Eliminación del pod***
 
