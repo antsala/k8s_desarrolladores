@@ -55,7 +55,7 @@ service             Crea un servicio.
 serviceaccount      Crea una cuenta de servicio.
 ```
 
-## Ejercicio 2: ***Crear un deployment con ***kubectl***
+## Ejercicio 2: ***Crear un deployment con kubectl***
 
 El pod es la unidad más pequeña de computación en Kubernetes, pero en la práctica los pods se crearán al definir otro objeto, el ***deployment***, que creará los pods.
 
