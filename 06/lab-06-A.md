@@ -23,66 +23,51 @@ sudo groupdel docker
 sudo rm -rf /var/run/docker.sock
 ```
 
-
-# Comprobamos que Docker ya no está con los siguientes comandos:
-
+Comprobamos que Docker ya no está con los siguientes comandos:
+```
 sudo systemctl status docker
+```
+```
+sudo docker --version
+```
 
-sudo docker container ls
+## Ejercicio 2: ***Instalación de Podman***
 
+Necesitamos un runtime de contenedor. Vamos a instalar ***podman***, de RedHat, que a diferencia de Docker permite trabajar con la abstracción del ***POD***. Lo que aprendamos aquí sobre los pods, será de directa aplicación en Kubernetes.
 
-########################################
-# Ejercicio 2: Instalación de 'Podman' #
-########################################
-
-# Necesitamos un runtime de contenedor. Vamos a instalar 'podman', de RedHat, que a diferenciade Docker
-# permite trabajar con la abstracción del POD.
-#
-# Lo que aprendamos aquí sobre los pods, será de directa aplicación en Kubernetes.
-
-# Aseguramos que 'curl' está instalado.
-
+Aseguramos que 'curl' está instalado.
+```
 sudo apt-get -y update
-
+```
+```
 sudo apt-get -y install curl
+```
 
+Para Ubuntu 20.04 no se puede instalar podman directamente desde los repositorios oficiales. Para conseguirlo, añadimos a la lista de repos, el de podman (RedHat).
+```
+echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key" | sudo apt-key add -
+```
 
-# Para Ubuntu 20.04 no se puede instalar podman directamente desde los repositorios
-# oficiales. Para conseguirlo, añadimos a la lista de repos, el de podman (RedHat).
-
-echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" | \
-    sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
-
-curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key" | \
-    sudo apt-key add -
-
-
-# Volvemos a actualizar el repositorio de paquetes.
-
+Volvemos a actualizar el repositorio de paquetes.
+```
 sudo apt-get -y update
+```
 
-
-# Instalamos podman.
-
+Instalamos podman.
+```
 sudo apt-get -y install podman
+```
 
-
-# Comprobamos que podman se ha instalado correctamente.
-# El resultado será la versión de podman.
-
+Comprobamos que podman se ha instalado correctamente. 
+```
 podman --version
+```
 
-
-# Probamos a lanzar un contenedor y ejecutar un comando en él. Como resultado aparecerá información sobre 
-# la versión del sistema operativo del contenedor.
-
+Probamos a lanzar un contenedor y ejecutar un comando en él. Como resultado aparecerá información sobre la versión del sistema operativo del contenedor.
+```
 podman run --rm docker.io/library/ubuntu:latest cat /etc/lsb-release
+```
 
+Con esto finalizamos la instalación del runtime Podman.
 
-# Con esto finalizamos la instalación del runtime Podman.
-
-
-
-#######################
-# FIN DEL LABORATORIO #
-#######################
