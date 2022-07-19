@@ -101,7 +101,7 @@ b9323ddee5de  mi_inventario  Created     About a minute ago  43004cb9a3a3  1
 
 Deseamos que ***phpMyAdmin*** sea alcanzable desde el exterior a través del puerto ***8085***, por lo que lo más lógico sería pensar que al iniciar el contenedor, debemos crear una regla de nateo con el parámetro ***-p 8085:80***, pero esto no se hace así.
 
-Al usar pods, las reglas de nateo se deben ***aplicar en el pod***, no en los contenedores. Esto es así porque en el modo ***rootless***  (no usamos ***sudo***) los contenedores ***no adquieren dirección IP***. Cuando el pod reciba el tráfico lo reenviará a los contenedores. La ***diapositiva 10***(Frontend-Backend con POD 2) aclara el escenario.
+Al usar pods, las reglas de nateo se deben ***aplicar en el pod***, no en los contenedores. Esto es así porque en el modo ***rootless***  (no usamos ***sudo***) los contenedores ***no adquieren dirección IP***. Cuando el pod reciba el tráfico lo reenviará a los contenedores. La ***diapositiva 10*** (Frontend-Backend con POD 2) aclara el escenario.
 
 Además, estas reglas se deben poner en el momento de crear el pod, y no a posteriori. La forma más efectiva será destruir el pod y recrearlo con la regla de nateo.
 
@@ -161,7 +161,7 @@ c30a65ef86ae  k8s.gcr.io/pause:3.5                                       About a
 f6b7cfe407c9  docker.io/library/phpmyadmin:latest  apache2-foregroun...  8 seconds ago       Up 8 seconds ago   0.0.0.0:8085->80/tcp  mi_inventario_phpmyadmin  eea96c70c998  mi_inventario
 ```
 
-Podemos observar que hay tres reglas de nateo, una para el contenedor de infraestructura, otra para el Frontend y la última para el Backend. Debería resultar extraño como se permite tráfico http a los contenedores de infraestructura y de la base de datos, pero no tiene ninguna implicación puesto que la regla sea válida se debe inyectar la variable de entorno 'PMA_HOST=127.0.0.1' al contenedor que deseemos que reciba tráfico.
+Podemos observar que hay tres reglas de nateo, una para el contenedor de infraestructura, otra para el Frontend y la última para el Backend. Debería resultar extraño como se permite tráfico http a los contenedores de infraestructura y de la base de datos, pero no tiene ninguna implicación puesto que la regla sea válida se debe inyectar la variable de entorno ***PMA_HOST=127.0.0.1*** al contenedor que deseemos que reciba tráfico.
 
 Para probar que todo funciona debemos conectar con un navegador a ***http://localhost:8085***. La autenticación usará el usuario ***root*** con la contraseña ***secreto***.
 
