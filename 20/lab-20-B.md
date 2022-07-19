@@ -136,7 +136,7 @@ kubectl edit deployment nginx-deployment
 
 Se abre el editor con la configuración del deployment que hemos creado. La sintaxis y las propiedades que aparecen en este archivo serán tratadas posteriormente en este curso. Por ahora localicemos las única configuración que hemos aportado a la hora de crear el deployment: La imagen de contenedor que ser usará.
 
-El editor usado es ***vim***, que habrá que saber usar.
+El editor usado es ***vim***, que habrá que saber usar. (Pulsar ***R*** y sustituir caracteres hasta quese pulse ***ESC***)
 
 Localizar ***spec/template/spec/containers/image***. Debe aparecer el valor ***nginx:latest***.
 
@@ -272,7 +272,7 @@ Normal  Created    12m   kubelet            Created container mongo
 Normal  Started    12m   kubelet            Started container mongo
 ```
 
-## Ejercicio 7: ***Ver la salida estándar del contenedor con ***kubectl***
+## Ejercicio 7: ***Ver la salida estándar del contenedor con kubectl***
 
 Otra opción que nos interesa conocer es ***logs***, que muestra la salida estándar de los contenedores que se están ejecutando dentro del pod. Por ejemplo, el siguiente comando mostrará la salida del contenedor ***MongoDB***
 ```
