@@ -5,7 +5,7 @@ En este laboratorio crearemos una aplicación de dos capas. Para ello implementa
 Requisitos:
 
 1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o escritorio remoto.
-2. Tener instalado el runtime de contenedor ***podmam***, o lo que es lo mismo, haber realizado el ejercico anterior ***lab-06-A.md***
+2. Tener instalado el runtime de contenedor ***podman***, o lo que es lo mismo, haber realizado el ejercico anterior ***lab-06-A.md***
 
 ## Ejercicio 1: ***Descargar imágenes de contenedor***
 
