@@ -1,34 +1,27 @@
-# Laboratorio 06-A: "Instalar podman"
+# Laboratorio 06-A: ***Instalar podman***
  
-# Este laboratorio instalaremos el runtime de contenedor 'podman' que nos servirá
-# para presentar la abstracción del pod, objeto que se usará en Kubernetes.
+En este laboratorio instalaremos el runtime de contenedor ***podman*** que nos servirá para presentar la abstracción del pod, objeto que se usará en Kubernetes.
 
-# Requisitos:
-#
-#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
+Requisitos:
 
-
-#########################################
-# Ejercicio 1: Desinstalación de Docker #
-#########################################
-
-# Si se han realizado los ejercicios del módulo anterior, Docker estará instalado. Para poder
-# realizar una instalación de 'podman' correctamente, debemos desinstalar docker.
-
-# Ejecutamos los siguientes comandos para desinstalar podman:
+1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o escritorio remoto.
 
 
+## Ejercicio 1: ****Desinstalación de Docker***
+
+Si se han realizado los ejercicios del módulo anterior, Docker estará instalado. Para poder realizar una instalación de ***podman*** correctamente, debemos desinstalar docker.
+
+Ejecutamos los siguientes comandos para desinstalar ***Docker***:
+```
 sudo apt-get purge -y docker-ce
-
+```
+```
 sudo apt-get purge -y docker-engine docker docker.io docker-ce
-
 sudo apt-get autoremove -y --purge docker-engine docker docker.io docker-ce
-
 sudo rm -rf /var/lib/docker /etc/Docker
-
 sudo groupdel docker
-
 sudo rm -rf /var/run/docker.sock
+```
 
 
 # Comprobamos que Docker ya no está con los siguientes comandos:
