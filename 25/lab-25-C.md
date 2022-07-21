@@ -461,7 +461,7 @@ NAME                     TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)   
 frontend-load-balancer   LoadBalancer   10.102.188.44   <pending>     80:30087/TCP   50s
 ```
 
-El servicio es de tipo ***load balancer*** y la EXTERNAL-IP está en ***Pending***. Cuando se nos asigne la EXTERNAL-IP, debemos conectar con el navegador al puerto ***80***. De este forma, el tráfico iria así:
+El servicio es de tipo ***load balancer*** y la EXTERNAL-IP está en ***Pending***. Cuando se nos asigne la EXTERNAL-IP (será necesario usar ***minikube tunnel***), debemos conectar con el navegador al puerto ***80***. De este forma, el tráfico iria así:
 
 Navegador --> EXTERNAL-IP:80  --> frontend_load_balancer --> endpoint_pod:80
 
@@ -475,7 +475,7 @@ Tomar nota de la IP External del frontend y conectarse con un navegador.
 Limpiamos recursos del cluster.
 ```
 kubectl delete deployment frontend redis-master-deployment redis-replica-deployment
-kubectl delete service frontend-load-balancer redis-master redis-replica
+kubectl delete service frontend-load-balancer redis-master redis-replica-internal-service
 ```
 
 Comprobamos que solo queda el servicio de Kubernetes
