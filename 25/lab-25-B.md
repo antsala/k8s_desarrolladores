@@ -106,7 +106,7 @@ code lab-25-B-mongodb-secret-initial.yaml
 Las líneas mas importantes y su significado son:
 
 * *Línea 2*: El tipo de objeto a crear es un secreto de Kubernetes.
-* **Línea 4*: Aquí ponemos un nombre al secreto. En este caso ***mongodb-secret***. Los objetos que vayan a usarlo deberán poner este mismo nombre.
+* *Línea 4*: Aquí ponemos un nombre al secreto. En este caso ***mongodb-secret***. Los objetos que vayan a usarlo deberán poner este mismo nombre.
 * *Línea 5*: Kubernetes puede guardar secretos de diversa índole, por ejemplo, certificados digitales TLS, cadenas de conexión (URLs) y, en este caso, parejas clave/valor. A este tipo de información se le llama ***Opaque***.
 * *Línea 7*: Esta línea contiene la clave del secreto para el NOMBRE del usuario. En el ejemplo ***mongo-root-username***. Importante. Sustituir el placeholder por el valor del NOMBRE de usuario codificado en Base64.
 
