@@ -214,6 +214,8 @@ kubectl exec -it <Poner aquí nombre del pod> -- redis-cli
 El comando anterior debe abrir una conexión con REDIS. Ejecutamos los siguientes comandos para verificar que hay ***2MB*** y la politica es ***LRU***: Borra las claves que se usan menos Less Recently Used cuando le haga falta memoria.
 ```
 CONFIG GET maxmemory
+```
+```
 CONFIG GET maxmemory-policy
 ```
 
