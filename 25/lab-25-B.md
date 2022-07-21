@@ -119,6 +119,11 @@ Cambiamos el nombre al archivo.
 mv lab-25-B-mongodb-secret-initial.yaml lab-25-B-mongodb-secret.yaml
 ```
 
+Iniciamos ***Minikube*** si no estuviera arriba.
+```
+minikube start
+```
+
 Ahora solo queda agregar el secreto al cluster:
 ```
 kubectl apply -f lab-25-B-mongodb-secret.yaml
