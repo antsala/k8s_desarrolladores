@@ -192,7 +192,7 @@ Cuando el contenedor arranca, lee el archivo ***/redis-master/redis.conf***, que
 
 Desplegamos esta versión actualizada para usar configmap.
 ```
-kubectl create -f lab-25-C-redis-master-deployment-modified.yaml
+kubectl apply -f lab-25-C-redis-master-deployment-modified.yaml
 ```
 
 Miramos los pods
