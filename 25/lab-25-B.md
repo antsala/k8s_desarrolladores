@@ -284,7 +284,7 @@ code lab-25-B-mongodb-configmap.yaml
 
 * *Línea 2*: Indica que el tipo de objeto a crear es un ***Config Map***.
 * *Línea 4*: Con nombre ***mongodb-configmap***.
-* *Línea 5 y 6*: La sección ***data:*** define las parejas clave/valor que forman las configuraciones. En este caso indicamos para la clave ***database_url*** el valor ***mongodb-service***-
+* *Línea 5 y 6*: La sección ***data:*** define las parejas clave/valor que forman las configuraciones. En este caso indicamos para la clave ***database_url*** el valor ***mongodb-service***.
 
 Salimos sin cambiar nada y aplicamos el configmap.
 ```
@@ -378,7 +378,7 @@ minikube tunnel
 
 Limpiamos los recursos:
 
-Cerramos la terminal de ***minikube service***
+Cerramos la terminal de ***minikube tunnel***
 
 Eliminamos los objetos del cluster:
 ```
@@ -386,6 +386,7 @@ kubectl delete -f lab-25-B-mongodb.yaml
 kubectl delete -f lab-25-B-mongo-express.yaml
 kubectl delete -f lab-25-B-mongo-configmap.yaml
 kubectl delete -f lab-25-B-mongodb-secret.yaml
+```
 
 Comprobamos:
 ```
