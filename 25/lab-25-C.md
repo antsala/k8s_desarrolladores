@@ -5,7 +5,7 @@ En este laboratorio aprenderemos a desplegar una app con in Frontend y un  Backe
 Requisitos:
 
 1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o escritorio remoto.
-2. Tener instalado el runtime de podman. (ver lab-06-A.md, Ejercicio 1 y 2)
+2. Tener instalado el ***runtime de podman***. (ver lab-06-A.md, Ejercicio 1 y 2)
 
 ## Ejercicio 1:  ***Despliegue del maestro de Redis***
 
@@ -82,7 +82,7 @@ Realmente no hace falta hacerlo porque en el directorio de ejemplos ya existe es
 code lab-25-C-redis-config
 ```
 
-* *allkeys-lru'*: lru = Less Recently Used
+* *allkeys-lru*: lru = Less Recently Used
 
 Para crear el ConfigMap, ejecutamos el siguiente comando.
 ```
