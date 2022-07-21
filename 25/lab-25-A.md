@@ -219,7 +219,7 @@ El despliegue es muy parecido al anterior. Las líneas más destacables son:
 * *Línea 4*: El nombre del deployment es ***helloContainerDeployment***.
 * *Línea 8*: Queremos 3 pods.
 * *Líneas 10 y 11*: Se utiliza el selector ***app: helloContainer***.
-* *Línea 19: Se usará la imagen ***antsala/hello_container*** para los contenedores.
+* *Línea 19*: Se usará la imagen ***antsala/hello_container*** para los contenedores.
 
 Salimos sin guardar y aplicamos el objeto.
 ```
@@ -253,7 +253,7 @@ hello-container-deployment-566d999d9-qfvb9   1/1     Running   0          96s
 Como el pod tiene un único contenedor y ***STATUS*** pone ***Running***, podemos garantizar que los contenedores se han iniciado correctamente.
 
 Ahora procedemos a desplegar el servicio. Editamos el archivo ***lab-25-A-helloContainer-service.yaml***:
-``
+```
 code lab-25-A-helloContainer-service.yaml
 ```
 
