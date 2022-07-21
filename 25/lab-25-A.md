@@ -20,7 +20,7 @@ code lab-25-A-nginx-deployment.yaml
 
 La sintaxis y su interpretación para este archivo YAML es la siguiente:
 
-* *Línea 1*: ***Versión ***del lenguaje de manifiesto a usar.
+* *Línea 1*: ***Versión*** del lenguaje de manifiesto a usar.
 * *Linea 2*: Indicamos que vamos a crear un objeto de tipo ***deployment***.
 * *Líneas 3-6*: Establece el nombre del deployment ***nginx-deployment*** y asigna una etiqueta ***app: my-app*** que podrá ser usada para asociar este deployment a otros objetos de k8s.
 * *Línea 12*: Empieza la definición del pod.
@@ -31,7 +31,14 @@ La sintaxis y su interpretación para este archivo YAML es la siguiente:
 * *Líneas 9-11*: Asocia el pod con un conjunto de contenedores, definidos a partir de la línea 17. Se utiliza la etiqueta ***app: my-app*** para establecer la asociación.
 * *Línea 8*: Indica cuántas instancias de pod levantará el deployment (ReplicaSet).
 
-Una vez entendido el manifiesto, lo cerramos sin modificar. Ahora vamos a proceder a aplicar el manifiesto por medio de ***kubectl***.
+Una vez entendido el manifiesto, lo cerramos sin modificar. 
+
+Si ***Minikube*** no estuviera iniciado, lo arrancamos en el siguiente comando:
+```
+minikube start
+```
+
+Ahora vamos a proceder a aplicar el manifiesto por medio de ***kubectl***.
 ```
 kubectl apply -f lab-25-A-nginx-deployment.yaml
 ```
