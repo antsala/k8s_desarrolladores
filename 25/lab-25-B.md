@@ -99,8 +99,15 @@ echo $password
 ```
 
 Abrimos el archivo ***lab-25-B-mongodb-secret-initial.yaml***. (Nota: ***initial*** quiere decir que tendremos que terminar su configuración siguiendo los pasos del laboratorio)
+
+Copiamos el archivo para no perder el original.
 ```
-code lab-25-B-mongodb-secret-initial.yaml
+cp lab-25-B-mongodb-secret-initial.yaml lab-25-B-mongodb-secret.yaml
+```
+
+Editamos ***lab-25-B-mongodb-secret.yaml***
+```
+code lab-25-B-mongodb-secret.yaml
 ```
 
 Las líneas mas importantes y su significado son:
@@ -114,10 +121,6 @@ Las líneas mas importantes y su significado son:
 
 Guardar los cambios y salir.
 
-Cambiamos el nombre al archivo.
-```
-mv lab-25-B-mongodb-secret-initial.yaml lab-25-B-mongodb-secret.yaml
-```
 
 Iniciamos ***Minikube*** si no estuviera arriba.
 ```
