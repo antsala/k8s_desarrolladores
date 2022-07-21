@@ -1,4 +1,4 @@
-# Laboratorio 25-C: "Backend de Redis con un master y dos réplicas"
+# Laboratorio 25-C: ***Backend de Redis con un master y dos réplicas***
  
 # Este laboratorio aprenderemos a desplegar una app con in Frontend y un  Backend de Redis con un master y
 # dos réplicas (master y dos slaves)
