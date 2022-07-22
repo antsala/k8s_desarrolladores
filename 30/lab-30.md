@@ -304,7 +304,7 @@ kube-public       Active   56m
 kube-system       Active   56m
 ```
 
-Predeterminamos el espacio de nombre ***default***
+Predeterminamos el espacio de nombres ***default***
 ```
 kubectl config set-context --current --namespace default
 ```
