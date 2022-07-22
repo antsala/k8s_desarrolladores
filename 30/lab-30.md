@@ -304,6 +304,11 @@ kube-public       Active   56m
 kube-system       Active   56m
 ```
 
+Predeterminamos el espacio de nombre ***default***
+```
+kubectl config set-context --current --namespace default
+```
+
 Comprobamos los objetos presentes en el cluster.
 ```
 kubectl get all 
