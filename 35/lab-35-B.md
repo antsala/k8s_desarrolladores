@@ -367,7 +367,7 @@ echo https://$INGRESS_DNS
 
 Para borrar los recursos que dimos de alta.
 ```
-kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.yaml
+kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.9.0/cert-manager.yaml
 ```
 ```
 az aks disable-addons \
