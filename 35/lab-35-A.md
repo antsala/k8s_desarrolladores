@@ -433,6 +433,7 @@ kubectl delete -f lab-35-A-mongodb-configmap.yaml
 kubectl delete -f lab-35-A-ingress.yaml
 kubectl delete -f lab-35-A-page-404-deployment.yaml 
 kubectl delete -f lab-35-A-page-404-internal-service.yaml 
+```
 
 Comprobamos los objetos presentes en el cluster.
 ```
