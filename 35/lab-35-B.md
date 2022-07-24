@@ -268,7 +268,7 @@ Mostramos y copiamos el valor en el portapapeles:
 echo $INGRESS_DNS
 ```
 
-Hacemos una copia del archivo 'lab-35-B-ingress-with-tls-initial.yaml' para no perder el original.
+Hacemos una copia del archivo ***lab-35-B-ingress-with-tls-initial.yaml*** para no perder el original.
 ```
 cp lab-35-B-ingress-with-tls-initial.yaml lab-35-B-ingress-with-tls.yaml
 ```
