@@ -271,9 +271,9 @@ job.batch/ingress-nginx-admission-patch    1/1           5s         89m
 ```
 
 De todos los objetos anteriores, el pod del controlador de ingress es el más importante. En esta captura es ***pod/ingress-nginx-controller-6d5f55986b-tdvcf***. Debe estar siempre en ***Running***. Mirando sus ***logs*** o con el comando ***describe*** podemos ver como entra el tráfico en el cluster.
-´´´
+```
 kubectl logs log <Poner aquí el nombre del pod del controlador> --namespace ingress-nginx 
-´´´
+```
 
 ## Ejercicio 4:  ***Configurar el Registro de Recurso de DNS***
 
