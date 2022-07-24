@@ -223,7 +223,12 @@ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2
 
 ## Ejercicio 4: ***Instalación del emisor de certificador (issuer)***
 
-Instalación del emisor de certificador (issuer). El archivo ***certificate-issuer.yaml*** contiene el código para este emisor. Lo abrimos para estudiarlo:
+Hacemos una copia del archivo ***lab-35-B-certificate-issuer.yaml*** para no perder el original.
+```
+cp lab-35-B-certificate-issuer-initial.yaml lab-35-B-certificate-issuer.yaml
+```
+
+Instalación del emisor de certificador (issuer). El archivo ***lab-35-B-certificate-issuer.yaml*** contiene el código para este emisor. Lo abrimos para estudiarlo:
 ```
 code lab-35-B-certificate-issuer.yaml
 ```
@@ -260,6 +265,11 @@ INGRESS_DNS=$PUBLIC_IP_DNS_NAME.westeurope.cloudapp.azure.com
 Mostramos y copiamos el valor en el portapapeles:
 ```
 echo $INGRESS_DNS
+```
+
+Hacemos una copia del archivo 'lab-35-B-ingress-with-tls-initial.yaml' para no perder el original.
+```
+cp lab-35-B-ingress-with-tls-initial.yaml lab-35-B-ingress-with-tls.yaml
 ```
 
 Abrimos el archivo 'lab-35-B-ingress-with-tls.yaml':
@@ -306,7 +316,12 @@ IMPORTANTE: Dará un error de certificado porque estamos usando el servidor de s
 
 ## Ejercicio 6: ***Cambiar al entorno de producción de Let´s Encrypt***
 
-Cambiar del entorno de staging al de producción de Let's Encrypt
+Cambiar del entorno de staging al de producción de Let's Encrypt.
+
+Hacemos una copia del archivo ***lab-25-B-certificate-issuer-prod-initial.yaml*** para no perder el original.
+```
+cp lab-25-B-certificate-issuer-prod-initial.yaml lab-25-B-certificate-issuer-prod.yaml
+```
 
 Vamos a crear un nuevo ***issuer*** en el cluster, pero esta vez que pida certificados de producción. Editamos el archivo ***lab-25-B-certificate-issuer-prod.yaml***.
 ```
