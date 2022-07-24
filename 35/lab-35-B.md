@@ -216,7 +216,7 @@ Vamos a dar soporte HTTPS a la aplicación. Para ello necesitaremos un certifica
 
 Instalamos ***cert-manager***:
 ```
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.9.0/cert-manager.yaml
 ```
 
 ***cert-manager*** hace uso de una funcionalidad de Kubernetes llamada ***CustomResourceDefinition (CRD)***, que es usada para extender el API Server de Kubernetes y crear recursos personalizados. Algunos de ellos serán utilizados en breve.
