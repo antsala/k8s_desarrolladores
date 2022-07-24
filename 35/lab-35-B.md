@@ -64,7 +64,8 @@ az network application-gateway create \
     --sku Standard_v2 \
     --public-ip-address agic-pip \
     --vnet-name agic-vnet \
-    --subnet agic-subnet
+    --subnet agic-subnet \
+    --priority "1"  
 ```
 
 Una vez creado el ***AGIC (Application Gateway Ingress Controller)***, debemos configurarlo para que se integre en el cluster de Kubernetes, por medio del plug-in. También configuraremos el ***Virtual Network Peering*** para que el Application Gateway pueda enviar tráfico al cluster de K8s.
