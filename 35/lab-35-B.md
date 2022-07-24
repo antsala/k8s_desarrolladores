@@ -297,7 +297,7 @@ Un objeto ***certificate***, que podemos ver así (esperar a que ponga ***True**
 kubectl get certificate -w
 ```
 
-Hay otro objeto que 'cert-manager' creó para obtener el certificado. Es la ***petición***. Podemos verificar su estado así:
+Hay otro objeto que ***cert-manager*** creó para obtener el certificado. Es la ***petición***. Podemos verificar su estado así:
 ```
 kubectl get certificaterequest
 ```
@@ -319,12 +319,12 @@ IMPORTANTE: Dará un error de certificado porque estamos usando el servidor de s
 
 Cambiar del entorno de staging al de producción de Let's Encrypt.
 
-Hacemos una copia del archivo ***lab-25-B-certificate-issuer-prod-initial.yaml*** para no perder el original.
+Hacemos una copia del archivo ***lab-35-B-certificate-issuer-prod-initial.yaml*** para no perder el original.
 ```
-cp lab-25-B-certificate-issuer-prod-initial.yaml lab-25-B-certificate-issuer-prod.yaml
+cp lab-35-B-certificate-issuer-prod-initial.yaml lab-35-B-certificate-issuer-prod.yaml
 ```
 
-Vamos a crear un nuevo ***issuer*** en el cluster, pero esta vez que pida certificados de producción. Editamos el archivo ***lab-25-B-certificate-issuer-prod.yaml***.
+Vamos a crear un nuevo ***issuer*** en el cluster, pero esta vez que pida certificados de producción. Editamos el archivo ***lab-35-B-certificate-issuer-prod.yaml***.
 ```
 code lab-35-B-certificate-issuer-prod.yaml
 ```

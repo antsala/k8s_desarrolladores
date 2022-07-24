@@ -17,8 +17,8 @@ spec:
             name: frontend
             port: 
               number: 80
-    host: <Poner aquí el nombre dns del ingress>
+    host: pipnameasg20220724.westeurope.cloudapp.azure.com
   tls:
     - hosts:
-      - <Poner aquí el nombre dns del ingress>
+      - pipnameasg20220724.westeurope.cloudapp.azure.com
       secretName: frontend-tls
