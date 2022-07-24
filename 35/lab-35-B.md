@@ -336,6 +336,11 @@ Copiar el valor.
 echo $INGRESS_DNS
 ```
 
+Copiamos el archivo ***lab-35-B-ingress-with-tls-prod-initial.yaml*** para no perder el original.
+```
+cp lab-35-B-ingress-with-tls-prod-initial.yaml lab-35-B-ingress-with-tls-prod.yaml
+```
+
 Editamos el archivo ***lab-35-B-ingress-with-tls-prod.yaml***:
 ```
 code lab-35-B-ingress-with-tls-prod.yaml
