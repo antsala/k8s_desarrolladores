@@ -194,10 +194,15 @@ Se puede hacer con la GUI, pero por comodidad lo hacemos con ***az aks***. Prime
 az aks nodepool list --resource-group myaks-rg --cluster-name myaks | grep name
 ```
 
-Tomar el nombre del NopePool de la salida anterior. Vamos a poner el número de nodos del NodePool a 1:
+Tomar el nombre del NopePool de la salida anterior y sustituirlo en el siguiente comando:
+```
+nodePoolName=<Poner aquí el nombre del NodePool>
+```
+
+Vamos a poner el número de nodos del NodePool a 1:
 ```
 az aks nodepool scale \
-    --name <Poner aquí en nombre del NodePool>  \
+    --name $nodePoolName  \
     --node-count 1 \
     --resource-group myaks-rg \
     --cluster-name myaks
