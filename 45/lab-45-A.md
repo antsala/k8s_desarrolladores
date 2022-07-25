@@ -185,9 +185,7 @@ kubectl get all
 ```
 
 Solo debe quedar el servicio de Kubernetes.
-```
-kubectl get all
-```
+
 
 ## Ejercicio 3: ***Autoescalado de nodos***
 
