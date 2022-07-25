@@ -76,7 +76,7 @@ Comprobamos
 ls -l /usr/local/bin/kubectl
 ```
 
-## Ejercicio 3: ***Modificar sudoers e instalar uidmap
+## Ejercicio 3: ***Modificar sudoers e instalar uidmap***
 
 Ahora probamos la herramienta ***kubectl*** mostrando su versión. Aparecerá un error que indica que no puede conectar con ***localhost:8080***. Este comportamiento ***es correcto*** porque aun no hemos iniciado ***Minikube***, solo hemos descargado su binario, así que ***kubectl*** no puede todavía contactar con el ***API Server***. 
 ```
