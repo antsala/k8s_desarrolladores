@@ -143,10 +143,7 @@ La idea es que vayamos viendo en tiempo real cómo se van creando los pods. En l
 sudo apt-get update
 ```
 ```
-sudo apt install -y golang-go
-```
-```
-go get -u github.com/rakyll/hey
+sudo apt install -y hey
 ```
 
 Copiamos la EXTERNAL-IP del servicio de frontend.
