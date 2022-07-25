@@ -158,8 +158,6 @@ sudo apt-get update
 sudo apt install -y golang-go
 ```
 ```
-export GOPATH=~/go
-export PATH=$GOPATH/bin:$PATH
 go get -u github.com/rakyll/hey
 ```
 
