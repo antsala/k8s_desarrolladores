@@ -268,7 +268,7 @@ Comprobamos que hay pods que no se pueden planificar porque no hay recursos. Imp
 kubectl get pods
 ```
 
-La salida será parecida a esta: (Nota: Comprobar que hay dos réplicas en ***Pending***)
+La salida será parecida a esta: (Nota: Comprobar que hay algunas réplicas en ***Pending***)
 ```
 NAME                             READY   STATUS    RESTARTS   AGE
 frontend-7c8cb4c59f-74bpf        1/1     Running   0          3m
