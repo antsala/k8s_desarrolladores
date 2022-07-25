@@ -40,12 +40,12 @@ Vamos a cambiar el servicio de frontend de ClusterIP a ***LoadBalancer***. Para 
 kubectl edit service frontend
 ```
 
-Se usa el editor ***vim***. Pulsar ***i***. Cambiar en el código el tipo de ***ClusterIP*** a ***LoadBalancer***. Luego ***:wq!***
+Se usa el editor ***vim***. Pulsar ***i*** para insertar, ***x*** para borrar carácter. Cambiar en el código el tipo de ***ClusterIP*** a ***LoadBalancer***. Luego ***:wq!***
 
 Comprobamos que el servicio se ha actualizado a ***LoadBalancer***
-***
+```
 kubectl get service frontend
-***
+```
 
 Salida debe ser así:
 ```
