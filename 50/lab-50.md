@@ -113,7 +113,7 @@ Repasemos todo lo que ha ocurrido. Estos son los objetos que el chart ha creado 
 kubectl get all
 ```
 
-En la salida se muestra que se han creado: 2 pods (Wordpress y su base de datos), 2 servicios, uno interno para MariaDB y el otro externo (LoadBalancer). 1 Deployment para el pod del frontend con su replicaset y, por último 1 statefulset (aun por explicar) para mariaDB.
+En la salida se muestra que se han creado: ***2 pods*** (Wordpress y su base de datos), ***2 servicios***, uno interno para MariaDB y el otro externo (LoadBalancer). ***1 Deployment*** para el pod del frontend con su ***replicaset*** y, por último 1 ***statefulset*** (aun por explicar) para mariaDB.
 ```
 pod/my-minikube-wp-mariadb-0                    1/1     Running   0          2m20s
 pod/my-minikube-wp-wordpress-8599667678-g2wh8   1/1     Running   0          2m20s
