@@ -349,7 +349,7 @@ kubectl get pvc
 
 El nombre del PVC puede buscarse en los recursos de Azure (discos).
 
-El concepto del PVC abstrae las cuestiones específicas del proveedor cloud. Esto permite que la misma plantilla de Helm funcione en ***Azure, ***AWS*** o ***GCP (Google Cloud Platform)***. 
+El concepto del PVC abstrae las cuestiones específicas del proveedor cloud. Esto permite que la misma plantilla de Helm funcione en ***Azure***, ***AWS*** o ***GCP (Google Cloud Platform)***. 
 
 En AWS se utilizará un ***Elastic Block Storage (EBS)***, mientras que en GCP será un ***Persistent Disk***, y en Azure un ***Disco***, un ***blob*** o un ***Azure File***.
 
