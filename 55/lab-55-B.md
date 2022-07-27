@@ -28,7 +28,7 @@ code lab-55-B-MySQL-ConfigMap.yaml
 Las líneas más relevantes son:
 
 * *Línea 2*: Es un ***ConfigMap***.
-* *Líneas 7-15*: Define dos claves: ***primary.cnf*** y ***replica-cnf*** que serán tenidas en cuenta en función del rol que asignemos a cada pod de MySQL. Se aplican de la siguiente forma: ***primary.cnf***: Se aplicará al servidor MySQL que actúe como master o primario. En este ejemplo el servidor primario enviará logs de replicación a los servidores que actúan como réplicas. ***replica.cnf***: Las réplicas de MySQL leerán esta clave que significa que rechazarán todas las operaciones de escritura que no provengan desde logs de replicación del primario.
+* *Líneas 7-15*: Define dos claves: ***primary.cnf*** y ***replica.cnf*** que serán tenidas en cuenta en función del rol que asignemos a cada pod de MySQL. Se aplican de la siguiente forma: ***primary.cnf***: Se aplicará al servidor MySQL que actúe como master o primario. En este ejemplo el servidor primario enviará logs de replicación a los servidores que actúan como réplicas. ***replica.cnf***: Las réplicas de MySQL leerán esta clave que significa que rechazarán todas las operaciones de escritura que no provengan desde logs de replicación del primario.
 
 Creamos el ConfigMap.
 ```
