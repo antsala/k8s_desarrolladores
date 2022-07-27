@@ -321,7 +321,7 @@ Los StatefulSets requieren, o un volumen pre-aprovisionado, o un volumen aprovis
 
 En este ejemplo de WordPress, se está usando una PVC. La PVC proporciona una abstracción sobre los mecanismos de almacenamiento subyacentes.
 
-Observemos lo que hizo el charts de Helm de MariaDB con el siguiente comando:
+Observemos lo que hizo el chart de Helm de MariaDB con el siguiente comando:
 ```
 kubectl get statefulset -o yaml > mariadbss.yaml
 code mariadbss.yaml
