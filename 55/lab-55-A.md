@@ -37,7 +37,7 @@ kubectl describe deployment/redis-master
 
 Deseamos pasar configuraciones al servidor Redis así que borramos el deployment actual desde la línea de comandos:
 ```
-kubectl delete deployment/redis-master
+kubectl delete -f lab-55-A-redis-master-deployment.yaml
 ```
 
 Comprobar que se elimina:
