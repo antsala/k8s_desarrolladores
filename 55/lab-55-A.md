@@ -287,7 +287,7 @@ chmod 700 get_helm.sh
 source ~/.profile
 ```
 
-Vamos a instalar WordPress por medio de Helm. En primer lugar añadimos el repositorio que contiene los charts de Helm:
+Vamos a instalar ***WordPress*** por medio de Helm. En primer lugar añadimos el repositorio que contiene los charts de Helm:
 ```
 helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
