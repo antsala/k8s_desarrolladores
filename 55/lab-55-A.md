@@ -370,11 +370,6 @@ Para ver los objetos de K8s que ha creado Helm:
 kubectl get all
 ```
 
-Para ver el estado del despliegue del chart:
-```
-helm status myakswp
-```
-
 Para desinstalar el chart:
 ```
 helm delete myakswp
