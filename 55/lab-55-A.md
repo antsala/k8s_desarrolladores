@@ -334,7 +334,7 @@ Las líneas más relevantes son:
 * *Lineas 140-157*: Estas líneas declaran el PVC. Concretamente...
 * *Línea 149*: Le asigna el nombre ***data***, que será reutilizado en la línea 119 anterior.
 * *Línea 152*: Establece el modo de acceso ***ReadWriteOnce***, que creará un almacenamiento de bloque, que en Azure es un disco. También tenemos los modos ***ReadOnlyMany*** y ***ReadWriteMany***. Como su nombre sugiere, un volumen ***ReadWriteOnce*** solo puede ser conectado a un único pod, mientras que un ***ReadOnlyMany*** o un ***ReadWriteMany*** pueden ser conectados a diferentes pods a la vez. Estos dos últimos requieren un mecanismo de almacenamiento subyacente del tipo ***Azure Files*** o ***Azure Blob***.
-* *Línea 156*: Define el tamaño del disco.
+* *Línea 155*: Define el tamaño del disco.
 
 En resumen, K8s crea de forma dinámica (a través de la clase de almacenamiento) y conecta un volumen de 8 GiB a este pod. El aprovisionador de almacenamiento dinámico es de tipo ***disco***. Estos aprovisionadores (clases de almacenamiento) se configuraron al crear el cluster.
 

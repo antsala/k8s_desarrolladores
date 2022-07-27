@@ -1,0 +1,171 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: myakswp
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2022-07-27T16:31:50Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: myakswp
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: mariadb
+      helm.sh/chart: mariadb-11.1.0
+    name: myakswp-mariadb
+    namespace: default
+    resourceVersion: "10861"
+    uid: d02990dc-7219-4a44-9443-92cb38d6e3ec
+  spec:
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: primary
+        app.kubernetes.io/instance: myakswp
+        app.kubernetes.io/name: mariadb
+    serviceName: myakswp-mariadb
+    template:
+      metadata:
+        annotations:
+          checksum/configuration: 24b70e43369ed9c5aa005ca70497228155f595fb64022b570932df5d63753556
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: primary
+          app.kubernetes.io/instance: myakswp
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: mariadb
+          helm.sh/chart: mariadb-11.1.0
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/component: primary
+                    app.kubernetes.io/instance: myakswp
+                    app.kubernetes.io/name: mariadb
+                namespaces:
+                - default
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        containers:
+        - env:
+          - name: BITNAMI_DEBUG
+            value: "false"
+          - name: MARIADB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mariadb-root-password
+                name: myakswp-mariadb
+          - name: MARIADB_USER
+            value: bn_wordpress
+          - name: MARIADB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mariadb-password
+                name: myakswp-mariadb
+          - name: MARIADB_DATABASE
+            value: bitnami_wordpress
+          image: docker.io/bitnami/mariadb:10.6.8-debian-11-r9
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - /bin/bash
+              - -ec
+              - |
+                password_aux="${MARIADB_ROOT_PASSWORD:-}"
+                if [[ -f "${MARIADB_ROOT_PASSWORD_FILE:-}" ]]; then
+                    password_aux=$(cat "$MARIADB_ROOT_PASSWORD_FILE")
+                fi
+                mysqladmin status -uroot -p"${password_aux}"
+            failureThreshold: 3
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: mariadb
+          ports:
+          - containerPort: 3306
+            name: mysql
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/bash
+              - -ec
+              - |
+                password_aux="${MARIADB_ROOT_PASSWORD:-}"
+                if [[ -f "${MARIADB_ROOT_PASSWORD_FILE:-}" ]]; then
+                    password_aux=$(cat "$MARIADB_ROOT_PASSWORD_FILE")
+                fi
+                mysqladmin status -uroot -p"${password_aux}"
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1001
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /bitnami/mariadb
+            name: data
+          - mountPath: /opt/bitnami/mariadb/conf/my.cnf
+            name: config
+            subPath: my.cnf
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1001
+        serviceAccount: myakswp-mariadb
+        serviceAccountName: myakswp-mariadb
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: myakswp-mariadb
+          name: config
+    updateStrategy:
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: primary
+          app.kubernetes.io/instance: myakswp
+          app.kubernetes.io/name: mariadb
+        name: data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 8Gi
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: myakswp-mariadb-7bd4f5c7c9
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: myakswp-mariadb-7bd4f5c7c9
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
