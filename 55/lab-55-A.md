@@ -220,7 +220,7 @@ code lab-55-A-frontend-deployment.yaml
 
 Lo más importante en el archivo de despliegue anterior es:
 
-* *Línea 12*: El número de réplicas del frontend son 3 (3 pods)
+* * Línea 12*: El número de réplicas del frontend son 3 (3 pods)
 * * Línea 10-11*:  Las etiquetas son ***app: guestbook***, ***tier: frontend***.
 * * Línea 21*: Se está usando la imagen de contenedor ***gb-frontend:v4***.
 
