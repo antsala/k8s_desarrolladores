@@ -309,7 +309,7 @@ Las ***PVCs*** se utilizan para abstraer el almacenamiento del proveedor (cloud)
 Un ***Statefulset*** es como un Deployment con capacidades adicionales que se asocian con pods individuales. Esto significa que k8s se asegurará que el ***pod y su almacenamiento se mantengan juntos***. Otra curiosidad es que los StatefulSets nombran los pods con ***números***, en lugar de un id aleatorio. Comprobamos el estado. Observar cómo se ha nombrado al pod de MariaDB (***pod/myakswp-mariadb-0***)
 ```
 kubectl get pods
-``
+```
 
 Otra diferencia es como se administra la eliminación del pod. Cuando el pod de un Deployment se elimina, K8s lo replanificará en cualquier nodo, mientras que cuando se borra un pod de un StatefulSet, K8s lo planificará solamente en el nodo que estaba corriendo. Solo cambiará la ubicación del pod si el nodo donde corría se quita del cluster o no está disponible.
 
