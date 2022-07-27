@@ -112,7 +112,7 @@ Debido a la importancia de los contenidos que vamos a aprender, comentamos las l
 
 * *Línea 2*: Definimos un objeto ***StatefulSet***.
 * *Líneas 6-8*: Este ***StatefulSet*** gestionará las réplicas del pod que tiene declarada la etiqueta ***app: mysql***.
-* *Línea 9*: Nombre del servicio (mysql) con el que está asociado este StatefulSet.
+* *Línea 9*: ***Nombre del servicio*** (mysql) con el que está asociado este StatefulSet.
 * *Línea 10*: Deseamos 3 réplicas (1 primaria y 2 en RO)
 * *Línea 11-Final*: Blueprint. Definición de los contenedores del pod.
 * *Línea 16*: ***initContainers***. Kubernetes se asegura de iniciar los contenedores de esta sección antes de proceder con el inicio del resto de contenedores declarados en el pod.
