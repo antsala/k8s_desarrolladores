@@ -227,7 +227,7 @@ Lo más importante en el archivo de despliegue anterior es:
 en K8s existe tres formas de exponer un servicio:
 
 * *ClusterIP*: Por defecto. Se crea una IP para el servicio y k8s redirige el tráfico al nodo apropiado. Al ser una IP interna, el servicio no puede ser accedido desde Internet.
-* *NodePort*: El servicio puede ser accedido desde fuera del cluster, conectándose a la IP (y puerto del nodo.
+* *NodePort*: El servicio puede ser accedido desde fuera del cluster, conectándose a la IP (y puerto del nodo).
 * *LoadBalancer*: Se creará un balanceador externo, con una IP pública. Se balancea entre los pods.
 
 Desplegamos el frontend:
