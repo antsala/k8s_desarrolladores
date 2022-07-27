@@ -191,7 +191,7 @@ code lab-55-A-redis-replica-deployment.yaml
 
 * *Línea 13*: Desplegamos 2 pods (2 réplicas)
 * *Línea 23*: Se usa la imagen ***follower***, que se conectará a una máquina llamada ***redis-server***. (Realmente es un servicio)
-* *Línea 39-30*: Le decimos que la resolución se hace por DNS. De esta forma, los followers se conectarán a la IP asociada a ***redis-server***, es decir a ***redis-server.default.svc.cluster.local***, que es la IP del pod de redis-server. (Aun nos queda por crear el servicio)
+* *Línea 29-30*: Le decimos que la resolución se hace por DNS. De esta forma, los followers se conectarán a la IP asociada a ***redis-server***, es decir a ***redis-server.default.svc.cluster.local***, que es la IP del pod de redis-server. (Aun nos queda por crear el servicio)
 
 Aplicamos:
 ```
