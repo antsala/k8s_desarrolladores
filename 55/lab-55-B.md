@@ -151,7 +151,7 @@ kubectl get all
 
 ## Ejercicio 4: ***Enviar tráfico desde el Frontend***
 
-Vamos a probar la conexión desde el Frontend contra el servidor primario de MySQL (***pod/mysql-0***). Lo haremos usando un contenedor temporal para realizar las pruebas:# (Nota: Se crea una tabla y se almacena un registro con el mensaje ***Hola***)
+Vamos a probar la conexión desde el Frontend contra el servidor primario de MySQL (***pod/mysql-0***). Lo haremos usando un contenedor temporal para realizar las pruebas: (Nota: Se crea una tabla y se almacena un registro con el mensaje ***Hola***)
 ```
 kubectl run mysql-client --image=mysql:5.7 -i --rm --restart=Never --\
   mysql -h mysql-0.mysql <<EOF
