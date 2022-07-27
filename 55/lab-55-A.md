@@ -273,7 +273,7 @@ kubectl get all
 
 (Nota: Si tienes un error, antes de reintentarlo, borra los PVCs y los PVs)
 
-Como ya hemos visto, Helm es el administrador de paquetes de Kubernetes. Permite desplegar, actualizar, y administrar las aplicaciones de Kubernetes. Para ello, se escriben los denominados ***charts***'***. 
+Como ya hemos visto, Helm es el administrador de paquetes de Kubernetes. Permite desplegar, actualizar, y administrar las aplicaciones de Kubernetes. Para ello, se escriben los denominados ***charts***. 
 
 Instalación de Helm. (Nota: instalar Helm en Ubuntu solo si no estuviera instalado)
 ```
