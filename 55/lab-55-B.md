@@ -118,7 +118,7 @@ Debido a la importancia de los contenidos que vamos a aprender, comentamos las l
 * *Línea 16*: ***initContainers***. Kubernetes se asegura de iniciar los contenedores de esta sección antes de proceder con el inicio del resto de contenedores declarados en el pod.
 * *Línea 17-63*: Se define el contenedor de inicio.
 * *Línea 17*:  Se llama a ***init-mysql***. Su misión solo es la de copiar el archivo de configuración de MySQL en función de si el pod va a tener el rod de primario o réplica.
-* *Líneas 19-35*: ***CMD*** Comando que se ejecuta al iniciar el contenedor. MUY IMPORTANTE!!! 
+* *Líneas 19-35*: ***Comando*** que se ejecuta al iniciar el contenedor. MUY IMPORTANTE!!! 
 Observar cómo se copia al volumen el archivo de configuración del ConfigMap en función del rol de la instancia. La primera (id 0) será la maestra.
 * *Línea 65*: Su nombre es ***mysql***.
 * *Línea 72*: El contenedor se expone en el puerto ***3306***.        
