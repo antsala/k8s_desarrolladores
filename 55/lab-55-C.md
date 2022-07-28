@@ -208,7 +208,7 @@ Comprobamos que todos los objetos se ha iniciado correctamente:
 kubectl get all --namespace mongodb-repl-system
 ```
 
-Comprobar que el maestro de MongoDB (mongo-0) se ha iniciado:
+Comprobar que el maestro de MongoDB (***mongo-0***) se ha iniciado:
 ```
 kubectl describe pod mongo-0 --namespace mongodb-repl-system
 ```
