@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: prometheus
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: "2022-07-28T16:00:48Z"
+  labels:
+    app: kube-prometheus-stack-operator
+    app.kubernetes.io/instance: prometheus
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    app.kubernetes.io/version: 38.0.3
+    chart: kube-prometheus-stack-38.0.3
+    heritage: Helm
+    release: prometheus
+  name: prometheus-kube-prometheus-operator
+  namespace: default
+  resourceVersion: "11551"
+  uid: 23e6496b-0208-4fb4-9390-15ea9836db8c
+spec:
+  clusterIP: 10.107.106.187
+  clusterIPs:
+  - 10.107.106.187
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: https
+  selector:
+    app: kube-prometheus-stack-operator
+    release: prometheus
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
