@@ -243,9 +243,7 @@ En unos instantes volverán a estar arriba las tres instancias.
 kubectl get statefulset mysql
 ```
 
-
-
-Probamos las aplicación aumentando el número de réplicas del StatefulSet ***mysql***.
+Probamos el escalado de la aplicación aumentando el número de réplicas del StatefulSet ***mysql***.
 ```
 kubectl scale statefulset mysql --replicas=5
 kubectl get pods
