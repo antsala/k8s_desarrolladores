@@ -314,7 +314,7 @@ Esperamos a que K8s haya destruido las dos réplicas (pods)
 kubectl get pods
 ```
 
-Volvemosa mostrar las PVCs
+Volvemos a mostrar las PVCs
 ```
 kubectl get pvc
 ```
