@@ -25,7 +25,9 @@ IP=`minikube ip`
 ```
 
 La visualizamos y la copiamos al portapapeles.
+```
 echo $IP
+```
 
 A continuación editamos el siguiente archivo:
 ```
