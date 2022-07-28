@@ -19,6 +19,11 @@ En este laboratorio aprenderemos a indicar a los pods que el servicio a consulta
 
 Lo primero que debemos conocer es la ***IP*** del servicio externo al cluster. En este ejemplo será la aplicación ***hello_container***  y estará en la única máquina que tenemos, pero funcionará igualmente.
 
+Cambiamos al directorio de trabajo:
+```
+cd ~/k8s_desarrolladores/65
+```
+
 Tomamos la IP del nodo de ***Minikube*** y la anotamos:
 ```
 IP=`minikube ip`
