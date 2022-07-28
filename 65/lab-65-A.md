@@ -1,4 +1,4 @@
-Laboratorio 65-A: ***Endpoints externos***
+# Laboratorio 65-A: ***Endpoints externos***
  
 En este laboratorio aprenderemos a conectar pods de Kubernetes con servicios que corren ***fuera del cluster*** de Kubernetes.
 
