@@ -213,6 +213,11 @@ mysql-2   1/2     Running   0          20m
 
 Se puede apreciar como ***1/2*** indica que e1 contenedor no está respondiendo a la sonda ***Readiness***.
 
+También podemos usar el siguiente comando para verificar que es la sonda la que no responde.
+```
+kubectl describe pod mysql-2
+```
+
 Volvemos a renombrar el comando.
 ```
 kubectl exec mysql-2 -c mysql -- mv /usr/bin/mysql.off /usr/bin/mysql
