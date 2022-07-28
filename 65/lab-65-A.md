@@ -46,7 +46,7 @@ Las líneas más interesantes son:
 * *Línea 9*: IMPORTANTE!!!! Pegar aquí la IP capturada .
 * *Línea 12*: ***Puerto*** al que se redirigirá el tráfico al servicio externo.
 
-Aplicamos:
+Guardamos el archivo y aplicamos:
 ```
 kubectl apply -f lab-65-A-external-web-endpoint.yaml
 ```
