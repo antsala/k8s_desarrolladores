@@ -163,8 +163,8 @@ Las líneas más importantes:
 * *Línea 7*: En principio levantamos un solo pod, el maestro de MongoDB.
 * *Línea 11*: Conectamos el StatefulSet al servicio ***mongo***.
 * *Línea 17*: Usamos la cuenta de servicio llamada ***mongo-account***.
-* *Líneas 20-49*: Declaramos el contenedor principal del pod. Pueden observarse todas las propiedades.
-* *Líneas 51-69*: Declaramos un contenedor helper o sidecar. 
+* *Líneas 20-49*: Declaramos el ***contenedor principal*** del pod. Pueden observarse todas las propiedades.
+* *Líneas 51-69*: Declaramos un contenedor helper o ***sidecar***. 
 * *Líneas 70-82*: Declaración de los volúmenes que montarán los contenedores.
 * *Líneas 85-93*: PVCs 
 
