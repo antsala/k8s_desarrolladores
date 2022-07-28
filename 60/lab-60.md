@@ -27,7 +27,7 @@ Cambiamos al directorio de trabajo:
 cd ~/k8s_desarrolladores/60
 ```
 
-En este link: https://prometheus-community.github.io/helm-charts/ tenemos la documentación del chart de Prometheus. Si la leemos atentamente, veremos que se instala el Operator, con las ventajas que este ofrece.
+En este link: https://prometheus-community.github.io/helm-charts/ tenemos la documentación del chart de Prometheus. Si la leemos atentamente, veremos que se instala el ***Operator***, con las ventajas que este ofrece.
 
 Instalamos Helm (solo si no estuviera presente):
 ```
@@ -46,7 +46,7 @@ helm version
 
 Añadimos los repos de Helm para Prometheus.
 ```
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add prometheus-community https://charts.helm.sh/stable
 helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 helm repo update
 ```
