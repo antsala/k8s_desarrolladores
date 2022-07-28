@@ -79,7 +79,7 @@ Cuando Mongo se ejecute necesitaremos proporcionar permisos para la ***mongo-key
 
 El contenedor Mongo se inicia con el usuario ***mongodb*** y no con ***root***, así que tenemos que cambiar los permisos y luego iniciar Mongo. Para conseguirlo cargamos temporalmente el ConfigMap ***mongo-key*** en una carpeta temporal, que luego copiaremos en otra ruta mejor. 
 
-La razón de hacer esto es que el contenedor carga el ***ConfigMap*** como un enlace simbólico en el sistema de archivos y por ello no nos permitirá cambiar ni el propietario ni los permisos del archivo. Para conseguirlo esto nos apoyamos en otro script.
+La razón de hacer esto es que el contenedor carga el ***ConfigMap*** como un enlace simbólico en el sistema de archivos y por ello no nos permitirá cambiar ni el propietario ni los permisos del archivo. Para conseguir esto nos apoyamos en otro script.
 
 Abrimos el archivo:
 ```
