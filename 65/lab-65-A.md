@@ -122,7 +122,7 @@ apt-get update -y
 apt-get install -y curl
 ```
 
-Ahora probamos si desde dentro del contenedor se puede alcanzar el servicio externo a.l cluster
+Ahora probamos si desde dentro del contenedor se puede alcanzar el servicio externo al cluster.
 ```
 curl external-web
 ```
