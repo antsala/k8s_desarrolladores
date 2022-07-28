@@ -233,6 +233,18 @@ kubectl delete pod mysql-2
 kubectl get statefulset mysql
 ```
 
+Con el comando ***describe*** podemos ver como el statefulset recrea el pod.
+```
+kubectl describe statefulset mysql
+```
+
+En unos instantes volverán a estar arriba las tres instancias.
+```
+kubectl get statefulset mysql
+```
+
+
+
 Probamos las aplicación aumentando el número de réplicas del StatefulSet ***mysql***.
 ```
 kubectl scale statefulset mysql --replicas=5
