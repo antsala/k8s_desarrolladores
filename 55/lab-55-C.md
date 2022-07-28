@@ -52,7 +52,7 @@ Las líneas más importantes son:
 * *Línea 2*: Es un ***ConfigMap***.
 * *Línea 4*: Su nombre es ***mongo-init-script***.
 * *Línea 6*: El script se llama ***mongo-user-sh***.
-* *Líneas 7-12*: El script crea un usuario administrador cuyo nombre y password se toma respectivamente de las variables de entorno ***MONGO_INITDB_ROOT_USERNAME*** y ***MONGO_INITDB_ROOT_PASSWORD***, que serán inicializadas desde el secreto. Posteriormente crea (si no existe) una base de datos con nombre ***mi_database***. Luego da de alta un usuario llamado ***mi_database-user*** con el password definido en la variable de entorno ***SECOND_USER_DB_PASSWORD***. A este usuario se le da el permiso ***RW*** en la base de datos que se acaba de crear.
+* *Líneas 7-12*: El script crea un usuario administrador cuyo nombre y password se toma respectivamente de las variables de entorno ***MONGO_INITDB_ROOT_USERNAME*** y ***MONGO_INITDB_ROOT_PASSWORD***, que serán inicializadas desde el secreto. Posteriormente crea (si no existe) una base de datos con nombre ***mi_database***. Luego da de alta un usuario llamado ***mi_database_user*** con el password definido en la variable de entorno ***SECOND_USER_DB_PASSWORD***. A este usuario se le da el permiso ***RW*** en la base de datos que se acaba de crear.
 
 Cerramos sin modificar nada. Aplicamos más tarde.
 
