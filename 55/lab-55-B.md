@@ -149,6 +149,22 @@ Comprobamos:
 kubectl get all
 ```
 
+Para poder ver qué ocurre dentro de los contenedores de los pods, usamos una sintaxis especial consistente en indicar el nombre del contenedor. 
+
+Por ejemplo para ver el log del contenedor ***init-mysql*** del pod ***mysql-0*** (que es el primario) escribimos
+```
+kubectl logs mysql-0 init-mysql
+``` 
+
+Para ver log del contenedor ***clone-mysql*** del pod ***mysql-0*** (que es el primario) escribimos
+```
+kubectl logs mysql-0 clone-mysql
+``` 
+
+De forma similar podríamos ver los contenedores los los pods de réplica, simplemente poniendo el nombre del pod y el nombre del contenedor cuyo log deseemos visualizar.
+
+Pasado un rato, se levantarán todos los pods y podemos continuar.
+
 ## Ejercicio 4: ***Enviar tráfico desde el Frontend***
 
 Vamos a probar la conexión desde el Frontend contra el servidor primario de MySQL (***pod/mysql-0***). Lo haremos usando un contenedor temporal para realizar las pruebas: (Nota: Se crea una tabla y se almacena un registro con el mensaje ***Hola***)
