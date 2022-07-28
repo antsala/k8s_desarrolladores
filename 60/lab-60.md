@@ -47,7 +47,7 @@ helm version
 Añadimos los repos de Helm para Prometheus.
 ```
 helm repo add prometheus-community https://charts.helm.sh/stable
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo add stable https://charts.helm.sh/stable
 helm repo update
 ```
 
