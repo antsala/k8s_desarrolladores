@@ -6,7 +6,7 @@ subsets:
   -
     addresses:
       -
-        ip: "192.168.49.2" # Aquí habría que poner la IP del servicio externo al cluster.
+        ip: "192.168.18.90" # Aquí habría que poner la IP del servicio externo al cluster.
     ports:
       -
         port: 80 

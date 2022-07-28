@@ -87,7 +87,7 @@ Comprobar en la salida como ***Endpoints*** es ***IP_del_servicio_externo_al_clu
 
 Ahora necesitamos ***simular*** ser el servicio externo al cluster. Para ello vamos a usar directamente el ***runtime***, es decir, Kubernetes no interviene para nada. Usaremos ***podman*** para levantar un contenedor de la aplicación ***hello_container*** sobre la propia IP del nodo.
 ```
-sudo podman run -d --name mi_servicio_web_externo -p 80:8080 docker.io/antsala/hello_container
+sudo podman run -d --rm --name mi_servicio_web_externo -p 80:8080 docker.io/antsala/hello_container
 ```
 
 Ya tenemos nuestro servidor web funcionando. Se ha publicado en el puerto 80. El siguiente paso es levantar un pod en Kubernetes que, usando el nombre del servicio interno ***external-web*** pueda alcanzar a ***hello_container***.
