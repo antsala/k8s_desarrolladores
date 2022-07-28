@@ -2,12 +2,12 @@
  
 En este laboratorio aprenderemos a usar el objeto ***StatefulSet*** junto con contenedores ayudantes o ***sidecars***.
 
-Vamos desplegar topología replicada de MongoDB, usando un contenedor Sidecar
+Vamos desplegar topología replicada de ***MongoDB***, usando un contenedor ***Sidecar***.
 
 Requisitos:
 
 1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o escritorio remoto.
-2. Cluster Minikube iniciado.
+2. Cluster ***Minikube*** iniciado.
 
 
 Como ya hemos aprendido en este curso, hemos aportado la capacidad de autoescalado al ***ReplicaSet***, pero en este caso usaremos otra técnica que hace uso de un ***Sidecar***.
@@ -18,7 +18,7 @@ Otra cuestión a aprender es conseguir que nuestros despliegues en Kubernetes se
 
 ## Ejercicio 1: ***Crear secretos y script de inicio***
 
-La documentación de ***MongoDB ***nos dice que la imagen tiene la posibilidad de configurar scripts y ejecutarlos la primera vez que se inicia el contenedor. Utilizaremos esta técnica para configurar usuarios (y passwords)
+La documentación de ***MongoDB*** nos dice que la imagen tiene la posibilidad de configurar scripts y ejecutarlos la primera vez que se inicia el contenedor. Utilizaremos esta técnica para configurar usuarios (y passwords)
 
 Cambiamos al directorio de trabajo:
 ```
