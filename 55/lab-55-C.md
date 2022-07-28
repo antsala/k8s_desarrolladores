@@ -176,7 +176,7 @@ En Kubernetes existe una clase de objeto muy útil llamada ***Kustomization***. 
 
 Editamos el archivo y lo consultamos:
 ```
-code kustomize.yaml
+code kustomization.yaml
 ```
 
 Las líneas más interesantes son:
