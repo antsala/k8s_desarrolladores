@@ -24,15 +24,7 @@ Cambiamos al directorio de trabajo:
 cd ~/k8s_desarrolladores/65
 ```
 
-Tomamos la IP del nodo de ***Minikube*** y la anotamos:
-```
-IP=`minikube ip`
-```
-
-La visualizamos y la copiamos al portapapeles.
-```
-echo $IP
-```
+Tomamos la IP de la máquina virtual del laboratorio y la anotamos, será necesaria más adelante. (Nota: si no sabes cual es, pregunta al formador)
 
 A continuación editamos el siguiente archivo:
 ```
