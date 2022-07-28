@@ -88,7 +88,7 @@ Observamos el resultado:
 kubectl describe service external-web
 ```
 
-Comprobar en la salida como ***Endpoints*** es ***<IP del servicio externo al cluster>:80***, que realmente no es un pod, sino el objeto ***Endpoint*** que hemos creado antes.
+Comprobar en la salida como ***Endpoints*** es ***IP_del_servicio_externo_al_cluster:80***, que realmente no es un pod, sino el objeto ***Endpoint*** que hemos creado antes.
 
 ## Ejercicio 3: ***Prueba del endpoint***
 
