@@ -309,6 +309,11 @@ Realizamos un scale-in. Pasamos a 3 réplicas.
 kubectl scale statefulset mysql  --replicas=3
 ```
 
+Esperamos a que K8s haya destruido las dos réplicas (pods)
+```
+kubectl get pods
+```
+
 Volvemosa mostrar las PVCs
 ```
 kubectl get pvc
