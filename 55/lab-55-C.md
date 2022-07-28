@@ -230,5 +230,5 @@ kubectl delete -f mongo-backend.yaml
 
 Listamos los PVCs y los PVs para comprobar que se han eliminado.
 ```
-kubectl get pvc 
+kubectl get pvc --namespace mongodb-repl-system
 ```
