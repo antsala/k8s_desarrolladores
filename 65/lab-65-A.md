@@ -62,7 +62,7 @@ NAME           ENDPOINTS         AGE
 external-web   192.168.1.38:80   44s
 ```
 
-Aun es necesario dar otro paso, ya que los pods del cluster necesitan conectar con un ***servicio*** (no lo pueden resolver el nombre del endpoint)
+Aun es necesario dar otro paso, ya que los pods del cluster necesitan conectar con un ***servicio*** (no pueden resolver el nombre del endpoint)
 
 ## Ejercicio 2: ***Creación del servicio interno***
 
@@ -76,7 +76,7 @@ code lab-65-A-external-web-service.yaml
 Las líneas más importantes son:
 
 * *Línea 4*. Esta etiqueta ***debe coincidir*** con la declarada en el Endpoint.
-* *Líneas 9 y 10: se crea la regla de ***natting***.
+* *Líneas 9 y 10*: se crea la regla de ***natting***.
 
 Aplicamos:
 ```
