@@ -21,7 +21,7 @@ Lo primero que debemos conocer es la ***IP*** del servicio externo al cluster. E
 
 Tomamos la IP del nodo de ***Minikube*** y la anotamos:
 ```
-IP=minikube ip
+IP=`minikube ip`
 ```
 
 La visualizamos y la copiamos al portapapeles.
