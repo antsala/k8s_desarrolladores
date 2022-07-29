@@ -383,6 +383,18 @@ Más información:
 kubectl get -o wide nodes
 ```
 
+En el caso de ***Minikube***, es necesario activar el complemento del ***servidor de métricas***.
+```
+minikube addons enable metrics-server
+```
+
+Comprobamos que se ha levantado el pod.
+```
+kubectl get pods --namespace kube-system | grep metrics-server
+```
+
+Esperar hasta que se inicie: Nota: El servidor de métrica tardará un rato en recopilar datos y calcular sus estadísticas. Es posible que los siguientes comandos no funcionen hasta que esto no sea así. Esperar un tiempo suficiente y podrás comprobar como todo funciona correctamente.
+
 Consumo en los nodos:
 ```
 kubectl top nodes

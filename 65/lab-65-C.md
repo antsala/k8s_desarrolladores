@@ -1,49 +1,29 @@
-# Laboratorio 65-C: "RBAC en AKS" (AZURE)
+# Laboratorio 65-C: ***RBAC en AKS (AZURE)***
  
-# Este laboratorio aprenderemos a integrar RBAC de Kubernetes en AKS.
+En este laboratorio aprenderemos a integrar RBAC de Kubernetes en AKS.
 
-# Requisitos:
-#
-#   1) Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh.
-#
-#   2) Cluster AKS. (Ver lab-00.txt)
+Requisitos:
+
+1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o escritorio remoto.
+2. Cluster AKS. (Ver lab-00.md)
+
+## Ejercicio 1. ***Introduccion a RBAC***
+
+Hasta el momento, hemos tenido permisos para crear, leer, actualizar y eliminar objetos en el cluster. Esto funciona bien en un entorno de prueba, pero no es recomendable para uno de producción.
+
+En los clusters de producción, la recomendación es aprovechar RBAC y conceder un conjunto limitado de permisos a los usuarios. Será necesario configurar RBAC en Kubernetes e intregrarlo con ***Azure AD***.
+
+RBAC tiene 3 conceptos importantes:
+
+* *Role*: Contiene un conjunto de permisos. Por defecto, el rol no tiene ningún permiso y en consecuencia hay que especificarlos. Los permisos son del tipo ***get***, ***watch***, ***list***... Se les llama ***verbos***. Aquí los verbos admitidos por el API Server: https://kubernetes.io/docs/reference/access-authn-authz/authorization/#determine-the-request-verb. El rol también contiene los recursos a los que se aplican esos permisos. Los recursos pueden ser todos los ***pods***, los ***deployments***, etc, o pueden ser un objeto concreto, como ***pod/mypod***.
+
+* *Subject*: Se refiere a la persona o a la cuenta de servicio a la que se asigna el rol. En los clusteres de AKS integrados con AAD, el subject puede ser un ***usuario*** o un ***grupo*** de AAD.
+
+* *RoleBinding*: Sirve para enlazar un subject a un rol para un contexto. Si es ***CusterRoleBinding***, se refiere a la totalidad del cluster.
+
+Un concepto importante a comprender es que hay dos capas de RBAC: Los RBAC de Azure y los RBAC de Kubernetes.
 
 
-#####################################
-# Ejercicio 1. Introduccion a RBAC. #
-#####################################
-
-# Hasta el momento, hemos tenido permisos para crear, leer, actualizar y eliminar
-# objetos en el cluster. Esto funciona bien en un entorno de prueba, pero no es
-# recomendable para uno de producción.
-#
-# En los clusters de producción, la recomendación es aprovechar RBAC y conceder 
-# un conjunto limitado de permisos a los usuarios. 
-# 
-# Será necesario configurar RBAC en Kubernetes e intregrarlo con Azure AD.
-#
-# RBAC tiene 3 conceptos importantes:
-#
-# Role:         Contiene un conjunto de permisos. Por defecto, el rol no tiene ningún
-#               permiso y en consecuencia hay que especificarlos. Los permisos son del
-#               tipo 'get', 'watch', 'list'... Se les llama "verbos".
-#               Aquí los verbos admitidos por el API Server: 
-#               https://kubernetes.io/docs/reference/access-authn-authz/authorization/#determine-the-request-verb
-#
-#               El rol también contiene los recursos a los que se aplican esos permisos.
-#               Los recursos pueden ser todos los pods, los deployments, etc, o puede
-#               ser un objeto concreto, como 'pod/mypod'.
-#
-# Subject:      Se refiere a la persona o a la cuenta de servicio a la que se asigna el rol.
-#               En los clusteres de AKS integrados con AAD, el subject puede ser un usuario
-#               o un grupo de AAD.
-#
-# RoleBinding:  Sirve para enlazar un subject a un rol para un contexto. Si 
-#               es 'CusterRoleBinding', se refiere a la totalidad del cluster.
-#
-# Un concepto importante a comprender es que hay dos capas de RBAC: Los RBAC de Azure y los
-# los RBAC de Kubernetes.
-#
 # Los RBAC de Azure tienen que ver con los roles asignados a las personas para hacer cambios 
 # en Azure, como crear, modificar o borrar clusters. Los RBAC de Kubernetes tienen que ver 
 # con el derecho de acceso a los recursos del cluster.
