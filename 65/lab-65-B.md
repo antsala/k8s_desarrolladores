@@ -160,7 +160,7 @@ fwrite(STDOUT, $host);
 fwrite(STDOUT, "\n");
 ```
 
-Guardamos CTRL+X + Y + Enter.
+Guardamos CTRL+X, Y y Enter.
 
 
 Se ha introducido un error donde la lectura de los mensajes seguirá funcionando, pero no la escritura. Se ha hecho pidiendo al frontend que se conecte a ***redis master*** en un servidor ***localhost*** que no es el correcto, así que la escritura fallará. Salimos del contenedor.
@@ -225,6 +225,7 @@ Vamos a montar estos archivos en el despliegue. Usaremos un ***ConfigMap*** para
 kubectl create configmap server1 --from-file=lab-65-B-index1.html
 kubectl create configmap server2 --from-file=lab-65-B-index2.html
 kubectl create configmap healthy --from-file=lab-65-B-healthy.html
+```
 
 A modo de recordatorio, para el primer configmap tenemos:
 ```
