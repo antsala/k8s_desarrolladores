@@ -31,7 +31,7 @@ De la salida del comando anterior, las columnas y su interpretación es la sigui
 
 * *Columna NAME*: Nombre del pod.
 * *Columna READY*: Indica cuántos contenedores del pod están listos, comparando contra el número total de contenedores del pod. Tiene que ver con las sondas ***readiness*** y ***liveness*** que serán tratadas en breve.
-* *Columna STATUS*: Indica el estado. Por ejemplo ***ContainerCreating***, ***Running**+, ...
+* *Columna STATUS*: Indica el estado. Por ejemplo ***ContainerCreating***, ***Running***, ...
 * *Columna RESTARTS*: Número de reinicios.
 * *Columna AGE*: Edad del pod desde su creación.
 
@@ -109,10 +109,14 @@ kubectl get service
 ```
 
 Almacenamos la IP Externa.
+```
 IP_EXTERNA=<Poner aquí la IP Externa del servicio frontend>
+```
 
 La mostramos la URL para copiarla.
+```
 echo http://$IP_EXTERNA
+```
 
 Conectamos con un navegador a 'http://$IP_EXTERNA' y comprobamos que funciona.
 
