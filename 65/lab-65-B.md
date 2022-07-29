@@ -400,6 +400,11 @@ Consumo en los nodos:
 kubectl top nodes
 ```
 
+Podemos apoyarnos en una interfaz gráfica para visualizar estas métricas. Para ello ejecutamos el siguiente comando.
+```
+minikube dashboard
+```
+
 Ver eventos en un nodo:
 ```
 kubectl describe node $NODE_NAME
