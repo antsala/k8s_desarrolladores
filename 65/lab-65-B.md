@@ -234,7 +234,7 @@ kubectl describe configmap/server1
 
 Ahora vamos a crear dos despliegues web, muy parecidos uno al otro, cambiando solo el ***ConfigMap***.
 
-Editamos el archivo 'lab-65-B-webdeploy1.yaml'
+Editamos el archivo ***lab-65-B-webdeploy1.yaml***
 ```
 code lab-65-B-webdeploy1.yaml
 ```
@@ -345,7 +345,7 @@ Ahora volvemos a hacer el experimento pero con la sonda ***liveness***. Si falla
 SERVER2_POD_NAME=<Poner aquí el nombre del POD 'server2-XXXXXXXXXX-XXXXX'>
 ```
 
-# Borramos el archivo ***healthy.html*** del ***server2***:
+Borramos el archivo ***healthy.html*** del ***server2***:
 ```
 kubectl exec $SERVER2_POD_NAME -- rm /usr/share/nginx/html/healthy.html
 ```
