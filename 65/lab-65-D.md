@@ -133,5 +133,24 @@ echo http://$IP_EXTERNA:8888
 
 Conectar con un navegador (o hacer un ***curl***) para probar que funciona correctamente. Refrescar (CTRL+F5) para determinar que en el balanceo también participa el pod de la ***versión 2.0***.
 
+Cuando comprobemos que la nueva versión funciona correctamente podríamos actualizar los despliegues para que los pods actualizaran sus imágenes.
+
+Lo que hemos realizado es un ejemplo básico para ilustrar los despliegues canary, y no es el mejor de todos. En la práctica real podemos controlar el tráfico que va hacia los pods canary de diversas maneras, por ejemplo, a través del controlador ingress. También se puede usar por ejemplo, Jenkins o soluciones de DevOps que se integran con Kubernetes. Para estos casos es imprescindible acudir a la documentación para entender cómo se deben realizar este tipo de despliegues.
+
+Eliminamos los recursos:
+```
+kubectl delete -f lab-65-D-nginx-service.yaml
+kubectl delete -f lab-65-D-nginx-deployment.yaml
+kubectl delete -f lab-65-D-nginx-deployment-canary-v2.yaml
+kubectl delete -f lab-65-D-app-v1-configmap.yaml
+kubectl delete -f lab-65-D-app-v2-configmap.yaml
+```
+
+Comprobamos:
+```
+kubectl get all
+```
+
+
 
 
