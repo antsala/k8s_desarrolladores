@@ -50,7 +50,9 @@ AKS_ADMIN_GROUP_ID=$(az ad group show \
 ```
 
 Mostramos el ID del grupo.
+``
 echo $AKS_ADMIN_GROUP_ID
+```
 
 Actualizamos la integración de Azure AD para el cluster:
 ```
