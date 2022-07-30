@@ -89,5 +89,17 @@ En la terminal principal comprobamos.
 kubectl get all
 ```
 
+Copiamos la IP-EXTERNA del servicio.
+```
+IP_EXTERNA=<Pegar aquí la EXTERNAL-IP del servicio>
+```
+
+Mostramos para copiar.
+```
+echo http://IP_EXTERNA
+```
+
+Conectar con un navegador para probar que funciona correctamente.
+
 
 
