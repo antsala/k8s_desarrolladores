@@ -352,6 +352,8 @@ az account show
 Vamos a verificar si el usuario tiene permiso para ver los pods en todos los espacios de nombres. Debe ver los pods en los dos espacios:
 ```
 kubectl get pods --namespace no-access
+```
+```
 kubectl get pods --namespace delete-access
 ```
 
@@ -363,6 +365,8 @@ kubectl get pods --all-namespaces
 Ahora comprobamos los permisos de eliminación. Solo debe poder eliminar del espacio de nombres ***delete-access***:
 ```
 kubectl delete pod --all --namespace delete-access
+```
+```
 kubectl delete pod --all --namespace no-access
 ```
 
