@@ -32,3 +32,9 @@ Vamos a hacer un ejemplo de este tipo de despliegue. Para ello usaremos una imag
 ```
 code lab-65-D-nginx-deployment.yaml
 ```
+
+Creamos el deployment.
+```
+kubectl apply -f lab-65-D-nginx-deployment.yaml
+```
+
