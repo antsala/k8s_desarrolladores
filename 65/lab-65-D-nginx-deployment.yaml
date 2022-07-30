@@ -27,5 +27,5 @@ spec:
           name: my-vol
       volumes:
       - name: my-vol
-        hostPath:
-          path: ./65/appV1.0
+        configMap:
+          name: app-v1-configmap
