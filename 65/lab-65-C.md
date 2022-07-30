@@ -93,8 +93,13 @@ LUKE_USER_ID=$(az ad user create \
                 --password useTheForce# \
                 --user-principal-name luke@antsalgrahotmail.onmicrosoft.com \
                 --mail-nickname luke \
-                --query objectId \
+                --query id \
                 --output tsv)
+```
+
+Mostramos el ID del usuario Luke.
+```
+echo $LUKE_USER_ID
 ```
 
 Creamos otro grupo de seguridad, llamado ***aks users***, donde pondremos a los usuarios del cluster sin rol administrativo:
