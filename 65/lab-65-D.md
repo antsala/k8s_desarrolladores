@@ -80,7 +80,7 @@ code lab-65-D-nginx-service.yaml
 
 Las líneas más importantes son:
 
-* *Líneas 7,8 y 9*: Mediante el selector, elegimos los pods a los que se mandará el tráfico, que son los de la "versión 1.0".
+* *Líneas 7,8 y 9*: Mediante el selector, elegimos los pods a los que se mandará el tráfico, que son los de la ***versión 1.0***.
 
 Desplegamos el servicio.
 ```
