@@ -30,3 +30,5 @@ cd ~/k8s_desarrolladores/65
 
 Vamos a hacer un ejemplo de este tipo de despliegue. Para ello usaremos una imagen de ***nginx***. Abrimos el archivo ***lab-65-D-nginx-deployment.yaml***.
 ```
+code lab-65-D-nginx-deployment.yaml
+```
