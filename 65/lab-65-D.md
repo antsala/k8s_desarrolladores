@@ -96,10 +96,10 @@ IP_EXTERNA=<Pegar aquí la EXTERNAL-IP del servicio>
 
 Mostramos para copiar.
 ```
-echo http://IP_EXTERNA
+echo http://$IP_EXTERNA
 ```
 
-Conectar con un navegador para probar que funciona correctamente.
+Conectar con un navegador (o hacer un ***curl***) para probar que funciona correctamente.
 
 
 
