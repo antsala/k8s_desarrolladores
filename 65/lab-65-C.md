@@ -154,7 +154,7 @@ control (IAM)/Role Assignments***
 
 El rol ***Azure Kubernetes Service Cluster Role***, tiene como descripción ***List cluster user credential action***, que permite tomar las credenciales de ese usuario en el cluster y almacenarlas en ***.kube/config***, para que posteriormente ***kubectl*** pueda usarlas.
 
-NOTA: Si se hubiera usado la ***CloudShell***, también habría que dar permisos a ***AKS_USER_GROUP_ID*** para la cuenta de almacenamiento donde reside la CloudShell. En este ejemplo no la usamos.
+NOTA: Si se hubiera usado la ***CloudShell***, también habría que dar permisos a ***AKS_USERS_GROUP_ID*** para la cuenta de almacenamiento donde reside la CloudShell. En este ejemplo no la usamos.
 
 
 ## Ejercicio 5. ***Configurar RBAC en AKS***
