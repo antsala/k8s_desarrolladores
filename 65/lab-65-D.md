@@ -38,3 +38,7 @@ Creamos el deployment.
 kubectl apply -f lab-65-D-nginx-deployment.yaml
 ```
 
+Comprobamos que se despliega correctamente.
+```
+kubectl get all -w
+```
