@@ -4,9 +4,9 @@ metadata:
   name: nginx-service
 spec:
   type: LoadBalancer
-selector:
-  app: nginx
-  version: "1.0"
-ports:
-- port: 8888
-  targetPort: 80
+  selector:
+    app: nginx
+    version: "1.0"
+  ports:
+  - port: 8888
+    targetPort: 80
