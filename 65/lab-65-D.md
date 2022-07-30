@@ -81,7 +81,7 @@ kubectl apply -f lab-65-D-nginx-service.yaml
 
 En otra terminal levantamos ***minikube tunnel***
 ```
-miniube tunnel
+minikube tunnel
 ```
 
 En la terminal principal comprobamos.
