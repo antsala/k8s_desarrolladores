@@ -219,7 +219,7 @@ kubectl describe clusterRole readOnly
 
 Mostramos para copiar.
 ```
-echo $AKS_USER_GROUP_ID
+echo $AKS_USERS_GROUP_ID
 ```
 
 Ahora vamos a crear un objeto ***ClusterRoleBinding*** que enlaza el rol a un usuario o grupo. Editamos el archivo ***lab-65-C-clusterRoleBinding.yaml***:
