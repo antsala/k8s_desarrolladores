@@ -67,8 +67,13 @@ Tomamos el ***ID del administrador del tenant***: (Nota: En el UPN poner el domi
 TENANT_ADMIN_USER=antsalgra_hotmail.com#EXT#@antsalgrahotmail.onmicrosoft.com 
 ADMIN_USER_ID=$(az ad user show \
                     --id $TENANT_ADMIN_USER\
-                    --query objectId \
+                    --query id \
                     --output tsv)
+```
+
+Mostramos el ID.
+```
+echo $ADMIN_USER_ID
 ```
 
 Agregamos al admin al grupo de administradores del cluster.
