@@ -97,7 +97,7 @@ LUKE_USER_ID=$(az ad user create \
                 --output tsv)
 ```
 
-Mostramos el ID del usuario Luke.
+Mostramos el ID del usuario ***Luke***.
 ```
 echo $LUKE_USER_ID
 ```
@@ -108,8 +108,13 @@ AKS_USER_GROUP_ID=$(az ad group create \
                         --display-name "aks users" \
                         --mail-nickname aksusers \
                         --description "usuarios de clusteres AKS" \
-                        --query objectId \
+                        --query id \
                         --output tsv)
+```
+
+Mostramos el ID del grupo ***aks users***
+```
+echo $AKS_USER_GROUP_ID
 ```
 
 Agregamos a ***Luke*** al grupo de usuarios del cluster:
