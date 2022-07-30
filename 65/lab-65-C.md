@@ -133,11 +133,6 @@ AKS_ID=$(az aks show \
             --output tsv)
 ```
 
-Lo mostramos.
-```
-echo $AKS_ID
-```
-
 Es algo así: ***/subscriptions/5d72e184-55f6-4093-838e-3d0f7506881a/resourcegroups/myaks-rg/providers/Microsoft.ContainerService/managedClusters/myaks***
 
 Lo consultamos:
@@ -145,7 +140,7 @@ Lo consultamos:
 echo $AKS_ID
 ```
 
-Creamos una asignación de rol de Azure para el grupo ***aks users***, del que es miembro ***Luke***. Si diera error indicando que el principal de seguridad no existe, esperar unos segudos porque el grupo aún no se ha creado:
+Creamos una asignación de rol de Azure para el grupo ***aks users***, del que es miembro ***Luke***. Si diera error indicando que el principal de seguridad no existe, esperar unos segundos porque el grupo aún no se ha creado:
 ```
 sleep 60
 az role assignment create \
