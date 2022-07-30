@@ -42,8 +42,8 @@ code lab-65-D-app-v2-configmap.yaml
 
 Creamos los configmaps
 ```
-kubectl apply lab-65-D-app-v1-configmap.yaml
-kubectl apply lab-65-D-app-v2-configmap.yaml
+kubectl apply -f lab-65-D-app-v1-configmap.yaml
+kubectl apply -f lab-65-D-app-v2-configmap.yaml
 ```
 
 Comprobamos
