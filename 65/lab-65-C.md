@@ -35,7 +35,7 @@ Una vez que el cluster ha sido integrado con Azure AD, esta funcionalidad no pue
 ```
 AKS_ADMIN_GROUP_DISPLAY_NAME="aks admins"
 az ad group create \
-    --display-name $AKS_ADMIN_GROUP_DISPLAY_NAME \
+    --display-name "$AKS_ADMIN_GROUP_DISPLAY_NAME" \
     --mail-nickname aksadmins \
     --description "Administradores de clusteres AKS" \
     --query objectId \
@@ -45,7 +45,7 @@ az ad group create \
 Tomamos el ID del grupo recién creado.
 ```
 AKS_ADMIN_GROUP_ID=$(az ad group show \
-        --group $AKS_ADMIN_GROUP_DISPLAY_NAME \
+        --group "$AKS_ADMIN_GROUP_DISPLAY_NAME" \
         --query objectId -o tsv)
 ```
 
