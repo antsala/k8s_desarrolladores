@@ -33,13 +33,24 @@ Los RBACs de Kubernetes son una característica OPCIONAL. Por defecto los cluste
 
 Una vez que el cluster ha sido integrado con Azure AD, esta funcionalidad no puede ser deshabilitada Empezamos creando un grupo en Azure AD al que le asignaremos permisos en AKS:
 ```
-AKS_ADMIN_GROUP_ID=$(az ad group create \
-                        --display-name "aks admins" \
-                        --mail-nickname aksadmins \
-                        --description "Administradores de clusteres AKS" \
-                        --query objectId \
-                        --output tsv)
+AKS_ADMIN_GROUP_DISPLAY_NAME="aks admins"
+az ad group create \
+    --display-name $AKS_ADMIN_GROUP_DISPLAY_NAME \
+    --mail-nickname aksadmins \
+    --description "Administradores de clusteres AKS" \
+    --query objectId \
+    --output tsv)
 ```
+
+Tomamos el ID del grupo recién creado.
+```
+AKS_ADMIN_GROUP_ID=$(az ad group show \
+        --group $AKS_ADMIN_GROUP_DISPLAY_NAME \
+        --query objectId -o tsv)
+```
+
+Mostramos el ID del grupo.
+echo $AKS_ADMIN_GROUP_ID
 
 Actualizamos la integración de Azure AD para el cluster:
 ```
