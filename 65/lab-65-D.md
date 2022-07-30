@@ -60,10 +60,8 @@ code lab-65-D-nginx-deployment.yaml
 ```
 
 Las líneas más importantes son:
-```
 * *Línea 9*: Tenemos tres pods.
 * *Líneas 13 y 14*: Se cean las etiquetas ***app: nginx*** y ***version: 1.0***, que será utilizadas por el ***selector*** del servicio.
-```
 
 Creamos el deployment.
 ```
@@ -81,9 +79,8 @@ code lab-65-D-nginx-service.yaml
 ```
 
 Las líneas más importantes son:
-```
+
 * *Líneas 7,8 y 9*: Mediante el selector, elegimos los pods a los que se mandará el tráfico, que son los de la "versión 1.0".
-```
 
 Desplegamos el servicio.
 ```
