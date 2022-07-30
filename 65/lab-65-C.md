@@ -133,6 +133,11 @@ AKS_ID=$(az aks show \
             --output tsv)
 ```
 
+Lo mostramos.
+```
+echo $AKS_ID
+```
+
 Es algo así: ***/subscriptions/5d72e184-55f6-4093-838e-3d0f7506881a/resourcegroups/myaks-rg/providers/Microsoft.ContainerService/managedClusters/myaks***
 
 Lo consultamos:
