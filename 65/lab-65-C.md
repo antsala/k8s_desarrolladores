@@ -230,7 +230,7 @@ code lab-65-C-clusterRoleBinding.yaml
 * *Línea 2*: Define que estamos creando una instancia ***ClusterRoleBinding***.
 * *Línea 4*: Le asigna el nombre ***readOnlyBinding***.
 * *Líneas 5-8*: Hace referencia al objeto ***ClusterRole*** que creamos anteriormente.
-* *Líneas 9-12*: Se refiere al grupo de AAD que creamos antes (***aks users***). IMPORTANTE!!!! Sustituir en la línea 12 el id que hemos visualizado para ***AKS_USERS***.
+* *Líneas 9-12*: Se refiere al grupo de AAD que creamos antes (***aks users***). IMPORTANTE!!!! Sustituir en la línea 12 el id que hemos visualizado para ***AKS_USERS_GROUP_ID***.
 
 Guardar los cambios y salir.
 
