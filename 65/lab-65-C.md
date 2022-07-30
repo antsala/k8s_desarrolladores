@@ -150,7 +150,7 @@ az role assignment create \
 ```
 
 El resultado de esta acción se puede ver en la GUI en: ***Home/Kubernetes services/myaks/Access 
-control (IAM)/Role Assignments
+control (IAM)/Role Assignments***
 
 El rol ***Azure Kubernetes Service Cluster Role***, tiene como descripción ***List cluster user credential action***, que permite tomar las credenciales de ese usuario en el cluster y almacenarlas en ***.kube/config***, para que posteriormente ***kubectl*** pueda usarlas.
 
