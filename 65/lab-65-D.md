@@ -101,5 +101,37 @@ echo http://$IP_EXTERNA:8888
 
 Conectar con un navegador (o hacer un ***curl***) para probar que funciona correctamente.
 
+Procedemos a realizar un canary donde deseamos que el 25% del tráfico vaya hacia un pod con la ***versión 2.0*** de la aplicación. Para ello creamos un deployment con un pod de la nueva versión. Lo podemos ver en el archivo ***lab-65-D-nginx-deployment-canary-v2.yaml***
+```
+code lab-65-D-nginx-deployment-canary-v2.yaml
+```
+
+Desplegamos.
+```
+kubectl apply -f lab-65-D-nginx-deployment-canary-v2.yaml
+```
+
+Comprobamos los pods. Tendremos 3 de la ***versión 1.0*** y 1 de la ***versión 2.0***. Pero el servicio solo mete tráfico en los de versión 1.0.
+```
+kubectl get pods
+```
+
+Para hacer que el servicio balancee el nuevo pod, debemos hacer que el selector use solamente las etiquetas comunes en los dos desplieges. El archivo ***lab-65-D-nginx-service-modified.yaml*** selecciona ahora los pods que tienen solo la etiqueta ***app: nginx***, y en consecuencia meterá tráfico a los 4 pods.
+```
+code lab-65-D-nginx-service-modified.yaml
+```
+
+Actualizamos el servicio.
+```
+kubectl apply -f lab-65-D-nginx-service-modified.yaml
+```
+
+Mostramos para copiar.
+```
+echo http://$IP_EXTERNA:8888
+```
+
+Conectar con un navegador (o hacer un ***curl***) para probar que funciona correctamente. Refrescar (CTRL+F5) para determinar que en el balanceo también participa el pod de la ***versión 2.0***.
+
 
 
