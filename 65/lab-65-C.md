@@ -39,7 +39,7 @@ az ad group create \
     --mail-nickname aksadmins \
     --description "Administradores de clusteres AKS" \
     --query objectId \
-    --output tsv)
+    --output tsv
 ```
 
 Tomamos el ID del grupo recién creado.
