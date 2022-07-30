@@ -379,8 +379,6 @@ Borramos la caché de cuentas de Azure:
 ```
 az account clear
 ```
-
-Iniciamos sesión con el usuario ***Luke@antsalgrahotmail.onmicrosoft.com*** y password ***useTheForce#***
 ```
 az login
 ```
