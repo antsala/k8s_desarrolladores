@@ -59,6 +59,12 @@ Vamos a hacer un ejemplo de este tipo de despliegue. Para ello usaremos una imag
 code lab-65-D-nginx-deployment.yaml
 ```
 
+Las líneas más importantes son:
+```
+* *Línea 9*: Tenemos tres pods.
+* *Líneas 13 y 14*: Se cean las etiquetas ***app: nginx*** y ***version: 1.0***, que será utilizadas por el ***selector*** del servicio.
+```
+
 Creamos el deployment.
 ```
 kubectl apply -f lab-65-D-nginx-deployment.yaml
@@ -72,6 +78,11 @@ kubectl get all
 Procedemos a crear un ***servicio*** para balancear el tráfico contra los tres pods que acabamos de iniciar. Abrimos el archivo ***lab-65-D-nginx-service.yaml***
 ```
 code lab-65-D-nginx-service.yaml
+```
+
+Las líneas más importantes son:
+```
+* *Líneas 7,8 y 9*: Mediante el selector, elegimos los pods a los que se mandará el tráfico, que son los de la "versión 1.0".
 ```
 
 Desplegamos el servicio.
