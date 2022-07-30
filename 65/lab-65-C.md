@@ -104,7 +104,7 @@ echo $LUKE_USER_ID
 
 Creamos otro grupo de seguridad, llamado ***aks users***, donde pondremos a los usuarios del cluster sin rol administrativo:
 ```
-AKS_USER_GROUP_ID=$(az ad group create \
+AKS_USERS_GROUP_ID=$(az ad group create \
                         --display-name "aks users" \
                         --mail-nickname aksusers \
                         --description "usuarios de clusteres AKS" \
@@ -114,13 +114,13 @@ AKS_USER_GROUP_ID=$(az ad group create \
 
 Mostramos el ID del grupo ***aks users***
 ```
-echo $AKS_USER_GROUP_ID
+echo $AKS_USERS_GROUP_ID
 ```
 
 Agregamos a ***Luke*** al grupo de usuarios del cluster:
 ```
 az ad group member add \
-    --group $AKS_USER_GROUP_ID \
+    --group $AKS_USERS_GROUP_ID \
     --member-id $LUKE_USER_ID
 ```
 
