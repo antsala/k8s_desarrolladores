@@ -28,6 +28,33 @@ Cambiamos al directorio de trabajo.
 cd ~/k8s_desarrolladores/65
 ```
 
+Vamos a usar archivos html sencillos que representarán las dos versiones de la aplicación. Haremos uso de configmaps para inyectarlos.
+
+El archivo ***lab-65-D-app-v1-configmap.yaml*** contiene el código fuente de la ***versión 1.0***. Lo inspeccionamos:
+```
+code lab-65-D-app-v1-configmap.yaml
+```
+
+De forma análoga abrimos el configmap para la ***versión 2.0*** de la aplicación.
+```
+code lab-65-D-app-v2-configmap.yaml
+```
+
+Creamos los configmaps
+```
+kubectl apply lab-65-D-app-v1-configmap.yaml
+kubectl apply lab-65-D-app-v2-configmap.yaml
+```
+
+Comprobamos
+```
+kubectl describe configmap app-v1-configmap
+```
+```
+kubectl describe configmap app-v2-configmap
+```
+
+
 Vamos a hacer un ejemplo de este tipo de despliegue. Para ello usaremos una imagen de ***nginx***. Abrimos el archivo ***lab-65-D-nginx-deployment.yaml***.
 ```
 code lab-65-D-nginx-deployment.yaml
@@ -40,5 +67,6 @@ kubectl apply -f lab-65-D-nginx-deployment.yaml
 
 Comprobamos que se despliega correctamente.
 ```
-kubectl get all -w
+kubectl get all
 ```
+

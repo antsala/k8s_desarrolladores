@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-v1-configmap
+  namespace: default
+data:
+  index.html: |
+    <html>
+    <h1>Hola Mundo!!!!</h1>
+    </br>
+    <h1>Esta es la versión 1.0 de la aplicación</h1>
+    </html

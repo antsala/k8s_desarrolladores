@@ -14,18 +14,18 @@ spec:
         version: "1.0"
     spec:
       containers:
-        - name: nginx
-          image: nginx:alpine
-          resources:
-            limits:
-              memory: "128Mi"
-              cpu: "50m"
-          ports:
-            - containerPort: 80
-          volumeMounts:
-            - mountPath: /usr/share/nginx/html
-              name: index.html
-          volumes:
-            - name: index.html
-              hostPath:
-                path: "~/k8s_desarrolladores/65/appV1.0"
+      - name: nginx
+        image: nginx:alpine
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: my-vol
+      volumes:
+      - name: my-vol
+        hostPath:
+          path: ./65/appV1.0
