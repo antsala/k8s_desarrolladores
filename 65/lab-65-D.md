@@ -74,4 +74,8 @@ Procedemos a crear un ***servicio*** para balancear el tráfico contra los tres 
 code lab-65-D-nginx-service.yaml
 ```
 
+Desplegamos el servicio.
+```
+kubectl apply -f lab-65-D-nginx-service.yaml
+```
 
