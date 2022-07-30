@@ -54,7 +54,6 @@ kubectl describe configmap app-v1-configmap
 kubectl describe configmap app-v2-configmap
 ```
 
-
 Vamos a hacer un ejemplo de este tipo de despliegue. Para ello usaremos una imagen de ***nginx***. Abrimos el archivo ***lab-65-D-nginx-deployment.yaml***.
 ```
 code lab-65-D-nginx-deployment.yaml
@@ -69,4 +68,10 @@ Comprobamos que se despliega correctamente.
 ```
 kubectl get all
 ```
+
+Procedemos a crear un ***servicio*** para balancear el tráfico contra los tres pods que acabamos de iniciar. Abrimos el archivo ***lab-65-D-nginx-service.yaml***
+```
+code lab-65-D-nginx-service.yaml
+```
+
 
