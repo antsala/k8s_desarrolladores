@@ -283,6 +283,8 @@ code lab-65-C-roleBinding.yaml
 * *Línea 7*: Hacer referencia a una instancia ***Role*** y no a una ***ClusterRole***.
 * *Líneas 11-13*: Define un usuario en lugar de un grupo. IMPORTANTE!!!! Poner en la línea 13 el usuario que hemos creado ***luke@antsalgrahotmail.onmicrosoft.com***.
 
+Guardamos y salimos.
+
 Creamos la instancia:
 ```
 kubectl create -f lab-65-C-roleBinding.yaml

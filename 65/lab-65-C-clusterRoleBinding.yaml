@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - kind: Group
   apiGroup: rbac.authorization.k8s.io
-  name: "2f5de9a5-dc1b-4ee6-b4a2-4898a6ee3fb6"
+  name: "2175c4f9-7cb1-4a8e-a893-b2f658163f63"
