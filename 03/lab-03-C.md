@@ -58,6 +58,7 @@ sudo docker image ls
 
 En el directorio de trabajo, existe una carpeta llamada ***website***, que contiene el archivo ***index.html*** con la aplicación web. Este archivo por comodidad en la explicación es muy elemental. Lo editamos con el siguiente comando.
 ```
+cp ./website/index_original.html ./website/index.html
 code ./website/index.html
 ```
 
