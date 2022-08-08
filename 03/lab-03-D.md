@@ -9,7 +9,7 @@ Requisitos:
 1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o escritorio remoto.
 2. Tener instalado ***Docker-ce*** como runtime de contenedor en dicha máquina virtual.
 
-## Ejercicio 1: ***Creación del Frontend ***
+## Ejercicio 1: ***Creación del Frontend***
 
 Para mayor aclaración, ver ***diapositiva 18*** (Frontend-Backend 1)
 
