@@ -282,7 +282,7 @@ kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master
 kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master.default
 ```
 ```
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master-.internal-service.default.svc.cluster.local
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master.default.svc.cluster.local
 ```
 
 ## Ejercicio 3:  ***Despliegue de las réplicas de Redis***
