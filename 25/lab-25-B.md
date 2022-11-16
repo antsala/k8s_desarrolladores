@@ -384,7 +384,7 @@ Eliminamos los objetos del cluster:
 ```
 kubectl delete -f lab-25-B-mongodb.yaml
 kubectl delete -f lab-25-B-mongo-express.yaml
-kubectl delete -f lab-25-B-mongo-configmap.yaml
+kubectl delete -f lab-25-B-mongodb-configmap.yaml
 kubectl delete -f lab-25-B-mongodb-secret.yaml
 ```
 
