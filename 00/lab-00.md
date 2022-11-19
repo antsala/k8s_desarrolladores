@@ -61,6 +61,15 @@ Iniciamos sesión con el usuario ***administrador*** de la subscripción de Azur
 az login
 ```
 
+Si hemos habilitado ***MFA*** en la autenticación de Azure, aparecerá un mensaje indicando que el tenant requiere autenticación.
+
+![Advertencia legal](../img/202211191023.png)
+
+Escribimos en ese caso el siguiente comando y autorizamos el login con el factor adicional configurado.
+```
+az login --tenant <Poner_aquí_el_TENANT_ID>
+```
+
 Creamos un grupo de recursos para el cluster.
 ```
 az group create \
