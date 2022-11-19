@@ -15,7 +15,7 @@ spec:
         app: page-404
     spec:
       containers:
-        - name: page-404-containier
-          image: antsala/page_not_found
+        - name: page-404-container
+          image: docker.io/antsala/page_not_found
           ports:
             - containerPort: 80
