@@ -400,6 +400,17 @@ Ahora debemos modificar el objeto ingress para que configure el endpoint para el
 code lab-35-A-ingress-with-default-backend.yaml
 ```
 
+
+El ***Default backend*** responde en el path ***/***, es decir, si nos conectamos a ***nombre_de_dominio_dns/***, saltará la página de error personalizada. 
+
+Observa los cambios en este YAML:
+
+* *Línea 6 y 7*: Definen anotaciones, indicando que el controlador ***Ingress*** es de la clase ***Nginx***, y que se producirá una reescritura de la URL, de forma que si dicha URL no existe, se reenviará el tráfico al default backend en el path ***/***.
+* *Línea 18 y 19 *: Nuestra aplicación responderá en el path ***/app*** . Observa el uso de expresiones regulares.
+
+Para la reescritura de URL te recomendamos que leas este artículo del controlador ingress de Nginx: https://kubernetes.github.io/ingress-nginx/user-guide/ingress-path-matching/
+
+
 Lo aplicamos:
 ```
 kubectl apply -f lab-35-A-ingress-with-default-backend.yaml
@@ -421,6 +432,16 @@ Default backend:  page-404-internal-service:6666 (172.17.0.9:80)
 ```
 
 Como se puede observar, el Default backend está actualizado para que se llame al servicio ***page-404-internal-service:6666***, que a su vez redirige el tráfico al pod ***172.17.0.9:80***, que mostrará la página error personalizada.
+
+Prueba a conectar a la siguiente URL. Debes ver la aplicación.
+```
+http://www.hellocontainer.com/app
+```
+
+Si conectas a esta otra, debes ver la página de error personalizada.
+```
+http://www.hellocontainer.com/otra_url
+```
 
 Limpiamos los recursos.
 ```
