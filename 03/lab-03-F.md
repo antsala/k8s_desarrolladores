@@ -15,6 +15,10 @@ Cambiamos al directorio de trabajo.
 cd ~/k8s_desarrolladores/03/frontend-backend/sinatra/webapp_redis
 ```
 
+```
+chmod +x ./bin/webapp
+```
+
 Editamos el archivo de manifiesto.
 ```
 code Docker-compose.yaml
