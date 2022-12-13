@@ -11,7 +11,7 @@ Requisitos:
 
 
 ```
-cd ~/k8s_desarrolladores/03/webapp_redis
+cd ~/k8s_desarrolladores/03/frontend-backend/sinatra/webapp_redis
 ```
 
 ```
@@ -37,7 +37,7 @@ curl localhost:8000
 
 Enviamos una request con POST a ***/json/*** con los campos de un formulario. Esta vez se guardará en redis, además de devolverse en formato JSON.
 ```
-curl -i -H 'Accept: application/json' -d 'nombre=Antonio&apellidos=Salazar Gravan&telefono=666123321' http://localhost:8080/json/
+curl -i -H 'Accept: application/json' -d 'nombre=Antonio&apellidos=Salazar Gravan&telefono=666123321' http://localhost:8000/json/
 ```
 
 Por último, una GET a ***/json*** que provocará una lectura de Redis para leer los parámetros del formulario, que serán devueltos en la response en formato JSON.

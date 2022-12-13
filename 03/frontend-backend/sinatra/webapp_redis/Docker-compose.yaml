@@ -21,6 +21,7 @@ services:
   redis:  # Este es el Backend.
     # Si has subido tu imagen a Docker Hub pon la etiqueta apropiada.
     image: antsala/redis
+    container_name: db  # Importantísimo. El frontend se conecta a un contenedor llamado 'db'.
     deploy:
       replicas: 1
       resources:
