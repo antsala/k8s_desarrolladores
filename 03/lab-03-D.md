@@ -171,6 +171,8 @@ Procedemos a desplegar el Backend, que será un contenedor Redis que almacenará
 La carpeta ***redis*** contiene los archivos del Backend. En primer lugar consultamos el Dockerfile que construirá el contenedor.
 ```
 cd ~/k8s_desarrolladores/03/frontend-backend/sinatra/redis
+```
+```
 code ./Dockerfile
 ```
 
