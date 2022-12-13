@@ -6,6 +6,7 @@ Requisitos:
 
 1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o escritorio remoto.
 2. Tener instalado ***Docker-ce*** como runtime de contenedor en dicha máquina virtual.
+3. Haber desplegado el cluster ***Swarm***.
 
 ## Ejercicio 1: ***Desplegar por medio de archivo YAML*** 
 
