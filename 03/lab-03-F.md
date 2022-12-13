@@ -10,97 +10,41 @@ Requisitos:
 ## Ejercicio 1: ***Desplegar por medio de archivo YAML*** 
 
 
-
-
-
-Nos ponemos en ***HOME***.
 ```
-cd ~
+cd ~/k8s_desarrolladores/03/webapp_redis
 ```
 
-Descargamos el compilador de Go, lo descoprimimos.
 ```
-curl -O https://dl.google.com/go/go1.15.5.linux-amd64.tar.gz
-tar xvf go1.15.5.linux-amd64.tar.gz
+chmod +x ./bin/webapp
 ```
 
-Cambiamos propietario.
 ```
-sudo chown -R root:root ./go
-```
-
-Lo cambiamos de carpeta.
-```
-sudo mv go /usr/local
+code Docker-compose.yaml
 ```
 
-Editamos ***.profile*** para agregar variables en entorno al final del archivo.
 ```
-code .profile
-```
-
-Agregar estas dos líneas al final del archivo.
-```
-export GOPATH=$HOME/k8s_desarrolladores/03/work
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+sudo docker stack deploy -c Docker-compose.yaml webappRedisStack
 ```
 
-Guardar y salir. Cargamos el profile para que se actualicen las varibles de entorno.
 ```
-source .profile
-```
-
-## Ejercicio 2: ***Compilar una app en Go***
-
-Editamos el archivo ***hello.go*** que usaremos para probar el compilador.
-```
-code ~/k8s_desarrolladores/03/work/src/hello/hello.go
+sudo docker stack ps webappRedisStack
 ```
 
-Como se puede comprobar es un código sencillo que muestra el mensaje ***Hola Mundo!!!***
-
-Procedemos a compilarlo, indicando el nombre de la carpeta. Se procederá a compilar todos los archivos ***.go*** que existan (en este caso solo está ***hello.go***)
+Ahora probamos. En primer lugar una GET al directorio raíz, debe devolver un mensaje.
 ```
-go install hello
+curl localhost:8000
 ```
 
-Comprobamos si ha compilado escribiendo el nombre del ejecutable (***hello***)
+Enviamos una request con POST a ***/json/*** con los campos de un formulario. Esta vez se guardará en redis, además de devolverse en formato JSON.
 ```
-hello
-```
-
-Para determinar la carpeta en la que Go coloca el ejecutable:
-```
-which hello
+curl -i -H 'Accept: application/json' -d 'nombre=Antonio&apellidos=Salazar Gravan&telefono=666123321' http://localhost:8080/json/
 ```
 
-Acabamos de comprobar que el compilador de Go funciona. Procedemos a crear una app que haga algo más apropiado. Se encuentra en el archivo ***~/k8s_desarrolladores/03/work/src/hellocontainer/helloContainer.go***. La editamos.
+Por último, una GET a ***/json*** que provocará una lectura de Redis para leer los parámetros del formulario, que serán devueltos en la response en formato JSON.
 ```
-code ~/k8s_desarrolladores/03/work/src/helloContainer/helloContainer.go
-```
-
-El programa hace lo siguiente:
-
-* *Líneas 1-9*: Declara módulos a usar.
-* *Línea 11*: Función ***main***. Es el punto de entrada a la aplicación.
-* *Líneas 12-15*: Inicializa la variable ***port*** al valor ***8080***. Si se pasa el valor del puerto como variable de entorno al iniciar la app, el código puede leer dicha variable y actualizar el puerto.
-* *Línea 17*: Instancia un objeto servidor web.
-* *Línea 18*: Asocia función de respuesta a evento. Si hay una request a la URI ***/***, el código llamará a la función ***helloContainer*** para procesar dicha request.
-* *Línea 20*: Se muestra mensaje por la salida estándar.
-* *Línea 21 y 22*: Se inicia el servidor web. Cualquier error es guardado en el objeto ***err*** y almacenado en el log.
-* *Línea 25*: Inicio de la función de respuesta a evento.
-* *Líneas 26-30*: Se disponen diversos mensajes, entre ellos el nombre del host, que serán mostrados en la response.
-* *Líneas 32-39*: Se leen todas las IPs asignadas al servidor que se mostrarán en la response.
-
-Salimos sin modificar y procedemos a compilar el programa
-```
-go install helloContainer
+curl http://localhost:8080/json
 ```
 
-Lanzamos la aplicación para probarla
-```
-helloContainer
-```
 
 Abrimos otra consola, porque en la anterior se está ejecutando el servidor, y hacemos una request al puerto ***8080***.
 ```
