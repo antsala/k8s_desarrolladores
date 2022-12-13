@@ -9,14 +9,11 @@ Requisitos:
 
 ## Ejercicio 1: ***Desplegar por medio de archivo YAML*** 
 
-
+Cambiamos al directorio de trabajo.
 ```
 cd ~/k8s_desarrolladores/03/frontend-backend/sinatra/webapp_redis
 ```
 
-```
-chmod +x ./bin/webapp
-```
 
 ```
 code Docker-compose.yaml
@@ -42,7 +39,7 @@ curl -i -H 'Accept: application/json' -d 'nombre=Antonio&apellidos=Salazar Grava
 
 Por último, una GET a ***/json*** que provocará una lectura de Redis para leer los parámetros del formulario, que serán devueltos en la response en formato JSON.
 ```
-curl http://localhost:8080/json
+curl http://localhost:8000/json
 ```
 
 

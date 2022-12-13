@@ -1,6 +1,6 @@
 version: "3"
 services:
-  sinatra:  # Este es el frontend.
+  sinatra:  # Este es el frontend Sinatra.
     # Si has subido tu imagen a Docker Hub pon la etiqueta apropiada.
     image: antsala/sinatra
     deploy:
@@ -18,7 +18,7 @@ services:
     networks:
       - app
 
-  db:  # Este es el Backend.
+  db:  # Este es el Backend Redis.
     # Si has subido tu imagen a Docker Hub pon la etiqueta apropiada.
     image: antsala/redis
     deploy:
