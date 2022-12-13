@@ -14,18 +14,49 @@ Cambiamos al directorio de trabajo.
 cd ~/k8s_desarrolladores/03/frontend-backend/sinatra/webapp_redis
 ```
 
-
+Editamos el archivo de manifiesto.
 ```
 code Docker-compose.yaml
 ```
 
+* *Línea 35 y 36*: Se crea una red llamada ***app*** para que el frontend y el backend se comuniquen.
+* *Líneas 3-19*: Se define el servicio de frontend ***Sinatra***, donde destacamos:
+* *Línea 15*: El puerto externo lo ponemos a ***8000***.
+* *Línea 17*: Se monta un volumen para que el contenedor acceda a la aplicación.
+* *Línea 18 y 19: Conectamos al contenedor a la red ***app***.
+
+Muy importante!!!
+
+En el ejercicio anterior te habrás dado cuenta que las instancias reciben un nombre especial cuando se despliegan en el cluster. Tienen la forma siguiente: ***NombreDelStack_NombreDelServicio.NumeroDeInstancia.IDContenedor***. De esta forma, el contenedor de redis se llamaría, por ejemplo así: ***webappRedisStack_db.1.r8d70eaexrpevi4scdpfdfldg***.
+(Nota: Puedes verificarlo listando los contenedores cuando hayas desplegado el stack)         
+
+Esto introduce una dificultad importante, porque si recuerdas, el código del frontend Sinatra, se conectaba al backend por medio del nombre del contenedor, que en el ejercicio anterior era ***db***, y si bien podríamos saber la parte fija del nombre del contenedor, resutará del todo imposible "adivinar" cual será el id del contenedor.
+
+Para solucionar este problema, en Swarm un contenedor no se conecta a otro directamente (como hicimos en el ejercicio ***lab-03-D***), sino que el contenedor deberá conectarse a un SERVICIO y este, el servicio, redirigirá el tráfico a los contenedores apropiados.
+
+Pues bien, para no modificar la aplicación Sinatra, que conectaba a "algo" llamado ***db***, lo que vamos a hacer es nombrar al servicio de backend (Redis) precísamente con ese nombre (***db***).
+
+Seguimos con el archivo YAML.
+
+* *Líneas 21 a 33*: Se define el servicio de backend de Redis, que como hemos aclarado debe llamarse obligatoriamente ***db***.
+* *Línees 32 y 33*: Conectamos los contenedores del servicio Redis a la red ***App***.
+
+Desplegamos el Stack
 ```
 sudo docker stack deploy -c Docker-compose.yaml webappRedisStack
 ```
 
+Comprobamos que se ha desplegado correctamente.
 ```
 sudo docker stack ps webappRedisStack
 ```
+
+Como curiosidad, listamos los contenedores.
+```
+sudo docker container ls -a
+```
+
+Solo resta probar la aplicación.
 
 Ahora probamos. En primer lugar una GET al directorio raíz, debe devolver un mensaje.
 ```
@@ -42,186 +73,15 @@ Por último, una GET a ***/json*** que provocará una lectura de Redis para leer
 curl http://localhost:8000/json
 ```
 
+Nuestra aplicación está formada por dos partes, donde el Frontend NO TIENE ESTADO y el Backend SÍ lo tiene. 
 
-Abrimos otra consola, porque en la anterior se está ejecutando el servidor, y hacemos una request al puerto ***8080***.
-```
-curl localhost:8080
-```
+Para las aplicaciones SIN estado, puedes cambiar el número de replicas sin problemas, pero para las que lo tienen, esto no se puede hacer. Kubernetes ofrece un tipo de objeto especial para resolver esta limitación, llamado ***StatefulSet***, pero Docker no lo tiene.
 
-La salida será similar a la siguiente, donde se muestra el nombre del host y las direcciones IPs asignadas.
-```
-Hola Mundo!
-Version: 1.0.0
-Hostname: ubu
-Dirección IP: 192.168.1.45
-Dirección IP: 172.17.0.1
-Dirección IP: 172.18.0.1
-```
-
-Cerramos la última consola y, paramos el servidor con ***CTRL+C***.
-
-
-## Ejercicio 3: ***Contenerizar la app Go***
-
-Vamos a contenerizar la app. Para ello nos colocamos en el directorio de contexto con el siguiente comando.
-```
-cd ~/k8s_desarrolladores/03/helloContainerCtx
-```
-
-Copiamos la carpeta ***helloContainer*** (que contiene ***helloContainer.go***) a este directorio de contexto.
-```
-cp -r ~/k8s_desarrolladores/03/work/src/helloContainer/ .
-```
-
-En el directorio de contexto tenemos un archivo Dockerfile que pasamos a detallar.
-```
-code ~/k8s_desarrolladores/03/helloContainerCtx/Dockerfile
-```
-
-Este Dockerfile va a hacer dos cosas:
-
-1.Compilará el código fuente (***helloContainer.go***) y generará el ejecutable.
-2.Tomará el ejecutable generado y lo almacenará en la imagen de contenedor.
-
-* *Línea 1*: Crea un contenedor basado en la imagen ***golang:1.11-alpine***, que es una imagen que tiene instalada el compilador de Go.
-* *Línea 2*: Añade los archivos del directorio de contexto, en este caso la carpeta ***helloContainer*** (Que a su vez contiene el archivo ***helloContainer.go***) en la carpeta ***/go/src*** de la imagen de contenedor.
-* *Línea 3*: Compila nuestra aplicación en Go. El ejecutable se almacena en la ruta ***/go/bin/helloContainer***.
-
-En este punto, la imagen de contenedor, a la que podemos llamar ***PREVIA***, tiene el ejecutable de nuestra aplicación.
-
-El archivo Dockerfile contínua, desde otra imagen base.
-
-* *Línea 5*: Se crea un contenedor con la imagen ***alpine***.
-* *Línea 6*: Esto es lo importante: Se establece como contexto la imagen ***PREVIA***, copia de ella el ejecutable de la aplicación (***/go/bin/hellocontainer***) y lo pone en el directorio actual (***.***) de la ***NUEVA IMAGEN***.
-* *Línea 7*: Por último. se ejecuta el programa ***helloContainer***, que está en el directorio actual (***.***)
-
-
-Con esta técnica se puede compilar el código fuente y crear la imagen de contenedor de la aplicación. Es ideal para usar en los pipelines de CI/CD.
-
-Creamos la imagen (que a su vez compilará el código fuente)
-```
-sudo docker build -t antsala/hello_container .
-```
-
-Comprobamos que la imagen se ha creado correctamente.
-```
-sudo docker image ls
-```
-
-La salida será similar a esta. Nota: Se han omitido el resto de imágenes previas)
-```
-REPOSITORY                       TAG           IMAGE ID       CREATED          SIZE
-antsala/hello_container          latest        b66a10e42c57   52 seconds ago   12.2MB
-```
-
-Subimos la imagen a DockerHub.
-```
-sudo docker login
-```
-```
-sudo docker push antsala/hello_container
-sudo docker logout
-```
-
-Lanzamos un contenedor para probar nuestra aplicación contenerizada.
-```
-sudo docker container run --name helloContainer -d -p 85:8080 antsala/hello_container
-```
-
-Probamos
-```
-curl localhost:85
-```
-
-La salida será similar a esto.(Nota: Observar como el nombre del host es el id del contenedor)
-```
-Hola Mundo!
-Version: 1.0.0
-Hostname: 93a224a3858d
-Dirección IP: 172.17.0.2
-```
-
-Una vez comprobado, eliminamos el contenedor.
-```
-sudo docker container rm -f helloContainer
-```
-
-
-## Ejercicio 4: ***Desplegar servicio en Swarm***
-
-
-En este ejercicio vamos a desplegar un servicio basado en la imagen de contenedor que hemos creado. La práctica va a servirnos para introducir los ***archivos de manifiesto*** que definen el servicio (y que serán la clave de Kubernetes). También podremos probar el balanceo, característico de los micro servicios.
-
-En primer lugar debemos desplegar el cluster de Docker (Swarm). Trabajaremos con un único nodo, pero esto no es importante.
-```
-sudo docker swarm init
-```
-
-Como resultado, un mensaje nos informará que el cluster está levantado, así como el procedimiento a seguir para añadir más nodos al cluster.
-
-Para poder crear archivos YAML de manifiesto, necesitamos que esté instalada la herramienta ***Docker-compose***. La instalamos con el siguiente comando:
-```
-sudo apt -y install docker-compose
-```
-
-Ahora procedemos a estudiar un archivo de manifiesto de ejemplo. Este se encuentra en la carpeta *** '~/k8s_desarrolladores/03/helloContainerSvc***, así que entramos en ella.
-```
-cd ~/k8s_desarrolladores/03/helloContainerSvc
-```
-
-En esta carpeta tenemos el archivo ***Docker-compose.yaml***. Lo editamos para estudiarlo:
-```
-code ./Docker-compose.yaml
-```
-
-* *Línea 18 y 19*: Crea una red, llamada ***webnet*** para uso exclusivo de los contenedores que van a crearse.
-* *Línea 2*: Define los servicios que se implementarán. En este caso uno solo, el servicio ***web***, que se declara desde la línea 4 hasta la 17.
-* *Línea 5*: Indicamos la imagen que usarán los contenedores.
-* *Línea 7*: Deseamos 5 réplicas (5 contenedores)
-* *Líneas 10-11*: Limitamos cada contenedor a usar el 10% de la CPU total y 50 MB de RAM.
-* *Líneas 12-13*: Los contenedores se reiniciarán si la aplicación falla.
-* *Línea 15*: Regla de nateo para acceder al servicio. Conectaremos contra la IP de cualquier nodo del cluster, al puerto ***4000***. El balanceador irá repartiendo el tráfico entre los 5 contenedores, que responden en el puerto ***8080***.
-* *Línea 17*: Conectamos los contenedores a la red ***webnet***.
-
-Salimos sin modificar y procedemos a desplegar este servicio en el cluster. Lo llamaremos ***helloContainerStack***.
-```
-sudo docker stack deploy -c Docker-compose.yaml helloContainerStack
-```
-
-Swarm responderá que ha creado la red y el servicio. Para comprobarlo ejecutamos el siguiente comando:
-```
-sudo docker stack ls
-```
-
-La salida es como esta:
-```
-NAME                  SERVICES   ORCHESTRATOR
-helloContainerStack   1          Swarm
-```
-
-Para ver los contenedores que ha levantado, usamos este comando:
-```
-sudo docker stack ps helloContainerStack
-```
-
-La salida será similar a la siguiente, en la que podemos ver los 5 contenedores corriendo.
-```
-ID             NAME                        IMAGE                            NODE      DESIRED STATE   CURRENT STATE           ERROR     PORTS
-a69nbga2tm61   helloContainerStack_web.1   antsala/hello_container:latest   ubu       Running         Running 2 minutes ago             
-mkze4dpg85rz   helloContainerStack_web.2   antsala/hello_container:latest   ubu       Running         Running 2 minutes ago             
-jfx4eweg2kv1   helloContainerStack_web.3   antsala/hello_container:latest   ubu       Running         Running 2 minutes ago             
-wqo1cvz212z1   helloContainerStack_web.4   antsala/hello_container:latest   ubu       Running         Running 2 minutes ago             
-ypqzhk0cp9x1   helloContainerStack_web.5   antsala/hello_container:latest   ubu       Running         Running 2 minutes ago 
-```
-
-Lo que realmente nos interesa demostrar es el funcionamiento del balanceo. Lo conseguimos repitiendo el siguiente comando, con el que verificamos que van contestando los diferentes contenedores que forman en servicio.
-```
-curl localhost:4000
-```
+Como práctica adicional te animo a que escales a 5 réplicas el ***FRONTEND*** y pruebes la aplicación. Podrás comprobar que funciona perfectamente.
 
 Eliminamos la aplicación. 
 ```
-sudo docker stack rm helloContainerStack
+sudo docker stack rm webappRedisStack
 ```
 
 Destruimos el cluster.

@@ -279,14 +279,9 @@ Eliminamos la aplicación.
 sudo docker stack rm helloContainerStack
 ```
 
-Destruimos el cluster.
-```
-sudo docker swarm leave --force
-```
 
-Borramos los contenedores y la imágenes.
+Borramos los contenedores (por si quedara alguno perdido)
 ```
 sudo docker container rm -f `sudo docker container ls -a -q`
-sudo docker image rm -f `sudo docker image ls -q`
 ```
 
