@@ -1,13 +1,15 @@
-# Laboratorio 03-E: ***Microservicios***
+# Laboratorio 03-F: ***Frontend y Backend por medio de archivo YAML***
  
-En este laboratorio crearemos una aplicación el lenguaje ***Go***. Esta app la compilaremos en el mismo momento de generar la imagen de contenedor. La app levanta un servidor web que, si nos conectamos, nos responde indicando el nombre del host y las direcciones IPs que tiene asignada. Posteriormente crearemos un servicio en ***Swarm*** para demostrar en balanceo.
+En este laboratorio crearemos volvemos  desplegar la aplicación ***SINATRA/REDIS*** pero esta vez de forma declarativa por medio de un archivo YAML.
 
 Requisitos:
 
 1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o escritorio remoto.
 2. Tener instalado ***Docker-ce*** como runtime de contenedor en dicha máquina virtual.
 
-## Ejercicio 1: ***Instalación de Go*** 
+## Ejercicio 1: ***Recompilar las imágenes*** 
+
+
 
 Nos ponemos en ***HOME***.
 ```
