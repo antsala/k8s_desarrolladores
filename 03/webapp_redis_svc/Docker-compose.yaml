@@ -13,6 +13,8 @@ services:
         condition: on-failure
     ports:
       - "8000:4567"
+    volumes:
+      - .:/opt/webapp  # Ojo, '.' equivale a $PWD en 'docker run...'
     networks:
       - app
 
