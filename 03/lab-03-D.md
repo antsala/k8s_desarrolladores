@@ -62,6 +62,14 @@ nginx                            latest    c919045c4c2b   12 days ago         14
 ubuntu                           16.04     b6f507652425   6 months ago        135MB
 ```
 
+Subimos la imagen al repositorio.
+```
+sudo docker login
+```
+```
+sudo docker push antsala/sinatra
+```
+
 En la carpeta ***sinatra*** tenemos la carpeta de la aplicación, llamada ***webapp***. Entramos en ella.
 ```
 cd webapp
