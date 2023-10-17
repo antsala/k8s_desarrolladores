@@ -76,6 +76,7 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
    - ***Compilar*** una app en Go.
    - ***Contenerizar*** la app Go.
    - Desplegar servicio en ***Swarm***.
+   - Frontend y Backend por medio de archivo YAML.
 
 
 

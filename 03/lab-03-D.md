@@ -62,6 +62,18 @@ nginx                            latest    c919045c4c2b   12 days ago         14
 ubuntu                           16.04     b6f507652425   6 months ago        135MB
 ```
 
+Subimos la imagen al repositorio.
+```
+sudo docker login
+```
+```
+sudo docker push antsala/sinatra
+```
+```
+sudo docker logout
+```
+
+
 En la carpeta ***sinatra*** tenemos la carpeta de la aplicación, llamada ***webapp***. Entramos en ella.
 ```
 cd webapp
@@ -159,6 +171,8 @@ Procedemos a desplegar el Backend, que será un contenedor Redis que almacenará
 La carpeta ***redis*** contiene los archivos del Backend. En primer lugar consultamos el Dockerfile que construirá el contenedor.
 ```
 cd ~/k8s_desarrolladores/03/frontend-backend/sinatra/redis
+```
+```
 code ./Dockerfile
 ```
 
@@ -191,6 +205,17 @@ antsala/apache2                  latest    9f6e1d4e26ca   20 hours ago     220MB
 ubuntu                           latest    2b4cba85892a   10 days ago      72.8MB
 nginx                            latest    c919045c4c2b   12 days ago      142MB
 ubuntu                           16.04     b6f507652425   6 months ago     135MB
+```
+
+Subimos la imagen al repositorio.
+```
+sudo docker login
+```
+```
+sudo docker push antsala/redis
+```
+```
+sudo docker logout
 ```
 
 Procedemos a levantar un contenedor de Redis para probar.
