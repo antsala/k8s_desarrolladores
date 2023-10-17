@@ -376,6 +376,15 @@ En otra terminal ejecutamos:
 minikube tunnel
 ```
 
+Para probar, conectar al puerto 8081 de la IP externa. las credenciales son:
+```
+admin
+```
+
+```
+pass
+```
+
 Limpiamos los recursos:
 
 Cerramos la terminal de ***minikube tunnel***
