@@ -194,9 +194,6 @@ El repositorio GIT está organizado en una serie de carpetas. Las presentaciones
 ## Carpeta 55
 
 1. Laboratorio 55-A: ***Usar volúmenes en las aplicaciones***. Ejercicios:
-   - Despliegue del servidor Redis.
-   - Creación de un ***ConfigMap*** desde un archivo.
-   - Creación de un ConfigMap desde archivo YAML.
    - Instalar aplicaciones ***con estado (statefull)*** en el cluster.
    - ***Persistent Volume Claims*** (PVCs).
 
