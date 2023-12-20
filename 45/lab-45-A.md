@@ -22,7 +22,7 @@ El escalado de nodos es una característica nativa en los clusters administrados
 
 Desplegamos la aplicación Guestbook de ejemplo de Google, que es la misma del laboratorio 25-C. Editamos el archivo para comprobarlo:
 ```
-code lab-45-guestbook-all-in-one.yaml
+nano lab-45-guestbook-all-in-one.yaml
 ```
 
 Creamos todos los objetos en el cluster:
@@ -105,7 +105,7 @@ redis-replica-5bc7bcc9c4-wj2ws   1/1     Running   0          6m19s
 
 Abrimos el archivo de ejemplo para configurar el Horizontal POD Autoscaler ***lab-45-hpa.yaml***.
 ```
-code lab-45-hpa.yaml
+nano lab-45-hpa.yaml
 ```
 
 Las líneas más importantes son:
