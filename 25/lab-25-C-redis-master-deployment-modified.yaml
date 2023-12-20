@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: master
-        image: k8s.gcr.io/redis:e2e
+        image: docker.io/antsala/guestbook-redis-master:latest
         command:
         - redis-server
         - "/redis-master/redis.conf"
