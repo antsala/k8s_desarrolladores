@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: master
-        image: docker.io/redis:6.0.5
+        image: k8s.gcr.io/redis:e2e
         command:
         - redis-server
         - "/redis-master/redis.conf"

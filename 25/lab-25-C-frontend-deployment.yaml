@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: php-redis
-        image: gcr.io/google_samples/gb-frontend:v5
+        image: https://gcr.io/google_containers/guestbook:v3
         resources:
           requests:
             cpu: 100m
