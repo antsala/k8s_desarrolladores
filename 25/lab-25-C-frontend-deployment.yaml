@@ -27,6 +27,6 @@ spec:
         - name: GET_HOSTS_FROM
           value: env
         - name: REDIS_SLAVE_SERVICE_HOST
-          value: redis-replica-internal-service
+          value: redis-replica
         ports:
         - containerPort: 80
