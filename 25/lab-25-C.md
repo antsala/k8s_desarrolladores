@@ -18,7 +18,7 @@ cd ~/k8s_desarrolladores/25
 
 Desplegamos el backend del maestro de redis. Abrimos el achivo ***lab-25-redis-master-deployment.yaml***.
 ```
-code lab-25-C-redis-master-deployment.yaml
+nano lab-25-C-redis-master-deployment.yaml
 ```
 
 El contenido a destacar de este archivo lo comentamos a continuación:
@@ -79,7 +79,7 @@ maxmemory-policy allkeys-lru
 
 Realmente no hace falta hacerlo porque en el directorio de ejemplos ya existe ese archivo. Así que nos limitamos a abrirlo para comprobarlo.
 ```
-code lab-25-C-redis-config
+nano lab-25-C-redis-config
 ```
 
 * *allkeys-lru*: lru = Less Recently Used
@@ -132,7 +132,7 @@ kubectl delete configmap/redis-configmap-from-file
 
 En este caso partiríamos desde un archivo YAML, que tenemos disponible en la carpeta del laboratorio. Abrimos el archivo 'redis-config.yaml' 
 ```
-code lab-25-C-redis-config.yaml
+nano lab-25-C-redis-config.yaml
 ```
 
 El contenido más destacado del archivo es el siguiente:
@@ -178,7 +178,7 @@ metadata:
 
 Ahora vamos a usar un ***ConfigMap*** para pasar información al contenedor en tiempo de ejecución. Vamos a abrir el archivo modificado:
 ```
-code lab-25-C-redis-master-deployment-modified.yaml
+nano lab-25-C-redis-master-deployment-modified.yaml
 ```
 
 Observar lo siguiente:
@@ -224,7 +224,7 @@ Salimos con ***exit***.
 
 Ahora vamos a desplegar un servicio INTERNO para los pods del deployment redis-master.Abrimos el archivo ***redis-master-service.yaml***.
 ```
-code lab-25-C-redis-master-service.yaml
+nano lab-25-C-redis-master-service.yaml
 ```
 
 Estudiamos el contenido del archivo.
@@ -289,7 +289,7 @@ kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master.default.sv
 
 Ahora vamos a desplegar las réplicas (2) de redis, que se sincronizarán desde redis-master. Para ello estudiamos el archivo ***lab-25-C-redis-replica-deployment.yaml***.
 ```
-code lab-25-C-redis-replica-deployment.yaml
+nano lab-25-C-redis-replica-deployment.yaml
 ```
 
 Las líneas más importantes del archivo son:
@@ -325,7 +325,7 @@ Para que el frontend (aún por desplegar) pueda contactar con las réplicas (ade
 
 Editamos el archivo:
 ```
-code lab-25-C-redis-replica-service.yaml
+nano lab-25-C-redis-replica-service.yaml
 ```
 
 Las líneas más importantes son:
@@ -359,7 +359,7 @@ Ahora desplegamos en frontend, que se contectará al servidor máster de Redis o
 
 Editamos la definición del deployment:
 ```
-code lab-25-C-frontend-deployment.yaml
+nano lab-25-C-frontend-deployment.yaml
 ```
 
 Lo más importante en el archivo de despliegue es:
@@ -435,7 +435,7 @@ En K8s existe tres formas de exponer un servicio:
 
 Editamos el archivo:
 ```
-code lab-25-C-frontend-service.yaml
+nano lab-25-C-frontend-service.yaml
 ```
 
 Las líneas más importantes son:
