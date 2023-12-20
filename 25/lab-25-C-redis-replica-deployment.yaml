@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: replica
-        image: gcr.io/google_samples/gb-redis-follower:v1
+        image: docker.io/antsala/guestbook-redis-follower:latest
         resources:
           requests:
             cpu: 100m

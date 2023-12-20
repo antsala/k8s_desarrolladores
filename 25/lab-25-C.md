@@ -378,7 +378,8 @@ Lo más importante en el archivo de despliegue es:
                        $host = getenv('REDIS_MASTER_SERVICE_HOST');
                    }
 
-                   Es decir, que el servidor máster de Redis será el que indique la variable del sistema ***REDIS_MASTER_SERVICE_HOST***. Esta variable la crea Kubernetes cuando se despliega el master.
+                   Es decir, que el servidor máster de Redis será el que indique la variable del sistema ***REDIS_MASTER_SERVICE_HOST***. Esta variable se inyecta en el YAML del deployment del
+                   frontend y tiene el valor 'redis-replica-internal-service'.
 
 * *Líneas 29 y 30*: Se inicializa la variable de entorno ***REDIS_SLAVE_SERVICE_HOST*** al valor ***redis-replica-internal-service***, para que los contenedores de Frontend puedan contactar con la réplicas.
 
