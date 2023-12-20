@@ -76,7 +76,7 @@ MYSQL_PASSWORD
 
 Así que para facilitar la manipulación de estos secretos, creamos un archivo que contenga estas variables, con la excepción de ***PMA_HOST*** que la inyectaremos manualmente. Editemos el archivo con estas variables con el siguiente comando:
 ```
-code lab-06-B-env-vars
+nano lab-06-B-env-vars
 ```
 
 ## Ejercicio 3: ***Creación del pod***

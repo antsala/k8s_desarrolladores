@@ -32,12 +32,12 @@ Vamos a usar archivos html sencillos que representarán las dos versiones de la 
 
 El archivo ***lab-65-D-app-v1-configmap.yaml*** contiene el código fuente de la ***versión 1.0***. Lo inspeccionamos:
 ```
-code lab-65-D-app-v1-configmap.yaml
+nano lab-65-D-app-v1-configmap.yaml
 ```
 
 De forma análoga abrimos el configmap para la ***versión 2.0*** de la aplicación.
 ```
-code lab-65-D-app-v2-configmap.yaml
+nano lab-65-D-app-v2-configmap.yaml
 ```
 
 Creamos los configmaps
@@ -56,7 +56,7 @@ kubectl describe configmap app-v2-configmap
 
 Vamos a hacer un ejemplo de este tipo de despliegue. Para ello usaremos una imagen de ***nginx***. Abrimos el archivo ***lab-65-D-nginx-deployment.yaml***.
 ```
-code lab-65-D-nginx-deployment.yaml
+nano lab-65-D-nginx-deployment.yaml
 ```
 
 Las líneas más importantes son:
@@ -75,7 +75,7 @@ kubectl get all
 
 Procedemos a crear un ***servicio*** para balancear el tráfico contra los tres pods que acabamos de iniciar. Abrimos el archivo ***lab-65-D-nginx-service.yaml***
 ```
-code lab-65-D-nginx-service.yaml
+nano lab-65-D-nginx-service.yaml
 ```
 
 Las líneas más importantes son:
@@ -111,7 +111,7 @@ Conectar con un navegador (o hacer un ***curl***) para probar que funciona corre
 
 Procedemos a realizar un canary donde deseamos que el 25% del tráfico vaya hacia un pod con la ***versión 2.0*** de la aplicación. Para ello creamos un deployment con un pod de la nueva versión. Lo podemos ver en el archivo ***lab-65-D-nginx-deployment-canary-v2.yaml***
 ```
-code lab-65-D-nginx-deployment-canary-v2.yaml
+nano lab-65-D-nginx-deployment-canary-v2.yaml
 ```
 
 Desplegamos.
@@ -126,7 +126,7 @@ kubectl get pods
 
 Para hacer que el servicio balancee el nuevo pod, debemos hacer que el selector use solamente las etiquetas comunes en los dos desplieges. El archivo ***lab-65-D-nginx-service-modified.yaml*** selecciona ahora los pods que tienen solo la etiqueta ***app: nginx***, y en consecuencia meterá tráfico a los 4 pods.
 ```
-code lab-65-D-nginx-service-modified.yaml
+nano lab-65-D-nginx-service-modified.yaml
 ```
 
 Actualizamos el servicio.

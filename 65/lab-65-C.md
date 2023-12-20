@@ -193,7 +193,7 @@ kubectl get all --namespace delete-access
 
 Ahora vamos a crear el objeto ***ClusterRole***, que asignará permisos de solo lectura en todo el cluster. Editamos el archivo ***lab-65-C-clusterRole.yaml***:
 ```
-code lab-65-C-clusterRole.yaml
+nano lab-65-C-clusterRole.yaml
 ```
 
 * *Línea 2*:  Define la creación de una instancia ***ClusterRole***.
@@ -224,7 +224,7 @@ echo $AKS_USERS_GROUP_ID
 
 Ahora vamos a crear un objeto ***ClusterRoleBinding*** que enlaza el rol a un usuario o grupo. Editamos el archivo ***lab-65-C-clusterRoleBinding.yaml***:
 ```
-code lab-65-C-clusterRoleBinding.yaml
+nano lab-65-C-clusterRoleBinding.yaml
 ```
 
 * *Línea 2*: Define que estamos creando una instancia ***ClusterRoleBinding***.
@@ -251,7 +251,7 @@ kubectl describe clusterRoleBinding readOnlyBinding
 
 A continuación crearemos un rol que permite la eliminación en el espacio de nombres ***delete-access***. Editamos el archivo ***lab-65-C-role.yaml***.
 ```
-code lab-65-C-role.yaml
+nano lab-65-C-role.yaml
 ```
 
 * *Línea 2*: Se indica que se está creando una instancia de ***Role*** y no de ***ClusterRole***. La instancia de ***Role*** no se aplica a todo el cluster.
@@ -275,7 +275,7 @@ kubectl describe role deleteRole  --namespace delete-access
 
 Por último creamos una instancia de ***RoleBinding*** para asignar el role al usuario ***Luke***. Editamos el archivo ***lab-65-C-roleBinding.yaml***:
 ```
-code lab-65-C-roleBinding.yaml
+nano lab-65-C-roleBinding.yaml
 ```
 
 * *Línea 2*: Crea una instancia de un ***RoleBinding*** y no de un ***ClusterRoleBinding*** porque lo que se está asociando es un ***Role*** y no un ***ClusterRole***.

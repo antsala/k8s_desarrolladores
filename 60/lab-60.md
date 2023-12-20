@@ -122,7 +122,7 @@ kubectl get service prometheus-kube-prometheus-operator -o yaml > operator.yaml
 
 Lo editamos y lo estudiamos:
 ```
-code operator.yaml
+nano operator.yaml
 ```
 
 Limpiamos recursos:

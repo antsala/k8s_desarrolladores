@@ -143,7 +143,7 @@ cd ~/k8s_desarrolladores/35
 
 Vamos a desplegar la aplicación ***Guestbook*** y exponerla por medio de una ingress. Editemos el archivo para conocer el despliegue. Es la app de ejemplo de Google.
 ```
-code lab-35-B-guestbook-all-in-one.yaml
+nano lab-35-B-guestbook-all-in-one.yaml
 ```
 
 Salimos sin modificar el archivo y creamos los objetos:
@@ -153,7 +153,7 @@ kubectl create -f lab-35-B-guestbook-all-in-one.yaml
 
 En la carpeta del laboratorio, tenemos el archivo ***lab-35-B-simple-frontend-ingress.yaml***. Lo abrimos:
 ```
-code lab-35-B-simple-frontend-ingress.yaml
+nano lab-35-B-simple-frontend-ingress.yaml
 ```
 
 Las líneas más importantes a tener en cuenta son:
@@ -231,7 +231,7 @@ cp lab-35-B-certificate-issuer-initial.yaml lab-35-B-certificate-issuer.yaml
 
 Instalación del emisor de certificador (issuer). El archivo ***lab-35-B-certificate-issuer.yaml*** contiene el código para este emisor. Lo abrimos para estudiarlo:
 ```
-code lab-35-B-certificate-issuer.yaml
+nano lab-35-B-certificate-issuer.yaml
 ```
 
 Las líneas más importantes son:
@@ -275,7 +275,7 @@ cp lab-35-B-ingress-with-tls-initial.yaml lab-35-B-ingress-with-tls.yaml
 
 Abrimos el archivo 'lab-35-B-ingress-with-tls.yaml':
 ```
-code lab-35-B-ingress-with-tls.yaml 
+nano lab-35-B-ingress-with-tls.yaml 
 ```
 
 Las líneas más interesantes son:
@@ -326,7 +326,7 @@ cp lab-35-B-certificate-issuer-prod-initial.yaml lab-35-B-certificate-issuer-pro
 
 Vamos a crear un nuevo ***issuer*** en el cluster, pero esta vez que pida certificados de producción. Editamos el archivo ***lab-35-B-certificate-issuer-prod.yaml***.
 ```
-code lab-35-B-certificate-issuer-prod.yaml
+nano lab-35-B-certificate-issuer-prod.yaml
 ```
 
 IMPORTANTE. En la línea 7, ponemos el email, Guardamos el archivo.
@@ -343,7 +343,7 @@ cp lab-35-B-ingress-with-tls-prod-initial.yaml lab-35-B-ingress-with-tls-prod.ya
 
 Editamos el archivo ***lab-35-B-ingress-with-tls-prod.yaml***:
 ```
-code lab-35-B-ingress-with-tls-prod.yaml
+nano lab-35-B-ingress-with-tls-prod.yaml
 ```
 
 IMPORTANTE!!!. En la fila 20 y en la 23 ponemos la DNS de nuestra ingress. Guardamos.

@@ -15,7 +15,7 @@ Como hemos aprendido, se puede usar ***kubectl*** para crear objetos en el clust
 En la carpeta de los laboratorios del curso tenemos el archivo ***lab-20-B-nginx-deployment.yaml***, que contiene la estructura básica de un deployment. Procedemos a abrir el archivo con el editor ***VSC*** si se dispone de interfaz gráfica, sino, otro a elección.
 ```
 cd ~/k8s_desarrolladores/25
-code lab-25-A-nginx-deployment.yaml
+nano lab-25-A-nginx-deployment.yaml
 ```
 
 La sintaxis y su interpretación para este archivo YAML es la siguiente:
@@ -99,7 +99,7 @@ kubectl get replicasets
 
 Como ya sabemos, un servicio de Kubernetes permite que el tráfico llegue a los contenedores de los pods. Editemos el siguiente archivo:
 ```
-code lab-25-A-nginx-service.yaml
+nano lab-25-A-nginx-service.yaml
 ```
 
 La sintaxis y su interpretación para este archivo YAML es la siguiente:
@@ -182,7 +182,7 @@ kubectl get deployment nginx-deployment -o yaml > nginx-deployment-status.yaml
 
 Hemos generado un archivo con el estado. Lo abrimos con el editor.
 ```
-code nginx-deployment-status.yaml
+nano nginx-deployment-status.yaml
 ```
 
 Estudiar detenidamente el archivo, prestando especial atención a la seccción ***status***
@@ -211,7 +211,7 @@ service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3h
 
 Editamos el archivo ***lab-25-A-helloContainer-deployment.yaml***:
 ```
-code lab-25-A-helloContainer-deployment.yaml
+nano lab-25-A-helloContainer-deployment.yaml
 ```
 
 El despliegue es muy parecido al anterior. Las líneas más destacables son:
@@ -254,7 +254,7 @@ Como el pod tiene un único contenedor y ***STATUS*** pone ***Running***, podemo
 
 Ahora procedemos a desplegar el servicio. Editamos el archivo ***lab-25-A-helloContainer-service.yaml***:
 ```
-code lab-25-A-helloContainer-service.yaml
+nano lab-25-A-helloContainer-service.yaml
 ```
 
 Las líneas más importantes son:

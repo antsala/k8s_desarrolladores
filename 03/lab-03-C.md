@@ -19,7 +19,7 @@ cd ~/k8s_desarrolladores/03/volumen
 
 En el directorio existen dos archivos de configuración de nginx: ***nginx.conf*** y ***global.conf***. Comprobemos el contenido de cada uno.
 ```
-code nginx.conf
+nano nginx.conf
 ```
 
 Este archivo configura a ***nginx*** para que se inicie solo con llamar a su ejecutable, sin necesidad de establecer parámetros (***-g daemon off;***).
@@ -28,14 +28,14 @@ Una vez estudiado, lo cerramos sin modificar.
 
 En siguiente archivo ***global.conf*** tiene una configuración importante para entender el laboratorio. Lo editamos con el siguiente comando:
 ```
-code global.conf
+nano global.conf
 ```
 
 * *Línea 5*: que tiene este valor: ***/var/www/html/website;*** indica el directorio donde vamos a incluir el archivo ***index.html*** de la aplicación. Esto es importante porque posteriormente usaremos un volumen que va a hacer referencia a esa ruta.
 
 El archivo ***Dockerfile*** instala nginx y copia los archivos de configuración a la imagen de contenedor. Editamos el archivo:
 ```
-code Dockerfile
+nano Dockerfile
 ```
 
 El contenido del archivo es el siguiente:
@@ -59,7 +59,7 @@ sudo docker image ls
 En el directorio de trabajo, existe una carpeta llamada ***website***, que contiene el archivo ***index.html*** con la aplicación web. Este archivo por comodidad en la explicación es muy elemental. Lo editamos con el siguiente comando.
 ```
 cp ./website/index_original.html ./website/index.html
-code ./website/index.html
+nano ./website/index.html
 ```
 
 Una vez estudiada la aplicación, cerramos sin modificar el archivo.
@@ -82,7 +82,7 @@ curl localhost:8080
 
 Editamos el archivo ***index.html*** e insertamos algún mensaje.
 ```
-code ./website/index.html
+nano ./website/index.html
 ```
 
 Añadimos, debajo de la línea 6, el siguiente código:

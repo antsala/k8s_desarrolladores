@@ -22,7 +22,7 @@ cd ~/k8s_desarrolladores/55
 
 Editamos el YAML del ConfigMap para estudiarlo.
 ```
-code lab-55-B-MySQL-ConfigMap.yaml 
+nano lab-55-B-MySQL-ConfigMap.yaml 
 ```
 
 Las líneas más relevantes son:
@@ -55,7 +55,7 @@ En Kubernetes decimos que queremos un servicio ***Headless*** de estas caracter�
 
 El archivo ***lab-55-B-MySQL-services.yaml*** define los dos servicios que necesita esta app.
 ```
-code lab-55-B-MySQL-services.yaml
+nano lab-55-B-MySQL-services.yaml
 ```
 
 Las líneas más interesantes son:
@@ -105,7 +105,7 @@ Procedemos a crear el ***StatefullSet***.
 
 Editamos el archivo ***lab-55-B-statefulset.yaml***.
 ```
-code lab-55-B-statefulset.yaml
+nano lab-55-B-statefulset.yaml
 ```
 
 Debido a la importancia de los contenidos que vamos a aprender, comentamos las líneas más importantes:

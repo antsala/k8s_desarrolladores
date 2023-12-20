@@ -32,7 +32,7 @@ sudo mv go /usr/local
 
 Editamos ***.profile*** para agregar variables en entorno al final del archivo.
 ```
-code .profile
+nano .profile
 ```
 
 Agregar estas dos líneas al final del archivo.
@@ -50,7 +50,7 @@ source .profile
 
 Editamos el archivo ***hello.go*** que usaremos para probar el compilador.
 ```
-code ~/k8s_desarrolladores/03/work/src/hello/hello.go
+nano ~/k8s_desarrolladores/03/work/src/hello/hello.go
 ```
 
 Como se puede comprobar es un código sencillo que muestra el mensaje ***Hola Mundo!!!***
@@ -72,7 +72,7 @@ which hello
 
 Acabamos de comprobar que el compilador de Go funciona. Procedemos a crear una app que haga algo más apropiado. Se encuentra en el archivo ***~/k8s_desarrolladores/03/work/src/hellocontainer/helloContainer.go***. La editamos.
 ```
-code ~/k8s_desarrolladores/03/work/src/helloContainer/helloContainer.go
+nano ~/k8s_desarrolladores/03/work/src/helloContainer/helloContainer.go
 ```
 
 El programa hace lo siguiente:
@@ -130,7 +130,7 @@ cp -r ~/k8s_desarrolladores/03/work/src/helloContainer/ .
 
 En el directorio de contexto tenemos un archivo Dockerfile que pasamos a detallar.
 ```
-code ~/k8s_desarrolladores/03/helloContainerCtx/Dockerfile
+nano ~/k8s_desarrolladores/03/helloContainerCtx/Dockerfile
 ```
 
 Este Dockerfile va a hacer dos cosas:
@@ -226,7 +226,7 @@ cd ~/k8s_desarrolladores/03/helloContainerSvc
 
 En esta carpeta tenemos el archivo ***Docker-compose.yaml***. Lo editamos para estudiarlo:
 ```
-code ./Docker-compose.yaml
+nano ./Docker-compose.yaml
 ```
 
 * *Línea 18 y 19*: Crea una red, llamada ***webnet*** para uso exclusivo de los contenedores que van a crearse.

@@ -28,7 +28,7 @@ Tomamos la IP de la máquina virtual del laboratorio y la anotamos, será necesa
 
 A continuación editamos el siguiente archivo:
 ```
-code lab-65-A-external-web-endpoint.yaml
+nano lab-65-A-external-web-endpoint.yaml
 ```
 
 Las líneas más interesantes son:
@@ -62,7 +62,7 @@ Procedemos a crear el servicio interno y asociarlo con el endpoint.
 
 Abrimos el siguiente archivo:
 ```
-code lab-65-A-external-web-service.yaml 
+nano lab-65-A-external-web-service.yaml 
 ```
 
 Las líneas más importantes son:
@@ -94,7 +94,7 @@ Ya tenemos nuestro servidor web funcionando. Se ha publicado en el puerto 80. El
 
 Editamos el siguiente archivo y lo estudiamos:
 ```
-code lab-65-A-test-external-web.yaml
+nano lab-65-A-test-external-web.yaml
 ```
 
 Las líneas más interesantes son:

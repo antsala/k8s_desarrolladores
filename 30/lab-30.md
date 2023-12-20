@@ -81,10 +81,10 @@ No resources found in hello-container-namespace namespace.
 
 Si el archivo YAML no contiene indicación alguna sobre el espacio de nombres en el que se deben crear los objetos, podemos especificarlo al aplicar el YAML. Los archivos ***lab-30-helloContainer-deployment.yaml*** y ***lab-30-helloContainer-service.yaml*** no tienen ninguna propiedad que indique el espacio de nombres en el que deseamos crear los objetos. Podemos comprobarlo abriendo los archivos y buscando la propiedad ***namespace***, que no estará.
 ```
-code lab-30-helloContainer-deployment.yaml
+nano lab-30-helloContainer-deployment.yaml
 ```
 ```
-code lab-30-helloContainer-service.yaml
+nano lab-30-helloContainer-service.yaml
 ```
 
 Salimos del editor sin modificar los archivos.
@@ -223,14 +223,14 @@ Sin duda esta es la forma más cómoda, porque en el propio archivo YAML indicam
 
 Editamos el archivo:
 ```
-code lab-30-helloContainer-deployment-namespace.yaml
+nano lab-30-helloContainer-deployment-namespace.yaml
 ```
 
 * *Línea 5*: Se indica el espacio de nombres en el que deseamos crear el deployment.
 
 Lo mismo ocurre para ***lab-30-helloContainer-service-namespace.yaml***. Lo Editamos
 ```
-code lab-30-helloContainer-service-namespace.yaml
+nano lab-30-helloContainer-service-namespace.yaml
 ```
 
 * *Línea 5*: Se indica el espacio de nombres en el que deseamos crear el servicio.

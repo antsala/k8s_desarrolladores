@@ -48,7 +48,7 @@ cd ~/k8s_desarrolladores/25
 
 Abrimos el archivo que contiene el deployment de MongoDB.
 ```
-code lab-25-B-mongodb.yaml
+nano lab-25-B-mongodb.yaml
 ```
 
 Lo primero que debemos asimilar es que este archivo está dividido en dos partes.La línea ***33*** tiene ***---***. En la sintaxis YAML esto indica que se está definiendo un objeto diferente. Por lo tanto, las líneas ***1-32*** definen el objeto ***mongodb-deployment***, mientras que las líneas ***34-44*** definen el objeto ***mongodb-service***.
@@ -107,7 +107,7 @@ cp lab-25-B-mongodb-secret-initial.yaml lab-25-B-mongodb-secret.yaml
 
 Editamos ***lab-25-B-mongodb-secret.yaml***
 ```
-code lab-25-B-mongodb-secret.yaml
+nano lab-25-B-mongodb-secret.yaml
 ```
 
 Las líneas mas importantes y su significado son:
@@ -245,7 +245,7 @@ Estas variables de entorno debemos proporcionárselas al contenedor. El nombre y
 
 Abrimos el archivo ***lab-25-B-mongo-express.yaml***.
 ```
-code lab-25-B-mongo-express.yaml
+nano lab-25-B-mongo-express.yaml
 ```
 
 Al igual que pasaba en el Backend, comprobamos que este archivo está dividido en dos partes. La línea 38 tiene ***---***. En la sintaxis YAML esto indica que se está definiendo un objeto diferente. Por lo tanto, las líneas ***1-37*** definen el objeto ***mongo-express-deployment***, mientras que las líneas ***38-51*** definen el objeto ***mongo-express-service***.
@@ -279,7 +279,7 @@ Salimos sin modificar nada.
 
 Aun no podemos aplicar el YAML, porque falta por crear el ***Config Map***. El archivo ya está creado, así que lo abrimos.
 ```
-code lab-25-B-mongodb-configmap.yaml
+nano lab-25-B-mongodb-configmap.yaml
 ```
 
 * *Línea 2*: Indica que el tipo de objeto a crear es un ***Config Map***.

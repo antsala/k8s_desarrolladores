@@ -26,7 +26,7 @@ cd ~/k8s_desarrolladores/03/frontend-backend/sinatra
 ls -l
 ```
 ```
-code Dockerfile
+nano Dockerfile
 ```
 
 El Dockerfile hace lo siguiente:
@@ -89,7 +89,7 @@ ls -l
 
 Procedemos a estudiar los archivos.
 ```
-code ./bin/webapp
+nano ./bin/webapp
 ```
 
 El código que puede observarse es el lanzador de la aplicación. Realmente ejecuta el archivo ***app.rb*** que está en la carpeta ***lib***. Cerramos sin guardar.
@@ -101,7 +101,7 @@ chmod +x ./bin/webapp
 
 Procedemos a consultar ***app.rb***.
 ```
-code ./lib/app.rb
+nano ./lib/app.rb
 ```
 
 ***app.rb*** hace lo siguiente:
@@ -173,7 +173,7 @@ La carpeta ***redis*** contiene los archivos del Backend. En primer lugar consul
 cd ~/k8s_desarrolladores/03/frontend-backend/sinatra/redis
 ```
 ```
-code ./Dockerfile
+nano ./Dockerfile
 ```
 
 La imagen se construirá de la siguiente forma:
@@ -320,7 +320,7 @@ chmod +x ./bin/webapp
 
 En la carpeta ***lib**** está el archivo ***app.rb*** con la nueva versión del Frontend. Procedemos a editarlo para consultarlo.
 ```
-code ./lib/app.rb
+nano ./lib/app.rb
 ```
 
 El contenido del archivo es similar a la versión anterior, pero contiene cambios significativos:

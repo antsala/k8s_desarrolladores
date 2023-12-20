@@ -17,7 +17,7 @@ cd ~/k8s_desarrolladores/03/web_estatica
 
 En este directorio tenemos un archivo de ejemplo llamado ***Dockerfile***, que editamos para estudiarlo
 ```
-code Dockerfile
+nano Dockerfile
 ```
 
 Este archivo Dockerfile es muy sencillo y realiza lo siguiente:
@@ -91,7 +91,7 @@ En el Dockerfile suele ponerse el comando ***ENTRYPOINT*** o el comando ***CMD**
 
 Procedamos a abrir el archivo ***Dockerfile_entry*** en el directorio de trabajo y le echamos un vistazo.
 ```
-code Dockerfile_entry
+nano Dockerfile_entry
 ```
 
 Cerramos el editor y procedemos a compilar la imagen a partir de este Dockerfile:
@@ -157,7 +157,7 @@ Docker empleará los parámetros por defecto si en la línea de docker run ***no
 
 Veámoslo con un ejemplo. En el directorio de trabajo tenemos el archivo ***Dockerfile_entry_cmd***. Lo editamos:
 ```
-code Dockerfile_entry_cmd
+nano Dockerfile_entry_cmd
 ```
 
 Observemos los cambios:

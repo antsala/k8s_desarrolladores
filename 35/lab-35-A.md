@@ -19,7 +19,7 @@ Procedemos a redesplegar las aplicaciones ***hellocontainer*** y ***mongodb*** d
 
 Para el Frontend de ***helloContainer*** no hay cambios. Editamos el archivo para recordar qué contiene.
 ```
-code lab-35-A-helloContainer-deployment.yaml
+nano lab-35-A-helloContainer-deployment.yaml
 ```
 
 * *línea 21*: Expresa que los contenedores estarán dando servicio en el puerto ***8080***.
@@ -28,7 +28,7 @@ Cerramos el archivo sin modificarlo.
 
 ***helloContainer*** definía un servicio EXTERNO para exponer los pods. Ahora ese servicio debe ser reconvertido a ***INTERNO***. Editamos el archivo ***lab-35-A-helloContainer-service.yaml***.
 ```
-code lab-35-A-helloContainer-service.yaml
+nano lab-35-A-helloContainer-service.yaml
 ```
 
 El cambio más notable es que ***NO APARECE*** el parámetro ***type: LoadBalancer*** en la especificación del servicio. Esto lo convierte en un ***SERVICIO INTERNO***. Además, en la línea 4, se cambia el nombre del servicio a ***hello-container-internal-service***. Por otro lado, el servicio escucha en el puerto ***4000*** (Línea 10) y reenvía el tráfico al puerto ***8080*** de los pods (Línea 11)
@@ -91,7 +91,7 @@ Procedemos a desplegar el Frontend y el Backend.
 
 El Backend no sufre cambios, editamos el archivo para recordarlo:
 ```
-code lab-35-A-mongodb.yaml
+nano lab-35-A-mongodb.yaml
 ```
 
 Las líneas 42 y 43 define el puerto en el que escuchará sel servicio de backend (***27017***) y el tráfico será reenviado al puerto ***27017*** del pod de ***mongodb server***. Salimos sin modificar nada.
@@ -99,7 +99,7 @@ Las líneas 42 y 43 define el puerto en el que escuchará sel servicio de backen
 
 Por último, para el Frontend si hay cambios. Editamos el archivo ***lab-35-A-mongo-express.yaml***.
 ```
-code lab-35-A-mongo-express.yaml
+nano lab-35-A-mongo-express.yaml
 ```
 
 El cambio más notable es que ***NO APARECE*** el parámetro ***type: LoadBalancer*** en la especificación del servicio. Esto lo convierte en un ***SERVICIO INTERNO***. Además, en la línea 42, se cambia el nombre del servicio a ***mongo-express-internal-service***. Por otro lado, el servicio escucha en el puerto ***5000*** (Línea 48) y reenvía el tráfico al puerto ***8081*** del pod ***mongo-express*** (Línea 49).
@@ -160,7 +160,7 @@ En este momento tenemos las aplicaciones funcionando, pero no son accesibles a s
 
 Editamos el archivo ***lab-35-A-ingress.yaml***.
 ```
-code lab-35-A-ingress.yaml
+nano lab-35-A-ingress.yaml
 ```
 
 Este YAML hace lo siguiente:
@@ -359,7 +359,7 @@ Lo que debemos hacer es crear un servidor web que muestre la página de error de
 
 Abrimos el archivo.
 ```
-code lab-35-A-page-404-deployment.yaml
+nano lab-35-A-page-404-deployment.yaml
 ```
 
 Es el típico deployment con un pod. Cerramos sin modificar y aplicamos.
@@ -376,7 +376,7 @@ Nos resta por crear un servicio, al que llamaremos ***page-404-internal-service*
 
 Abrimos el archivo ***lab-35-A-page-404-internal-service.yaml*** para verificarlo.
 ```
-code lab-35-A-page-404-internal-service.yaml
+nano lab-35-A-page-404-internal-service.yaml
 ```
 
 Cerramos sin cambiar nada. Creamos el servicio.
@@ -397,7 +397,7 @@ page-404-internal-service   ClusterIP   10.109.167.175   <none>        6666/TCP 
 
 Ahora debemos modificar el objeto ingress para que configure el endpoint para el Default Backend. El archivo ***lab-35-A-ingress-with-default-backend.yaml*** ya tiene estas modificaciones. Lo editamos para estudiarlo:
 ```
-code lab-35-A-ingress-with-default-backend.yaml
+nano lab-35-A-ingress-with-default-backend.yaml
 ```
 
 

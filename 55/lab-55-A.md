@@ -17,7 +17,7 @@ cd ~/k8s_desarrolladores/55
 
 Estudiamos el YAML:
 ```
-code lab-55-A-redis-master-deployment.yaml
+nano lab-55-A-redis-master-deployment.yaml
 ```
 
 Desplegamos el backend del maestro de redis:
@@ -56,7 +56,7 @@ Creamos un archivo, llamado ***lab-55-A-redis-config*** y le ponemos estas dos l
 
 Realmente no hace falta hacerlo porque en el directorio de ejemplos ya existe ese archivo. Así que nos limitamos a abrirlo para comprobarlo:
 ```
-code lab-55-A-redis-config
+nano lab-55-A-redis-config
 ```
 
 ***allkeys-lru*** --> lru = Less Recently Used
@@ -88,7 +88,7 @@ kubectl delete configmap/example-redis-config
 
 En este caso partiríamos de un archivo YAML, que coincidirá exactamente con el que se creó anteriormente. Lo visualizamos. (Nota: ***|-*** se utiliza para definir un string en varias líneas. Elimina el salto de linea al final y los espacios en blanco si los hubiera)
 ```
-code lab-55-A-example-redis-config.yaml
+nano lab-55-A-example-redis-config.yaml
 ```
 
 Volvemos a crear el configmap, pero esta vez directamente desde el YAML:
@@ -108,7 +108,7 @@ kubectl get configmap/example-redis-config --output yaml
 
 Ahora vamos a usar un ConfigMap para pasar información al contenedor en tiempo de ejecución. Vamos a abrir el archivo modificado:
 ```
-code lab-55-A-redis-master-deployment_modified.yaml
+nano lab-55-A-redis-master-deployment_modified.yaml
 ```
 
 Observar lo siguiente:
@@ -145,7 +145,7 @@ Salimos con ***exit***.
 
 Ahora vamos a desplegar un servicio para los pods del deployment redis-master. Echamos un vistazo al YAML:
 ```
-code lab-55-A-redis-master-service.yaml
+nano lab-55-A-redis-master-service.yaml
 ```
 
 Desplegamos:
@@ -186,7 +186,7 @@ kubectl exec -it redis-master-<Poner aquí el ID apropiado> -- ping redis-master
 
 Ahora vamos a desplegar las réplicas (2) de redis, que se sincronizarán desde redis-master. Estudiamos el YAML:
 ```
-code lab-55-A-redis-replica-deployment.yaml
+nano lab-55-A-redis-replica-deployment.yaml
 ```
 
 * *Línea 13*: Desplegamos 2 pods (2 réplicas)
@@ -215,7 +215,7 @@ kubectl get all
 
 Ahora desplegamos en frontend.
 ```
-code lab-55-A-frontend-deployment.yaml
+nano lab-55-A-frontend-deployment.yaml
 ```
 
 Lo más importante en el archivo de despliegue anterior es:
@@ -242,7 +242,7 @@ kubectl get pods
 
 Vamos a crear un servicio de tipo ***LoadBalancer*** para el frontend.
 ```
-code lab-55-A-frontend-service.yaml
+nano lab-55-A-frontend-service.yaml
 ```
 
 Aplicamos:
@@ -324,7 +324,7 @@ En este ejemplo de WordPress, se está usando una PVC. La PVC proporciona una ab
 Observemos lo que hizo el chart de Helm de MariaDB con el siguiente comando:
 ```
 kubectl get statefulset -o yaml > mariadbss.yaml
-code mariadbss.yaml
+nano mariadbss.yaml
 ```
 
 Las líneas más relevantes son:

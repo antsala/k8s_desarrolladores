@@ -207,17 +207,17 @@ Vamos a crear dos despliegues de ***nginx***. Cada uno con una página ***index*
 
 Editamos el erchivo ***index1.html***:
 ```
-code lab-65-B-index1.html
+nano lab-65-B-index1.html
 ```
 
 Editamos el erchivo ***index2.html***:
 ```
-code lab-65-B-index2.html
+nano lab-65-B-index2.html
 ```
 
 Editamos el archivo ***healthy.html***:
 ```
-code lab-65-B-healthy.html
+nano lab-65-B-healthy.html
 ```
 
 Vamos a montar estos archivos en el despliegue. Usaremos un ***ConfigMap*** para cada uno, lo que nos permitirá conectarlos a los pods:
@@ -236,7 +236,7 @@ Ahora vamos a crear dos despliegues web, muy parecidos uno al otro, cambiando so
 
 Editamos el archivo ***lab-65-B-webdeploy1.yaml***
 ```
-code lab-65-B-webdeploy1.yaml
+nano lab-65-B-webdeploy1.yaml
 ```
 
 Las líneas más destacables son:
@@ -258,7 +258,7 @@ kubectl get deployments -w
 
 Por último, un creamos un servicio que enrute el tráfico a los dos deployments. Comprobamos el manifiesto:
 ```
-code lab-65-B-webservice.yaml
+nano lab-65-B-webservice.yaml
 ```
 
 Lo creamos:

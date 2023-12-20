@@ -29,7 +29,7 @@ Una técnica muy interesante el crear un script y almacenarlo en un ***configmap
 
 Estudiemos el archivo del secreto.
 ```
-code lab-55-C-mongo-secret.yaml
+nano lab-55-C-mongo-secret.yaml
 ```
 
 Las líneas más destacables son:
@@ -44,7 +44,7 @@ A continuación declaramos un ***ConfigMap*** que almacenará el script. Este sc
 
 Echamos un vistazo al siguiente archivo:
 ```
-code lab-55-C-mongo-init-configmap.yaml
+nano lab-55-C-mongo-init-configmap.yaml
 ```
 
 Las líneas más importantes son:
@@ -62,7 +62,7 @@ Cerramos sin modificar nada. Aplicamos más tarde.
 
 Editamos el archivo:
 ```
-code lab-55-C-mongo-key.yaml
+nano lab-55-C-mongo-key.yaml
 ```
 
 Las líneas más importantes son:
@@ -83,7 +83,7 @@ La razón de hacer esto es que el contenedor carga el ***ConfigMap*** como un en
 
 Abrimos el archivo:
 ```
-code lab-55-C-mongo-script-permissions.yaml
+nano lab-55-C-mongo-script-permissions.yaml
 ```
 
 Las líneas más importantes son:
@@ -102,7 +102,7 @@ Vamos a crear un ***NameSpace*** para tener organizados los objetos de la aplica
 
 Editamos el archivo:
 ```
-code lab-55-C-mongo-namespace.yaml
+nano lab-55-C-mongo-namespace.yaml
 ```
 
 El archivo es muy sencillo y permite ver como se crea el espacio de nombres ***mongodb-repl-system***
@@ -113,7 +113,7 @@ Salimos sin cambiar nada. Aplicamos más tarde.
 
 Procedemos a crear un servicio interno de tipo ***Headless***. Estudiamos el siguiente código:
 ```
-code lab-55-C-mongo-service.yaml
+nano lab-55-C-mongo-service.yaml
 ```
 
 Las líneas más importantes son:
@@ -127,7 +127,7 @@ Procedemos a crear una ***Service Account*** y un ***Cluster Role Binding*** ya 
 
 Editamos el siguiente archivo:
 ```
-code lab-55-C-mongo-service-account-rbac.yaml
+nano lab-55-C-mongo-service-account-rbac.yaml
 ```
 
 El contenido más interesante es el siguiente:
@@ -153,7 +153,7 @@ Procedemos a crear el ***StatefulSet*** con dos contenedores. El primero es el d
 
 Editamos el archivo:
 ```
-code lab-55-C-mongo-statefulset.yaml
+nano lab-55-C-mongo-statefulset.yaml
 ```
 
 Las líneas más importantes:
@@ -176,7 +176,7 @@ En Kubernetes existe una clase de objeto muy útil llamada ***Kustomization***. 
 
 Editamos el archivo y lo consultamos:
 ```
-code kustomization.yaml
+nano kustomization.yaml
 ```
 
 Las líneas más interesantes son:
@@ -193,7 +193,7 @@ kubectl kustomize . > mongo-backend.yaml
 
 Editamos el archivo:
 ```
-code mongo-backend.yaml
+nano mongo-backend.yaml
 ```
 
 Observar como aparecen todos los objetos en el archivo, y como ciertas líneas (10, 56, 70, 79, 92, 101, 110 y 123 declaran el espacio de nombres en el que deseamos que se creen los objetos.
