@@ -476,7 +476,7 @@ Tomar nota de la IP External del frontend y conectarse con un navegador.
 Limpiamos recursos del cluster.
 ```
 kubectl delete deployment frontend redis-master-deployment redis-replica-deployment
-kubectl delete service frontend-load-balancer redis-master redis-replica-service
+kubectl delete service frontend-load-balancer redis-master redis-replica
 ```
 
 Comprobamos que solo queda el servicio de Kubernetes
