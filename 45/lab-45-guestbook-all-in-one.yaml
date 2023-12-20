@@ -15,10 +15,10 @@ spec:
     tier: backend
     role: master
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
-  name: redis-master
+  name: redis-master-deployment
 spec:
   selector:
     matchLabels:
@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: master
-        image: k8s.gcr.io/redis:e2e 
+        image: docker.io/antsala/guestbook-redis-master:latest
         resources:
           requests:
             cpu: 100m
@@ -59,10 +59,10 @@ spec:
     tier: backend
     role: replica
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
-  name: redis-replica
+  name: redis-replica-deployment
 spec:
   selector:
     matchLabels:
@@ -79,10 +79,10 @@ spec:
     spec:
       containers:
       - name: replica
-        image: gcr.io/google_samples/gb-redis-follower:v1
+        image: docker.io/antsala/guestbook-redis-follower:latest
         resources:
           requests:
-            cpu: 300m
+            cpu: 100m
             memory: 100Mi
         env:
         - name: GET_HOSTS_FROM
@@ -98,15 +98,13 @@ metadata:
     app: guestbook
     tier: frontend
 spec:
-  # uncomment the line below to create a Load Balanced service
-  # type: LoadBalancer
   ports:
   - port: 80
   selector:
     app: guestbook
     tier: frontend
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   name: frontend
@@ -124,7 +122,7 @@ spec:
     spec:
       containers:
       - name: php-redis
-        image: gcr.io/google-samples/gb-frontend:v4
+        image: docker.io/antsala/guestbook-frontend:latest
         resources:
           requests:
             cpu: 10m
