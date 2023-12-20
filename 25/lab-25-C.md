@@ -331,7 +331,7 @@ nano lab-25-C-redis-replica-service.yaml
 Las líneas más importantes son:
 
 * *Línea 2*: Se crea un servicio interno.
-* *Línea 4*: Con nombre ***redis-replica-internal-service***.
+* *Línea 4*: Con nombre ***redis-replica***.
 * *Línea 11*: Escuchará en el puerto ***6379***...
 * *Línea 12*: y reenviará al puerto ***6379*** de los pods.
 * *Líneas 13-16*: Se asociará con los pods que tengan definidas las etiquetas: ***app: redis***, ***role: replica***, ***tier: backend***.
@@ -343,13 +343,13 @@ kubectl apply -f lab-25-C-redis-replica-service.yaml
 
 Comprobamos el despliegue del servicio:
 ```
-kubectl get service redis-replica-internal-service
+kubectl get service redis-replica
 ```
 
 La salida será similar a esta:
 ```
-NAME                             TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
-redis-replica-internal-service   ClusterIP   10.109.5.10   <none>        6379/TCP   105s
+NAME            TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
+redis-replica   ClusterIP   10.109.5.10   <none>        6379/TCP   105s
 ```
 
 ## Ejercicio 4: ***Despliegue del Frontend***
@@ -379,9 +379,9 @@ Lo más importante en el archivo de despliegue es:
                    }
 
                    Es decir, que el servidor máster de Redis será el que indique la variable del sistema ***REDIS_MASTER_SERVICE_HOST***. Esta variable se inyecta en el YAML del deployment del
-                   frontend y tiene el valor 'redis-replica-internal-service'.
+                   frontend y tiene el valor 'redis-replica'.
 
-* *Líneas 29 y 30*: Se inicializa la variable de entorno ***REDIS_SLAVE_SERVICE_HOST*** al valor ***redis-replica-internal-service***, para que los contenedores de Frontend puedan contactar con la réplicas.
+* *Líneas 29 y 30*: Se inicializa la variable de entorno ***REDIS_SLAVE_SERVICE_HOST*** al valor ***redis-replica***, para que los contenedores de Frontend puedan contactar con la réplicas.
 
 Desplegamos el frontend.
 ```
@@ -476,7 +476,7 @@ Tomar nota de la IP External del frontend y conectarse con un navegador.
 Limpiamos recursos del cluster.
 ```
 kubectl delete deployment frontend redis-master-deployment redis-replica-deployment
-kubectl delete service frontend-load-balancer redis-master redis-replica-internal-service
+kubectl delete service frontend-load-balancer redis-master redis-replica-service
 ```
 
 Comprobamos que solo queda el servicio de Kubernetes
