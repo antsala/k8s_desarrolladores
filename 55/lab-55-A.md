@@ -5,7 +5,7 @@ En este laboratorio aprenderemos a usar Volúmenes, ConfigMaps y Secrets. Vamos 
 Requisitos:
 
 1. Una máquina virtual con Ubuntu 20.04 LTS a la que poder hacer ssh o escritorio remoto.
-2. Tener un cluster con con plugin de ***Storage Class*** configurado, por ejemplo AKS.
+2. Tener un cluster con con plugin de ***Storage Class*** configurado, por ejemplo AKS (también vale Minikube)
 
 
 ## Ejercicio 1: ***Instalar aplicaciones con estado en el cluster***
