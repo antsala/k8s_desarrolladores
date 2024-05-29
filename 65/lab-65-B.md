@@ -153,7 +153,6 @@ kubectl exec -it $FRONTEND_POD_NAME -- bash
 
 Actualizamos el repo e instalamos editor: (Nota: los siguiente comandos se ejecutan dentro del contenedor)
 ```
-apt update -y
 apt install -y nano
 ```
 
