@@ -95,6 +95,17 @@ NOTA: Debido a que Kubernetes hizo una ***rolling update***, el frontend estuvo 
 
 ## Ejercicio 3: ***Errores de la aplicación***
 
+Primero debemos editar el archivo de configuración y cambiar el balanceador del frontend a `type: LoadBalancer`.
+
+```
+nano lab-65-B-guestbook-all-in-one.yaml 
+```
+
+Hacer el cambio.
+
+```
+kubectl apply -f lab-65-B-guestbook-all-in-one.yaml
+```
 
 Veamos como depurar un error en la aplicación.
 
