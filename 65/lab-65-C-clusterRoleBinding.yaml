@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - kind: Group
   apiGroup: rbac.authorization.k8s.io
-  name: "2175c4f9-7cb1-4a8e-a893-b2f658163f63"
+  name: "<Pon aquí el ID del grupo>"
