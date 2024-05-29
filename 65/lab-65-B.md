@@ -153,7 +153,11 @@ kubectl exec -it $FRONTEND_POD_NAME -- bash
 
 Actualizamos el repo e instalamos editor: (Nota: los siguiente comandos se ejecutan dentro del contenedor)
 ```
-apt install -y nano
+cat <<EOF > /etc/apt/sources.list
+deb http://archive.debian.org/debian/ jessie main contrib non-free
+deb http://security.debian.org/ jessie/updates main contrib non-free
+EOF
+
 ```
 
 Editamos el ***guestkook.php***:
