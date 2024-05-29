@@ -206,7 +206,7 @@ Se puede ver el mensaje de depuración que pusimos: ***hostname al principio del
 
 La solución del error en este caso es sencilla, puesto que la provocamos al entrar en el contenedor y modificar el código. Vamos a eliminar el pod.
 
-Al eliminar el pod, se borra el contenedor, y la capa reescribible de éste, que es la que contenía los cambios problemáticos. Como hay un ***ReplicaSet***, se instanciará un nuevo pod desde la imagen de contenedor original:
+Al eliminar el pod, se borra el contenedor, y la capa reescribible de este, que es la que contenía los cambios problemáticos. Como hay un ***ReplicaSet***, se instanciará un nuevo pod desde la imagen de contenedor original:
 ```
 kubectl delete pod $FRONTEND_POD_NAME
 ```
