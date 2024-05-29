@@ -160,6 +160,14 @@ EOF
 
 ```
 
+```
+apt-get update -y
+```
+
+```
+apt-get install -y nano
+```
+
 Editamos el ***guestkook.php***:
 ```
 nano guestbook.php
