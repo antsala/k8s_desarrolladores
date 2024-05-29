@@ -9,7 +9,7 @@ Requisitos:
 
 La monitorización del cluster es crítica. ***Prometheus*** es una solución de monitorización para Kubernetes muy usada. Su arquitectura tiene tres capas:
 
-La capa de ***captura de métrica***, que recopìla información del cluster de Kubernetes. Una capa de ***almacenamiento***, que ingiere y almacena en una base de datos toda esta información. Un ***frontend*** con el que puede interactuar otras app, como Grafana, para consultar los datos.
+La capa de ***captura de métrica***, que recopila información del cluster de Kubernetes. Una capa de ***almacenamiento***, que ingiere y almacena en una base de datos toda esta información. Un ***frontend*** con el que puede interactuar otras app, como Grafana, para consultar los datos.
 
 El servidor de Prometheus también puede emitir alertas a otros servicios.
 
