@@ -167,7 +167,7 @@ apt-get update -y
 ```
 
 ```
-apt-get install -y nano
+apt-get install -y --force-yes nano   
 ```
 
 Editamos el ***guestkook.php***:
