@@ -214,11 +214,6 @@ sudo docker swarm init
 
 Como resultado, un mensaje nos informará que el cluster está levantado, así como el procedimiento a seguir para añadir más nodos al cluster.
 
-Para poder crear archivos YAML de manifiesto, necesitamos que esté instalada la herramienta ***Docker-compose***. La instalamos con el siguiente comando:
-```
-sudo apt -y install docker-compose
-```
-
 Ahora procedemos a estudiar un archivo de manifiesto de ejemplo. Este se encuentra en la carpeta *** '~/k8s_desarrolladores/03/helloContainerSvc***, así que entramos en ella.
 ```
 cd ~/k8s_desarrolladores/03/helloContainerSvc
