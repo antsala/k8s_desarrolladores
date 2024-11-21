@@ -74,7 +74,7 @@ Creamos un grupo de recursos para el cluster.
 ```
 az group create \
     --name myaks-rg \
-    --location westeurope
+    --location northeurope
 ```
 
 Habilitamos la supervisión de clusteres.
@@ -91,7 +91,7 @@ Creamos el cluster.
 az aks create \
     --resource-group myaks-rg \
     --name myaks \
-    --location westeurope \
+    --location northeurope \
     --node-count 2 \
     --node-vm-size Standard_DS2_v2 \
     --enable-addons monitoring \
