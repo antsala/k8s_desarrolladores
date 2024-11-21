@@ -27,7 +27,7 @@ Creamos un nuevo grupo de recursos para el AF en la misma ubicación del grupo d
 ```
 az group create \
     --resource-group agic-rg \
-    --location westeurope
+    --location northeurope
 ```
 
 Creamos los componentes de red necesarios para el Application Gateway. Primero un nombre dns para la IP pública. (Nota: debe ser único) (Nota: sustituir YYYYMMDD por la fecha actual)
@@ -35,7 +35,7 @@ Creamos los componentes de red necesarios para el Application Gateway. Primero u
 PUBLIC_IP_DNS_NAME=pipnameasg<YYYYMMDD>
 ```
 
-El registro A de esta IP tomará la forma: ***$PUBLIC_IP_DNS_NAME.westeurope.cloudapp.azure.com***:
+El registro A de esta IP tomará la forma: ***$PUBLIC_IP_DNS_NAME.northeurope.cloudapp.azure.com***:
 ```
 az network public-ip create \
     --name agic-pip \
@@ -59,7 +59,7 @@ Por último, creamos el Application Gateway. OJO. PUEDE TARDAR SOBRE 6 MINUTOS:
 ```
 az network application-gateway create \
     --name agic \
-    --location westeurope \
+    --location northeurope \
     --resource-group agic-rg \
     --sku Standard_v2 \
     --public-ip-address agic-pip \
@@ -184,7 +184,7 @@ Probar la app. El tráfico ya entra por el AGIC. Conectar con un navegador a: **
 
 Azure crea un registro A para la IP del entrypoint del ingress:
 ```
-URL_APP=http://$PUBLIC_IP_DNS_NAME.westeurope.cloudapp.azure.com
+URL_APP=http://$PUBLIC_IP_DNS_NAME.northeurope.cloudapp.azure.com
 ```
 
 Comprobamos.
@@ -260,7 +260,7 @@ kubectl describe issuer letsencrypt-staging
 
 Hay dos formas de configurar certificados: O bien creamos un certificado manualmente y lo enlazamos con la ingress, o podemos configurar al controlador ingress, de forma que ***cert-manager*** cree el certificado automáticamente. Utilizaremos el segundo método.
 ```
-INGRESS_DNS=$PUBLIC_IP_DNS_NAME.westeurope.cloudapp.azure.com
+INGRESS_DNS=$PUBLIC_IP_DNS_NAME.northeurope.cloudapp.azure.com
 ```
 
 Mostramos y copiamos el valor en el portapapeles:
