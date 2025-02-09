@@ -53,7 +53,7 @@ redis-leader              1/1     1            1           8s
 
 Miramos el detalle:(Nota: Leer detenidamente la salida y observar la información de escalado del ReplicaSet)
 ```
-kubectl describe deployment/redis-deployment
+kubectl describe deployment/redis-leader
 ```
 
 La implementación ha sido una prueba, borramos el deployment desde la línea de comandos.
@@ -178,7 +178,7 @@ metadata:
 
 Ahora vamos a usar un ***ConfigMap*** para pasar información al contenedor en tiempo de ejecución. Vamos a abrir el archivo modificado:
 ```
-nano lab-25-C-redis-master-deployment-modified.yaml
+nano lab-25-C-redis-leader-deployment-modified.yaml
 ```
 
 Observar lo siguiente:
@@ -202,8 +202,8 @@ kubectl get pods
 
 La salida debe mostrar algo parecido a esto, indicando que el pod está en ejecución.
 ```
-NAME                                       READY   STATUS    RESTARTS   AGE
-redis-master-deployment-754ccc67d4-ctp9v   1/1     Running   0          7s
+NAME                                    READY   STATUS    RESTARTS   AGE
+redis-master-754ccc67d4-ctp9v   1/1     Running   0          7s
 ```
 
 Ejecutamos un comando dentro del pod para comprobar si realmente ha leido los valores de configuración. Cambiar el nombre del pod. ***--*** indica que lo que viene después es el comando que ejecutan los contenedores del pod. En este caso, el pod tiene un único contenedor.
@@ -222,9 +222,9 @@ CONFIG GET maxmemory-policy
 Salimos con ***exit***.
 
 
-Ahora vamos a desplegar un servicio INTERNO para los pods del deployment redis-master.Abrimos el archivo ***redis-master-service.yaml***.
+Ahora vamos a desplegar un servicio INTERNO para los pods del deployment redis-leader.Abrimos el archivo ***redis-leader-service.yaml***.
 ```
-nano lab-25-C-redis-master-service.yaml
+nano lab-25-C-redis-leader-service.yaml
 ```
 
 Estudiamos el contenido del archivo.
