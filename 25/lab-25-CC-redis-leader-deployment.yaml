@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: leader
-        image: "docker.io/redis:6.0.5"
+        image: "antsala/guestbook-redis-leader:latest"
         resources:
           requests:
             cpu: 100m
