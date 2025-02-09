@@ -1,41 +1,43 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-master
+  name: redis-leader
   labels:
     app: redis
+    role: leader
     tier: backend
-    role: master
 spec:
   ports:
   - port: 6379
     targetPort: 6379
   selector:
     app: redis
+    role: leader
     tier: backend
-    role: master
 ---
-apiVersion: apps/v1 
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-master-deployment
+  name: redis-leader
+  labels:
+    app: redis
+    role: leader
+    tier: backend
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: redis
-      role: master
-      tier: backend
-  replicas: 1
   template:
     metadata:
       labels:
         app: redis
-        role: master
+        role: leader
         tier: backend
     spec:
       containers:
-      - name: master
-        image: docker.io/antsala/guestbook-redis-master:latest
+      - name: leader
+        image: "antsala/guestbook-redis-leader:latest"
         resources:
           requests:
             cpu: 100m
@@ -46,68 +48,74 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-replica
+  name: redis-follower
   labels:
     app: redis
+    role: follower
     tier: backend
-    role: replica
 spec:
   ports:
   - port: 6379
+    targetPort: 6379
   selector:
     app: redis
+    role: follower
     tier: backend
-    role: replica
 ---
-apiVersion: apps/v1 
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-replica-deployment
+  name: redis-follower
+  labels:
+    app: redis
 spec:
   selector:
     matchLabels:
       app: redis
-      role: replica
+      role: follower
       tier: backend
   replicas: 2
   template:
     metadata:
       labels:
         app: redis
-        role: replica
+        role: follower
         tier: backend
     spec:
       containers:
-      - name: replica
+      - name: follower
         image: docker.io/antsala/guestbook-redis-follower:latest
         resources:
           requests:
             cpu: 100m
             memory: 100Mi
-        env:
-        - name: GET_HOSTS_FROM
-          value: dns
         ports:
         - containerPort: 6379
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: frontend-load-balancer
   labels:
     app: guestbook
     tier: frontend
 spec:
+  type: LoadBalancer
   ports:
   - port: 80
+    targetPort: 80
   selector:
     app: guestbook
     tier: frontend
+
 ---
-apiVersion: apps/v1 
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  labels:
+    app: guestbook
 spec:
   selector:
     matchLabels:
@@ -125,12 +133,10 @@ spec:
         image: docker.io/antsala/guestbook-frontend:latest
         resources:
           requests:
-            cpu: 10m
-            memory: 10Mi
+            cpu: 100m
+            memory: 100Mi
         env:
         - name: GET_HOSTS_FROM
-          value: env
-        - name: REDIS_SLAVE_SERVICE_HOST
-          value: redis-replica
+          value: "dns"
         ports:
         - containerPort: 80
