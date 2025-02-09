@@ -374,22 +374,8 @@ Lo más importante en el archivo de despliegue es:
 
 * *Línea 9-11*: Este deployment se asociará con la plantilla de pod que tiene definidas las etiquetas ***app: guestbook*** y ***tier: frontend***.
 * *Línea 12*: El número de réplicas del frontend son 3 (3 pods)
-* *Línea 21*: Se está usando la imagen de contenedor ***gb-frontend:v4***.
-* *Líneas 27 y 28*: La variable de entorno ***GET_HOST_FROM*** sirve para determinar dónde está el máster de Redis. 
-                 
-                   El valor es 'env'.
-
-                   El código del Frontend en este punto es:
-
-                   $host = 'redis-master';
-                   if (getenv('GET_HOSTS_FROM') == 'env') {
-                       $host = getenv('REDIS_MASTER_SERVICE_HOST');
-                   }
-
-                   Es decir, que el servidor máster de Redis será el que indique la variable del sistema ***REDIS_MASTER_SERVICE_HOST***. Esta variable se inyecta en el YAML del deployment del
-                   frontend y tiene el valor 'redis-replica'.
-
-* *Líneas 29 y 30*: Se inicializa la variable de entorno ***REDIS_SLAVE_SERVICE_HOST*** al valor ***redis-replica***, para que los contenedores de Frontend puedan contactar con la réplicas.
+* *Línea 21*: Se está usando la imagen de contenedor ***antsala/guestbook-frontend:latest***.
+* *Líneas 27 y 28*: La variable de entorno ***GET_HOST_FROM*** sirve para determinar dónde está el máster de Redis. El valor ***dns*** hace que el frontend busque al backend de redis por su nombre de servicio.
 
 Desplegamos el frontend.
 ```
@@ -425,9 +411,9 @@ NAME                                        READY   STATUS    RESTARTS   AGE
 frontend-69bff8766c-r5mv9                   1/1     Running   0          4m10s
 frontend-69bff8766c-thqh7                   1/1     Running   0          4m10s
 frontend-69bff8766c-x67rg                   1/1     Running   0          4m10s
-redis-master-deployment-754ccc67d4-ctp9v    1/1     Running   0          14h
-redis-replica-deployment-6bf68ddfbd-dvj62   1/1     Running   0          40m
-redis-replica-deployment-6bf68ddfbd-zzzdv   1/1     Running   0          40m
+redis-leader-754ccc67d4-ctp9v               1/1     Running   0          14h
+redis-follower-6bf68ddfbd-dvj62             1/1     Running   0          40m
+redis-follower-6bf68ddfbd-zzzdv             1/1     Running   0          40m
 ```
 
 ## Ejercicio 5: ***Despliegue del balanceador para el Frontend***
@@ -456,7 +442,7 @@ Las líneas más importantes son:
 
 Aplicamos el servicio:
 ```
-kubectl create -f lab-25-C-frontend-service.yaml
+kubectl apply -f lab-25-C-frontend-service.yaml
 ```
 
 Comprobamos los servicios.
@@ -483,8 +469,8 @@ Tomar nota de la IP External del frontend y conectarse con un navegador.
 
 Limpiamos recursos del cluster.
 ```
-kubectl delete deployment frontend redis-master-deployment redis-replica-deployment
-kubectl delete service frontend-load-balancer redis-master redis-replica
+kubectl delete deployment frontend redis-follower redis-leader
+kubectl delete service frontend-load-balancer redis-leader redis-follower
 ```
 
 Comprobamos que solo queda el servicio de Kubernetes
