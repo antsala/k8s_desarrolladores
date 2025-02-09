@@ -16,49 +16,49 @@ Cambiamos al directorio de trabajo.
 cd ~/k8s_desarrolladores/25
 ```
 
-Desplegamos el backend del maestro de redis. Abrimos el achivo ***lab-25-redis-master-deployment.yaml***.
+Desplegamos el backend del leader de redis. Abrimos el achivo ***lab-25-redis-leader-deployment.yaml***.
 ```
-nano lab-25-C-redis-master-deployment.yaml
+nano lab-25-C-redis-leader-deployment.yaml
 ```
 
 El contenido a destacar de este archivo lo comentamos a continuación:
 
 * *Línea 2*: Es un ***deployment***.
-* *Línea 4*: Asignamos el nombre de ***redis-master-deployment***.
+* *Línea 4*: Asignamos el nombre de ***redis-leader***.
 * *Línea 6*: Se define la etiqueta ***app: redis***.
-* *Líneas 8-12*: Importante: Hasta el momento hemos usado una sola etiqueta para asociar el deployment a la plantilla de pod. En este ejemplo se usan varias etiquetas: ***app: redis***, ***role: master*** y ***tier: backend***. Esto va a darnos más libertad a la hora de asociar servicios/deployments/pods, a la vez que añade más información al archivo YAML que servirá para entender mejor el propósito del objeto que se está creando.
+* *Líneas 8-12*: Importante: Hasta el momento hemos usado una sola etiqueta para asociar el deployment a la plantilla de pod. En este ejemplo se usan varias etiquetas: ***app: redis***, ***role: leader*** y ***tier: backend***. Esto va a darnos más libertad a la hora de asociar servicios/deployments/pods, a la vez que añade más información al archivo YAML que servirá para entender mejor el propósito del objeto que se está creando.
 
 Para que se produzca la asociación entre objetos, se deben verificar TODAS las etiquetas.
 
 * *Líneas 17-19*: En la especificación de la plantilla del pod, volvemos a poner las mismas etiquetas.
-* *Líneas 22*:    El contenedor ser llamará ***master***.
-* *Línea 23*:     y estará basado en la imagen es ***k8s.gcr.io/redis:e2e***. 
-* *Líneas 24-30*: Se especifica la contención de recursos para el contenedor. Si el servidor va sobrado de recursos, el contenedor podrá usar más recursos de los que se declaran en ***requests***, pero en ningún caso más de lo que aparece en ***limits***. La CPU se puede expresar en tanto por uno o, como en este caso, usando la unidad ***milis*** (m). 1000 milis equivalen al 100% de la CPU disponible. Es muy conveniente leer el siguiente artículo: (https://kubernetes.io/es/docs/concepts/configuration/manage-resources-containers/)
+* *Líneas 22*:    El contenedor ser llamará ***leader***.
+* *Línea 23*:     y estará basado en la imagen es ***docker.io/redis:6.0.5***. 
+* *Líneas 24-30*: Se especifica la contención de recursos para el contenedor. Si el servidor va sobrado de recursos, el contenedor podrá usar más recursos de los que se declaran en ***requests***. La CPU se puede expresar en tanto por uno o, como en este caso, usando la unidad ***milis*** (m). 1000 milis equivalen al 100% de la CPU disponible. Es muy conveniente leer el siguiente artículo: (https://kubernetes.io/es/docs/concepts/configuration/manage-resources-containers/)
 
 Aplicamos el deployment:
 ```
-kubectl apply -f lab-25-C-redis-master-deployment.yaml
+kubectl apply -f lab-25-C-redis-leader-deployment.yaml
 ```
 
 Examinamos el deployment:
 ```
-kubectl get deployment redis-master-deployment
+kubectl get deployment redis-leader
 ```
 
 La salida será parecida a esta:
 ```
 NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
-redis-master-deployment   1/1     1            1           8s
+redis-leader              1/1     1            1           8s
 ```
 
 Miramos el detalle:(Nota: Leer detenidamente la salida y observar la información de escalado del ReplicaSet)
 ```
-kubectl describe deployment/redis-master-deployment
+kubectl describe deployment/redis-leader
 ```
 
 La implementación ha sido una prueba, borramos el deployment desde la línea de comandos.
 ```
-kubectl delete deployment/redis-master-deployment
+kubectl delete deployment/redis-leader
 ```
 
 Comprobar que se elimina y que solo quede el servicio de Kubernetes:
@@ -178,7 +178,7 @@ metadata:
 
 Ahora vamos a usar un ***ConfigMap*** para pasar información al contenedor en tiempo de ejecución. Vamos a abrir el archivo modificado:
 ```
-nano lab-25-C-redis-master-deployment-modified.yaml
+nano lab-25-C-redis-leader-deployment-modified.yaml
 ```
 
 Observar lo siguiente:
@@ -192,7 +192,7 @@ Cuando el contenedor arranca, lee el archivo ***/redis-master/redis.conf***, que
 
 Desplegamos esta versión actualizada para usar configmap.
 ```
-kubectl apply -f lab-25-C-redis-master-deployment-modified.yaml
+kubectl apply -f lab-25-C-redis-leader-deployment-modified.yaml
 ```
 
 Miramos los pods
@@ -202,8 +202,8 @@ kubectl get pods
 
 La salida debe mostrar algo parecido a esto, indicando que el pod está en ejecución.
 ```
-NAME                                       READY   STATUS    RESTARTS   AGE
-redis-master-deployment-754ccc67d4-ctp9v   1/1     Running   0          7s
+NAME                                    READY   STATUS    RESTARTS   AGE
+redis-master-754ccc67d4-ctp9v   1/1     Running   0          7s
 ```
 
 Ejecutamos un comando dentro del pod para comprobar si realmente ha leido los valores de configuración. Cambiar el nombre del pod. ***--*** indica que lo que viene después es el comando que ejecutan los contenedores del pod. En este caso, el pod tiene un único contenedor.
@@ -222,39 +222,39 @@ CONFIG GET maxmemory-policy
 Salimos con ***exit***.
 
 
-Ahora vamos a desplegar un servicio INTERNO para los pods del deployment redis-master.Abrimos el archivo ***redis-master-service.yaml***.
+Ahora vamos a desplegar un servicio INTERNO para los pods del deployment redis-leader.Abrimos el archivo ***redis-leader-service.yaml***.
 ```
-nano lab-25-C-redis-master-service.yaml
+nano lab-25-C-redis-leader-service.yaml
 ```
 
 Estudiamos el contenido del archivo.
 
 * *Línea 2*: El objeto es un servicio.
-* *Línea 4*: Con nombre ***redis-master***.
-* *Líneas 5-8*:   El servicio crea las etiquetas ***app: redis***, ***role: master*** y ***tier: backend***.
+* *Línea 4*: Con nombre ***redis-leader***.
+* *Líneas 5-8*:   El servicio crea las etiquetas ***app: redis***, ***role: leader*** y ***tier: backend***.
 * *Línea 12*:     El servicio atiende en el puerto ***6379***...
 * *Línea 13*:     y reenvía el tráfico a los pod al puerto ***6379***.
-* *Líneas 13-16*: El servicio enviará tráfico a los pods que tengan definidas las etiquetas ***app: redis***, ***role: master*** y ***tier: backend***.
+* *Líneas 13-16*: El servicio enviará tráfico a los pods que tengan definidas las etiquetas ***app: redis***, ***role: leader*** y ***tier: backend***.
 
 
 Creamos el objeto:
 ```
-kubectl apply -f lab-25-C-redis-master-service.yaml
+kubectl apply -f lab-25-C-redis-leader-service.yaml
 ```
 
 Comprobamos el despliegue del servicio:
 ```
-kubectl get service redis-master
+kubectl get service redis-leader
 ```
 
 La salida del comando anterior es:
 ```
 NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-redis-master        ClusterIP   10.100.15.241   <none>        6379/TCP   32s
+redis-leader        ClusterIP   10.100.15.241   <none>        6379/TCP   32s
 ```
 Comprobar que el tipo de servicio es ***ClusterIP***, por lo que solo se puede acceder a él desde dentro del cluster (desde otros pods) y no desde el exterior del cluster.
 
-Un servicio también introduce un ***nombre DNS*** para dicho servicio, en la forma: ***<nombreServicio>.<espacioDeNombres>svc.cluster.local***. Puesto que estamos usando el espacio de nombres ***default***, la DNS del servicio ***redis-master*** es: ***redis-master.default.svc.cluster.local***.
+Un servicio también introduce un ***nombre DNS*** para dicho servicio, en la forma: ***<nombreServicio>.<espacioDeNombres>svc.cluster.local***. Puesto que estamos usando el espacio de nombres ***default***, la DNS del servicio ***redis-leader*** es: ***redis-leader.default.svc.cluster.local***.
 
 Para ver esto funcionando, nos metemos en el pod para ver si hay resolución DNS. Lo vamos a hacer con ***ping*** ya que ***nslookup*** no está instalado en el pod. No va a haber respuesta de ping, solo nos interesa la resolución DNS.
 
@@ -265,97 +265,105 @@ kubectl get pods
 
 La salida se parecerá a esta:
 ```
-NAME                                       READY   STATUS    RESTARTS   AGE
-redis-master-deployment-754ccc67d4-ctp9v   1/1     Running   0          13h
+NAME                            READY   STATUS    RESTARTS   AGE
+redis-leader-754ccc67d4-ctp9v   1/1     Running   0          13h
 ```
+
+Vamos a instalar el comando ***ping***.
 ```
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master
+kubectl exec -it <nombre-del-pod> -- bash -c "apt update && apt install -y iputils-ping"
+```
+
+Hacemos ping para comprobar la resolución.
+
+```
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-leader
 ```
 
 Comprobar que el registro A ***redis-master.default.svc.cluster.local***. se resuelve a la ***CLUSTER-IP anterior***. CTRL+C para salir.
 
 Convolución. Se completa el dominio si no se especifica completamente.
 ```
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-leader
 ```
 ```
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master.default
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-leader.default
 ```
 ```
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master.default.svc.cluster.local
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-leader.default.svc.cluster.local
 ```
 
 ## Ejercicio 3:  ***Despliegue de las réplicas de Redis***
 
-Ahora vamos a desplegar las réplicas (2) de redis, que se sincronizarán desde redis-master. Para ello estudiamos el archivo ***lab-25-C-redis-replica-deployment.yaml***.
+Ahora vamos a desplegar las réplicas (2) de redis, que se sincronizarán desde redis-master. Para ello estudiamos el archivo ***lab-25-C-redis-follower-deployment.yaml***.
 ```
-nano lab-25-C-redis-replica-deployment.yaml
+nano lab-25-C-redis-follower-deployment.yaml
 ```
 
 Las líneas más importantes del archivo son:
 
 * *Línea 2*: Indicamos que es un deployment.
-* *Línea 4*: Su nombre es ***redis-replica-deployment***.
-* *Líneas 8-12*:  El deployment se asociará con una plantilla de pod que tenga definidas las etiquetas: ***app: redis***, ***role: replica*** y ***tier: backend***.
+* *Línea 4*: Su nombre es ***redis-follower***.
+* *Líneas 8-12*:  El deployment se asociará con una plantilla de pod que tenga definidas las etiquetas: ***app: redis***, ***role: follower*** y ***tier: backend***.
 * *Línea 13*: Se instanciarán dos pods.
 * *Línea 21*: Comienza la definición del contenedor.
-* *Línea 22*: El nombre del contenedor será ***replica***.
-* *Línea 23*: Estará basado en la imagen de réplica de redis ***gcr.io/google_samples/gb-redis-follower:v1***.
+* *Línea 22*: El nombre del contenedor será ***follower***.
+* *Línea 23*: Estará basado en la imagen de réplica de redis ***docker.io/antsala/guestbook-redis-follower:latest***.
 * *Línea 25*: Se le asignará el 10% de la CPU (100 milis)
 * *Línea 26*: y 100 Mebibits de memoria. (Leer este artículo: https://es.wikipedia.org/wiki/Mebibit)
-* *Línea 28-30*: Se crea la variable de entorno ***GET_HOST_FROM*** con el valor ***dns***. Cuando el contenedor se inicie se conectará a una máquina (su master) llamada ***redis-server***, es decir a ***redis-server-internal-service.default.svc.cluster.local***, que es la IP del servicio de ***redis-server***.
+
 
 Aplicamos el deployment:
 ```
-kubectl apply -f lab-25-C-redis-replica-deployment.yaml
+kubectl apply -f lab-25-C-redis-follower-deployment.yaml
 ```
 
 Comprobamos que arranca el deployment:
 ```
-kubectl get deployment redis-replica-deployment
+kubectl get deployment redis-follower
 ```
 
 La salida será similar a esta:
 ```
-NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
-redis-replica-deployment   2/2     2            2           41s
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+redis-follower   2/2     2            2           41s
 ```
 
 Para que el frontend (aún por desplegar) pueda contactar con las réplicas (además del master de redis), es necesario exponerlas mediante un servicio, que nos dará la respectiva ClusterIP.
 
 Editamos el archivo:
 ```
-nano lab-25-C-redis-replica-service.yaml
+nano lab-25-C-redis-follower-service.yaml
 ```
 
 Las líneas más importantes son:
 
 * *Línea 2*: Se crea un servicio interno.
-* *Línea 4*: Con nombre ***redis-replica***.
+* *Línea 4*: Con nombre ***redis-follower***.
 * *Línea 11*: Escuchará en el puerto ***6379***...
 * *Línea 12*: y reenviará al puerto ***6379*** de los pods.
-* *Líneas 13-16*: Se asociará con los pods que tengan definidas las etiquetas: ***app: redis***, ***role: replica***, ***tier: backend***.
+* *Líneas 13-16*: Se asociará con los pods que tengan definidas las etiquetas: ***app: redis***, ***role: follower***, ***tier: backend***.
 
 Aplicamos el servicio:
 ```
-kubectl apply -f lab-25-C-redis-replica-service.yaml
+kubectl apply -f lab-25-C-redis-follower-service.yaml
 ```
 
 Comprobamos el despliegue del servicio:
 ```
-kubectl get service redis-replica
+kubectl get service redis-follower
 ```
 
 La salida será similar a esta:
 ```
 NAME            TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
-redis-replica   ClusterIP   10.109.5.10   <none>        6379/TCP   105s
+redis-follower  ClusterIP   10.109.5.10   <none>        6379/TCP   105s
 ```
 
 ## Ejercicio 4: ***Despliegue del Frontend***
 
 
-Ahora desplegamos en frontend, que se contectará al servidor máster de Redis o a las réplicas en función del tipo de consulta que se necesite hacer.
+Ahora desplegamos en frontend, que se contectará al servidor leader de Redis o a los followers en función del tipo de consulta que se necesite hacer.
 
 Editamos la definición del deployment:
 ```
@@ -366,22 +374,8 @@ Lo más importante en el archivo de despliegue es:
 
 * *Línea 9-11*: Este deployment se asociará con la plantilla de pod que tiene definidas las etiquetas ***app: guestbook*** y ***tier: frontend***.
 * *Línea 12*: El número de réplicas del frontend son 3 (3 pods)
-* *Línea 21*: Se está usando la imagen de contenedor ***gb-frontend:v4***.
-* *Líneas 27 y 28*: La variable de entorno ***GET_HOST_FROM*** sirve para determinar dónde está el máster de Redis. 
-                 
-                   El valor es 'env'.
-
-                   El código del Frontend en este punto es:
-
-                   $host = 'redis-master';
-                   if (getenv('GET_HOSTS_FROM') == 'env') {
-                       $host = getenv('REDIS_MASTER_SERVICE_HOST');
-                   }
-
-                   Es decir, que el servidor máster de Redis será el que indique la variable del sistema ***REDIS_MASTER_SERVICE_HOST***. Esta variable se inyecta en el YAML del deployment del
-                   frontend y tiene el valor 'redis-replica'.
-
-* *Líneas 29 y 30*: Se inicializa la variable de entorno ***REDIS_SLAVE_SERVICE_HOST*** al valor ***redis-replica***, para que los contenedores de Frontend puedan contactar con la réplicas.
+* *Línea 21*: Se está usando la imagen de contenedor ***antsala/guestbook-frontend:latest***.
+* *Líneas 27 y 28*: La variable de entorno ***GET_HOST_FROM*** sirve para determinar dónde está el máster de Redis. El valor ***dns*** hace que el frontend busque al backend de redis por su nombre de servicio.
 
 Desplegamos el frontend.
 ```
@@ -417,9 +411,9 @@ NAME                                        READY   STATUS    RESTARTS   AGE
 frontend-69bff8766c-r5mv9                   1/1     Running   0          4m10s
 frontend-69bff8766c-thqh7                   1/1     Running   0          4m10s
 frontend-69bff8766c-x67rg                   1/1     Running   0          4m10s
-redis-master-deployment-754ccc67d4-ctp9v    1/1     Running   0          14h
-redis-replica-deployment-6bf68ddfbd-dvj62   1/1     Running   0          40m
-redis-replica-deployment-6bf68ddfbd-zzzdv   1/1     Running   0          40m
+redis-leader-754ccc67d4-ctp9v               1/1     Running   0          14h
+redis-follower-6bf68ddfbd-dvj62             1/1     Running   0          40m
+redis-follower-6bf68ddfbd-zzzdv             1/1     Running   0          40m
 ```
 
 ## Ejercicio 5: ***Despliegue del balanceador para el Frontend***
@@ -448,7 +442,7 @@ Las líneas más importantes son:
 
 Aplicamos el servicio:
 ```
-kubectl create -f lab-25-C-frontend-service.yaml
+kubectl apply -f lab-25-C-frontend-service.yaml
 ```
 
 Comprobamos los servicios.
@@ -475,8 +469,8 @@ Tomar nota de la IP External del frontend y conectarse con un navegador.
 
 Limpiamos recursos del cluster.
 ```
-kubectl delete deployment frontend redis-master-deployment redis-replica-deployment
-kubectl delete service frontend-load-balancer redis-master redis-replica
+kubectl delete deployment frontend redis-follower redis-leader
+kubectl delete service frontend-load-balancer redis-leader redis-follower
 ```
 
 Comprobamos que solo queda el servicio de Kubernetes
