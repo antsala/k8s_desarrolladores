@@ -295,38 +295,38 @@ kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-leader.default.sv
 
 ## Ejercicio 3:  ***Despliegue de las réplicas de Redis***
 
-Ahora vamos a desplegar las réplicas (2) de redis, que se sincronizarán desde redis-master. Para ello estudiamos el archivo ***lab-25-C-redis-replica-deployment.yaml***.
+Ahora vamos a desplegar las réplicas (2) de redis, que se sincronizarán desde redis-master. Para ello estudiamos el archivo ***lab-25-C-redis-follower-deployment.yaml***.
 ```
-nano lab-25-C-redis-replica-deployment.yaml
+nano lab-25-C-redis-follower-deployment.yaml
 ```
 
 Las líneas más importantes del archivo son:
 
 * *Línea 2*: Indicamos que es un deployment.
-* *Línea 4*: Su nombre es ***redis-replica-deployment***.
-* *Líneas 8-12*:  El deployment se asociará con una plantilla de pod que tenga definidas las etiquetas: ***app: redis***, ***role: replica*** y ***tier: backend***.
+* *Línea 4*: Su nombre es ***redis-follower***.
+* *Líneas 8-12*:  El deployment se asociará con una plantilla de pod que tenga definidas las etiquetas: ***app: redis***, ***role: follower*** y ***tier: backend***.
 * *Línea 13*: Se instanciarán dos pods.
 * *Línea 21*: Comienza la definición del contenedor.
-* *Línea 22*: El nombre del contenedor será ***replica***.
-* *Línea 23*: Estará basado en la imagen de réplica de redis ***gcr.io/google_samples/gb-redis-follower:v1***.
+* *Línea 22*: El nombre del contenedor será ***follower***.
+* *Línea 23*: Estará basado en la imagen de réplica de redis ***docker.io/antsala/guestbook-redis-follower:latest***.
 * *Línea 25*: Se le asignará el 10% de la CPU (100 milis)
 * *Línea 26*: y 100 Mebibits de memoria. (Leer este artículo: https://es.wikipedia.org/wiki/Mebibit)
-* *Línea 28-30*: Se crea la variable de entorno ***GET_HOST_FROM*** con el valor ***dns***. Cuando el contenedor se inicie se conectará a una máquina (su master) llamada ***redis-server***, es decir a ***redis-server-internal-service.default.svc.cluster.local***, que es la IP del servicio de ***redis-server***.
+
 
 Aplicamos el deployment:
 ```
-kubectl apply -f lab-25-C-redis-replica-deployment.yaml
+kubectl apply -f lab-25-C-redis-follower-deployment.yaml
 ```
 
 Comprobamos que arranca el deployment:
 ```
-kubectl get deployment redis-replica-deployment
+kubectl get deployment redis-follower
 ```
 
 La salida será similar a esta:
 ```
-NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
-redis-replica-deployment   2/2     2            2           41s
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+redis-follower   2/2     2            2           41s
 ```
 
 Para que el frontend (aún por desplegar) pueda contactar con las réplicas (además del master de redis), es necesario exponerlas mediante un servicio, que nos dará la respectiva ClusterIP.
