@@ -333,37 +333,37 @@ Para que el frontend (aún por desplegar) pueda contactar con las réplicas (ade
 
 Editamos el archivo:
 ```
-nano lab-25-C-redis-replica-service.yaml
+nano lab-25-C-redis-follower-service.yaml
 ```
 
 Las líneas más importantes son:
 
 * *Línea 2*: Se crea un servicio interno.
-* *Línea 4*: Con nombre ***redis-replica***.
+* *Línea 4*: Con nombre ***redis-follower***.
 * *Línea 11*: Escuchará en el puerto ***6379***...
 * *Línea 12*: y reenviará al puerto ***6379*** de los pods.
-* *Líneas 13-16*: Se asociará con los pods que tengan definidas las etiquetas: ***app: redis***, ***role: replica***, ***tier: backend***.
+* *Líneas 13-16*: Se asociará con los pods que tengan definidas las etiquetas: ***app: redis***, ***role: follower***, ***tier: backend***.
 
 Aplicamos el servicio:
 ```
-kubectl apply -f lab-25-C-redis-replica-service.yaml
+kubectl apply -f lab-25-C-redis-follower-service.yaml
 ```
 
 Comprobamos el despliegue del servicio:
 ```
-kubectl get service redis-replica
+kubectl get service redis-follower
 ```
 
 La salida será similar a esta:
 ```
 NAME            TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
-redis-replica   ClusterIP   10.109.5.10   <none>        6379/TCP   105s
+redis-follower  ClusterIP   10.109.5.10   <none>        6379/TCP   105s
 ```
 
 ## Ejercicio 4: ***Despliegue del Frontend***
 
 
-Ahora desplegamos en frontend, que se contectará al servidor máster de Redis o a las réplicas en función del tipo de consulta que se necesite hacer.
+Ahora desplegamos en frontend, que se contectará al servidor leader de Redis o a los followers en función del tipo de consulta que se necesite hacer.
 
 Editamos la definición del deployment:
 ```
