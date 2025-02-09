@@ -268,6 +268,14 @@ La salida se parecerá a esta:
 NAME                            READY   STATUS    RESTARTS   AGE
 redis-leader-754ccc67d4-ctp9v   1/1     Running   0          13h
 ```
+
+Vamos a instalar el comando ***ping***.
+```
+kubectl exec -it <nombre-del-pod> -- bash -c "apt update && apt install -y iputils-ping"
+```
+
+Hacemos ping para comprobar la resolución.
+
 ```
 kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-leader
 ```
@@ -276,13 +284,13 @@ Comprobar que el registro A ***redis-master.default.svc.cluster.local***. se res
 
 Convolución. Se completa el dominio si no se especifica completamente.
 ```
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-leader
 ```
 ```
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master.default
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-leader.default
 ```
 ```
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master.default.svc.cluster.local
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-leader.default.svc.cluster.local
 ```
 
 ## Ejercicio 3:  ***Despliegue de las réplicas de Redis***
