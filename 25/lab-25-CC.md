@@ -230,31 +230,31 @@ nano lab-25-C-redis-leader-service.yaml
 Estudiamos el contenido del archivo.
 
 * *Línea 2*: El objeto es un servicio.
-* *Línea 4*: Con nombre ***redis-master***.
-* *Líneas 5-8*:   El servicio crea las etiquetas ***app: redis***, ***role: master*** y ***tier: backend***.
+* *Línea 4*: Con nombre ***redis-leader***.
+* *Líneas 5-8*:   El servicio crea las etiquetas ***app: redis***, ***role: leader*** y ***tier: backend***.
 * *Línea 12*:     El servicio atiende en el puerto ***6379***...
 * *Línea 13*:     y reenvía el tráfico a los pod al puerto ***6379***.
-* *Líneas 13-16*: El servicio enviará tráfico a los pods que tengan definidas las etiquetas ***app: redis***, ***role: master*** y ***tier: backend***.
+* *Líneas 13-16*: El servicio enviará tráfico a los pods que tengan definidas las etiquetas ***app: redis***, ***role: leader*** y ***tier: backend***.
 
 
 Creamos el objeto:
 ```
-kubectl apply -f lab-25-C-redis-master-service.yaml
+kubectl apply -f lab-25-C-redis-leader-service.yaml
 ```
 
 Comprobamos el despliegue del servicio:
 ```
-kubectl get service redis-master
+kubectl get service redis-leader
 ```
 
 La salida del comando anterior es:
 ```
 NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-redis-master        ClusterIP   10.100.15.241   <none>        6379/TCP   32s
+redis-leader        ClusterIP   10.100.15.241   <none>        6379/TCP   32s
 ```
 Comprobar que el tipo de servicio es ***ClusterIP***, por lo que solo se puede acceder a él desde dentro del cluster (desde otros pods) y no desde el exterior del cluster.
 
-Un servicio también introduce un ***nombre DNS*** para dicho servicio, en la forma: ***<nombreServicio>.<espacioDeNombres>svc.cluster.local***. Puesto que estamos usando el espacio de nombres ***default***, la DNS del servicio ***redis-master*** es: ***redis-master.default.svc.cluster.local***.
+Un servicio también introduce un ***nombre DNS*** para dicho servicio, en la forma: ***<nombreServicio>.<espacioDeNombres>svc.cluster.local***. Puesto que estamos usando el espacio de nombres ***default***, la DNS del servicio ***redis-leader*** es: ***redis-leader.default.svc.cluster.local***.
 
 Para ver esto funcionando, nos metemos en el pod para ver si hay resolución DNS. Lo vamos a hacer con ***ping*** ya que ***nslookup*** no está instalado en el pod. No va a haber respuesta de ping, solo nos interesa la resolución DNS.
 
@@ -265,11 +265,11 @@ kubectl get pods
 
 La salida se parecerá a esta:
 ```
-NAME                                       READY   STATUS    RESTARTS   AGE
-redis-master-deployment-754ccc67d4-ctp9v   1/1     Running   0          13h
+NAME                            READY   STATUS    RESTARTS   AGE
+redis-leader-754ccc67d4-ctp9v   1/1     Running   0          13h
 ```
 ```
-kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-master
+kubectl exec -it <Poner aquí el nombre del pod> -- ping redis-leader
 ```
 
 Comprobar que el registro A ***redis-master.default.svc.cluster.local***. se resuelve a la ***CLUSTER-IP anterior***. CTRL+C para salir.
